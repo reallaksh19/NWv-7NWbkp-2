@@ -1,0 +1,48 @@
+name: CI Validation Gate
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Block rejected patch artifacts
+      run: |
+        if find . \( -name "*.rej" -o -name "*.orig" \) -print -quit | grep -q .; then
+          echo "Rejected patch or backup artifacts were found. Apply or delete them before merging."
+          find . \( -name "*.rej" -o -name "*.orig" \) -print
+          exit 1
+        fi
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Linter (Must be 0 errors)
+      run: npm run lint
+
+    - name: Build App
+      run: npm run build
+
+    - name: Run Benchmarks (Precision & Recall Gates)
+      run: npm run benchmark
+
+    - name: Run Up Ahead Classification Smoke Test
+      run: npm run test:upahead-smoke
+
+    - name: Run Market Snapshot Integrity Test
+      env:
+        MARKET_SNAPSHOT_MAX_AGE_HOURS: 720
+      run: npm run test:market-snapshot

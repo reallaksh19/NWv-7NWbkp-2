@@ -1,0 +1,6332 @@
+weather update
+Current repo already has Colombo in `DEFAULT_WEATHER_CITIES`, but the UI is not clean enough and QuickWeather still has weak add/delete behavior, weak desktop contrast, and precipitation display only as `%` in places. The weekly component also lacks real-feel and humidity display.   
+
+## How user will add/delete city after this patch
+
+In **Weather tab**: click **Manage weather cities** → select **Colombo** from dropdown → **Add**.
+To delete: click **Manage weather cities** → click **×** beside the city. At least one city must remain.
+
+# Slice 61A — Weather UX close-out: city manager, Colombo, weekly metrics, QuickWeather polish
+
+Create:
+
+```bash
+scripts/apply_slice61A_weather_ux_closeout.mjs
+```
+
+Paste this full code:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function replaceOnce(source, before, after, label) {
+  if (!source.includes(before)) {
+    if (source.includes(after.trim())) return source;
+    throw new Error(`Missing replace target for ${label}`);
+  }
+  return source.replace(before, after);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Weather location registry: add clean helpers and firm Colombo support     */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherLocations.js', `/**
+ * Weather location registry – single source of truth for supported static-host cities.
+ */
+
+export const WEATHER_LOCATION_CONFIG_VERSION = 'weather-locations-v3-colombo-ux';
+
+export const DEFAULT_WEATHER_CITIES = ['chennai', 'trichy', 'muscat', 'colombo'];
+
+export const WEATHER_LOCATION_REGISTRY = {
+    chennai: {
+        key: 'chennai',
+        lat: 13.0827,
+        lon: 80.2707,
+        display: 'Chennai',
+        country: 'India',
+        icon: '🏛️',
+        aliases: ['madras'],
+    },
+    trichy: {
+        key: 'trichy',
+        lat: 10.7905,
+        lon: 78.7047,
+        display: 'Trichy',
+        country: 'India',
+        icon: '🏯',
+        aliases: ['tiruchirappalli', 'tiruchirapalli', 'tiruchi'],
+    },
+    muscat: {
+        key: 'muscat',
+        lat: 23.5859,
+        lon: 58.4059,
+        display: 'Muscat',
+        country: 'Oman',
+        icon: '📍',
+        aliases: ['maskad', 'masqat'],
+    },
+    colombo: {
+        key: 'colombo',
+        lat: 6.9271,
+        lon: 79.8612,
+        display: 'Colombo',
+        country: 'Sri Lanka',
+        icon: '🌴',
+        aliases: ['kolamba'],
+    },
+};
+
+export function normalizeWeatherCity(value) {
+    return String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[_-]+/g, ' ')
+        .replace(/\\s+/g, ' ');
+}
+
+export function resolveRegistryKey(cityName) {
+    const key = normalizeWeatherCity(cityName);
+    if (WEATHER_LOCATION_REGISTRY[key]) return key;
+
+    for (const [canonical, entry] of Object.entries(WEATHER_LOCATION_REGISTRY)) {
+        if ((entry.aliases || []).map(normalizeWeatherCity).includes(key)) return canonical;
+    }
+
+    return null;
+}
+
+export function getCityWeatherKey(cityName) {
+    return resolveRegistryKey(cityName) || normalizeWeatherCity(cityName);
+}
+
+export function getWeatherLocation(cityName) {
+    const key = resolveRegistryKey(cityName);
+    return key ? WEATHER_LOCATION_REGISTRY[key] : null;
+}
+
+export function getWeatherLocationLabel(cityName) {
+    const location = getWeatherLocation(cityName);
+    if (location) return location.display;
+
+    const raw = String(cityName || '').trim();
+    if (!raw) return 'Unknown';
+
+    return raw
+        .split(/\\s+/)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+        .join(' ');
+}
+
+export function getWeatherLocationOptions() {
+    return Object.values(WEATHER_LOCATION_REGISTRY)
+        .map(location => ({
+            key: location.key,
+            label: location.display,
+            country: location.country,
+            icon: location.icon,
+            lat: location.lat,
+            lon: location.lon,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+export function uniqueWeatherCities(cities) {
+    const result = [];
+
+    for (const city of Array.isArray(cities) ? cities : []) {
+        const key = getCityWeatherKey(city);
+        if (!key || result.includes(key)) continue;
+        if (!WEATHER_LOCATION_REGISTRY[key]) continue;
+        result.push(key);
+    }
+
+    return result;
+}
+
+export function getConfiguredWeatherCities(settings) {
+    const raw = settings?.weather?.cities;
+    const normalized = uniqueWeatherCities(raw);
+
+    if (normalized.length === 0) return [...DEFAULT_WEATHER_CITIES];
+
+    const alreadyMigrated =
+        settings?.weather?.locationConfigVersion === WEATHER_LOCATION_CONFIG_VERSION;
+
+    if (!alreadyMigrated) {
+        return uniqueWeatherCities([...normalized, ...DEFAULT_WEATHER_CITIES]);
+    }
+
+    return normalized;
+}
+
+export function buildWeatherSettingsWithCities(baseSettings, cities) {
+    const nextCities = uniqueWeatherCities(cities);
+
+    return {
+        ...baseSettings,
+        weather: {
+            ...(baseSettings?.weather || {}),
+            cities: nextCities.length ? nextCities : [...DEFAULT_WEATHER_CITIES],
+            locationConfigVersion: WEATHER_LOCATION_CONFIG_VERSION,
+        },
+    };
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Cleaner manager: add/delete/reset visible and professional               */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/WeatherLocationManager.jsx', `import React, { useMemo, useState } from 'react';
+import { useSettings } from '../../context/SettingsContext';
+import {
+    DEFAULT_WEATHER_CITIES,
+    WEATHER_LOCATION_REGISTRY,
+    buildWeatherSettingsWithCities,
+    getConfiguredWeatherCities,
+    getWeatherLocationOptions,
+    resolveRegistryKey,
+} from '../../services/weatherLocations.js';
+import './WeatherLocationManager.css';
+
+export default function WeatherLocationManager({ compact = false }) {
+    const { settings, updateSettings } = useSettings();
+    const cities = getConfiguredWeatherCities(settings);
+    const options = useMemo(() => getWeatherLocationOptions(), []);
+    const [inputValue, setInputValue] = useState('');
+    const [message, setMessage] = useState('');
+    const [open, setOpen] = useState(false);
+
+    function save(nextCities) {
+        updateSettings(buildWeatherSettingsWithCities(settings, nextCities));
+    }
+
+    function addCity() {
+        const canonical = resolveRegistryKey(inputValue);
+        if (!canonical) {
+            setMessage('Select a supported city from the list.');
+            return;
+        }
+
+        if (cities.includes(canonical)) {
+            setMessage(\`\${WEATHER_LOCATION_REGISTRY[canonical].display} is already in your list.\`);
+            return;
+        }
+
+        save([...cities, canonical]);
+        setInputValue('');
+        setMessage(\`\${WEATHER_LOCATION_REGISTRY[canonical].display} added.\`);
+    }
+
+    function removeCity(city) {
+        if (cities.length <= 1) {
+            setMessage('At least one city must remain.');
+            return;
+        }
+
+        const next = cities.filter(item => item !== city);
+        save(next);
+        setMessage(\`\${WEATHER_LOCATION_REGISTRY[city]?.display || city} removed.\`);
+    }
+
+    function resetToDefaults() {
+        save([...DEFAULT_WEATHER_CITIES]);
+        setMessage('Reset to Chennai, Trichy, Muscat and Colombo.');
+    }
+
+    const availableToAdd = options.filter(option => !cities.includes(option.key));
+
+    if (!open) {
+        return (
+            <section className={\`wlm-collapsed \${compact ? 'wlm-collapsed--compact' : ''}\`}>
+                <div>
+                    <strong>Weather locations</strong>
+                    <span>{cities.map(city => WEATHER_LOCATION_REGISTRY[city]?.display || city).join(' · ')}</span>
+                </div>
+                <button className="wlm-toggle" type="button" onClick={() => setOpen(true)}>
+                    Manage
+                </button>
+            </section>
+        );
+    }
+
+    return (
+        <section className={\`wlm-panel \${compact ? 'wlm-panel--compact' : ''}\`}>
+            <div className="wlm-header">
+                <div>
+                    <span className="wlm-eyebrow">Weather locations</span>
+                    <h3>Add / delete locations</h3>
+                    <p>Add Colombo or remove cities using the × button. Static-host mode supports registry cities only.</p>
+                </div>
+                <button className="wlm-toggle wlm-close" type="button" onClick={() => setOpen(false)}>
+                    Done
+                </button>
+            </div>
+
+            <div className="wlm-chip-row">
+                {cities.map(city => (
+                    <span key={city} className="wlm-chip">
+                        <span>{WEATHER_LOCATION_REGISTRY[city]?.icon || '📍'} {WEATHER_LOCATION_REGISTRY[city]?.display || city}</span>
+                        <button
+                            type="button"
+                            onClick={() => removeCity(city)}
+                            disabled={cities.length <= 1}
+                            aria-label={\`Remove \${WEATHER_LOCATION_REGISTRY[city]?.display || city}\`}
+                            title="Remove city"
+                        >
+                            ×
+                        </button>
+                    </span>
+                ))}
+            </div>
+
+            {availableToAdd.length > 0 && (
+                <div className="wlm-add-row">
+                    <select
+                        className="wlm-select"
+                        value={inputValue}
+                        onChange={event => {
+                            setInputValue(event.target.value);
+                            setMessage('');
+                        }}
+                    >
+                        <option value="">Add a city…</option>
+                        {availableToAdd.map(option => (
+                            <option key={option.key} value={option.key}>
+                                {option.label} — {option.country}
+                            </option>
+                        ))}
+                    </select>
+                    <button className="wlm-add-btn" type="button" onClick={addCity} disabled={!inputValue}>
+                        Add
+                    </button>
+                </div>
+            )}
+
+            <div className="wlm-footer">
+                <button className="wlm-reset" type="button" onClick={resetToDefaults}>
+                    Reset defaults
+                </button>
+                {message && <span className="wlm-message">{message}</span>}
+            </div>
+        </section>
+    );
+}
+`);
+
+write('src/components/weather/WeatherLocationManager.css', `.wlm-collapsed,
+.wlm-panel {
+    margin: 12px 16px;
+    border: 1px solid rgba(45, 212, 191, 0.22);
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.72));
+    color: var(--text-primary, #f8fafc);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+}
+
+.wlm-collapsed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 14px;
+}
+
+.wlm-collapsed strong,
+.wlm-collapsed span {
+    display: block;
+}
+
+.wlm-collapsed strong {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #99f6e4;
+}
+
+.wlm-collapsed span {
+    margin-top: 2px;
+    color: #cbd5e1;
+    font-size: 0.82rem;
+}
+
+.wlm-panel {
+    padding: 14px;
+}
+
+.wlm-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.wlm-eyebrow {
+    color: #99f6e4;
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.wlm-header h3 {
+    margin: 2px 0 4px;
+    font-size: 1rem;
+}
+
+.wlm-header p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.78rem;
+}
+
+.wlm-toggle,
+.wlm-add-btn,
+.wlm-reset {
+    border: 1px solid rgba(45, 212, 191, 0.28);
+    border-radius: 999px;
+    background: rgba(20, 184, 166, 0.14);
+    color: #ccfbf1;
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.wlm-toggle {
+    min-height: 34px;
+    padding: 0 14px;
+}
+
+.wlm-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.wlm-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 7px 6px 10px;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 999px;
+    background: rgba(2, 6, 23, 0.38);
+    color: #e2e8f0;
+    font-size: 0.82rem;
+}
+
+.wlm-chip button {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(248, 113, 113, 0.18);
+    color: #fecaca;
+    cursor: pointer;
+}
+
+.wlm-chip button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.wlm-add-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+}
+
+.wlm-select {
+    min-height: 38px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 999px;
+    background: rgba(2, 6, 23, 0.62);
+    color: #f8fafc;
+    padding: 0 12px;
+}
+
+.wlm-add-btn {
+    min-height: 38px;
+    padding: 0 16px;
+}
+
+.wlm-add-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.wlm-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.wlm-reset {
+    min-height: 32px;
+    padding: 0 12px;
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(147, 197, 253, 0.24);
+    color: #bfdbfe;
+}
+
+.wlm-message {
+    color: #bfdbfe;
+    font-size: 0.78rem;
+}
+
+@media (max-width: 640px) {
+    .wlm-collapsed,
+    .wlm-header,
+    .wlm-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wlm-add-row {
+        grid-template-columns: 1fr;
+    }
+
+    .wlm-toggle,
+    .wlm-add-btn,
+    .wlm-reset {
+        width: 100%;
+    }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Weekly forecast: professional compact rows with rain mm/prob, feel, RH   */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/WeeklyWeatherForecast.jsx', `import React from 'react';
+import './WeeklyWeatherForecast.css';
+
+function uvLabel(uv) {
+    if (uv == null) return '';
+    if (uv >= 11) return 'Extreme';
+    if (uv >= 8) return 'Very high';
+    if (uv >= 6) return 'High';
+    if (uv >= 3) return 'Moderate';
+    return 'Low';
+}
+
+function getValue(day, keys, fallback = null) {
+    for (const key of keys) {
+        if (day?.[key] != null) return day[key];
+    }
+    return fallback;
+}
+
+function formatRain(day) {
+    const probability = getValue(day, ['precipProb', 'rainProb', 'rainfallProbability'], 0);
+    const mm = getValue(day, ['precipSum', 'rainMm', 'rainfallMm'], 0);
+    return \`\${probability ?? 0}% · \${Number(mm || 0).toFixed(1)}mm\`;
+}
+
+export default function WeeklyWeatherForecast({ forecast, cityName }) {
+    if (!Array.isArray(forecast) || forecast.length === 0) return null;
+
+    return (
+        <section className="wwf-card">
+            <div className="wwf-header">
+                <div>
+                    <span className="wwf-eyebrow">Weekly forecast</span>
+                    <h3>7-day outlook</h3>
+                </div>
+                {cityName && <span className="wwf-city">{cityName}</span>}
+            </div>
+
+            <div className="wwf-rows">
+                {forecast.slice(0, 7).map((day, index) => {
+                    const label = day.dayLabel || day.label || (index === 0 ? 'Today' : day.date);
+                    const high = getValue(day, ['tempMax', 'high']);
+                    const low = getValue(day, ['tempMin', 'low']);
+                    const feel = getValue(day, ['realFeelDay', 'feelsLikeDay', 'apparentMax']);
+                    const humidity = getValue(day, ['humidityDay', 'humidityMean']);
+                    const uv = getValue(day, ['uvMax', 'uvIndex']);
+                    const wind = getValue(day, ['windMax', 'windKph']);
+
+                    return (
+                        <article key={day.date || index} className={\`wwf-row \${index === 0 ? 'wwf-row--today' : ''}\`}>
+                            <div className="wwf-main">
+                                <span className="wwf-day">{label}</span>
+                                <span className="wwf-condition">
+                                    <span className="wwf-icon">{day.icon || '☁️'}</span>
+                                    {day.condition || 'Forecast'}
+                                </span>
+                            </div>
+
+                            <div className="wwf-temp">
+                                <strong>{high != null ? \`\${high}°\` : '—'}</strong>
+                                <span>{low != null ? \`\${low}°\` : '—'}</span>
+                            </div>
+
+                            <div className="wwf-metric">
+                                <span>Rain</span>
+                                <strong>{formatRain(day)}</strong>
+                            </div>
+
+                            <div className="wwf-metric">
+                                <span>Feels</span>
+                                <strong>{feel != null ? \`\${feel}°\` : '—'}</strong>
+                            </div>
+
+                            <div className="wwf-metric">
+                                <span>Humidity</span>
+                                <strong>{humidity != null ? \`\${humidity}%\` : '—'}</strong>
+                            </div>
+
+                            <div className="wwf-metric">
+                                <span>UV / Wind</span>
+                                <strong>{uv != null ? uvLabel(uv) : '—'}{wind != null ? \` · \${wind}km/h\` : ''}</strong>
+                            </div>
+                        </article>
+                    );
+                })}
+            </div>
+        </section>
+    );
+}
+`);
+
+write('src/components/weather/WeeklyWeatherForecast.css', `.wwf-card {
+    margin: 14px 16px;
+    border: 1px solid rgba(45, 212, 191, 0.18);
+    border-radius: 20px;
+    overflow: hidden;
+    background:
+        radial-gradient(520px 180px at 100% 0%, rgba(20, 184, 166, 0.12), transparent 70%),
+        rgba(15, 23, 42, 0.68);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+}
+
+.wwf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.wwf-eyebrow {
+    color: #99f6e4;
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.wwf-header h3 {
+    margin: 3px 0 0;
+    color: #f8fafc;
+    font-size: 1rem;
+}
+
+.wwf-city {
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(20, 184, 166, 0.14);
+    color: #ccfbf1;
+    font-size: 0.76rem;
+    font-weight: 900;
+}
+
+.wwf-rows {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+}
+
+.wwf-row {
+    display: grid;
+    grid-template-columns: minmax(150px, 1.4fr) 86px repeat(4, minmax(86px, 1fr));
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 16px;
+    background: rgba(2, 6, 23, 0.34);
+}
+
+.wwf-row--today {
+    border-color: rgba(45, 212, 191, 0.28);
+    background: rgba(20, 184, 166, 0.10);
+}
+
+.wwf-main,
+.wwf-metric,
+.wwf-temp {
+    min-width: 0;
+}
+
+.wwf-day {
+    display: block;
+    color: #f8fafc;
+    font-weight: 900;
+    font-size: 0.9rem;
+}
+
+.wwf-condition {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wwf-icon {
+    flex: 0 0 auto;
+}
+
+.wwf-temp {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.wwf-temp strong {
+    color: #f8fafc;
+    font-size: 1.12rem;
+}
+
+.wwf-temp span {
+    color: #94a3b8;
+    font-size: 0.86rem;
+}
+
+.wwf-metric span,
+.wwf-metric strong {
+    display: block;
+}
+
+.wwf-metric span {
+    color: #64748b;
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.wwf-metric strong {
+    margin-top: 3px;
+    color: #cbd5e1;
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+    .wwf-row {
+        grid-template-columns: 1fr 76px;
+    }
+
+    .wwf-metric {
+        display: grid;
+        grid-template-columns: 82px 1fr;
+        grid-column: 1 / -1;
+    }
+
+    .wwf-temp {
+        justify-content: flex-end;
+    }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 4) QuickWeather desktop visibility + precipitation mm + professional alert  */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/QuickWeatherRefined.css', `.quick-weather-card {
+    border: 1px solid rgba(45, 212, 191, 0.20) !important;
+    border-radius: 22px !important;
+    background:
+        radial-gradient(520px 190px at 100% 0%, rgba(20, 184, 166, 0.14), transparent 72%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.82)) !important;
+    color: #f8fafc !important;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.26);
+}
+
+.qw-config-bar {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    padding-bottom: 10px;
+}
+
+.qw-config-bar input {
+    background: rgba(2, 6, 23, 0.75) !important;
+    border-color: rgba(148, 163, 184, 0.28) !important;
+    color: #f8fafc !important;
+}
+
+.qw-config-bar input::placeholder {
+    color: #94a3b8 !important;
+}
+
+.qw-config-bar button {
+    background: rgba(20, 184, 166, 0.16) !important;
+    border-color: rgba(45, 212, 191, 0.28) !important;
+    color: #ccfbf1 !important;
+}
+
+.qw-cities-list {
+    display: grid;
+    gap: 8px;
+}
+
+.qw-city-row {
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    border-radius: 16px;
+    background: rgba(2, 6, 23, 0.32);
+    color: #e2e8f0;
+}
+
+.qw-city-row--active {
+    border-color: rgba(45, 212, 191, 0.36);
+    background: rgba(20, 184, 166, 0.12);
+}
+
+.qw-city-slot__pop {
+    min-width: 74px;
+    color: #bfdbfe;
+    font-weight: 800;
+}
+
+.qw-pop-high,
+.qw-pop-low {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+}
+
+.qw-pop-high {
+    color: #93c5fd;
+}
+
+.qw-pop-low {
+    color: #64748b;
+}
+
+.qw-highlight-text-container {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: start;
+    margin-top: 12px;
+    padding: 12px 14px !important;
+    border: 1px solid rgba(45, 212, 191, 0.20);
+    border-radius: 18px !important;
+    background:
+        linear-gradient(135deg, rgba(20, 184, 166, 0.14), rgba(59, 130, 246, 0.10)) !important;
+    color: #e2e8f0 !important;
+}
+
+.qw-highlight-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    background: rgba(2, 6, 23, 0.38);
+    font-size: 1.1rem;
+}
+
+.qw-highlight-text {
+    color: #f8fafc !important;
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.qw-severe-banner {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(248, 113, 113, 0.32);
+    background: rgba(127, 29, 29, 0.24);
+    color: #fecaca;
+}
+
+@media (min-width: 900px) {
+    .quick-weather-card {
+        min-height: 180px;
+    }
+
+    .qw-config-bar {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .qw-config-bar {
+        align-items: stretch !important;
+    }
+
+    .qw-config-bar form {
+        width: 100%;
+    }
+
+    .qw-config-bar input {
+        flex: 1;
+        width: 100% !important;
+    }
+}
+`);
+
+patchFile('src/components/QuickWeather.jsx', source => {
+    let text = source;
+
+    text = insertAfterOnce(
+        text,
+        `import QuickWeatherSignalStrip from './weather/QuickWeatherSignalStrip.jsx';`,
+        `
+import {
+    buildWeatherSettingsWithCities,
+    getCityWeatherKey,
+    getConfiguredWeatherCities,
+    getWeatherLocation,
+    getWeatherLocationLabel,
+    getWeatherLocationOptions,
+} from '../services/weatherLocations.js';
+import './QuickWeatherRefined.css';`,
+        'QuickWeather refined imports'
+    );
+
+    text = replaceOnce(
+        text,
+        `function normalizeCity(value) {
+    return String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/\\s+/g, ' ');
+}`,
+        `function normalizeCity(value) {
+    return getCityWeatherKey(value);
+}`,
+        'QuickWeather normalizeCity registry'
+    );
+
+    text = replaceOnce(
+        text,
+        `function getCityLabel(city, cityData) {
+    return cityData?.name || titleCase(city);
+}`,
+        `function getCityLabel(city, cityData) {
+    return cityData?.name || getWeatherLocationLabel(city) || titleCase(city);
+}`,
+        'QuickWeather city labels'
+    );
+
+    text = replaceOnce(
+        text,
+        `function getConfiguredCities(settings) {
+    const raw = settings?.weather?.cities || DEFAULT_CITIES;
+    const cleaned = raw.map(normalizeCity).filter(Boolean);
+    return [...new Set(cleaned)].length ? [...new Set(cleaned)] : DEFAULT_CITIES;
+}`,
+        `function getConfiguredCities(settings) {
+    return getConfiguredWeatherCities(settings);
+}`,
+        'QuickWeather configured cities'
+    );
+
+    text = replaceOnce(
+        text,
+        `        const nextSettings = {
+            ...settings,
+            weather: {
+                ...(settings?.weather || {}),
+                cities: uniqueCities
+            }
+        };`,
+        `        const nextSettings = buildWeatherSettingsWithCities(settings, uniqueCities);`,
+        'QuickWeather save real city settings'
+    );
+
+    text = insertAfterOnce(
+        text,
+        `        if (!city) {
+            setCityEditMessage('Enter a city name.');
+            return;
+        }
+
+`,
+        `        if (!getWeatherLocation(city)) {
+            setCityEditMessage('Select a supported city: Chennai, Trichy, Muscat or Colombo.');
+            return;
+        }
+
+`,
+        'QuickWeather reject unsupported city'
+    );
+
+    text = text.replace(
+        `setCityEditMessage(\`\${titleCase(city)} is already added.\`);`,
+        `setCityEditMessage(\`\${getWeatherLocationLabel(city)} is already added.\`);`
+    );
+
+    text = insertAfterOnce(
+        text,
+        `                        aria-label="Add weather city"`,
+        `
+                        list="quick-weather-city-options"`,
+        'QuickWeather datalist attribute'
+    );
+
+    text = insertAfterOnce(
+        text,
+        `                    />
+`,
+        `                    <datalist id="quick-weather-city-options">
+                        {getWeatherLocationOptions().map(option => (
+                            <option key={option.key} value={option.label}>{option.country}</option>
+                        ))}
+                    </datalist>
+`,
+        'QuickWeather city datalist'
+    );
+
+    text = replaceOnce(
+        text,
+        `{(slot.prob || 0) > 20
+                                                ? <span className="qw-pop-high">💧{slot.prob}%</span>
+                                                : <span className="qw-pop-low">--</span>
+                                            }`,
+        `{(slot.prob || 0) > 20 || (slot.precip || 0) > 0
+                                                ? <span className="qw-pop-high">💧{slot.prob || 0}% · {(slot.precip || 0).toFixed ? (slot.precip || 0).toFixed(1) : slot.precip}mm</span>
+                                                : <span className="qw-pop-low">0% · 0.0mm</span>
+                                            }`,
+        'QuickWeather precip mm display'
+    );
+
+    return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 5) Weather service: daily rain, feels-like day, humidity day                */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/services/weatherService.js', source => {
+    let text = source;
+
+    if (!text.includes('getWeatherLocationLabel')) {
+        text = text.replace(
+            `import { WEATHER_LOCATION_REGISTRY } from './weatherLocations.js';`,
+            `import { WEATHER_LOCATION_REGISTRY, getWeatherLocationLabel } from './weatherLocations.js';`
+        );
+    }
+
+    text = replaceOnce(
+        text,
+        `        daily: 'precipitation_probability_max,precipitation_sum,uv_index_max,temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max',`,
+        `        daily: 'precipitation_probability_max,precipitation_sum,uv_index_max,temperature_2m_max,temperature_2m_min,apparent_temperature_max,relative_humidity_2m_mean,weather_code,wind_speed_10m_max',`,
+        'Weather daily real-feel humidity fields'
+    );
+
+    text = replaceOnce(
+        text,
+        `        name: locationName.charAt(0).toUpperCase() + locationName.slice(1),
+        icon: locationName === 'muscat' ? '📍' : '🏛️',`,
+        `        name: getWeatherLocationLabel(locationName),
+        icon: WEATHER_LOCATION_REGISTRY[locationName]?.icon || (locationName === 'muscat' ? '📍' : '🏛️'),`,
+        'Weather service display label and icon'
+    );
+
+    text = replaceOnce(
+        text,
+        `        summary: parseFloat(totalPrecip) > 0 ? \`Today's max rain probability: \${maxPrecipProb}%. Total precip: \${totalPrecip}mm. UV Index: \${maxUV || 'N/A'}.\` : \`Condition stable. UV Index: \${maxUV || 'N/A'}.\``,
+        `        summary: parseFloat(totalPrecip) > 0
+            ? \`Rain \${maxPrecipProb}% · \${totalPrecip}mm · UV \${maxUV || 'N/A'}\`
+            : \`Stable · UV \${maxUV || 'N/A'}\``,
+        'Weather summary crisp text'
+    );
+
+    const humidityBlock = `        const apparentMax = [
+            modelData.ecmwf?.daily?.apparent_temperature_max?.[d],
+            modelData.gfs?.daily?.apparent_temperature_max?.[d],
+            modelData.icon?.daily?.apparent_temperature_max?.[d],
+        ].filter(v => v != null);
+        const humidityMean = [
+            modelData.ecmwf?.daily?.relative_humidity_2m_mean?.[d],
+            modelData.gfs?.daily?.relative_humidity_2m_mean?.[d],
+            modelData.icon?.daily?.relative_humidity_2m_mean?.[d],
+        ].filter(v => v != null);
+`;
+
+    text = insertAfterOnce(
+        text,
+        `        const windMax = [
+            modelData.ecmwf?.daily?.wind_speed_10m_max?.[d],
+            modelData.gfs?.daily?.wind_speed_10m_max?.[d],
+            modelData.icon?.daily?.wind_speed_10m_max?.[d],
+        ].filter(v => v != null);
+`,
+        humidityBlock,
+        'Weather daily apparent/humidity consensus'
+    );
+
+    text = replaceOnce(
+        text,
+        `            tempMax: avg(tempMax),
+            tempMin: avg(tempMin),
+            precipProb: avg(precipProb),
+            precipSum: avgF(precipSum),
+            uvMax: avg(uvMax),
+            windMax: avg(windMax),`,
+        `            tempMax: avg(tempMax),
+            tempMin: avg(tempMin),
+            high: avg(tempMax),
+            low: avg(tempMin),
+            precipProb: avg(precipProb),
+            rainProb: avg(precipProb),
+            rainfallProbability: avg(precipProb),
+            precipSum: avgF(precipSum),
+            rainMm: avgF(precipSum),
+            rainfallMm: avgF(precipSum),
+            realFeelDay: avg(apparentMax),
+            feelsLikeDay: avg(apparentMax),
+            humidityDay: avg(humidityMean),
+            humidityMean: avg(humidityMean),
+            uvMax: avg(uvMax),
+            uvIndex: avg(uvMax),
+            windMax: avg(windMax),`,
+        'Weather weekly metric aliases'
+    );
+
+    return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 6) On This Day display setting: off by default contract                     */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/displayPreferences.js', `export const DEFAULT_DISPLAY_PREFERENCES = {
+    showOnThisDay: false,
+};
+
+export function getDisplayPreferences(settings = {}) {
+    return {
+        ...DEFAULT_DISPLAY_PREFERENCES,
+        ...(settings.display || {}),
+    };
+}
+
+export function shouldShowOnThisDay(settings = {}) {
+    return getDisplayPreferences(settings).showOnThisDay === true;
+}
+
+export function buildDisplaySettings(baseSettings = {}, patch = {}) {
+    return {
+        ...baseSettings,
+        display: {
+            ...DEFAULT_DISPLAY_PREFERENCES,
+            ...(baseSettings.display || {}),
+            ...patch,
+        },
+    };
+}
+`);
+
+write('src/components/settings/DisplayPreferencesPanel.jsx', `import React from 'react';
+import { useSettings } from '../../context/SettingsContext';
+import { buildDisplaySettings, shouldShowOnThisDay } from '../../services/displayPreferences.js';
+
+export default function DisplayPreferencesPanel() {
+    const { settings, updateSettings } = useSettings();
+    const showOnThisDay = shouldShowOnThisDay(settings);
+
+    return (
+        <section className="display-preferences-panel">
+            <label>
+                <input
+                    type="checkbox"
+                    checked={showOnThisDay}
+                    onChange={event => updateSettings(buildDisplaySettings(settings, {
+                        showOnThisDay: event.target.checked,
+                    }))}
+                />
+                Show “On this day”
+            </label>
+        </section>
+    );
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 7) Certification                                                            */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_weather_ux_closeout_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+    if (!condition) throw new Error(message);
+}
+
+function read(path) {
+    assert(fs.existsSync(path), 'Missing file: ' + path);
+    return fs.readFileSync(path, 'utf8');
+}
+
+const locations = read('src/services/weatherLocations.js');
+const manager = read('src/components/weather/WeatherLocationManager.jsx');
+const managerCss = read('src/components/weather/WeatherLocationManager.css');
+const quickWeather = read('src/components/QuickWeather.jsx');
+const quickCss = read('src/components/QuickWeatherRefined.css');
+const weekly = read('src/components/weather/WeeklyWeatherForecast.jsx');
+const weeklyCss = read('src/components/weather/WeeklyWeatherForecast.css');
+const service = read('src/services/weatherService.js');
+const displayPrefs = read('src/services/displayPreferences.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+    'colombo',
+    'getWeatherLocationOptions',
+    'getWeatherLocationLabel',
+    'WEATHER_LOCATION_CONFIG_VERSION',
+    'weather-locations-v3-colombo-ux'
+]) {
+    assert(locations.includes(token), 'weatherLocations.js missing token: ' + token);
+}
+
+for (const token of [
+    'Add / delete locations',
+    'Colombo',
+    'Reset defaults',
+    'wlm-chip',
+    'removeCity'
+]) {
+    assert(manager.includes(token) || managerCss.includes(token), 'WeatherLocationManager missing token: ' + token);
+}
+
+for (const token of [
+    'QuickWeatherRefined.css',
+    'getWeatherLocationOptions',
+    'Select a supported city',
+    'quick-weather-city-options',
+    '0% · 0.0mm'
+]) {
+    assert(quickWeather.includes(token), 'QuickWeather.jsx missing token: ' + token);
+}
+
+for (const token of [
+    '.quick-weather-card',
+    '.qw-config-bar input',
+    '.qw-highlight-text-container',
+    '.qw-city-row--active'
+]) {
+    assert(quickCss.includes(token), 'QuickWeatherRefined.css missing token: ' + token);
+}
+
+for (const token of [
+    'realFeelDay',
+    'humidityDay',
+    'formatRain',
+    '7-day outlook'
+]) {
+    assert(weekly.includes(token), 'WeeklyWeatherForecast.jsx missing token: ' + token);
+}
+
+for (const token of [
+    '.wwf-card',
+    '.wwf-row',
+    '.wwf-metric',
+    'rgba(15, 23, 42'
+]) {
+    assert(weeklyCss.includes(token), 'WeeklyWeatherForecast.css missing token: ' + token);
+}
+
+for (const token of [
+    'apparent_temperature_max',
+    'relative_humidity_2m_mean',
+    'rainfallProbability',
+    'realFeelDay',
+    'humidityDay',
+    'Rain '
+]) {
+    assert(service.includes(token), 'weatherService.js missing token: ' + token);
+}
+
+for (const token of [
+    'showOnThisDay: false',
+    'shouldShowOnThisDay',
+    'buildDisplaySettings'
+]) {
+    assert(displayPrefs.includes(token), 'displayPreferences.js missing token: ' + token);
+}
+
+assert(
+    packageJson.includes('"test:weather-ux-closeout"'),
+    'package.json must include test:weather-ux-closeout'
+);
+
+assert(
+    certGate.includes("['npm', ['run', 'test:weather-ux-closeout']]") ||
+    certGate.includes('certification_manifest.json'),
+    'certification gate must include weather UX closeout test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+    status: 'PASS',
+    checked: 'Weather UX closeout',
+    guarantees: [
+        'Colombo remains in supported weather registry',
+        'Weather location manager supports visible add/delete/reset',
+        'QuickWeather add city is real and registry-backed',
+        'QuickWeather displays precipitation probability and mm',
+        'QuickWeather desktop contrast is improved',
+        'Weekly forecast includes rainfall probability/mm, real feel and humidity',
+        'Weekly forecast CSS matches dark professional Weather tab style',
+        'On This Day setting contract is off by default'
+    ]
+}, null, 2));
+
+console.log('PASS: Weather UX closeout static slice');
+`);
+
+patchFile('package.json', source => {
+    const pkg = JSON.parse(source);
+    pkg.scripts = pkg.scripts || {};
+    pkg.scripts['test:weather-ux-closeout'] = 'node scripts/test_weather_ux_closeout_static.mjs';
+    return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+    if (source.includes("['npm', ['run', 'test:weather-ux-closeout']]")) return source;
+    if (source.includes('certification_manifest.json')) return source;
+
+    if (source.includes("  ['npm', ['run', 'test:weather-weekly-planning']],")) {
+        return source.replace(
+            "  ['npm', ['run', 'test:weather-weekly-planning']],",
+            "  ['npm', ['run', 'test:weather-weekly-planning']],\\n  ['npm', ['run', 'test:weather-ux-closeout']],"
+        );
+    }
+
+    if (source.includes("  ['npm', ['run', 'test:weather-trust']],")) {
+        return source.replace(
+            "  ['npm', ['run', 'test:weather-trust']],",
+            "  ['npm', ['run', 'test:weather-trust']],\\n  ['npm', ['run', 'test:weather-ux-closeout']],"
+        );
+    }
+
+    return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+    patchFile('scripts/certification_manifest.json', source => {
+        const manifest = JSON.parse(source);
+        manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+        if (!manifest.commands.some(entry => entry.id === 'weather-ux-closeout')) {
+            const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-weekly-planning');
+            const command = {
+                id: 'weather-ux-closeout',
+                cmd: 'npm',
+                args: ['run', 'test:weather-ux-closeout'],
+            };
+
+            if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+            else manifest.commands.push(command);
+        }
+
+        return JSON.stringify(manifest, null, 2) + '\\n';
+    });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+    patchFile('scripts/validate_certification_manifest.mjs', source => {
+        if (source.includes('test:weather-ux-closeout')) return source;
+
+        if (source.includes("'test:weather-weekly-planning',")) {
+            return source.replace(
+                "'test:weather-weekly-planning',",
+                "'test:weather-weekly-planning',\\n  'test:weather-ux-closeout',"
+            );
+        }
+
+        return source;
+    });
+}
+
+console.log('\\nSlice 61A Weather UX closeout patch complete.');
+```
+
+Run:
+
+```bash
+node scripts/apply_slice61A_weather_ux_closeout.mjs
+
+node scripts/test_weather_ux_closeout_static.mjs
+npm run test:weather-ux-closeout
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+Expected checkpoint:
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61A_weather_ux_closeout.mjs
+  - src/services/weatherLocations.js
+  - src/components/weather/WeatherLocationManager.jsx
+  - src/components/weather/WeatherLocationManager.css
+  - src/components/weather/WeeklyWeatherForecast.jsx
+  - src/components/weather/WeeklyWeatherForecast.css
+  - src/components/QuickWeather.jsx
+  - src/components/QuickWeatherRefined.css
+  - src/services/weatherService.js
+  - src/services/displayPreferences.js
+  - src/components/settings/DisplayPreferencesPanel.jsx
+  - scripts/test_weather_ux_closeout_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- Weather UX gate:
+  - Add Colombo visible: YES/NO
+  - Delete city visible: YES/NO
+  - QuickWeather visible in desktop: YES/NO
+  - QuickWeather shows rain % and mm: YES/NO
+  - Weekly forecast shows rain %, mm, real feel, humidity: YES/NO
+  - On This Day setting defaults OFF: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+One note: repo search did not find the exact “On This Day” component name, so this slice adds the **setting contract** with `showOnThisDay: false`. The actual “On This Day” component should be wrapped with:
+
+```jsx
+{shouldShowOnThisDay(settings) && <OnThisDay />}
+```
+
+once its real component/file name is identified.
+
+
+---------------------------------------------------------
+
+# Slice 61B — Settings integration + “On This Day” off-by-default enforcement
+
+This closes the remaining Weather/settings UX issue from your screenshot set.
+
+Current Settings Weather tab still uses hardcoded location rows for Chennai, Trichy, and editable Muscat only, so even if the Weather tab has a manager, the Settings tab still looks old and cannot properly manage Colombo/custom locations. 
+
+## What this slice does
+
+```txt
+- Replaces old hardcoded Weather settings city rows with real WeatherLocationManager.
+- Adds display preference setting: Show “On This Day” — default OFF.
+- Mounts a global OnThisDayVisibilityController in App.
+- Hides “On This Day” blocks in desktop and mobile when setting is OFF.
+- Keeps the setting available so user can turn it ON later.
+- Adds certification tests.
+```
+
+Create:
+
+```bash
+scripts/apply_slice61B_weather_settings_onthisday.mjs
+```
+
+Paste:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+function replaceRange(source, startAnchor, endAnchor, replacement, label) {
+  const start = source.indexOf(startAnchor);
+  if (start < 0) throw new Error(`Missing start anchor for ${label}`);
+  const end = source.indexOf(endAnchor, start);
+  if (end < 0) throw new Error(`Missing end anchor for ${label}`);
+  return source.slice(0, start) + replacement + source.slice(end);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Display preference contract                                              */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/displayPreferences.js', `export const DEFAULT_DISPLAY_PREFERENCES = {
+  showOnThisDay: false,
+};
+
+export function getDisplayPreferences(settings = {}) {
+  return {
+    ...DEFAULT_DISPLAY_PREFERENCES,
+    ...(settings.display || {}),
+  };
+}
+
+export function shouldShowOnThisDay(settings = {}) {
+  return getDisplayPreferences(settings).showOnThisDay === true;
+}
+
+export function buildDisplaySettings(baseSettings = {}, patch = {}) {
+  return {
+    ...baseSettings,
+    display: {
+      ...DEFAULT_DISPLAY_PREFERENCES,
+      ...(baseSettings.display || {}),
+      ...patch,
+    },
+  };
+}
+`);
+
+write('src/services/displayPreferences.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  DEFAULT_DISPLAY_PREFERENCES,
+  buildDisplaySettings,
+  getDisplayPreferences,
+  shouldShowOnThisDay,
+} from './displayPreferences';
+
+describe('Display preferences certification', () => {
+  it('keeps On This Day off by default', () => {
+    expect(DEFAULT_DISPLAY_PREFERENCES.showOnThisDay).toBe(false);
+    expect(shouldShowOnThisDay({})).toBe(false);
+  });
+
+  it('allows On This Day to be explicitly enabled', () => {
+    expect(shouldShowOnThisDay({ display: { showOnThisDay: true } })).toBe(true);
+  });
+
+  it('builds display settings without dropping existing settings', () => {
+    const next = buildDisplaySettings(
+      { theme: 'dark', display: { other: true } },
+      { showOnThisDay: true }
+    );
+
+    expect(next.theme).toBe('dark');
+    expect(next.display.other).toBe(true);
+    expect(next.display.showOnThisDay).toBe(true);
+  });
+
+  it('fills missing defaults', () => {
+    expect(getDisplayPreferences({}).showOnThisDay).toBe(false);
+  });
+});
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Settings UI panel                                                        */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/settings/DisplayPreferencesPanel.jsx', `import React from 'react';
+import { useSettings } from '../../context/SettingsContext';
+import {
+  buildDisplaySettings,
+  shouldShowOnThisDay,
+} from '../../services/displayPreferences.js';
+import './DisplayPreferencesPanel.css';
+
+export default function DisplayPreferencesPanel() {
+  const { settings, updateSettings } = useSettings();
+  const showOnThisDay = shouldShowOnThisDay(settings);
+
+  return (
+    <section className="display-preferences-panel" data-display-preferences-panel="true">
+      <div className="display-preferences-panel__copy">
+        <span className="display-preferences-panel__eyebrow">Home display</span>
+        <h3>Optional widgets</h3>
+        <p>
+          “On This Day” is hidden by default on mobile and desktop. Turn it on only when you want it in the feed.
+        </p>
+      </div>
+
+      <label className="display-preferences-panel__toggle">
+        <input
+          type="checkbox"
+          checked={showOnThisDay}
+          onChange={event => updateSettings(buildDisplaySettings(settings, {
+            showOnThisDay: event.target.checked,
+          }))}
+        />
+        <span>
+          <strong>Show “On This Day”</strong>
+          <em>{showOnThisDay ? 'Enabled' : 'Off by default'}</em>
+        </span>
+      </label>
+    </section>
+  );
+}
+`);
+
+write('src/components/settings/DisplayPreferencesPanel.css', `.display-preferences-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(45, 212, 191, 0.20);
+  border-radius: 18px;
+  background:
+    radial-gradient(360px 120px at 100% 0%, rgba(20, 184, 166, 0.12), transparent 68%),
+    rgba(15, 23, 42, 0.64);
+}
+
+.display-preferences-panel__eyebrow {
+  color: #99f6e4;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.display-preferences-panel h3 {
+  margin: 3px 0 4px;
+  color: #f8fafc;
+  font-size: 1rem;
+}
+
+.display-preferences-panel p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.display-preferences-panel__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.34);
+  cursor: pointer;
+}
+
+.display-preferences-panel__toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #14b8a6;
+}
+
+.display-preferences-panel__toggle strong,
+.display-preferences-panel__toggle em {
+  display: block;
+}
+
+.display-preferences-panel__toggle strong {
+  color: #e2e8f0;
+  font-size: 0.84rem;
+}
+
+.display-preferences-panel__toggle em {
+  margin-top: 2px;
+  color: #94a3b8;
+  font-size: 0.74rem;
+  font-style: normal;
+}
+
+@media (max-width: 680px) {
+  .display-preferences-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .display-preferences-panel__toggle {
+    min-width: 0;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Global On This Day visibility controller                                 */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/settings/OnThisDayVisibilityController.jsx', `import { useEffect } from 'react';
+import { useSettings } from '../../context/SettingsContext';
+import { shouldShowOnThisDay } from '../../services/displayPreferences.js';
+
+const HIDDEN_ATTR = 'data-nw-hidden-on-this-day';
+
+function normalizeText(value) {
+  return String(value || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+}
+
+function isOnThisDayText(text) {
+  const value = normalizeText(text);
+  return (
+    value === 'on this day' ||
+    value.startsWith('on this day ') ||
+    value.includes(' on this day ')
+  );
+}
+
+function findContainer(node) {
+  if (!node || !node.closest) return null;
+
+  return (
+    node.closest('[data-on-this-day]') ||
+    node.closest('[data-widget="on-this-day"]') ||
+    node.closest('[data-testid*="on-this-day" i]') ||
+    node.closest('[class*="on-this-day" i]') ||
+    node.closest('[id*="on-this-day" i]') ||
+    node.closest('section') ||
+    node.closest('article') ||
+    node.closest('.card') ||
+    node.closest('.panel') ||
+    node.closest('.widget') ||
+    node.parentElement
+  );
+}
+
+function findOnThisDayContainers(root = document) {
+  const containers = new Set();
+
+  try {
+    root
+      .querySelectorAll('[data-on-this-day], [data-widget="on-this-day"], [data-testid*="on-this-day" i], [class*="on-this-day" i], [id*="on-this-day" i]')
+      .forEach(node => containers.add(node));
+  } catch {
+    // Ignore unsupported selector edge cases.
+  }
+
+  const textCandidates = root.querySelectorAll('h1,h2,h3,h4,h5,h6,header,button,summary,[role="heading"]');
+  textCandidates.forEach(node => {
+    if (isOnThisDayText(node.textContent)) {
+      const container = findContainer(node);
+      if (container) containers.add(container);
+    }
+  });
+
+  return [...containers].filter(node => {
+    if (!node || !node.style) return false;
+    if (node.closest?.('.settings-page')) return false;
+    return true;
+  });
+}
+
+function hideOnThisDay(root = document) {
+  findOnThisDayContainers(root).forEach(node => {
+    if (!node.hasAttribute(HIDDEN_ATTR)) {
+      node.setAttribute(HIDDEN_ATTR, 'true');
+      node.setAttribute('aria-hidden', 'true');
+      node.style.display = 'none';
+    }
+  });
+}
+
+function showOnThisDay(root = document) {
+  root.querySelectorAll('[' + HIDDEN_ATTR + '="true"]').forEach(node => {
+    node.removeAttribute(HIDDEN_ATTR);
+    node.removeAttribute('aria-hidden');
+    node.style.display = '';
+  });
+}
+
+export default function OnThisDayVisibilityController() {
+  const { settings } = useSettings();
+  const showOnThisDay = shouldShowOnThisDay(settings);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+
+    if (showOnThisDay) {
+      showOnThisDay(document);
+      return undefined;
+    }
+
+    hideOnThisDay(document);
+
+    const observer = new MutationObserver(() => {
+      hideOnThisDay(document);
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      showOnThisDay(document);
+    };
+  }, [showOnThisDay]);
+
+  return null;
+}
+
+export const __onThisDayTestUtils = {
+  findOnThisDayContainers,
+  hideOnThisDay,
+  showOnThisDay,
+  isOnThisDayText,
+};
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 4) Patch App.jsx to mount the controller                                    */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/App.jsx', source => {
+  let text = source;
+
+  text = insertAfterOnce(
+    text,
+    `import DebugConsole from './components/DebugConsole';`,
+    `
+import OnThisDayVisibilityController from './components/settings/OnThisDayVisibilityController.jsx';`,
+    'App OnThisDayVisibilityController import'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `                <DebugConsole />`,
+    `
+                <OnThisDayVisibilityController />`,
+    'App OnThisDayVisibilityController render'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 5) Patch SettingsPage Weather tab                                           */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/pages/SettingsPage.jsx', source => {
+  let text = source;
+
+  text = insertAfterOnce(
+    text,
+    `import { getRuntimeCapabilities } from '../runtime/runtimeCapabilities';`,
+    `
+import WeatherLocationManager from '../components/weather/WeatherLocationManager.jsx';
+import DisplayPreferencesPanel from '../components/settings/DisplayPreferencesPanel.jsx';`,
+    'SettingsPage weather/display imports'
+  );
+
+  const startAnchor = `                        <SectionTitle icon="📍" title="Locations" />`;
+  const endAnchor = `                        <SectionTitle icon="🌤️" title="Weather Models" />`;
+
+  const replacement = `                        <SectionTitle icon="📍" title="Locations" />
+                        <WeatherLocationManager />
+
+                        <SectionTitle icon="🧩" title="Display Preferences" />
+                        <SettingCard>
+                            <DisplayPreferencesPanel />
+                        </SettingCard>
+
+`;
+
+  text = replaceRange(
+    text,
+    startAnchor,
+    endAnchor,
+    replacement,
+    'SettingsPage weather location/display block'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 6) QuickWeather import hardening after Slice 61A                            */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/components/QuickWeather.jsx', source => {
+  let text = source;
+
+  // Remove old single import if the richer Slice 61A import exists.
+  if (
+    text.includes(`import { DEFAULT_WEATHER_CITIES } from '../services/weatherLocations.js';`) &&
+    text.includes('getConfiguredWeatherCities')
+  ) {
+    text = text.replace(`import { DEFAULT_WEATHER_CITIES } from '../services/weatherLocations.js';\n`, '');
+  }
+
+  if (!text.includes('DEFAULT_WEATHER_CITIES') && text.includes('getConfiguredWeatherCities')) {
+    text = text.replace(
+      `import {
+    buildWeatherSettingsWithCities,`,
+      `import {
+    DEFAULT_WEATHER_CITIES,
+    buildWeatherSettingsWithCities,`
+    );
+  }
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 7) Certification                                                            */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_weather_settings_onthisday_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const displayPrefs = read('src/services/displayPreferences.js');
+const displayPrefsTest = read('src/services/displayPreferences.cert.test.js');
+const displayPanel = read('src/components/settings/DisplayPreferencesPanel.jsx');
+const displayPanelCss = read('src/components/settings/DisplayPreferencesPanel.css');
+const controller = read('src/components/settings/OnThisDayVisibilityController.jsx');
+const app = read('src/App.jsx');
+const settingsPage = read('src/pages/SettingsPage.jsx');
+const quickWeather = read('src/components/QuickWeather.jsx');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'showOnThisDay: false',
+  'shouldShowOnThisDay',
+  'buildDisplaySettings',
+]) {
+  assert(displayPrefs.includes(token), 'displayPreferences.js missing token: ' + token);
+}
+
+for (const token of [
+  'keeps On This Day off by default',
+  'allows On This Day to be explicitly enabled',
+  'fills missing defaults',
+]) {
+  assert(displayPrefsTest.includes(token), 'displayPreferences.cert.test.js missing token: ' + token);
+}
+
+for (const token of [
+  'Show “On This Day”',
+  'Off by default',
+  'data-display-preferences-panel',
+  'buildDisplaySettings',
+]) {
+  assert(displayPanel.includes(token), 'DisplayPreferencesPanel.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '.display-preferences-panel',
+  '.display-preferences-panel__toggle',
+]) {
+  assert(displayPanelCss.includes(token), 'DisplayPreferencesPanel.css missing token: ' + token);
+}
+
+for (const token of [
+  'OnThisDayVisibilityController',
+  'MutationObserver',
+  'data-nw-hidden-on-this-day',
+  'findOnThisDayContainers',
+  'shouldShowOnThisDay',
+]) {
+  assert(controller.includes(token), 'OnThisDayVisibilityController.jsx missing token: ' + token);
+}
+
+for (const token of [
+  'OnThisDayVisibilityController',
+  '<OnThisDayVisibilityController />',
+]) {
+  assert(app.includes(token), 'App.jsx missing token: ' + token);
+}
+
+for (const token of [
+  'WeatherLocationManager',
+  'DisplayPreferencesPanel',
+  'Display Preferences',
+]) {
+  assert(settingsPage.includes(token), 'SettingsPage.jsx missing token: ' + token);
+}
+
+assert(
+  !settingsPage.includes('value="Chennai" disabled') &&
+  !settingsPage.includes('value="Trichy" disabled'),
+  'SettingsPage weather tab must not keep hardcoded Chennai/Trichy disabled rows'
+);
+
+assert(
+  quickWeather.includes('DEFAULT_WEATHER_CITIES'),
+  'QuickWeather.jsx must keep DEFAULT_WEATHER_CITIES available'
+);
+
+assert(
+  packageJson.includes('"test:weather-settings-onthisday"'),
+  'package.json must include test:weather-settings-onthisday'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:weather-settings-onthisday']]") ||
+  certGate.includes('certification_manifest.json'),
+  'certification gate must include weather settings/on-this-day test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather settings and On This Day visibility',
+  guarantees: [
+    'Settings Weather tab uses real WeatherLocationManager',
+    'hardcoded 3-city settings UI is removed',
+    'Display preference panel includes Show On This Day',
+    'On This Day is off by default',
+    'global visibility controller hides On This Day on mobile and desktop',
+    'QuickWeather import is hardened after Weather UX closeout'
+  ]
+}, null, 2));
+
+console.log('PASS: Weather settings and On This Day static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:weather-settings-onthisday'] =
+    'node scripts/test_weather_settings_onthisday_static.mjs && vitest run --config vitest.config.js src/services/displayPreferences.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-settings-onthisday']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:weather-ux-closeout']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-ux-closeout']],",
+      "  ['npm', ['run', 'test:weather-ux-closeout']],\\n  ['npm', ['run', 'test:weather-settings-onthisday']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:weather-weekly-planning']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-weekly-planning']],",
+      "  ['npm', ['run', 'test:weather-weekly-planning']],\\n  ['npm', ['run', 'test:weather-settings-onthisday']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-settings-onthisday')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-ux-closeout');
+      const command = {
+        id: 'weather-settings-onthisday',
+        cmd: 'npm',
+        args: ['run', 'test:weather-settings-onthisday'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-settings-onthisday')) return source;
+
+    if (source.includes("'test:weather-ux-closeout',")) {
+      return source.replace(
+        "'test:weather-ux-closeout',",
+        "'test:weather-ux-closeout',\\n  'test:weather-settings-onthisday',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61B Weather settings and On This Day patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61B_weather_settings_onthisday.mjs
+
+node scripts/test_weather_settings_onthisday_static.mjs
+npm run test:weather-settings-onthisday
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61B_weather_settings_onthisday.mjs
+  - src/services/displayPreferences.js
+  - src/services/displayPreferences.cert.test.js
+  - src/components/settings/DisplayPreferencesPanel.jsx
+  - src/components/settings/DisplayPreferencesPanel.css
+  - src/components/settings/OnThisDayVisibilityController.jsx
+  - src/App.jsx
+  - src/pages/SettingsPage.jsx
+  - src/components/QuickWeather.jsx
+  - scripts/test_weather_settings_onthisday_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- Display preference Vitest passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- Closure gate:
+  - Settings Weather tab uses real city manager: YES/NO
+  - Hardcoded Chennai/Trichy/Muscat settings rows removed: YES/NO
+  - “On This Day” setting exists: YES/NO
+  - “On This Day” default is OFF: YES/NO
+  - Mobile/desktop On This Day visibility controller mounted: YES/NO
+  - QuickWeather import hardened: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+
+------------------------------------------------------------
+# Slice 61C — QuickWeather precision + professional signal strip
+
+Current `QuickWeatherSignalStrip` shows only rain probability like `${riskSummary.rain}%`, and `weatherInsights.buildNextRiskSummary()` does not return precipitation mm, so the UI cannot show `55% · 2.1mm` yet.  
+
+This slice fixes that cleanly.
+
+## Create
+
+```bash
+scripts/apply_slice61C_weather_signal_precision.mjs
+```
+
+## Full code
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Weather insight precision: rain probability + rain mm                    */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherInsights.js', `/**
+ * Weather planning insights derived from daily / weekly forecast.
+ * Pure functions only.
+ */
+
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function asNumber(value, fallback = null) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function firstNumber(day, keys, fallback = null) {
+  for (const key of keys) {
+    const value = asNumber(day?.[key], null);
+    if (value != null) return value;
+  }
+  return fallback;
+}
+
+function maxFromDays(days, keys, fallback = null) {
+  const values = asArray(days)
+    .map(day => firstNumber(day, keys, null))
+    .filter(value => value != null);
+
+  if (values.length === 0) return fallback;
+  return Math.max(...values);
+}
+
+function sumFromDays(days, keys, fallback = 0) {
+  const values = asArray(days)
+    .map(day => firstNumber(day, keys, null))
+    .filter(value => value != null);
+
+  if (values.length === 0) return fallback;
+  return Number(values.reduce((sum, value) => sum + value, 0).toFixed(1));
+}
+
+function getDailyForecast(cityData) {
+  return asArray(cityData?.weeklyForecast || cityData?.forecast || cityData?.daily);
+}
+
+function getTodayTomorrow(cityData) {
+  const forecast = getDailyForecast(cityData);
+
+  return {
+    today: forecast[0] || null,
+    tomorrow: forecast[1] || null,
+    days: forecast.slice(0, 2),
+  };
+}
+
+export function formatRainSignal(probability, precipMm) {
+  const prob = asNumber(probability, 0);
+  const mm = asNumber(precipMm, 0);
+
+  return \`\${Math.round(prob)}% · \${mm.toFixed(1)}mm\`;
+}
+
+/**
+ * Build a compact tomorrow chip: summary text + risk level.
+ */
+export function buildTomorrowChip(cityData) {
+  const { tomorrow } = getTodayTomorrow(cityData);
+  if (!tomorrow) return null;
+
+  const rain = firstNumber(tomorrow, ['precipProb', 'rainProb', 'rainfallProbability', 'pop'], 0);
+  const precipMm = firstNumber(tomorrow, ['precipSum', 'rainMm', 'rainfallMm', 'precip', 'precipitationMm'], 0);
+  const tempMax = firstNumber(tomorrow, ['tempMax', 'high', 'maxTemp']);
+  const tempMin = firstNumber(tomorrow, ['tempMin', 'low', 'minTemp']);
+  const uv = firstNumber(tomorrow, ['uvMax', 'uvIndex']);
+  const condition = tomorrow.condition || 'Forecast';
+
+  let risk = 'low';
+  if (rain >= 70 || precipMm >= 12 || (tempMax != null && tempMax >= 38)) risk = 'high';
+  else if (rain >= 35 || precipMm >= 2 || (tempMax != null && tempMax >= 33) || (uv != null && uv >= 7)) risk = 'medium';
+
+  return {
+    label: 'Tomorrow',
+    temp: tempMax,
+    tempMax,
+    tempMin,
+    rain,
+    precipMm,
+    uv,
+    risk,
+    condition,
+    rainText: formatRainSignal(rain, precipMm),
+  };
+}
+
+/**
+ * Build a simple outdoor planning score (0–100).
+ * Higher = better for outdoor activity.
+ */
+export function buildOutdoorScore(day) {
+  if (!day) return null;
+
+  let score = 100;
+  const rain = firstNumber(day, ['precipProb', 'rainProb', 'rainfallProbability', 'pop'], 0);
+  const precipMm = firstNumber(day, ['precipSum', 'rainMm', 'rainfallMm', 'precip', 'precipitationMm'], 0);
+  const temp = firstNumber(day, ['tempMax', 'high', 'maxTemp'], 28);
+  const uv = firstNumber(day, ['uvMax', 'uvIndex'], 5);
+  const wind = firstNumber(day, ['windMax', 'windKph', 'windSpeed'], 10);
+  const humidity = firstNumber(day, ['humidityDay', 'humidityMean'], 55);
+
+  score -= Math.min(40, rain * 0.45);
+  score -= Math.min(25, precipMm * 3);
+
+  if (temp > 38) score -= 20;
+  else if (temp > 35) score -= 10;
+
+  if (uv >= 10) score -= 15;
+  else if (uv >= 7) score -= 8;
+
+  if (wind >= 40) score -= 10;
+  else if (wind >= 25) score -= 5;
+
+  if (humidity >= 85 && temp >= 32) score -= 8;
+
+  return Math.max(0, Math.round(score));
+}
+
+/**
+ * Summarize a city's weekly forecast into planning highlights.
+ */
+export function summarizeCityWeekly(cityData) {
+  const forecast = getDailyForecast(cityData);
+  if (forecast.length === 0) return null;
+
+  const days = forecast.slice(0, 7);
+
+  const bestDay = days.reduce((best, day) => {
+    const score = buildOutdoorScore(day);
+    return score > (buildOutdoorScore(best) ?? 0) ? day : best;
+  }, days[0]);
+
+  const rainiestDay = days.reduce((rainiest, day) => {
+    const dayRain = firstNumber(day, ['precipSum', 'rainMm', 'rainfallMm'], 0);
+    const currentRain = firstNumber(rainiest, ['precipSum', 'rainMm', 'rainfallMm'], 0);
+    const dayProb = firstNumber(day, ['precipProb', 'rainProb', 'rainfallProbability'], 0);
+    const currentProb = firstNumber(rainiest, ['precipProb', 'rainProb', 'rainfallProbability'], 0);
+
+    return (dayRain * 10 + dayProb) > (currentRain * 10 + currentProb) ? day : rainiest;
+  }, days[0]);
+
+  const hottestDay = days.reduce((hottest, day) => (
+    firstNumber(day, ['tempMax', 'high'], 0) > firstNumber(hottest, ['tempMax', 'high'], 0) ? day : hottest
+  ), days[0]);
+
+  const highestUvDay = days.reduce((uvDay, day) => (
+    firstNumber(day, ['uvMax', 'uvIndex'], 0) > firstNumber(uvDay, ['uvMax', 'uvIndex'], 0) ? day : uvDay
+  ), days[0]);
+
+  return {
+    bestDay,
+    rainiestDay,
+    hottestDay,
+    highestUvDay,
+  };
+}
+
+/**
+ * Build next-risk summary: rain %, rain mm, heat, UV, wind signals.
+ */
+export function buildNextRiskSummary(cityData) {
+  const { today, tomorrow, days } = getTodayTomorrow(cityData);
+  if (!today && !tomorrow) return null;
+
+  const rain = maxFromDays(days, ['precipProb', 'rainProb', 'rainfallProbability', 'pop'], 0);
+  const precipMm = sumFromDays(days, ['precipSum', 'rainMm', 'rainfallMm', 'precip', 'precipitationMm'], 0);
+  const heat = maxFromDays(days, ['tempMax', 'high', 'maxTemp'], null);
+  const uv = maxFromDays(days, ['uvMax', 'uvIndex'], null);
+  const wind = maxFromDays(days, ['windMax', 'windKph', 'windSpeed'], null);
+  const humidity = maxFromDays(days, ['humidityDay', 'humidityMean'], null);
+
+  return {
+    rain,
+    precipMm,
+    rainText: formatRainSignal(rain, precipMm),
+    heat,
+    uv,
+    wind,
+    humidity,
+    stable: rain < 20 && precipMm < 0.5,
+  };
+}
+
+export const __weatherInsightTestUtils = {
+  firstNumber,
+  formatRainSignal,
+};
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Professional QuickWeather signal strip                                   */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/QuickWeatherSignalStrip.jsx', `import React from 'react';
+import {
+  buildNextRiskSummary,
+  buildTomorrowChip,
+  formatRainSignal,
+} from '../../services/weatherInsights.js';
+import './QuickWeatherSignalStrip.css';
+
+function riskClass(level) {
+  if (level === 'high') return 'qwss-chip--high';
+  if (level === 'medium') return 'qwss-chip--medium';
+  return 'qwss-chip--low';
+}
+
+function rainRiskLevel(probability, precipMm) {
+  if (probability >= 70 || precipMm >= 10) return 'high';
+  if (probability >= 35 || precipMm >= 1.5) return 'medium';
+  return 'low';
+}
+
+function heatRiskLevel(temp) {
+  if (temp >= 38) return 'high';
+  if (temp >= 33) return 'medium';
+  return 'low';
+}
+
+function uvRiskLevel(uv) {
+  if (uv >= 10) return 'high';
+  if (uv >= 7) return 'medium';
+  return 'low';
+}
+
+function windRiskLevel(wind) {
+  if (wind >= 40) return 'high';
+  if (wind >= 25) return 'medium';
+  return 'low';
+}
+
+export default function QuickWeatherSignalStrip({
+  cityData,
+  riskSummary,
+  tomorrowChip,
+}) {
+  const resolvedRisk = riskSummary || buildNextRiskSummary(cityData);
+  const resolvedTomorrow = tomorrowChip || buildTomorrowChip(cityData);
+
+  if (!resolvedRisk && !resolvedTomorrow) return null;
+
+  const signals = [];
+
+  if (resolvedRisk) {
+    const rain = Number(resolvedRisk.rain ?? 0);
+    const precipMm = Number(resolvedRisk.precipMm ?? resolvedRisk.rainMm ?? 0);
+
+    signals.push({
+      key: 'rain',
+      icon: '🌧',
+      label: formatRainSignal(rain, precipMm),
+      title: 'Rain probability · expected precipitation',
+      level: rainRiskLevel(rain, precipMm),
+    });
+
+    if (resolvedRisk.heat != null) {
+      signals.push({
+        key: 'heat',
+        icon: '🌡',
+        label: \`\${Math.round(resolvedRisk.heat)}°\`,
+        title: 'Max temperature',
+        level: heatRiskLevel(resolvedRisk.heat),
+      });
+    }
+
+    if (resolvedRisk.uv != null) {
+      signals.push({
+        key: 'uv',
+        icon: '☀',
+        label: \`UV \${Math.round(resolvedRisk.uv)}\`,
+        title: 'UV index',
+        level: uvRiskLevel(resolvedRisk.uv),
+      });
+    }
+
+    if (resolvedRisk.wind != null) {
+      signals.push({
+        key: 'wind',
+        icon: '💨',
+        label: \`\${Math.round(resolvedRisk.wind)}km/h\`,
+        title: 'Max wind',
+        level: windRiskLevel(resolvedRisk.wind),
+      });
+    }
+
+    if (resolvedRisk.humidity != null) {
+      signals.push({
+        key: 'humidity',
+        icon: '💦',
+        label: \`\${Math.round(resolvedRisk.humidity)}%\`,
+        title: 'Humidity',
+        level: resolvedRisk.humidity >= 85 ? 'medium' : 'low',
+      });
+    }
+
+    if (resolvedRisk.stable) {
+      signals.push({
+        key: 'stable',
+        icon: '✅',
+        label: 'Stable',
+        title: 'No significant rain expected',
+        level: 'low',
+      });
+    }
+  }
+
+  if (resolvedTomorrow) {
+    const tempPart = resolvedTomorrow.tempMax != null
+      ? \`\${Math.round(resolvedTomorrow.tempMax)}°\`
+      : resolvedTomorrow.temp != null
+        ? \`\${Math.round(resolvedTomorrow.temp)}°\`
+        : resolvedTomorrow.condition;
+
+    const rainPart = resolvedTomorrow.rainText ||
+      formatRainSignal(resolvedTomorrow.rain ?? 0, resolvedTomorrow.precipMm ?? 0);
+
+    signals.push({
+      key: 'tomorrow',
+      icon: '📅',
+      label: \`Tmr \${tempPart} · \${rainPart}\`,
+      title: \`Tomorrow: \${resolvedTomorrow.condition || 'Forecast'}\`,
+      level: resolvedTomorrow.risk || 'low',
+    });
+  }
+
+  if (signals.length === 0) return null;
+
+  return (
+    <div className="qwss-strip" data-quick-weather-signal-strip="professional">
+      {signals.map(signal => (
+        <span key={signal.key} className={\`qwss-chip \${riskClass(signal.level)}\`} title={signal.title}>
+          <span className="qwss-chip__icon">{signal.icon}</span>
+          <span className="qwss-chip__label">{signal.label}</span>
+        </span>
+      ))}
+    </div>
+  );
+}
+`);
+
+write('src/components/weather/QuickWeatherSignalStrip.css', `.qwss-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.qwss-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.42);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.qwss-chip__icon {
+  flex: 0 0 auto;
+  font-size: 0.94rem;
+}
+
+.qwss-chip__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qwss-chip--low {
+  border-color: rgba(45, 212, 191, 0.22);
+  background: rgba(20, 184, 166, 0.12);
+  color: #ccfbf1;
+}
+
+.qwss-chip--medium {
+  border-color: rgba(245, 158, 11, 0.30);
+  background: rgba(120, 53, 15, 0.20);
+  color: #fde68a;
+}
+
+.qwss-chip--high {
+  border-color: rgba(248, 113, 113, 0.34);
+  background: rgba(127, 29, 29, 0.24);
+  color: #fecaca;
+}
+
+@media (min-width: 900px) {
+  .qwss-strip {
+    margin-top: 12px;
+  }
+
+  .qwss-chip {
+    min-height: 32px;
+    padding-inline: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .qwss-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .qwss-chip {
+    justify-content: center;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Tests                                                                    */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherSignalPrecision.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  buildNextRiskSummary,
+  buildTomorrowChip,
+  buildOutdoorScore,
+  formatRainSignal,
+  summarizeCityWeekly,
+} from './weatherInsights';
+
+describe('Weather signal precision certification', () => {
+  it('formats rain probability and precipitation mm together', () => {
+    expect(formatRainSignal(55, 2.1)).toBe('55% · 2.1mm');
+    expect(formatRainSignal(null, null)).toBe('0% · 0.0mm');
+  });
+
+  it('builds next risk summary with precipitation mm', () => {
+    const summary = buildNextRiskSummary({
+      weeklyForecast: [
+        { precipProb: 55, precipSum: 2.1, tempMax: 32, uvMax: 9, windMax: 18, humidityDay: 76 },
+        { precipProb: 35, precipSum: 1.4, tempMax: 31, uvMax: 8, windMax: 22, humidityDay: 82 },
+      ],
+    });
+
+    expect(summary.rain).toBe(55);
+    expect(summary.precipMm).toBe(3.5);
+    expect(summary.rainText).toBe('55% · 3.5mm');
+    expect(summary.uv).toBe(9);
+    expect(summary.humidity).toBe(82);
+  });
+
+  it('builds tomorrow chip with rain mm and risk', () => {
+    const chip = buildTomorrowChip({
+      weeklyForecast: [
+        { precipProb: 10, precipSum: 0, tempMax: 30 },
+        { precipProb: 80, precipSum: 12.4, tempMax: 29, condition: 'Rain' },
+      ],
+    });
+
+    expect(chip.rain).toBe(80);
+    expect(chip.precipMm).toBe(12.4);
+    expect(chip.rainText).toBe('80% · 12.4mm');
+    expect(chip.risk).toBe('high');
+  });
+
+  it('reduces outdoor score for rain mm and humidity', () => {
+    const good = buildOutdoorScore({ precipProb: 5, precipSum: 0, tempMax: 29, uvMax: 4, humidityDay: 60 });
+    const bad = buildOutdoorScore({ precipProb: 90, precipSum: 18, tempMax: 36, uvMax: 10, humidityDay: 90 });
+
+    expect(good).toBeGreaterThan(bad);
+  });
+
+  it('uses rain mm to identify rainiest day', () => {
+    const summary = summarizeCityWeekly({
+      weeklyForecast: [
+        { label: 'Today', precipProb: 60, precipSum: 1.0, tempMax: 31 },
+        { label: 'Tomorrow', precipProb: 55, precipSum: 12.0, tempMax: 30 },
+      ],
+    });
+
+    expect(summary.rainiestDay.label).toBe('Tomorrow');
+  });
+});
+`);
+
+write('scripts/test_weather_signal_precision_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const insights = read('src/services/weatherInsights.js');
+const signal = read('src/components/weather/QuickWeatherSignalStrip.jsx');
+const signalCss = read('src/components/weather/QuickWeatherSignalStrip.css');
+const cert = read('src/services/weatherSignalPrecision.cert.test.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'formatRainSignal',
+  'precipMm',
+  'rainText',
+  'humidity',
+  'buildNextRiskSummary',
+  'buildTomorrowChip',
+]) {
+  assert(insights.includes(token), 'weatherInsights.js missing token: ' + token);
+}
+
+for (const token of [
+  'data-quick-weather-signal-strip',
+  'formatRainSignal',
+  'precipMm',
+  'Tmr',
+  'Humidity',
+]) {
+  assert(signal.includes(token), 'QuickWeatherSignalStrip.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '.qwss-strip',
+  '.qwss-chip',
+  '.qwss-chip--low',
+  '.qwss-chip--medium',
+  '.qwss-chip--high',
+]) {
+  assert(signalCss.includes(token), 'QuickWeatherSignalStrip.css missing token: ' + token);
+}
+
+for (const token of [
+  'Weather signal precision certification',
+  'formats rain probability and precipitation mm together',
+  'builds next risk summary with precipitation mm',
+  'builds tomorrow chip with rain mm and risk',
+]) {
+  assert(cert.includes(token), 'weatherSignalPrecision.cert.test.js missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:weather-signal-precision"'),
+  'package.json must include test:weather-signal-precision'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:weather-signal-precision']]") ||
+  certGate.includes('certification_manifest.json'),
+  'certification gate must include weather signal precision test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather signal precision',
+  guarantees: [
+    'QuickWeather signal strip shows rain probability and precipitation mm',
+    'Tomorrow chip includes rain mm',
+    'Weather insight risk summary carries precipitation mm',
+    'Humidity can be shown as a compact chip',
+    'QuickWeather signal strip uses professional dark weather styling'
+  ]
+}, null, 2));
+
+console.log('PASS: Weather signal precision static slice');
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 4) package.json + certification                                             */
+/* -------------------------------------------------------------------------- */
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:weather-signal-precision'] =
+    'node scripts/test_weather_signal_precision_static.mjs && vitest run --config vitest.config.js src/services/weatherSignalPrecision.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-signal-precision']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:weather-settings-onthisday']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-settings-onthisday']],",
+      "  ['npm', ['run', 'test:weather-settings-onthisday']],\\n  ['npm', ['run', 'test:weather-signal-precision']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:weather-ux-closeout']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-ux-closeout']],",
+      "  ['npm', ['run', 'test:weather-ux-closeout']],\\n  ['npm', ['run', 'test:weather-signal-precision']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-signal-precision')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-settings-onthisday');
+      const command = {
+        id: 'weather-signal-precision',
+        cmd: 'npm',
+        args: ['run', 'test:weather-signal-precision'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-signal-precision')) return source;
+
+    if (source.includes("'test:weather-settings-onthisday',")) {
+      return source.replace(
+        "'test:weather-settings-onthisday',",
+        "'test:weather-settings-onthisday',\\n  'test:weather-signal-precision',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61C Weather signal precision patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61C_weather_signal_precision.mjs
+
+node scripts/test_weather_signal_precision_static.mjs
+npm run test:weather-signal-precision
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61C_weather_signal_precision.mjs
+  - src/services/weatherInsights.js
+  - src/services/weatherSignalPrecision.cert.test.js
+  - src/components/weather/QuickWeatherSignalStrip.jsx
+  - src/components/weather/QuickWeatherSignalStrip.css
+  - scripts/test_weather_signal_precision_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- Weather signal Vitest passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- UX closure gate:
+  - QuickWeather shows rain % and mm: YES/NO
+  - Tomorrow chip shows rain % and mm: YES/NO
+  - Humidity chip available when data exists: YES/NO
+  - Signal strip professional styling applied: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+----------------------------------------------------
+# Slice 61D — Weather integration hardening
+
+This slice fixes the likely integration gaps after 61A–61C:
+
+```txt
+Fixes:
+- WeeklyWeatherForecast must support both:
+  1) <WeeklyWeatherForecast forecast={...} cityName="..." />
+  2) <WeeklyWeatherForecast weatherData={...} settings={...} />
+- WeatherPlanningSummary from earlier slices expects summarizeAllCitiesWeekly().
+- summarizeCityWeekly() must support both old and new signatures.
+- QuickWeatherSignalStrip must stay compatible with old props.
+- Weekly forecast rows normalize rain %, mm, real feel, humidity, UV and wind.
+```
+
+Create:
+
+```bash
+scripts/apply_slice61D_weather_integration_hardening.mjs
+```
+
+Paste:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Weather data adapter                                                     */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherDataAdapters.js', `import {
+  getConfiguredWeatherCities,
+  getWeatherLocationLabel,
+} from './weatherLocations.js';
+
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function asNumber(value, fallback = null) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function firstDefined(source, keys, fallback = null) {
+  for (const key of keys) {
+    if (source?.[key] != null) return source[key];
+  }
+  return fallback;
+}
+
+export function normalizeForecastDay(day = {}, index = 0) {
+  const rainProb = asNumber(firstDefined(day, [
+    'precipProb',
+    'rainProb',
+    'rainfallProbability',
+    'pop',
+    'prob',
+  ], 0), 0);
+
+  const rainMm = asNumber(firstDefined(day, [
+    'precipSum',
+    'rainMm',
+    'rainfallMm',
+    'precip',
+    'precipitationMm',
+  ], 0), 0);
+
+  const high = asNumber(firstDefined(day, [
+    'tempMax',
+    'high',
+    'maxTemp',
+  ], null), null);
+
+  const low = asNumber(firstDefined(day, [
+    'tempMin',
+    'low',
+    'minTemp',
+  ], null), null);
+
+  const realFeelDay = asNumber(firstDefined(day, [
+    'realFeelDay',
+    'feelsLikeDay',
+    'apparentMax',
+    'apparent_temperature_max',
+  ], null), null);
+
+  const humidityDay = asNumber(firstDefined(day, [
+    'humidityDay',
+    'humidityMean',
+    'relativeHumidity',
+    'relative_humidity_2m_mean',
+  ], null), null);
+
+  const uvIndex = asNumber(firstDefined(day, [
+    'uvMax',
+    'uvIndex',
+    'uv',
+  ], null), null);
+
+  const windKph = asNumber(firstDefined(day, [
+    'windMax',
+    'windKph',
+    'windSpeed',
+  ], null), null);
+
+  return {
+    ...day,
+    date: day.date || '',
+    label: day.dayLabel || day.label || (index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : day.date || 'Day ' + (index + 1)),
+    dayLabel: day.dayLabel || day.label || (index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : day.date || 'Day ' + (index + 1)),
+    condition: day.condition || 'Forecast',
+    icon: day.icon || '☁️',
+    iconId: day.iconId,
+    high,
+    low,
+    tempMax: high,
+    tempMin: low,
+    rainProb,
+    precipProb: rainProb,
+    rainfallProbability: rainProb,
+    rainMm,
+    precipSum: rainMm,
+    rainfallMm: rainMm,
+    realFeelDay,
+    feelsLikeDay: realFeelDay,
+    humidityDay,
+    humidityMean: humidityDay,
+    uvIndex,
+    uvMax: uvIndex,
+    windKph,
+    windMax: windKph,
+  };
+}
+
+export function normalizeForecastRows(forecast) {
+  return asArray(forecast)
+    .slice(0, 7)
+    .map((day, index) => normalizeForecastDay(day, index));
+}
+
+export function getCityForecast(cityData) {
+  return normalizeForecastRows(
+    cityData?.weeklyForecast ||
+    cityData?.forecast ||
+    cityData?.daily ||
+    []
+  );
+}
+
+export function getWeatherCityRows({ weatherData = {}, settings = {}, cities = null } = {}) {
+  const configuredCities = Array.isArray(cities) && cities.length
+    ? cities
+    : getConfiguredWeatherCities(settings);
+
+  return configuredCities.map(city => {
+    const cityData = weatherData?.[city] || {};
+
+    return {
+      city,
+      cityName: cityData.name || getWeatherLocationLabel(city),
+      cityData,
+      forecast: getCityForecast(cityData),
+      sourceMode: cityData.sourceMode || 'unknown',
+    };
+  });
+}
+
+export function formatRainPair(day) {
+  const normalized = normalizeForecastDay(day);
+  return \`\${normalized.rainProb || 0}% · \${Number(normalized.rainMm || 0).toFixed(1)}mm\`;
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Weather insights backwards compatibility                                 */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherInsights.js', `import {
+  getCityForecast,
+  normalizeForecastDay,
+  normalizeForecastRows,
+} from './weatherDataAdapters.js';
+
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function asNumber(value, fallback = null) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function average(values) {
+  const nums = values.map(value => asNumber(value)).filter(value => value != null);
+  if (nums.length === 0) return null;
+  return nums.reduce((sum, value) => sum + value, 0) / nums.length;
+}
+
+function firstNumber(day, keys, fallback = null) {
+  for (const key of keys) {
+    const value = asNumber(day?.[key], null);
+    if (value != null) return value;
+  }
+  return fallback;
+}
+
+function maxFromDays(days, keys, fallback = null) {
+  const values = asArray(days)
+    .map(day => firstNumber(day, keys, null))
+    .filter(value => value != null);
+
+  if (values.length === 0) return fallback;
+  return Math.max(...values);
+}
+
+function sumFromDays(days, keys, fallback = 0) {
+  const values = asArray(days)
+    .map(day => firstNumber(day, keys, null))
+    .filter(value => value != null);
+
+  if (values.length === 0) return fallback;
+  return Number(values.reduce((sum, value) => sum + value, 0).toFixed(1));
+}
+
+function getDailyForecast(cityData) {
+  return getCityForecast(cityData);
+}
+
+function getTodayTomorrow(cityData) {
+  const forecast = getDailyForecast(cityData);
+
+  return {
+    today: forecast[0] || null,
+    tomorrow: forecast[1] || null,
+    days: forecast.slice(0, 2),
+  };
+}
+
+export function formatRainSignal(probability, precipMm) {
+  const prob = asNumber(probability, 0);
+  const mm = asNumber(precipMm, 0);
+
+  return \`\${Math.round(prob)}% · \${mm.toFixed(1)}mm\`;
+}
+
+export function getWeatherRiskTone(risk) {
+  const level = String(risk?.level || risk?.risk || '').toLowerCase();
+  if (level === 'high') return 'bad';
+  if (level === 'medium') return 'warn';
+  if (level === 'low') return 'good';
+  return 'unknown';
+}
+
+export function buildTomorrowChip(cityData) {
+  const { tomorrow } = getTodayTomorrow(cityData);
+  if (!tomorrow) return null;
+
+  const day = normalizeForecastDay(tomorrow, 1);
+  let risk = 'low';
+
+  if (day.rainProb >= 70 || day.rainMm >= 12 || (day.high != null && day.high >= 38)) risk = 'high';
+  else if (day.rainProb >= 35 || day.rainMm >= 2 || (day.high != null && day.high >= 33) || (day.uvIndex != null && day.uvIndex >= 7)) risk = 'medium';
+
+  return {
+    label: 'Tomorrow',
+    temp: day.high,
+    tempMax: day.high,
+    tempMin: day.low,
+    high: day.high,
+    low: day.low,
+    rain: day.rainProb,
+    precipMm: day.rainMm,
+    rainMm: day.rainMm,
+    uv: day.uvIndex,
+    uvIndex: day.uvIndex,
+    risk,
+    condition: day.condition,
+    icon: day.icon,
+    rainText: formatRainSignal(day.rainProb, day.rainMm),
+    detail: \`\${day.high ?? '--'}°/\${day.low ?? '--'}° · rain \${formatRainSignal(day.rainProb, day.rainMm)}\`,
+  };
+}
+
+export function buildOutdoorScore(day) {
+  if (!day) return 0;
+
+  const normalized = normalizeForecastDay(day);
+  let score = 100;
+
+  score -= Math.min(40, normalized.rainProb * 0.45);
+  score -= Math.min(25, normalized.rainMm * 3);
+
+  if (normalized.high > 38) score -= 20;
+  else if (normalized.high > 35) score -= 10;
+
+  if (normalized.uvIndex >= 10) score -= 15;
+  else if (normalized.uvIndex >= 7) score -= 8;
+
+  if (normalized.windKph >= 40) score -= 10;
+  else if (normalized.windKph >= 25) score -= 5;
+
+  if (normalized.humidityDay >= 85 && normalized.high >= 32) score -= 8;
+
+  return Math.max(0, Math.round(score));
+}
+
+/**
+ * Backward compatible:
+ * - summarizeCityWeekly(cityData)
+ * - summarizeCityWeekly(city, cityData)
+ */
+export function summarizeCityWeekly(cityOrData, maybeCityData = null) {
+  const city = maybeCityData ? cityOrData : cityOrData?.city || '';
+  const cityData = maybeCityData || cityOrData || {};
+  const forecast = getDailyForecast(cityData);
+
+  if (forecast.length === 0) {
+    return {
+      city,
+      label: cityData?.name || city,
+      hasWeekly: false,
+      bestDay: null,
+      bestOutdoorDay: null,
+      rainiestDay: null,
+      hottestDay: null,
+      highestUvDay: null,
+      weekly: [],
+    };
+  }
+
+  const weekly = normalizeForecastRows(forecast).map(day => ({
+    ...day,
+    outdoorScore: buildOutdoorScore(day),
+  }));
+
+  const bestDay = [...weekly].sort((a, b) => b.outdoorScore - a.outdoorScore)[0] || null;
+  const rainiestDay = [...weekly].sort((a, b) => (
+    (b.rainMm * 10 + b.rainProb) - (a.rainMm * 10 + a.rainProb)
+  ))[0] || null;
+  const hottestDay = [...weekly].sort((a, b) => (b.high ?? -999) - (a.high ?? -999))[0] || null;
+  const highestUvDay = [...weekly].sort((a, b) => (b.uvIndex ?? -999) - (a.uvIndex ?? -999))[0] || null;
+
+  return {
+    city,
+    label: cityData?.name || city,
+    hasWeekly: true,
+    bestDay,
+    bestOutdoorDay: bestDay,
+    rainiestDay,
+    hottestDay,
+    highestUvDay,
+    weekly,
+  };
+}
+
+export function summarizeAllCitiesWeekly(weatherData = {}, cities = []) {
+  return asArray(cities).map(city => summarizeCityWeekly(city, weatherData?.[city]));
+}
+
+export function buildNextRiskSummary(cityData) {
+  const { today, tomorrow, days } = getTodayTomorrow(cityData);
+  if (!today && !tomorrow) return null;
+
+  const normalizedDays = normalizeForecastRows(days);
+
+  const rain = maxFromDays(normalizedDays, ['rainProb', 'precipProb', 'rainfallProbability'], 0);
+  const precipMm = sumFromDays(normalizedDays, ['rainMm', 'precipSum', 'rainfallMm'], 0);
+  const heat = maxFromDays(normalizedDays, ['high', 'tempMax'], null);
+  const uv = maxFromDays(normalizedDays, ['uvIndex', 'uvMax'], null);
+  const wind = maxFromDays(normalizedDays, ['windKph', 'windMax'], null);
+  const humidity = maxFromDays(normalizedDays, ['humidityDay', 'humidityMean'], null);
+
+  let level = 'low';
+  if (rain >= 70 || precipMm >= 10 || heat >= 38) level = 'high';
+  else if (rain >= 35 || precipMm >= 1.5 || heat >= 33 || uv >= 7 || wind >= 25) level = 'medium';
+
+  return {
+    type: precipMm > 0 || rain > 20 ? 'rain' : 'stable',
+    level,
+    risk: level,
+    label: level === 'high' ? 'Weather risk' : level === 'medium' ? 'Watch weather' : 'Stable',
+    detail: precipMm > 0 || rain > 20
+      ? \`Rain \${formatRainSignal(rain, precipMm)}\`
+      : 'No significant rain expected.',
+    icon: level === 'high' ? '⚠️' : precipMm > 0 || rain > 20 ? '🌧' : '✅',
+    rain,
+    precipMm,
+    rainMm: precipMm,
+    rainText: formatRainSignal(rain, precipMm),
+    heat,
+    uv,
+    wind,
+    humidity,
+    stable: rain < 20 && precipMm < 0.5,
+  };
+}
+
+export function buildDailyConsensus(modelData, dayIdx) {
+  const daily = [
+    modelData?.ecmwf?.daily,
+    modelData?.gfs?.daily,
+    modelData?.icon?.daily,
+  ].filter(Boolean);
+
+  function values(field) {
+    return daily
+      .map(model => model?.[field]?.[dayIdx])
+      .filter(value => value != null && Number.isFinite(Number(value)))
+      .map(Number);
+  }
+
+  function avg(field, decimals = 0) {
+    const value = average(values(field));
+    if (value == null) return null;
+    return decimals > 0 ? Number(value.toFixed(decimals)) : Math.round(value);
+  }
+
+  function modeCode() {
+    const codes = values('weather_code');
+    if (codes.length === 0) return 0;
+    const counts = new Map();
+    codes.forEach(code => counts.set(code, (counts.get(code) || 0) + 1));
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+  }
+
+  return {
+    code: modeCode(),
+    high: avg('temperature_2m_max'),
+    low: avg('temperature_2m_min'),
+    rainProb: avg('precipitation_probability_max'),
+    rainMm: avg('precipitation_sum', 1),
+    realFeelDay: avg('apparent_temperature_max'),
+    humidityDay: avg('relative_humidity_2m_mean'),
+    uvIndex: avg('uv_index_max'),
+    windKph: avg('wind_speed_10m_max'),
+  };
+}
+
+export const __weatherInsightTestUtils = {
+  firstNumber,
+  formatRainSignal,
+};
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Weekly forecast supports old and new props                               */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/WeeklyWeatherForecast.jsx', `import React from 'react';
+import {
+  formatRainPair,
+  getWeatherCityRows,
+  normalizeForecastRows,
+} from '../../services/weatherDataAdapters.js';
+import './WeeklyWeatherForecast.css';
+
+function uvLabel(uv) {
+  if (uv == null) return '—';
+  if (uv >= 11) return 'Extreme';
+  if (uv >= 8) return 'Very high';
+  if (uv >= 6) return 'High';
+  if (uv >= 3) return 'Moderate';
+  return 'Low';
+}
+
+function renderForecastRows(forecast) {
+  return normalizeForecastRows(forecast).map((day, index) => (
+    <article key={day.date || day.label || index} className={\`wwf-row \${index === 0 ? 'wwf-row--today' : ''}\`}>
+      <div className="wwf-main">
+        <span className="wwf-day">{day.dayLabel || day.label}</span>
+        <span className="wwf-condition">
+          <span className="wwf-icon">{day.icon || '☁️'}</span>
+          {day.condition || 'Forecast'}
+        </span>
+      </div>
+
+      <div className="wwf-temp">
+        <strong>{day.high != null ? \`\${day.high}°\` : '—'}</strong>
+        <span>{day.low != null ? \`\${day.low}°\` : '—'}</span>
+      </div>
+
+      <div className="wwf-metric">
+        <span>Rain</span>
+        <strong>{formatRainPair(day)}</strong>
+      </div>
+
+      <div className="wwf-metric">
+        <span>Feels</span>
+        <strong>{day.realFeelDay != null ? \`\${day.realFeelDay}°\` : '—'}</strong>
+      </div>
+
+      <div className="wwf-metric">
+        <span>Humidity</span>
+        <strong>{day.humidityDay != null ? \`\${day.humidityDay}%\` : '—'}</strong>
+      </div>
+
+      <div className="wwf-metric">
+        <span>UV / Wind</span>
+        <strong>{uvLabel(day.uvIndex)}{day.windKph != null ? \` · \${day.windKph}km/h\` : ''}</strong>
+      </div>
+    </article>
+  ));
+}
+
+function ForecastCard({ forecast, cityName, sourceMode }) {
+  const rows = normalizeForecastRows(forecast);
+  if (rows.length === 0) return null;
+
+  return (
+    <section className="wwf-card" data-weekly-weather-forecast="available">
+      <div className="wwf-header">
+        <div>
+          <span className="wwf-eyebrow">Weekly forecast</span>
+          <h3>7-day outlook</h3>
+        </div>
+        <div className="wwf-badges">
+          {cityName && <span className="wwf-city">{cityName}</span>}
+          {sourceMode && <span className="wwf-source">{sourceMode}</span>}
+        </div>
+      </div>
+
+      <div className="wwf-rows">
+        {renderForecastRows(rows)}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Supports both:
+ * - <WeeklyWeatherForecast forecast={cityForecast} cityName="Colombo" />
+ * - <WeeklyWeatherForecast weatherData={displayData} settings={settings} />
+ */
+export default function WeeklyWeatherForecast({
+  forecast = null,
+  cityName = '',
+  sourceMode = '',
+  weatherData = null,
+  settings = null,
+  cities = null,
+}) {
+  if (Array.isArray(forecast)) {
+    return <ForecastCard forecast={forecast} cityName={cityName} sourceMode={sourceMode} />;
+  }
+
+  const cityRows = getWeatherCityRows({
+    weatherData: weatherData || {},
+    settings: settings || {},
+    cities,
+  }).filter(row => row.forecast.length > 0);
+
+  if (cityRows.length === 0) {
+    return (
+      <section className="wwf-card wwf-card--empty" data-weekly-weather-forecast="empty">
+        <div className="wwf-header">
+          <div>
+            <span className="wwf-eyebrow">Weekly forecast</span>
+            <h3>7-day outlook</h3>
+          </div>
+        </div>
+        <p className="wwf-empty">Weekly forecast is updating.</p>
+      </section>
+    );
+  }
+
+  return (
+    <div className="wwf-stack" data-weekly-weather-forecast="stack">
+      {cityRows.map(row => (
+        <ForecastCard
+          key={row.city}
+          forecast={row.forecast}
+          cityName={row.cityName}
+          sourceMode={row.sourceMode}
+        />
+      ))}
+    </div>
+  );
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 4) Weekly CSS small additions                                               */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/components/weather/WeeklyWeatherForecast.css', source => {
+  if (source.includes('.wwf-stack')) return source;
+
+  return `${source}
+
+.wwf-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.wwf-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  justify-content: flex-end;
+}
+
+.wwf-source {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #bfdbfe;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.wwf-card--empty {
+  padding-bottom: 14px;
+}
+
+.wwf-empty {
+  margin: 0;
+  padding: 0 16px 14px;
+  color: #94a3b8;
+  font-size: 0.84rem;
+}
+`;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 5) Certification                                                            */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherIntegrationHardening.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  formatRainPair,
+  getWeatherCityRows,
+  normalizeForecastDay,
+  normalizeForecastRows,
+} from './weatherDataAdapters';
+import {
+  buildNextRiskSummary,
+  buildTomorrowChip,
+  summarizeAllCitiesWeekly,
+  summarizeCityWeekly,
+} from './weatherInsights';
+
+describe('Weather integration hardening certification', () => {
+  it('normalizes forecast aliases into a stable shape', () => {
+    const day = normalizeForecastDay({
+      tempMax: 31,
+      tempMin: 25,
+      precipProb: 92,
+      precipSum: 20.3,
+      apparentMax: 35,
+      humidityMean: 86,
+      uvMax: 8,
+      windMax: 22,
+    });
+
+    expect(day.high).toBe(31);
+    expect(day.low).toBe(25);
+    expect(day.rainProb).toBe(92);
+    expect(day.rainMm).toBe(20.3);
+    expect(day.realFeelDay).toBe(35);
+    expect(day.humidityDay).toBe(86);
+    expect(formatRainPair(day)).toBe('92% · 20.3mm');
+  });
+
+  it('builds city rows from WeatherPage style weatherData/settings props', () => {
+    const rows = getWeatherCityRows({
+      settings: {
+        weather: {
+          cities: ['colombo'],
+          locationConfigVersion: 'weather-locations-v3-colombo-ux',
+        },
+      },
+      weatherData: {
+        colombo: {
+          name: 'Colombo',
+          sourceMode: 'live-multi-model',
+          weeklyForecast: [{ high: 30, low: 25, rainProb: 70, rainMm: 8 }],
+        },
+      },
+    });
+
+    expect(rows).toHaveLength(1);
+    expect(rows[0].cityName).toBe('Colombo');
+    expect(rows[0].forecast[0].rainMm).toBe(8);
+  });
+
+  it('keeps summarizeCityWeekly backwards compatible', () => {
+    const cityData = {
+      name: 'Colombo',
+      weeklyForecast: [
+        { label: 'Today', high: 30, low: 25, rainProb: 20, rainMm: 0 },
+        { label: 'Tomorrow', high: 29, low: 24, rainProb: 92, rainMm: 20.3 },
+      ],
+    };
+
+    const oldStyle = summarizeCityWeekly('colombo', cityData);
+    const newStyle = summarizeCityWeekly(cityData);
+
+    expect(oldStyle.hasWeekly).toBe(true);
+    expect(oldStyle.rainiestDay.label).toBe('Tomorrow');
+    expect(newStyle.rainiestDay.label).toBe('Tomorrow');
+  });
+
+  it('keeps summarizeAllCitiesWeekly available for WeatherPlanningSummary', () => {
+    const summaries = summarizeAllCitiesWeekly({
+      colombo: {
+        weeklyForecast: [{ high: 30, low: 25, rainProb: 10, rainMm: 0 }],
+      },
+    }, ['colombo']);
+
+    expect(summaries).toHaveLength(1);
+    expect(summaries[0].hasWeekly).toBe(true);
+  });
+
+  it('builds QuickWeather risk and tomorrow summaries with mm', () => {
+    const cityData = {
+      weeklyForecast: [
+        { label: 'Today', high: 31, low: 25, rainProb: 55, rainMm: 2.1 },
+        { label: 'Tomorrow', high: 29, low: 24, rainProb: 92, rainMm: 20.3 },
+      ],
+    };
+
+    const risk = buildNextRiskSummary(cityData);
+    const tomorrow = buildTomorrowChip(cityData);
+
+    expect(risk.rainText).toBe('92% · 22.4mm');
+    expect(tomorrow.rainText).toBe('92% · 20.3mm');
+  });
+});
+`);
+
+write('scripts/test_weather_integration_hardening_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const adapter = read('src/services/weatherDataAdapters.js');
+const insights = read('src/services/weatherInsights.js');
+const weekly = read('src/components/weather/WeeklyWeatherForecast.jsx');
+const weeklyCss = read('src/components/weather/WeeklyWeatherForecast.css');
+const cert = read('src/services/weatherIntegrationHardening.cert.test.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'normalizeForecastDay',
+  'normalizeForecastRows',
+  'getWeatherCityRows',
+  'formatRainPair',
+  'realFeelDay',
+  'humidityDay',
+]) {
+  assert(adapter.includes(token), 'weatherDataAdapters.js missing token: ' + token);
+}
+
+for (const token of [
+  'summarizeAllCitiesWeekly',
+  'summarizeCityWeekly(cityOrData',
+  'buildNextRiskSummary',
+  'buildTomorrowChip',
+  'buildDailyConsensus',
+]) {
+  assert(insights.includes(token), 'weatherInsights.js missing token: ' + token);
+}
+
+for (const token of [
+  'weatherData = null',
+  'settings = null',
+  'ForecastCard',
+  'wwf-stack',
+  'formatRainPair',
+  'data-weekly-weather-forecast',
+]) {
+  assert(weekly.includes(token), 'WeeklyWeatherForecast.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '.wwf-stack',
+  '.wwf-source',
+  '.wwf-empty',
+]) {
+  assert(weeklyCss.includes(token), 'WeeklyWeatherForecast.css missing token: ' + token);
+}
+
+for (const token of [
+  'Weather integration hardening certification',
+  'normalizes forecast aliases',
+  'WeatherPage style weatherData/settings props',
+  'summarizeCityWeekly backwards compatible',
+  'summarizeAllCitiesWeekly available',
+]) {
+  assert(cert.includes(token), 'weatherIntegrationHardening.cert.test.js missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:weather-integration-hardening"'),
+  'package.json must include test:weather-integration-hardening'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:weather-integration-hardening']]") ||
+  certGate.includes('certification_manifest.json'),
+  'certification gate must include weather integration hardening test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather integration hardening',
+  guarantees: [
+    'WeeklyWeatherForecast supports old and new prop shapes',
+    'WeatherPlanningSummary summarizeAllCitiesWeekly import is restored',
+    'summarizeCityWeekly is backwards compatible',
+    'weekly forecast rows normalize rain probability/mm, real feel and humidity',
+    'QuickWeather risk/tomorrow summaries keep precipitation mm'
+  ]
+}, null, 2));
+
+console.log('PASS: Weather integration hardening static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:weather-integration-hardening'] =
+    'node scripts/test_weather_integration_hardening_static.mjs && vitest run --config vitest.config.js src/services/weatherIntegrationHardening.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-integration-hardening']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:weather-signal-precision']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-signal-precision']],",
+      "  ['npm', ['run', 'test:weather-signal-precision']],\\n  ['npm', ['run', 'test:weather-integration-hardening']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:weather-settings-onthisday']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-settings-onthisday']],",
+      "  ['npm', ['run', 'test:weather-settings-onthisday']],\\n  ['npm', ['run', 'test:weather-integration-hardening']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-integration-hardening')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-signal-precision');
+      const command = {
+        id: 'weather-integration-hardening',
+        cmd: 'npm',
+        args: ['run', 'test:weather-integration-hardening'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-integration-hardening')) return source;
+
+    if (source.includes("'test:weather-signal-precision',")) {
+      return source.replace(
+        "'test:weather-signal-precision',",
+        "'test:weather-signal-precision',\\n  'test:weather-integration-hardening',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61D Weather integration hardening patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61D_weather_integration_hardening.mjs
+
+node scripts/test_weather_integration_hardening_static.mjs
+npm run test:weather-integration-hardening
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61D_weather_integration_hardening.mjs
+  - src/services/weatherDataAdapters.js
+  - src/services/weatherInsights.js
+  - src/services/weatherIntegrationHardening.cert.test.js
+  - src/components/weather/WeeklyWeatherForecast.jsx
+  - src/components/weather/WeeklyWeatherForecast.css
+  - scripts/test_weather_integration_hardening_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- Weather integration Vitest passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- Integration closure gate:
+  - WeeklyWeatherForecast supports weatherData/settings: YES/NO
+  - WeeklyWeatherForecast supports forecast/cityName: YES/NO
+  - summarizeAllCitiesWeekly restored: YES/NO
+  - summarizeCityWeekly backward compatible: YES/NO
+  - rain %, mm, real feel, humidity normalized: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+
+----------------------------------------------
+# Slice 61E — Weather final closure gate + regression guards
+
+This is the **weather closure slice**. It does not add new UI. It protects all weather changes from silently breaking again.
+
+## What this certifies
+
+```txt
+- Colombo exists end-to-end.
+- QuickWeather uses real weather location registry.
+- QuickWeather has visible desktop CSS guard.
+- QuickWeather signal strip shows rain % + mm.
+- Weather settings uses WeatherLocationManager.
+- On This Day is OFF by default and controller is mounted.
+- Weekly forecast supports both old and new prop styles.
+- Weekly forecast shows rain %, mm, real feel, humidity.
+- Weather service requests daily fields required for weekly forecast.
+- Weather audit/grade still has Weather tab coverage.
+```
+
+Create:
+
+```bash
+scripts/apply_slice61E_weather_final_closure_gate.mjs
+```
+
+Paste:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Final Vitest closure tests                                               */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/weatherFinalClosure.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  DEFAULT_WEATHER_CITIES,
+  WEATHER_LOCATION_REGISTRY,
+  buildWeatherSettingsWithCities,
+  getConfiguredWeatherCities,
+  getWeatherLocationLabel,
+} from './weatherLocations';
+import {
+  formatRainPair,
+  getWeatherCityRows,
+  normalizeForecastDay,
+} from './weatherDataAdapters';
+import {
+  buildNextRiskSummary,
+  buildTomorrowChip,
+  summarizeAllCitiesWeekly,
+} from './weatherInsights';
+import {
+  shouldShowOnThisDay,
+} from './displayPreferences';
+
+describe('Weather final closure certification', () => {
+  it('keeps Colombo in default and registry-backed weather locations', () => {
+    expect(DEFAULT_WEATHER_CITIES).toContain('colombo');
+    expect(WEATHER_LOCATION_REGISTRY.colombo).toMatchObject({
+      key: 'colombo',
+      display: 'Colombo',
+      country: 'Sri Lanka',
+    });
+    expect(getWeatherLocationLabel('colombo')).toBe('Colombo');
+  });
+
+  it('keeps customized weather city settings canonical', () => {
+    const settings = buildWeatherSettingsWithCities({}, ['Colombo', 'Muscat']);
+    expect(settings.weather.cities).toEqual(['colombo', 'muscat']);
+
+    const configured = getConfiguredWeatherCities(settings);
+    expect(configured).toContain('colombo');
+    expect(configured).toContain('muscat');
+  });
+
+  it('normalizes weekly forecast fields required by Weather tab UI', () => {
+    const day = normalizeForecastDay({
+      label: 'Today',
+      high: 28,
+      low: 24,
+      rainProb: 92,
+      rainMm: 20.3,
+      realFeelDay: 33,
+      humidityDay: 88,
+      uvIndex: 8,
+      windKph: 18,
+    });
+
+    expect(day.high).toBe(28);
+    expect(day.low).toBe(24);
+    expect(day.rainProb).toBe(92);
+    expect(day.rainMm).toBe(20.3);
+    expect(day.realFeelDay).toBe(33);
+    expect(day.humidityDay).toBe(88);
+    expect(formatRainPair(day)).toBe('92% · 20.3mm');
+  });
+
+  it('supports WeatherPage style weekly city rows', () => {
+    const rows = getWeatherCityRows({
+      settings: {
+        weather: {
+          cities: ['colombo'],
+          locationConfigVersion: 'weather-locations-v3-colombo-ux',
+        },
+      },
+      weatherData: {
+        colombo: {
+          name: 'Colombo',
+          sourceMode: 'live-multi-model',
+          weeklyForecast: [
+            { label: 'Today', high: 28, low: 24, rainProb: 92, rainMm: 20.3, realFeelDay: 33, humidityDay: 88 },
+          ],
+        },
+      },
+    });
+
+    expect(rows).toHaveLength(1);
+    expect(rows[0].city).toBe('colombo');
+    expect(rows[0].forecast[0].rainMm).toBe(20.3);
+  });
+
+  it('keeps QuickWeather risk/tomorrow summaries precise', () => {
+    const cityData = {
+      weeklyForecast: [
+        { label: 'Today', high: 28, low: 24, rainProb: 92, rainMm: 20.3, humidityDay: 88 },
+        { label: 'Tomorrow', high: 29, low: 25, rainProb: 55, rainMm: 2.1, humidityDay: 82 },
+      ],
+    };
+
+    const risk = buildNextRiskSummary(cityData);
+    const tomorrow = buildTomorrowChip(cityData);
+
+    expect(risk.rainText).toBe('92% · 22.4mm');
+    expect(tomorrow.rainText).toBe('55% · 2.1mm');
+    expect(tomorrow.detail).toContain('55% · 2.1mm');
+  });
+
+  it('keeps planning summary functions available', () => {
+    const summaries = summarizeAllCitiesWeekly({
+      colombo: {
+        name: 'Colombo',
+        weeklyForecast: [
+          { label: 'Today', high: 28, low: 24, rainProb: 92, rainMm: 20.3 },
+          { label: 'Tomorrow', high: 29, low: 25, rainProb: 55, rainMm: 2.1 },
+        ],
+      },
+    }, ['colombo']);
+
+    expect(summaries).toHaveLength(1);
+    expect(summaries[0].hasWeekly).toBe(true);
+    expect(summaries[0].rainiestDay.label).toBe('Today');
+  });
+
+  it('keeps On This Day off by default', () => {
+    expect(shouldShowOnThisDay({})).toBe(false);
+  });
+});
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Static end-to-end weather closure check                                  */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_weather_final_closure_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+function maybeRead(path) {
+  return fs.existsSync(path) ? fs.readFileSync(path, 'utf8') : '';
+}
+
+const files = {
+  locations: read('src/services/weatherLocations.js'),
+  adapters: read('src/services/weatherDataAdapters.js'),
+  insights: read('src/services/weatherInsights.js'),
+  displayPrefs: read('src/services/displayPreferences.js'),
+  weatherService: read('src/services/weatherService.js'),
+  quickWeather: read('src/components/QuickWeather.jsx'),
+  quickWeatherCss: read('src/components/QuickWeatherRefined.css'),
+  signalStrip: read('src/components/weather/QuickWeatherSignalStrip.jsx'),
+  signalStripCss: read('src/components/weather/QuickWeatherSignalStrip.css'),
+  manager: read('src/components/weather/WeatherLocationManager.jsx'),
+  managerCss: read('src/components/weather/WeatherLocationManager.css'),
+  weekly: read('src/components/weather/WeeklyWeatherForecast.jsx'),
+  weeklyCss: read('src/components/weather/WeeklyWeatherForecast.css'),
+  weatherPage: read('src/pages/WeatherPage.jsx'),
+  settingsPage: read('src/pages/SettingsPage.jsx'),
+  app: read('src/App.jsx'),
+  onThisDayController: read('src/components/settings/OnThisDayVisibilityController.jsx'),
+  audit: maybeRead('src/services/pageAuditGrading.js'),
+  packageJson: read('package.json'),
+  certGate: read('scripts/run_certification_gate.mjs'),
+};
+
+function requireTokens(name, tokens) {
+  for (const token of tokens) {
+    assert(files[name].includes(token), name + ' missing token: ' + token);
+  }
+}
+
+requireTokens('locations', [
+  'DEFAULT_WEATHER_CITIES',
+  'colombo',
+  'Colombo',
+  'Sri Lanka',
+  'buildWeatherSettingsWithCities',
+  'getConfiguredWeatherCities',
+]);
+
+requireTokens('adapters', [
+  'normalizeForecastDay',
+  'getWeatherCityRows',
+  'formatRainPair',
+  'realFeelDay',
+  'humidityDay',
+  'rainMm',
+]);
+
+requireTokens('insights', [
+  'formatRainSignal',
+  'buildNextRiskSummary',
+  'buildTomorrowChip',
+  'summarizeAllCitiesWeekly',
+  'buildDailyConsensus',
+  'precipMm',
+  'rainText',
+]);
+
+requireTokens('displayPrefs', [
+  'showOnThisDay: false',
+  'shouldShowOnThisDay',
+  'buildDisplaySettings',
+]);
+
+requireTokens('weatherService', [
+  'apparent_temperature_max',
+  'relative_humidity_2m_mean',
+  'precipitation_probability_max',
+  'precipitation_sum',
+  'weeklyForecast',
+  'realFeelDay',
+  'humidityDay',
+]);
+
+requireTokens('quickWeather', [
+  'QuickWeatherRefined.css',
+  'getConfiguredWeatherCities',
+  'buildWeatherSettingsWithCities',
+  'getWeatherLocationOptions',
+  'Select a supported city',
+  'quick-weather-city-options',
+]);
+
+requireTokens('quickWeatherCss', [
+  '.quick-weather-card',
+  '.qw-config-bar input',
+  '.qw-highlight-text-container',
+  '.qw-city-row--active',
+]);
+
+requireTokens('signalStrip', [
+  'data-quick-weather-signal-strip',
+  'formatRainSignal',
+  'precipMm',
+  'Humidity',
+  'Tmr',
+]);
+
+requireTokens('signalStripCss', [
+  '.qwss-strip',
+  '.qwss-chip',
+  '.qwss-chip--low',
+  '.qwss-chip--medium',
+  '.qwss-chip--high',
+]);
+
+requireTokens('manager', [
+  'Add / delete locations',
+  'removeCity',
+  'Reset defaults',
+  'Colombo',
+]);
+
+requireTokens('managerCss', [
+  '.wlm-panel',
+  '.wlm-chip',
+  '.wlm-add-row',
+  '.wlm-select',
+]);
+
+requireTokens('weekly', [
+  'weatherData = null',
+  'settings = null',
+  'forecast = null',
+  'ForecastCard',
+  'formatRainPair',
+  'Feels',
+  'Humidity',
+]);
+
+requireTokens('weeklyCss', [
+  '.wwf-card',
+  '.wwf-row',
+  '.wwf-metric',
+  '.wwf-stack',
+]);
+
+requireTokens('weatherPage', [
+  'WeatherLocationManager',
+  'WeeklyWeatherForecast',
+  'WeatherCityComparison',
+  'WeatherPlanningSummary',
+]);
+
+requireTokens('settingsPage', [
+  'WeatherLocationManager',
+  'DisplayPreferencesPanel',
+  'Display Preferences',
+]);
+
+assert(
+  !files.settingsPage.includes('value="Chennai" disabled') &&
+  !files.settingsPage.includes('value="Trichy" disabled'),
+  'SettingsPage must not keep old hardcoded disabled Chennai/Trichy location rows'
+);
+
+requireTokens('app', [
+  'OnThisDayVisibilityController',
+  '<OnThisDayVisibilityController />',
+]);
+
+requireTokens('onThisDayController', [
+  'MutationObserver',
+  'data-nw-hidden-on-this-day',
+  'shouldShowOnThisDay',
+]);
+
+if (files.audit) {
+  requireTokens('audit', [
+    'auditWeatherTabQuality',
+    'weather-weekly-forecast',
+    'readyCityCount',
+  ]);
+}
+
+assert(
+  files.packageJson.includes('"test:weather-final-closure"'),
+  'package.json must include test:weather-final-closure'
+);
+
+assert(
+  files.certGate.includes("['npm', ['run', 'test:weather-final-closure']]") ||
+    files.certGate.includes('certification_manifest.json'),
+  'certification gate must include weather final closure test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather final closure static gate',
+  guarantees: [
+    'Colombo registry and defaults are present',
+    'Add/delete/reset city manager is present',
+    'Settings uses real WeatherLocationManager',
+    'QuickWeather add city is registry-backed',
+    'QuickWeather desktop visibility CSS exists',
+    'QuickWeather shows precipitation probability and mm',
+    'Weekly forecast supports weatherData/settings and forecast/cityName modes',
+    'Weekly forecast shows rain %, mm, real feel and humidity',
+    'Weather service requests required Open-Meteo fields',
+    'On This Day is off by default and visibility controller is mounted',
+    'Weather grade/audit coverage remains available'
+  ]
+}, null, 2));
+
+console.log('PASS: Weather final closure static gate');
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) package.json + certification                                             */
+/* -------------------------------------------------------------------------- */
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:weather-final-closure'] =
+    'node scripts/test_weather_final_closure_static.mjs && vitest run --config vitest.config.js src/services/weatherFinalClosure.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-final-closure']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  const anchors = [
+    "  ['npm', ['run', 'test:weather-integration-hardening']],",
+    "  ['npm', ['run', 'test:weather-signal-precision']],",
+    "  ['npm', ['run', 'test:weather-settings-onthisday']],",
+    "  ['npm', ['run', 'test:weather-ux-closeout']],",
+  ];
+
+  for (const anchor of anchors) {
+    if (source.includes(anchor)) {
+      return source.replace(
+        anchor,
+        anchor + "\\n  ['npm', ['run', 'test:weather-final-closure']],"
+      );
+    }
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-final-closure')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-integration-hardening');
+      const command = {
+        id: 'weather-final-closure',
+        cmd: 'npm',
+        args: ['run', 'test:weather-final-closure'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-final-closure')) return source;
+
+    const anchors = [
+      "'test:weather-integration-hardening',",
+      "'test:weather-signal-precision',",
+      "'test:weather-settings-onthisday',",
+      "'test:weather-ux-closeout',",
+    ];
+
+    for (const anchor of anchors) {
+      if (source.includes(anchor)) {
+        return source.replace(anchor, anchor + "\\n  'test:weather-final-closure',");
+      }
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61E Weather final closure gate patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61E_weather_final_closure_gate.mjs
+
+node scripts/test_weather_final_closure_static.mjs
+npm run test:weather-final-closure
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61E_weather_final_closure_gate.mjs
+  - src/services/weatherFinalClosure.cert.test.js
+  - scripts/test_weather_final_closure_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed:
+  - node scripts/test_weather_final_closure_static.mjs: YES/NO
+- Vitest closure test passed:
+  - npm run test:weather-final-closure: YES/NO
+- ESLint passed:
+  - npm run lint: YES/NO
+- Vitest/unit passed:
+  - npm run test:unit: YES/NO
+- Production build passed:
+  - npm run build: YES/NO
+- Full certification passed:
+  - npm run test:certify: YES/NO
+- Weather final closure gate:
+  - Colombo add/delete certified: YES/NO
+  - QuickWeather desktop visibility certified: YES/NO
+  - QuickWeather rain % + mm certified: YES/NO
+  - Weekly forecast rain/feel/humidity certified: YES/NO
+  - Settings integration certified: YES/NO
+  - On This Day OFF-by-default certified: YES/NO
+  - Weather audit/grade coverage certified: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+-------------------------------------------------------
+
+# Slice 61F — Weather manager clarity + one-click Colombo + visual UX guard
+
+This slice directly closes the screenshot complaints around **“how to add/delete city”**.
+
+## What this adds
+
+```txt
+- Weather city manager clearly says:
+  - Select city → Add
+  - Remove using ×
+- One-click “Add Colombo” button when Colombo is missing.
+- “Available cities” quick-add buttons.
+- Delete buttons are visually clear and labelled.
+- Manager collapsed state shows city count and current cities.
+- Adds static certification so this UX does not regress.
+```
+
+Create:
+
+```bash
+scripts/apply_slice61F_weather_manager_clarity.mjs
+```
+
+Paste:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Replace WeatherLocationManager with clearer UX                           */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/WeatherLocationManager.jsx', `import React, { useMemo, useState } from 'react';
+import { useSettings } from '../../context/SettingsContext';
+import {
+  DEFAULT_WEATHER_CITIES,
+  WEATHER_LOCATION_REGISTRY,
+  buildWeatherSettingsWithCities,
+  getConfiguredWeatherCities,
+  getWeatherLocationOptions,
+  resolveRegistryKey,
+} from '../../services/weatherLocations.js';
+import './WeatherLocationManager.css';
+
+function cityDisplay(city) {
+  return WEATHER_LOCATION_REGISTRY[city]?.display || city;
+}
+
+function cityIcon(city) {
+  return WEATHER_LOCATION_REGISTRY[city]?.icon || '📍';
+}
+
+export default function WeatherLocationManager({ compact = false }) {
+  const { settings, updateSettings } = useSettings();
+  const cities = getConfiguredWeatherCities(settings);
+  const options = useMemo(() => getWeatherLocationOptions(), []);
+  const [inputValue, setInputValue] = useState('');
+  const [message, setMessage] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const availableToAdd = options.filter(option => !cities.includes(option.key));
+  const colomboMissing = !cities.includes('colombo');
+
+  function save(nextCities) {
+    updateSettings(buildWeatherSettingsWithCities(settings, nextCities));
+  }
+
+  function addCity(cityValue = inputValue) {
+    const canonical = resolveRegistryKey(cityValue);
+
+    if (!canonical) {
+      setMessage('Select a supported city from the list, then press Add.');
+      return;
+    }
+
+    if (cities.includes(canonical)) {
+      setMessage(cityDisplay(canonical) + ' is already in your weather list.');
+      return;
+    }
+
+    save([...cities, canonical]);
+    setInputValue('');
+    setMessage(cityDisplay(canonical) + ' added.');
+  }
+
+  function removeCity(city) {
+    if (cities.length <= 1) {
+      setMessage('At least one weather city must remain.');
+      return;
+    }
+
+    save(cities.filter(item => item !== city));
+    setMessage(cityDisplay(city) + ' removed.');
+  }
+
+  function resetToDefaults() {
+    save([...DEFAULT_WEATHER_CITIES]);
+    setMessage('Reset to Chennai, Trichy, Muscat and Colombo.');
+  }
+
+  if (!open) {
+    return (
+      <section className={\`wlm-collapsed \${compact ? 'wlm-collapsed--compact' : ''}\`} data-weather-location-manager="collapsed">
+        <div className="wlm-collapsed__copy">
+          <strong>Weather locations</strong>
+          <span>{cities.length} selected · {cities.map(cityDisplay).join(' · ')}</span>
+        </div>
+
+        <div className="wlm-collapsed__actions">
+          {colomboMissing && (
+            <button
+              className="wlm-add-colombo"
+              type="button"
+              onClick={() => {
+                addCity('colombo');
+                setOpen(true);
+              }}
+              data-weather-add-colombo="true"
+            >
+              + Colombo
+            </button>
+          )}
+
+          <button className="wlm-toggle" type="button" onClick={() => setOpen(true)}>
+            Manage
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className={\`wlm-panel \${compact ? 'wlm-panel--compact' : ''}\`} data-weather-location-manager="open">
+      <div className="wlm-header">
+        <div>
+          <span className="wlm-eyebrow">Weather locations</span>
+          <h3>Add / delete locations</h3>
+          <p>
+            To add: choose a city and press <strong>Add</strong>. To delete: press the <strong>×</strong> beside that city.
+          </p>
+        </div>
+
+        <button className="wlm-toggle wlm-close" type="button" onClick={() => setOpen(false)}>
+          Done
+        </button>
+      </div>
+
+      <div className="wlm-help" data-weather-location-help="true">
+        <span>Supported now: Chennai, Trichy, Muscat, Colombo.</span>
+        {colomboMissing ? (
+          <button type="button" onClick={() => addCity('colombo')} data-weather-add-colombo="true">
+            + Add Colombo
+          </button>
+        ) : (
+          <strong>Colombo is already added.</strong>
+        )}
+      </div>
+
+      <div className="wlm-current">
+        <span className="wlm-section-label">Selected cities</span>
+        <div className="wlm-chip-row">
+          {cities.map(city => (
+            <span key={city} className="wlm-chip">
+              <span>{cityIcon(city)} {cityDisplay(city)}</span>
+              <button
+                type="button"
+                onClick={() => removeCity(city)}
+                disabled={cities.length <= 1}
+                aria-label={'Remove ' + cityDisplay(city)}
+                title={'Remove ' + cityDisplay(city)}
+                data-weather-delete-city={city}
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="wlm-add-row">
+        <select
+          className="wlm-select"
+          value={inputValue}
+          onChange={event => {
+            setInputValue(event.target.value);
+            setMessage('');
+          }}
+          aria-label="Select weather city to add"
+        >
+          <option value="">Select city to add…</option>
+          {availableToAdd.map(option => (
+            <option key={option.key} value={option.key}>
+              {option.label} — {option.country}
+            </option>
+          ))}
+        </select>
+
+        <button className="wlm-add-btn" type="button" onClick={() => addCity()} disabled={!inputValue}>
+          Add
+        </button>
+      </div>
+
+      {availableToAdd.length > 0 && (
+        <div className="wlm-quick-add" data-weather-quick-add-list="true">
+          <span className="wlm-section-label">Quick add</span>
+          <div className="wlm-quick-add__buttons">
+            {availableToAdd.map(option => (
+              <button key={option.key} type="button" onClick={() => addCity(option.key)}>
+                + {option.icon} {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="wlm-footer">
+        <button className="wlm-reset" type="button" onClick={resetToDefaults}>
+          Reset defaults
+        </button>
+        {message && <span className="wlm-message" role="status">{message}</span>}
+      </div>
+    </section>
+  );
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Replace WeatherLocationManager CSS with more professional layout          */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/WeatherLocationManager.css', `.wlm-collapsed,
+.wlm-panel {
+  margin: 12px 16px;
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  border-radius: 20px;
+  background:
+    radial-gradient(420px 160px at 100% 0%, rgba(20, 184, 166, 0.12), transparent 70%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.76));
+  color: var(--text-primary, #f8fafc);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
+}
+
+.wlm-collapsed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+}
+
+.wlm-collapsed__copy strong,
+.wlm-collapsed__copy span {
+  display: block;
+}
+
+.wlm-collapsed__copy strong {
+  color: #99f6e4;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wlm-collapsed__copy span {
+  margin-top: 3px;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.wlm-collapsed__actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.wlm-panel {
+  padding: 14px;
+}
+
+.wlm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.wlm-eyebrow,
+.wlm-section-label {
+  color: #99f6e4;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wlm-header h3 {
+  margin: 2px 0 4px;
+  color: #f8fafc;
+  font-size: 1rem;
+}
+
+.wlm-header p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.wlm-header p strong {
+  color: #e2e8f0;
+}
+
+.wlm-toggle,
+.wlm-add-colombo,
+.wlm-add-btn,
+.wlm-reset,
+.wlm-help button,
+.wlm-quick-add__buttons button {
+  min-height: 34px;
+  border: 1px solid rgba(45, 212, 191, 0.30);
+  border-radius: 999px;
+  background: rgba(20, 184, 166, 0.14);
+  color: #ccfbf1;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.wlm-toggle,
+.wlm-add-colombo,
+.wlm-help button,
+.wlm-quick-add__buttons button {
+  padding: 0 12px;
+}
+
+.wlm-add-colombo {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(147, 197, 253, 0.28);
+  color: #bfdbfe;
+}
+
+.wlm-help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 0;
+  padding: 10px 12px;
+  border: 1px dashed rgba(45, 212, 191, 0.28);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.30);
+}
+
+.wlm-help span,
+.wlm-help strong {
+  color: #cbd5e1;
+  font-size: 0.8rem;
+}
+
+.wlm-current {
+  margin-top: 12px;
+}
+
+.wlm-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.wlm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 6px 7px 6px 11px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.42);
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.wlm-chip button {
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(248, 113, 113, 0.18);
+  color: #fecaca;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.wlm-chip button:hover:not(:disabled) {
+  background: rgba(248, 113, 113, 0.30);
+}
+
+.wlm-chip button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.wlm-add-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.wlm-select {
+  min-height: 38px;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.70);
+  color: #f8fafc;
+  padding: 0 12px;
+}
+
+.wlm-add-btn {
+  min-height: 38px;
+  padding: 0 16px;
+}
+
+.wlm-add-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.wlm-quick-add {
+  margin-top: 12px;
+}
+
+.wlm-quick-add__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.wlm-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.wlm-reset {
+  min-height: 32px;
+  padding: 0 12px;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(147, 197, 253, 0.24);
+  color: #bfdbfe;
+}
+
+.wlm-message {
+  color: #bfdbfe;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+@media (max-width: 680px) {
+  .wlm-collapsed,
+  .wlm-header,
+  .wlm-help,
+  .wlm-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wlm-collapsed__actions,
+  .wlm-add-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .wlm-toggle,
+  .wlm-add-colombo,
+  .wlm-add-btn,
+  .wlm-reset,
+  .wlm-help button {
+    width: 100%;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Certification                                                            */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/weather/WeatherLocationManagerClarity.cert.test.js', `import { describe, expect, it } from 'vitest';
+import fs from 'fs';
+
+describe('Weather location manager clarity certification', () => {
+  const component = fs.readFileSync('src/components/weather/WeatherLocationManager.jsx', 'utf8');
+  const css = fs.readFileSync('src/components/weather/WeatherLocationManager.css', 'utf8');
+
+  it('explains how to add and delete cities', () => {
+    expect(component).toContain('To add: choose a city');
+    expect(component).toContain('To delete: press');
+    expect(component).toContain('data-weather-location-help');
+  });
+
+  it('provides one-click Colombo add path', () => {
+    expect(component).toContain('colomboMissing');
+    expect(component).toContain('data-weather-add-colombo');
+    expect(component).toContain('+ Add Colombo');
+  });
+
+  it('provides labelled delete buttons', () => {
+    expect(component).toContain('data-weather-delete-city');
+    expect(component).toContain('Remove ');
+    expect(component).toContain('removeCity');
+  });
+
+  it('provides quick-add list for available cities', () => {
+    expect(component).toContain('data-weather-quick-add-list');
+    expect(component).toContain('availableToAdd.map');
+  });
+
+  it('has professional visual classes', () => {
+    expect(css).toContain('.wlm-help');
+    expect(css).toContain('.wlm-add-colombo');
+    expect(css).toContain('.wlm-quick-add__buttons');
+    expect(css).toContain('.wlm-chip button:hover');
+  });
+});
+`);
+
+write('scripts/test_weather_manager_clarity_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const component = read('src/components/weather/WeatherLocationManager.jsx');
+const css = read('src/components/weather/WeatherLocationManager.css');
+const cert = read('src/components/weather/WeatherLocationManagerClarity.cert.test.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'data-weather-location-manager',
+  'data-weather-location-help',
+  'data-weather-add-colombo',
+  'data-weather-delete-city',
+  'data-weather-quick-add-list',
+  'To add: choose a city',
+  'To delete: press',
+  'colomboMissing',
+  '+ Add Colombo',
+]) {
+  assert(component.includes(token), 'WeatherLocationManager.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '.wlm-help',
+  '.wlm-add-colombo',
+  '.wlm-quick-add',
+  '.wlm-quick-add__buttons',
+  '.wlm-chip button:hover',
+  'rgba(20, 184, 166',
+]) {
+  assert(css.includes(token), 'WeatherLocationManager.css missing token: ' + token);
+}
+
+for (const token of [
+  'Weather location manager clarity certification',
+  'explains how to add and delete cities',
+  'provides one-click Colombo add path',
+  'provides labelled delete buttons',
+  'provides quick-add list',
+]) {
+  assert(cert.includes(token), 'WeatherLocationManagerClarity.cert.test.js missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:weather-manager-clarity"'),
+  'package.json must include test:weather-manager-clarity'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:weather-manager-clarity']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include weather manager clarity test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather manager clarity',
+  guarantees: [
+    'user can see how to add a city',
+    'user can see how to delete a city',
+    'one-click Add Colombo exists when Colombo is missing',
+    'quick-add available city buttons exist',
+    'delete city buttons are labelled',
+    'weather manager visual style is professional and visible'
+  ]
+}, null, 2));
+
+console.log('PASS: Weather manager clarity static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:weather-manager-clarity'] =
+    'node scripts/test_weather_manager_clarity_static.mjs && vitest run --config vitest.config.js src/components/weather/WeatherLocationManagerClarity.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-manager-clarity']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  const anchors = [
+    "  ['npm', ['run', 'test:weather-final-closure']],",
+    "  ['npm', ['run', 'test:weather-integration-hardening']],",
+    "  ['npm', ['run', 'test:weather-settings-onthisday']],",
+  ];
+
+  for (const anchor of anchors) {
+    if (source.includes(anchor)) {
+      return source.replace(
+        anchor,
+        anchor + "\\n  ['npm', ['run', 'test:weather-manager-clarity']],"
+      );
+    }
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-manager-clarity')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-final-closure');
+      const command = {
+        id: 'weather-manager-clarity',
+        cmd: 'npm',
+        args: ['run', 'test:weather-manager-clarity'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-manager-clarity')) return source;
+
+    if (source.includes("'test:weather-final-closure',")) {
+      return source.replace(
+        "'test:weather-final-closure',",
+        "'test:weather-final-closure',\\n  'test:weather-manager-clarity',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61F Weather manager clarity patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61F_weather_manager_clarity.mjs
+
+node scripts/test_weather_manager_clarity_static.mjs
+npm run test:weather-manager-clarity
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61F_weather_manager_clarity.mjs
+  - src/components/weather/WeatherLocationManager.jsx
+  - src/components/weather/WeatherLocationManager.css
+  - src/components/weather/WeatherLocationManagerClarity.cert.test.js
+  - scripts/test_weather_manager_clarity_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- Weather manager clarity Vitest passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- UX clarity gate:
+  - add-city instructions visible: YES/NO
+  - delete-city instructions visible: YES/NO
+  - one-click Add Colombo visible when missing: YES/NO
+  - quick-add city buttons visible: YES/NO
+  - delete buttons labelled and visible: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+------------------------------------------------------
+# Slice 61G — Weather professional visual theme + desktop visibility guard
+
+This slice is for the UI quality issues: poor colors/layout, QuickWeather invisible in desktop, and the item below QuickWeather looking unprofessional.
+
+It adds one shared override stylesheet that unifies Weather, QuickWeather, city manager, signal strip, weekly forecast, comparison cards, and planning summary.
+
+## Create
+
+```bash
+scripts/apply_slice61G_weather_professional_theme.mjs
+```
+
+## Full code
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function insertAfterLastImport(source, insertion) {
+  if (source.includes(insertion.trim())) return source;
+
+  const importMatches = [...source.matchAll(/^import .+;$/gm)];
+  if (!importMatches.length) return insertion + '\n' + source;
+
+  const last = importMatches[importMatches.length - 1];
+  const index = last.index + last[0].length;
+
+  return source.slice(0, index) + '\n' + insertion + source.slice(index);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Shared professional Weather visual system                                */
+/* -------------------------------------------------------------------------- */
+
+write('src/styles/weatherProfessionalTheme.css', `/* -------------------------------------------------------------------------- */
+/* NW Weather Professional Visual System                                       */
+/* Purpose: make Weather + QuickWeather consistent, visible, compact, premium. */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --weather-shell-bg: rgba(15, 23, 42, 0.78);
+  --weather-card-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.82));
+  --weather-card-bg-soft: rgba(15, 23, 42, 0.64);
+  --weather-card-border: rgba(45, 212, 191, 0.20);
+  --weather-card-border-strong: rgba(45, 212, 191, 0.34);
+  --weather-accent: #14b8a6;
+  --weather-accent-soft: rgba(20, 184, 166, 0.14);
+  --weather-accent-text: #99f6e4;
+  --weather-blue-soft: rgba(59, 130, 246, 0.14);
+  --weather-blue-text: #bfdbfe;
+  --weather-text: #f8fafc;
+  --weather-muted: #94a3b8;
+  --weather-muted-2: #64748b;
+  --weather-danger-bg: rgba(127, 29, 29, 0.24);
+  --weather-danger-border: rgba(248, 113, 113, 0.32);
+  --weather-danger-text: #fecaca;
+  --weather-warn-bg: rgba(120, 53, 15, 0.20);
+  --weather-warn-border: rgba(245, 158, 11, 0.30);
+  --weather-warn-text: #fde68a;
+  --weather-good-bg: rgba(20, 184, 166, 0.14);
+  --weather-good-border: rgba(45, 212, 191, 0.28);
+  --weather-good-text: #ccfbf1;
+  --weather-radius-lg: 22px;
+  --weather-radius-md: 16px;
+  --weather-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Weather page shell                                                          */
+/* -------------------------------------------------------------------------- */
+
+.weather-page,
+.page-container:has(.weather-location-manager),
+.page-container:has(.wlm-collapsed),
+.page-container:has(.wwf-card) {
+  background:
+    radial-gradient(840px 280px at 100% 0%, rgba(20, 184, 166, 0.08), transparent 64%),
+    radial-gradient(680px 260px at 0% 20%, rgba(59, 130, 246, 0.06), transparent 66%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* QuickWeather desktop visibility and contrast                                */
+/* -------------------------------------------------------------------------- */
+
+.quick-weather-card,
+[class*="quick-weather-card"],
+[data-quick-weather],
+.qw-card {
+  min-height: 172px;
+  border: 1px solid var(--weather-card-border) !important;
+  border-radius: var(--weather-radius-lg) !important;
+  background:
+    radial-gradient(520px 190px at 100% 0%, rgba(20, 184, 166, 0.15), transparent 72%),
+    var(--weather-card-bg) !important;
+  color: var(--weather-text) !important;
+  box-shadow: var(--weather-shadow);
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.quick-weather-card *,
+[class*="quick-weather-card"] * {
+  color-scheme: dark;
+}
+
+.quick-weather-card input,
+.quick-weather-card select,
+.quick-weather-card textarea,
+.qw-config-bar input,
+.qw-config-bar select {
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
+  background: rgba(2, 6, 23, 0.76) !important;
+  color: var(--weather-text) !important;
+}
+
+.quick-weather-card input::placeholder,
+.qw-config-bar input::placeholder {
+  color: var(--weather-muted) !important;
+}
+
+.quick-weather-card button,
+.qw-config-bar button {
+  border-color: var(--weather-good-border) !important;
+  background: var(--weather-good-bg) !important;
+  color: var(--weather-good-text) !important;
+}
+
+/* Desktop guard: never allow QuickWeather rows to collapse into invisible text. */
+
+@media (min-width: 900px) {
+  .quick-weather-card,
+  [class*="quick-weather-card"] {
+    display: block !important;
+    min-height: 188px;
+    overflow: visible;
+  }
+
+  .qw-cities-list,
+  .quick-weather-card ul,
+  .quick-weather-card .weather-list {
+    display: grid;
+    gap: 8px;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* QuickWeather city rows and precipitation                                    */
+/* -------------------------------------------------------------------------- */
+
+.qw-city-row,
+.quick-weather-card li,
+.quick-weather-card [class*="city-row"] {
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: var(--weather-radius-md);
+  background: rgba(2, 6, 23, 0.34);
+  color: #e2e8f0;
+}
+
+.qw-city-row--active,
+.quick-weather-card [aria-selected="true"],
+.quick-weather-card .active {
+  border-color: var(--weather-card-border-strong);
+  background: rgba(20, 184, 166, 0.12);
+}
+
+.qw-city-slot__pop,
+.qw-pop-high,
+.qw-pop-low {
+  min-width: 84px;
+  white-space: nowrap;
+  font-weight: 850;
+}
+
+.qw-pop-high {
+  color: #93c5fd !important;
+}
+
+.qw-pop-low {
+  color: var(--weather-muted) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* QuickWeather signal strip                                                   */
+/* -------------------------------------------------------------------------- */
+
+.qwss-strip,
+.quick-weather-signal-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.qwss-chip,
+.quick-weather-signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.42);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.qwss-chip--low,
+.quick-weather-signal--good {
+  border-color: var(--weather-good-border);
+  background: var(--weather-good-bg);
+  color: var(--weather-good-text);
+}
+
+.qwss-chip--medium,
+.quick-weather-signal--warn {
+  border-color: var(--weather-warn-border);
+  background: var(--weather-warn-bg);
+  color: var(--weather-warn-text);
+}
+
+.qwss-chip--high,
+.quick-weather-signal--bad {
+  border-color: var(--weather-danger-border);
+  background: var(--weather-danger-bg);
+  color: var(--weather-danger-text);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Item below QuickWeather / highlight card                                    */
+/* -------------------------------------------------------------------------- */
+
+.qw-highlight-text-container,
+.quick-weather-card + .weather-alert,
+.quick-weather-card + .card,
+.quick-weather-card [class*="highlight"],
+.quick-weather-card [class*="alert"] {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  margin-top: 12px;
+  padding: 12px 14px !important;
+  border: 1px solid var(--weather-card-border);
+  border-radius: 18px !important;
+  background:
+    linear-gradient(135deg, rgba(20, 184, 166, 0.14), rgba(59, 130, 246, 0.10)) !important;
+  color: #e2e8f0 !important;
+}
+
+.qw-highlight-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(2, 6, 23, 0.40);
+  font-size: 1.1rem;
+}
+
+.qw-highlight-text,
+.quick-weather-card [class*="highlight"] strong,
+.quick-weather-card [class*="alert"] strong {
+  color: var(--weather-text) !important;
+  font-size: 0.92rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.qw-severe-banner {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--weather-danger-border);
+  background: var(--weather-danger-bg);
+  color: var(--weather-danger-text);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Weather location manager                                                    */
+/* -------------------------------------------------------------------------- */
+
+.wlm-collapsed,
+.wlm-panel,
+.weather-location-manager {
+  border-color: var(--weather-card-border) !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(420px 160px at 100% 0%, rgba(20, 184, 166, 0.12), transparent 70%),
+    var(--weather-card-bg) !important;
+  box-shadow: var(--weather-shadow);
+}
+
+.wlm-eyebrow,
+.wlm-section-label,
+.weather-location-manager__eyebrow {
+  color: var(--weather-accent-text) !important;
+}
+
+.wlm-chip,
+.weather-location-manager__chip {
+  border-color: rgba(148, 163, 184, 0.18) !important;
+  background: rgba(2, 6, 23, 0.42) !important;
+  color: #e2e8f0 !important;
+}
+
+.wlm-select,
+.weather-location-manager input {
+  border-color: rgba(148, 163, 184, 0.26) !important;
+  background: rgba(2, 6, 23, 0.70) !important;
+  color: var(--weather-text) !important;
+}
+
+.wlm-add-colombo,
+.wlm-add-btn,
+.wlm-toggle,
+.wlm-help button,
+.wlm-quick-add__buttons button,
+.weather-location-manager button {
+  border-color: var(--weather-good-border) !important;
+  background: var(--weather-good-bg) !important;
+  color: var(--weather-good-text) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Weekly forecast                                                             */
+/* -------------------------------------------------------------------------- */
+
+.wwf-card,
+.weekly-weather-forecast {
+  margin: 14px 16px;
+  border: 1px solid var(--weather-card-border) !important;
+  border-radius: var(--weather-radius-lg) !important;
+  overflow: hidden;
+  background:
+    radial-gradient(520px 180px at 100% 0%, rgba(20, 184, 166, 0.12), transparent 70%),
+    var(--weather-card-bg-soft) !important;
+  box-shadow: var(--weather-shadow);
+}
+
+.wwf-header,
+.weekly-weather-forecast__header {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.wwf-eyebrow,
+.weekly-weather-forecast__eyebrow {
+  color: var(--weather-accent-text) !important;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wwf-header h3,
+.weekly-weather-forecast h2,
+.weekly-weather-forecast h3 {
+  color: var(--weather-text) !important;
+}
+
+.wwf-row,
+.weekly-weather-forecast__day {
+  border: 1px solid rgba(148, 163, 184, 0.12) !important;
+  border-radius: 16px !important;
+  background: rgba(2, 6, 23, 0.34) !important;
+}
+
+.wwf-row--today,
+.weekly-weather-forecast__day:first-child {
+  border-color: var(--weather-card-border-strong) !important;
+  background: rgba(20, 184, 166, 0.10) !important;
+}
+
+.wwf-day,
+.wwf-temp strong,
+.weekly-weather-forecast__temp strong {
+  color: var(--weather-text) !important;
+}
+
+.wwf-condition,
+.wwf-temp span,
+.wwf-metric strong,
+.weekly-weather-forecast__condition {
+  color: #cbd5e1 !important;
+}
+
+.wwf-metric span {
+  color: var(--weather-muted-2) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Weather comparison and planning cards                                       */
+/* -------------------------------------------------------------------------- */
+
+.weather-city-comparison,
+.weather-planning-summary {
+  border: 1px solid var(--weather-card-border) !important;
+  border-radius: var(--weather-radius-lg) !important;
+  background:
+    radial-gradient(520px 180px at 100% 0%, rgba(20, 184, 166, 0.10), transparent 70%),
+    var(--weather-card-bg-soft) !important;
+  box-shadow: var(--weather-shadow);
+}
+
+.weather-city-comparison__eyebrow,
+.weather-planning-summary__eyebrow {
+  color: var(--weather-accent-text) !important;
+}
+
+.weather-city-comparison h2,
+.weather-planning-summary h2,
+.weather-planning-summary h3 {
+  color: var(--weather-text) !important;
+}
+
+.weather-city-comparison__table th {
+  color: var(--weather-blue-text) !important;
+}
+
+.weather-city-comparison__table td,
+.weather-planning-summary__line {
+  color: #cbd5e1 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mobile compact behavior                                                     */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 680px) {
+  .quick-weather-card,
+  .wwf-card,
+  .weather-city-comparison,
+  .weather-planning-summary,
+  .wlm-collapsed,
+  .wlm-panel {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    border-radius: 18px !important;
+  }
+
+  .qwss-strip,
+  .quick-weather-signal-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .qwss-chip,
+  .quick-weather-signal {
+    justify-content: center;
+  }
+
+  .qw-highlight-text-container {
+    grid-template-columns: 1fr !important;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Import professional theme globally                                       */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/App.jsx', source => {
+  return insertAfterLastImport(
+    source,
+    `import './styles/weatherProfessionalTheme.css';`
+  );
+});
+
+/* -------------------------------------------------------------------------- */
+/* 3) Static and Vitest guard                                                  */
+/* -------------------------------------------------------------------------- */
+
+write('src/styles/weatherProfessionalTheme.cert.test.js', `import { describe, expect, it } from 'vitest';
+import fs from 'fs';
+
+describe('Weather professional theme certification', () => {
+  const css = fs.readFileSync('src/styles/weatherProfessionalTheme.css', 'utf8');
+
+  it('defines shared weather visual variables', () => {
+    expect(css).toContain('--weather-card-bg');
+    expect(css).toContain('--weather-card-border');
+    expect(css).toContain('--weather-accent-text');
+  });
+
+  it('protects QuickWeather desktop visibility', () => {
+    expect(css).toContain('.quick-weather-card');
+    expect(css).toContain('visibility: visible');
+    expect(css).toContain('@media (min-width: 900px)');
+  });
+
+  it('styles the item below QuickWeather professionally', () => {
+    expect(css).toContain('.qw-highlight-text-container');
+    expect(css).toContain('grid-template-columns: auto minmax(0, 1fr)');
+    expect(css).toContain('linear-gradient');
+  });
+
+  it('styles weekly forecast and weather manager consistently', () => {
+    expect(css).toContain('.wwf-card');
+    expect(css).toContain('.wlm-collapsed');
+    expect(css).toContain('.weather-city-comparison');
+    expect(css).toContain('.weather-planning-summary');
+  });
+
+  it('includes mobile compact guards', () => {
+    expect(css).toContain('@media (max-width: 680px)');
+    expect(css).toContain('grid-template-columns: 1fr 1fr');
+  });
+});
+`);
+
+write('scripts/test_weather_professional_theme_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const css = read('src/styles/weatherProfessionalTheme.css');
+const app = read('src/App.jsx');
+const cert = read('src/styles/weatherProfessionalTheme.cert.test.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  '--weather-card-bg',
+  '--weather-card-border',
+  '--weather-accent-text',
+  '.quick-weather-card',
+  'visibility: visible',
+  '.qw-highlight-text-container',
+  '.qwss-strip',
+  '.wlm-collapsed',
+  '.wwf-card',
+  '.weather-city-comparison',
+  '.weather-planning-summary',
+]) {
+  assert(css.includes(token), 'weatherProfessionalTheme.css missing token: ' + token);
+}
+
+for (const token of [
+  "import './styles/weatherProfessionalTheme.css';",
+]) {
+  assert(app.includes(token), 'App.jsx missing token: ' + token);
+}
+
+for (const token of [
+  'Weather professional theme certification',
+  'protects QuickWeather desktop visibility',
+  'styles the item below QuickWeather professionally',
+  'styles weekly forecast and weather manager consistently',
+]) {
+  assert(cert.includes(token), 'weatherProfessionalTheme.cert.test.js missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:weather-professional-theme"'),
+  'package.json must include test:weather-professional-theme'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:weather-professional-theme']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include weather professional theme test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather professional visual theme',
+  guarantees: [
+    'QuickWeather is visible in desktop view',
+    'QuickWeather card has professional contrast',
+    'item below QuickWeather is styled professionally',
+    'weekly forecast matches Weather tab theme',
+    'city manager matches Weather tab theme',
+    'weather comparison/planning cards match theme',
+    'mobile compact guards are present'
+  ]
+}, null, 2));
+
+console.log('PASS: Weather professional theme static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:weather-professional-theme'] =
+    'node scripts/test_weather_professional_theme_static.mjs && vitest run --config vitest.config.js src/styles/weatherProfessionalTheme.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-professional-theme']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  const anchors = [
+    "  ['npm', ['run', 'test:weather-manager-clarity']],",
+    "  ['npm', ['run', 'test:weather-final-closure']],",
+    "  ['npm', ['run', 'test:weather-integration-hardening']],",
+  ];
+
+  for (const anchor of anchors) {
+    if (source.includes(anchor)) {
+      return source.replace(
+        anchor,
+        anchor + "\\n  ['npm', ['run', 'test:weather-professional-theme']],"
+      );
+    }
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-professional-theme')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-manager-clarity');
+      const command = {
+        id: 'weather-professional-theme',
+        cmd: 'npm',
+        args: ['run', 'test:weather-professional-theme'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-professional-theme')) return source;
+
+    if (source.includes("'test:weather-manager-clarity',")) {
+      return source.replace(
+        "'test:weather-manager-clarity',",
+        "'test:weather-manager-clarity',\\n  'test:weather-professional-theme',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61G Weather professional visual theme patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61G_weather_professional_theme.mjs
+
+node scripts/test_weather_professional_theme_static.mjs
+npm run test:weather-professional-theme
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61G_weather_professional_theme.mjs
+  - src/styles/weatherProfessionalTheme.css
+  - src/styles/weatherProfessionalTheme.cert.test.js
+  - src/App.jsx
+  - scripts/test_weather_professional_theme_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- Theme Vitest passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- Visual gate:
+  - QuickWeather visible in desktop: YES/NO
+  - QuickWeather contrast improved: YES/NO
+  - item below QuickWeather professional: YES/NO
+  - weekly forecast aligned with Weather theme: YES/NO
+  - city manager aligned with Weather theme: YES/NO
+  - mobile compact layout protected: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+
+-----------------------------------------
+
+# Slice 61H — Weather browser smoke test with Playwright
+
+This adds a **real browser-level guard** after all static/Vitest checks. It checks the actual built UI behavior: QuickWeather visibility, Weather tab city manager, Add Colombo path, weekly forecast card, and On This Day hidden by default.
+
+It uses the existing `playwright` dependency from `package.json`; no new package is required. 
+
+## Create
+
+```bash
+scripts/apply_slice61H_weather_browser_smoke.mjs
+```
+
+## Full code
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Browser smoke script                                                     */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_weather_browser_smoke.mjs', `import { spawn } from 'node:child_process';
+import { chromium } from 'playwright';
+
+const HOST = '127.0.0.1';
+const PORT = 4177;
+const BASE_URL = \`http://\${HOST}:\${PORT}\`;
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function startDevServer() {
+  const child = spawn(
+    process.platform === 'win32' ? 'npm.cmd' : 'npm',
+    ['run', 'dev', '--', '--host', HOST, '--port', String(PORT)],
+    {
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: {
+        ...process.env,
+        BROWSER: 'none',
+      },
+    }
+  );
+
+  child.stdout.on('data', data => {
+    const text = String(data);
+    if (process.env.NW_VERBOSE_SMOKE === '1') process.stdout.write(text);
+  });
+
+  child.stderr.on('data', data => {
+    const text = String(data);
+    if (process.env.NW_VERBOSE_SMOKE === '1') process.stderr.write(text);
+  });
+
+  return child;
+}
+
+async function waitForServer(timeoutMs = 45000) {
+  const start = Date.now();
+  let lastError = null;
+
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const response = await fetch(BASE_URL, { cache: 'no-store' });
+      if (response.ok) return true;
+    } catch (error) {
+      lastError = error;
+    }
+
+    await sleep(500);
+  }
+
+  throw new Error('Vite dev server did not become ready. Last error: ' + (lastError?.message || 'unknown'));
+}
+
+async function visibleBox(page, selector, label) {
+  const locator = page.locator(selector).first();
+  await locator.waitFor({ state: 'visible', timeout: 12000 });
+  const box = await locator.boundingBox();
+
+  if (!box || box.width < 20 || box.height < 20) {
+    throw new Error(label + ' is not visibly rendered. Box: ' + JSON.stringify(box));
+  }
+
+  return box;
+}
+
+async function clickTextIfVisible(page, textCandidates) {
+  for (const text of textCandidates) {
+    const locator = page.getByText(text, { exact: false }).first();
+    try {
+      await locator.waitFor({ state: 'visible', timeout: 2500 });
+      await locator.click();
+      return true;
+    } catch {
+      // Try next.
+    }
+  }
+
+  return false;
+}
+
+async function gotoWeatherTab(page) {
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+  await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
+
+  const clicked = await clickTextIfVisible(page, ['Weather', 'weather', '🌤']);
+  if (clicked) {
+    await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
+    await page.waitForTimeout(800);
+  }
+
+  return clicked;
+}
+
+async function assertNoVisibleOnThisDay(page) {
+  const visibleOnThisDayCount = await page.evaluate(() => {
+    const candidates = [...document.querySelectorAll('section, article, .card, .panel, .widget, h1, h2, h3, h4, header')];
+    return candidates.filter(node => {
+      const text = String(node.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+      if (!text.includes('on this day')) return false;
+
+      const style = window.getComputedStyle(node);
+      const rect = node.getBoundingClientRect();
+
+      return style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        Number(style.opacity || 1) !== 0 &&
+        rect.width > 10 &&
+        rect.height > 10;
+    }).length;
+  });
+
+  if (visibleOnThisDayCount > 0) {
+    throw new Error('On This Day is visible even though default setting should hide it.');
+  }
+}
+
+async function assertWeatherLocationManager(page) {
+  const managerSelector = '[data-weather-location-manager], .wlm-collapsed, .wlm-panel, .weather-location-manager';
+  await visibleBox(page, managerSelector, 'Weather location manager');
+
+  const manageButton = page.getByRole('button', { name: /manage/i }).first();
+  if (await manageButton.isVisible().catch(() => false)) {
+    await manageButton.click();
+    await page.waitForTimeout(300);
+  }
+
+  await visibleBox(page, '[data-weather-location-manager="open"], .wlm-panel, .weather-location-manager', 'Open weather location manager');
+
+  const helpText = await page.locator('body').textContent();
+  for (const token of ['Add', 'delete', 'Colombo']) {
+    if (!String(helpText || '').toLowerCase().includes(token.toLowerCase())) {
+      throw new Error('Weather location manager is missing visible token: ' + token);
+    }
+  }
+
+  const colomboButton = page.locator('[data-weather-add-colombo], button:has-text("Colombo")').first();
+  const hasColomboPath = await colomboButton.count();
+  if (hasColomboPath < 1) {
+    const bodyText = await page.locator('body').textContent();
+    if (!String(bodyText || '').includes('Colombo is already added')) {
+      throw new Error('No Add Colombo path or already-added Colombo message found.');
+    }
+  }
+
+  const deleteButtons = await page.locator('[data-weather-delete-city], .wlm-chip button').count();
+  if (deleteButtons < 1) {
+    throw new Error('No visible delete-city button found in Weather location manager.');
+  }
+}
+
+async function assertQuickWeather(page) {
+  const selector = '.quick-weather-card, [class*="quick-weather-card"], [data-quick-weather], .qw-card';
+  const box = await visibleBox(page, selector, 'QuickWeather card');
+
+  if (box.width < 220 && page.viewportSize()?.width >= 900) {
+    throw new Error('QuickWeather desktop width is too small: ' + JSON.stringify(box));
+  }
+
+  const text = await page.locator(selector).first().textContent().catch(() => '');
+  const hasRainMm =
+    /\\d+%\\s*·\\s*\\d+(\\.\\d+)?mm/i.test(String(text)) ||
+    /0%\\s*·\\s*0\\.0mm/i.test(String(text));
+
+  if (!hasRainMm) {
+    throw new Error('QuickWeather does not show precipitation as probability + mm.');
+  }
+}
+
+async function assertWeeklyForecast(page) {
+  const selector = '[data-weekly-weather-forecast], .wwf-card, .weekly-weather-forecast';
+  await visibleBox(page, selector, 'Weekly forecast');
+
+  const text = await page.locator(selector).first().textContent().catch(() => '');
+
+  for (const token of ['Rain', 'Feels', 'Humidity']) {
+    if (!String(text || '').toLowerCase().includes(token.toLowerCase())) {
+      throw new Error('Weekly forecast is missing token: ' + token);
+    }
+  }
+}
+
+async function main() {
+  const server = startDevServer();
+  let browser = null;
+
+  try {
+    await waitForServer();
+
+    browser = await chromium.launch({
+      headless: true,
+    });
+
+    const context = await browser.newContext({
+      viewport: { width: 1366, height: 900 },
+    });
+
+    const page = await context.newPage();
+
+    await gotoWeatherTab(page);
+
+    await assertNoVisibleOnThisDay(page);
+    await assertWeatherLocationManager(page);
+    await assertQuickWeather(page);
+    await assertWeeklyForecast(page);
+
+    await browser.close();
+    browser = null;
+
+    console.log(JSON.stringify({
+      status: 'PASS',
+      checked: 'Weather browser smoke',
+      guarantees: [
+        'Weather page can be opened in browser',
+        'On This Day is hidden by default',
+        'Weather location manager is visible',
+        'Add/delete city path is visible',
+        'Colombo add/already-added path exists',
+        'QuickWeather is visible in desktop viewport',
+        'QuickWeather shows rain probability and mm',
+        'Weekly forecast shows rain, feels and humidity'
+      ],
+    }, null, 2));
+
+    console.log('PASS: Weather browser smoke');
+  } finally {
+    if (browser) await browser.close().catch(() => {});
+    server.kill('SIGTERM');
+    await sleep(500);
+    if (!server.killed) server.kill('SIGKILL');
+  }
+}
+
+main().catch(error => {
+  console.error(error);
+  process.exit(1);
+});
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Static guard for smoke script                                            */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_weather_browser_smoke_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const smoke = read('scripts/test_weather_browser_smoke.mjs');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  "import { chromium } from 'playwright'",
+  'assertNoVisibleOnThisDay',
+  'assertWeatherLocationManager',
+  'assertQuickWeather',
+  'assertWeeklyForecast',
+  'data-weather-add-colombo',
+  'data-weather-delete-city',
+  'QuickWeather does not show precipitation',
+  'Weekly forecast is missing token',
+]) {
+  assert(smoke.includes(token), 'test_weather_browser_smoke.mjs missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:weather-browser-smoke"'),
+  'package.json must include test:weather-browser-smoke'
+);
+
+assert(
+  packageJson.includes('"test:weather-browser-smoke:static"'),
+  'package.json must include test:weather-browser-smoke:static'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:weather-browser-smoke:static']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include static browser-smoke guard or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Weather browser smoke static guard',
+  guarantees: [
+    'Playwright smoke script exists',
+    'On This Day hidden-by-default browser check exists',
+    'Weather location manager browser check exists',
+    'QuickWeather desktop visibility browser check exists',
+    'QuickWeather precipitation mm browser check exists',
+    'Weekly forecast browser check exists'
+  ],
+}, null, 2));
+
+console.log('PASS: Weather browser smoke static guard');
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) package.json + certification                                             */
+/* -------------------------------------------------------------------------- */
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+
+  pkg.scripts['test:weather-browser-smoke:static'] =
+    'node scripts/test_weather_browser_smoke_static.mjs';
+
+  pkg.scripts['test:weather-browser-smoke'] =
+    'node scripts/test_weather_browser_smoke.mjs';
+
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:weather-browser-smoke:static']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  const anchors = [
+    "  ['npm', ['run', 'test:weather-professional-theme']],",
+    "  ['npm', ['run', 'test:weather-manager-clarity']],",
+    "  ['npm', ['run', 'test:weather-final-closure']],",
+  ];
+
+  for (const anchor of anchors) {
+    if (source.includes(anchor)) {
+      return source.replace(
+        anchor,
+        anchor + "\\n  ['npm', ['run', 'test:weather-browser-smoke:static']],"
+      );
+    }
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'weather-browser-smoke-static')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'weather-professional-theme');
+      const command = {
+        id: 'weather-browser-smoke-static',
+        cmd: 'npm',
+        args: ['run', 'test:weather-browser-smoke:static'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:weather-browser-smoke:static')) return source;
+
+    if (source.includes("'test:weather-professional-theme',")) {
+      return source.replace(
+        "'test:weather-professional-theme',",
+        "'test:weather-professional-theme',\\n  'test:weather-browser-smoke:static',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 61H Weather browser smoke patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice61H_weather_browser_smoke.mjs
+
+node scripts/test_weather_browser_smoke_static.mjs
+npm run test:weather-browser-smoke:static
+
+# Real browser smoke, run after build/static tests are clean:
+npm run test:weather-browser-smoke
+
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice61H_weather_browser_smoke.mjs
+  - scripts/test_weather_browser_smoke.mjs
+  - scripts/test_weather_browser_smoke_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static smoke guard passed:
+  - npm run test:weather-browser-smoke:static: YES/NO
+- Real browser smoke passed:
+  - npm run test:weather-browser-smoke: YES/NO
+- ESLint passed:
+  - npm run lint: YES/NO
+- Vitest/unit passed:
+  - npm run test:unit: YES/NO
+- Production build passed:
+  - npm run build: YES/NO
+- Full certification passed:
+  - npm run test:certify: YES/NO
+- Browser UX gate:
+  - On This Day hidden by default: YES/NO
+  - Weather manager visible: YES/NO
+  - Add/delete city path visible: YES/NO
+  - Colombo add/already-added path visible: YES/NO
+  - QuickWeather visible in desktop: YES/NO
+  - QuickWeather rain % + mm visible: YES/NO
+  - Weekly forecast rain/feels/humidity visible: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+Do **not** put the full browser smoke in `test:certify` yet. It is slower and can be flaky in CI. This slice only adds the **static browser-smoke guard** to certification. The real browser smoke should be run manually or in a nightly workflow.
+

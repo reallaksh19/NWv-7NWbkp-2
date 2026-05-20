@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "type": "travel-location-news-policy",
+  "generatedFor": {
+    "key": "muscat",
+    "display": "Muscat",
+    "countryCode": "OM",
+    "countryLabel": "Oman",
+    "edition": {
+      "country": "OM",
+      "lang": "en",
+      "timeRange": "30d"
+    }
+  },
+  "freshness": {
+    "maxAgeMinutes": 180,
+    "staleAfterMinutes": 360
+  },
+  "dedupe": {
+    "keyFields": [
+      "url",
+      "title",
+      "source"
+    ],
+    "titleSimilarityThreshold": 0.84
+  },
+  "queries": [
+    {
+      "id": "muscat-travel-1",
+      "locationKey": "muscat",
+      "label": "Muscat news",
+      "query": "Muscat news",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Muscat%20news&hl=en&gl=OM&ceid=OM:en",
+      "priority": "high"
+    },
+    {
+      "id": "muscat-travel-2",
+      "locationKey": "muscat",
+      "label": "Muscat local news",
+      "query": "Muscat local news",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Muscat%20local%20news&hl=en&gl=OM&ceid=OM:en",
+      "priority": "high"
+    },
+    {
+      "id": "muscat-travel-3",
+      "locationKey": "muscat",
+      "label": "Oman breaking news",
+      "query": "Oman breaking news",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Oman%20breaking%20news&hl=en&gl=OM&ceid=OM:en",
+      "priority": "high"
+    },
+    {
+      "id": "muscat-travel-4",
+      "locationKey": "muscat",
+      "label": "Muscat travel advisory",
+      "query": "Muscat travel advisory",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Muscat%20travel%20advisory&hl=en&gl=OM&ceid=OM:en",
+      "priority": "medium"
+    },
+    {
+      "id": "muscat-travel-5",
+      "locationKey": "muscat",
+      "label": "Muscat airport",
+      "query": "Muscat airport",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Muscat%20airport&hl=en&gl=OM&ceid=OM:en",
+      "priority": "medium"
+    },
+    {
+      "id": "muscat-travel-6",
+      "locationKey": "muscat",
+      "label": "Muscat weather alert",
+      "query": "Muscat weather alert",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Muscat%20weather%20alert&hl=en&gl=OM&ceid=OM:en",
+      "priority": "medium"
+    },
+    {
+      "id": "muscat-travel-7",
+      "locationKey": "muscat",
+      "label": "Oman tourism",
+      "query": "Oman tourism",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Oman%20tourism&hl=en&gl=OM&ceid=OM:en",
+      "priority": "low"
+    },
+    {
+      "id": "muscat-travel-8",
+      "locationKey": "muscat",
+      "label": "Oman transport",
+      "query": "Oman transport",
+      "country": "OM",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Oman%20transport&hl=en&gl=OM&ceid=OM:en",
+      "priority": "low"
+    }
+  ]
+}

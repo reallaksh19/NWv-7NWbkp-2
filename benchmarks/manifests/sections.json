@@ -1,0 +1,156 @@
+{
+  "schema_version": 2,
+  "manifest_type": "sections_catalog",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "sections": [
+    {
+      "id": "world",
+      "group": "daily_news",
+      "priority": "high",
+      "purpose": "Global high-signal stories with broad relevance.",
+      "quality_expectations": [
+        "High freshness relevance",
+        "Low entertainment bleed",
+        "Strong canonical clustering",
+        "Low stale leak"
+      ],
+      "anti_patterns": [
+        "Entertainment/social spillover without gold support",
+        "Weak local stories outranking globally important stories",
+        "Duplicate event clusters occupying multiple top positions"
+      ]
+    },
+    {
+      "id": "india",
+      "group": "daily_news",
+      "priority": "high",
+      "purpose": "Nationally relevant stories for India-focused daily use.",
+      "quality_expectations": [
+        "Strong top-10 recall for important India stories",
+        "Low festival noise leak into serious coverage",
+        "Freshness and source quality should matter"
+      ],
+      "anti_patterns": [
+        "Generic entertainment/social chatter treated as India lead stories",
+        "Stale explainers or repetitive commentary in top slots"
+      ]
+    },
+    {
+      "id": "chennai",
+      "group": "daily_news",
+      "priority": "high",
+      "purpose": "City-specific local relevance for Chennai.",
+      "quality_expectations": [
+        "High local utility",
+        "Good alert and civic relevance when present",
+        "Low duplicate local filler"
+      ],
+      "anti_patterns": [
+        "Weak local filler overpromotion",
+        "Irrelevant national/global bleed into local top slots"
+      ]
+    },
+    {
+      "id": "trichy",
+      "group": "daily_news",
+      "priority": "medium",
+      "purpose": "City-specific local relevance for Trichy.",
+      "quality_expectations": [
+        "High local utility",
+        "Low stale leak",
+        "Low duplicate local filler"
+      ],
+      "anti_patterns": [
+        "Weak local filler overpromotion",
+        "Irrelevant spillover from Chennai/local/general feeds"
+      ]
+    },
+    {
+      "id": "local",
+      "group": "daily_news",
+      "priority": "medium",
+      "purpose": "Broader local/regional relevance beyond city-only sections.",
+      "quality_expectations": [
+        "Actionable local/regional relevance",
+        "Balanced mix without noise saturation"
+      ],
+      "anti_patterns": [
+        "Generic low-signal local filler",
+        "Same-event repetition across nearby stories"
+      ]
+    },
+    {
+      "id": "business",
+      "group": "daily_news",
+      "priority": "high",
+      "purpose": "Business and economy stories with daily decision value.",
+      "quality_expectations": [
+        "High serious-section recall",
+        "Low shopping/festival noise leak",
+        "Good freshness discipline"
+      ],
+      "anti_patterns": [
+        "Holiday sale chatter treated as business lead story without real economic relevance",
+        "Opinion/explainer clutter in top ranks"
+      ]
+    },
+    {
+      "id": "technology",
+      "group": "daily_news",
+      "priority": "high",
+      "purpose": "Technology, startup, and product ecosystem stories.",
+      "quality_expectations": [
+        "Strong relevance for major tech stories",
+        "Low speculative leak",
+        "Low keyword-overweight errors"
+      ],
+      "anti_patterns": [
+        "Rumour/speculation overpromotion",
+        "Festival or shopping chatter leaking into tech without strong fit"
+      ]
+    },
+    {
+      "id": "sports",
+      "group": "daily_news",
+      "priority": "medium",
+      "purpose": "Sports headlines with current interest and schedule value.",
+      "quality_expectations": [
+        "Good freshness",
+        "Strong event relevance",
+        "Low opinion/blog contamination"
+      ],
+      "anti_patterns": [
+        "Opinion/prediction clutter",
+        "Low-value recap spam outranking meaningful match/event stories"
+      ]
+    },
+    {
+      "id": "entertainment",
+      "group": "daily_news",
+      "priority": "medium",
+      "purpose": "Entertainment coverage with genuine current interest.",
+      "quality_expectations": [
+        "Fresh releases and major entertainment news should surface well",
+        "Low gossip/redundancy contamination"
+      ],
+      "anti_patterns": [
+        "Gossip or weak filler dominating section",
+        "Same release story repeated too many times"
+      ]
+    },
+    {
+      "id": "social",
+      "group": "daily_news",
+      "priority": "low",
+      "purpose": "Buzz and lighter trend-oriented stories.",
+      "quality_expectations": [
+        "Distinct from serious sections",
+        "Useful as a contained trend bucket, not as feed distortion source"
+      ],
+      "anti_patterns": [
+        "Bleeding into serious sections",
+        "Driving overall ranking distortion outside its section"
+      ]
+    }
+  ]
+}

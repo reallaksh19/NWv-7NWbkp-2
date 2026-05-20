@@ -1,0 +1,73 @@
+.qwss-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.qwss-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.42);
+  color: #e2e8f0;
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.qwss-chip__icon {
+  flex: 0 0 auto;
+  font-size: 0.94rem;
+}
+
+.qwss-chip__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qwss-chip--low {
+  border-color: rgba(45, 212, 191, 0.22);
+  background: rgba(20, 184, 166, 0.12);
+  color: #ccfbf1;
+}
+
+.qwss-chip--medium {
+  border-color: rgba(245, 158, 11, 0.30);
+  background: rgba(120, 53, 15, 0.20);
+  color: #fde68a;
+}
+
+.qwss-chip--high {
+  border-color: rgba(248, 113, 113, 0.34);
+  background: rgba(127, 29, 29, 0.24);
+  color: #fecaca;
+}
+
+@media (min-width: 900px) {
+  .qwss-strip {
+    margin-top: 12px;
+  }
+
+  .qwss-chip {
+    min-height: 32px;
+    padding-inline: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .qwss-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .qwss-chip {
+    justify-content: center;
+  }
+}

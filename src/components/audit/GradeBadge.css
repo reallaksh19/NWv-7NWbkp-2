@@ -1,0 +1,104 @@
+.grade-badge {
+  --grade-badge-top-offset: 12px;
+  --grade-badge-right-offset: 12px;
+  --grade-badge-z-index: 40;
+  --grade-badge-size: 42px;
+
+  display: inline-grid;
+  place-items: center;
+  width: var(--grade-badge-size);
+  height: var(--grade-badge-size);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 950;
+  line-height: 1;
+  z-index: var(--grade-badge-z-index);
+}
+
+.grade-badge--position-top-right {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--grade-badge-top-offset));
+  right: calc(env(safe-area-inset-right, 0px) + var(--grade-badge-right-offset));
+}
+
+.grade-badge--position-below-header {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--grade-badge-top-offset, 72px));
+  right: calc(env(safe-area-inset-right, 0px) + var(--grade-badge-right-offset, 12px));
+}
+
+.grade-badge--position-floating-low {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--grade-badge-top-offset, 88px));
+  right: calc(env(safe-area-inset-right, 0px) + var(--grade-badge-right-offset, 12px));
+}
+
+.grade-badge--position-inline {
+  position: relative;
+  top: auto;
+  right: auto;
+  box-shadow: none;
+}
+
+.grade-badge--compact {
+  --grade-badge-size: 36px;
+  border-radius: 12px;
+}
+
+.grade-badge__letter {
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+}
+
+.grade-badge--compact .grade-badge__letter {
+  font-size: 0.98rem;
+}
+
+.grade-badge--good {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.95), rgba(21, 128, 61, 0.95));
+}
+
+.grade-badge--warn {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(180, 83, 9, 0.95));
+}
+
+.grade-badge--bad {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(153, 27, 27, 0.95));
+}
+
+.grade-badge:hover {
+  transform: translateY(-1px);
+}
+
+.grade-badge:focus-visible {
+  outline: 3px solid rgba(147, 197, 253, 0.75);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .grade-badge {
+    --grade-badge-size: 38px;
+    --grade-badge-top-offset: 10px;
+    --grade-badge-right-offset: 10px;
+    border-radius: 12px;
+  }
+
+  .grade-badge--position-below-header {
+    --grade-badge-top-offset: 64px;
+  }
+
+  .grade-badge--position-floating-low {
+    --grade-badge-top-offset: 78px;
+  }
+}
+
+@media (max-width: 380px) {
+  .grade-badge--position-top-right,
+  .grade-badge--position-below-header,
+  .grade-badge--position-floating-low {
+    --grade-badge-right-offset: 8px;
+  }
+}

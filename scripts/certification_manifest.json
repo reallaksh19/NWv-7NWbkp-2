@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 1,
+  "manifestVersion": "nw-certification-manifest-v1",
+  "description": "Single source of truth for npm run test:certify command order.",
+  "commands": [
+    {
+      "id": "lint",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "lint"
+      ]
+    },
+    {
+      "id": "lint-hotfix",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:lint-hotfix"
+      ]
+    },
+    {
+      "id": "quick-weather-pro",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:quick-weather-pro"
+      ]
+    },
+    {
+      "id": "bottom-nav",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:bottom-nav"
+      ]
+    },
+    {
+      "id": "following",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:following"
+      ]
+    },
+    {
+      "id": "desktop-polish",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:desktop-polish"
+      ]
+    },
+    {
+      "id": "insight-foundation",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-foundation"
+      ]
+    },
+    {
+      "id": "insight-angle-display",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-angle-display"
+      ]
+    },
+    {
+      "id": "insight-ranking-diagnostics",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-ranking-diagnostics"
+      ]
+    },
+    {
+      "id": "insight-behavior-plan",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-behavior-plan"
+      ]
+    },
+    {
+      "id": "insight-tree-tuning",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-tree-tuning"
+      ]
+    },
+    {
+      "id": "insight-duplicate-diagnostics",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-duplicate-diagnostics"
+      ]
+    },
+    {
+      "id": "insight-ranking-reason",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-ranking-reason"
+      ]
+    },
+    {
+      "id": "insight-diversity-tuning",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-diversity-tuning"
+      ]
+    },
+    {
+      "id": "insight-top-story-anchor",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-top-story-anchor"
+      ]
+    },
+    {
+      "id": "insight-useful-variant-rescue",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-useful-variant-rescue"
+      ]
+    },
+    {
+      "id": "insight-angle-classifier-enrichment",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-angle-classifier-enrichment"
+      ]
+    },
+    {
+      "id": "insight-core-recovery",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-core-recovery"
+      ]
+    },
+    {
+      "id": "insight-angle-recovery",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-angle-recovery"
+      ]
+    },
+    {
+      "id": "insight-cluster-cohesion",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-cluster-cohesion"
+      ]
+    },
+    {
+      "id": "insight-cache-contract",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-cache-contract"
+      ]
+    },
+    {
+      "id": "insight-post-tree-selection",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-post-tree-selection"
+      ]
+    },
+    {
+      "id": "insight-runtime-quality-gate",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-runtime-quality-gate"
+      ]
+    },
+    {
+      "id": "insight-snapshot-intake",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-snapshot-intake"
+      ]
+    },
+    {
+      "id": "insight-nlp-enrichment",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-nlp-enrichment"
+      ]
+    },
+    {
+      "id": "insight-e2e-quality",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-e2e-quality"
+      ]
+    },
+    {
+      "id": "insight-collector-json",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-collector-json"
+      ]
+    },
+    {
+      "id": "insight-browser-json-ingestion",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-browser-json-ingestion"
+      ]
+    },
+    {
+      "id": "insight-prefetch-quality-gate",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-prefetch-quality-gate"
+      ]
+    },
+    {
+      "id": "prefetch-commit-optimization",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:prefetch-commit-optimization"
+      ]
+    },
+    {
+      "id": "pages-data-publish",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:pages-data-publish"
+      ]
+    },
+    {
+      "id": "pages-newsdata-verification",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:pages-newsdata-verification"
+      ]
+    },
+    {
+      "id": "insight-source-policy",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-source-policy"
+      ]
+    },
+    {
+      "id": "insight-adaptive-source-health",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-adaptive-source-health"
+      ]
+    },
+    {
+      "id": "sections-source-policy",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:sections-source-policy"
+      ]
+    },
+    {
+      "id": "sections-browser-ingestion",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:sections-browser-ingestion"
+      ]
+    },
+    {
+      "id": "sections-quality-deploy",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:sections-quality-deploy"
+      ]
+    },
+    {
+      "id": "newsdata-runtime-status",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:newsdata-runtime-status"
+      ]
+    },
+    {
+      "id": "news-prefetch-workflow-orchestration",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:news-prefetch-workflow-orchestration"
+      ]
+    },
+    {
+      "id": "newsdata-raw-json-fallback",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:newsdata-raw-json-fallback"
+      ]
+    },
+    {
+      "id": "certification-manifest",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:certification-manifest"
+      ]
+    },
+    {
+      "id": "insight-cluster-anchor",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-cluster-anchor"
+      ]
+    },
+    {
+      "id": "insight-24h-concept",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-24h-concept"
+      ]
+    },
+    {
+      "id": "insight-behavior-evidence",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-behavior-evidence"
+      ]
+    },
+    {
+      "id": "upahead-evidence",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:upahead-evidence"
+      ]
+    },
+    {
+      "id": "upahead-briefing",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:upahead-briefing"
+      ]
+    },
+    {
+      "id": "planner-evidence",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-evidence"
+      ]
+    },
+    {
+      "id": "planner-view-model",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-view-model"
+      ]
+    },
+    {
+      "id": "planner-bulk-actions",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-bulk-actions"
+      ]
+    },
+    {
+      "id": "calendar-export-quality",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:calendar-export-quality"
+      ]
+    },
+    {
+      "id": "planner-item-inspector",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-item-inspector"
+      ]
+    },
+    {
+      "id": "planner-agenda-export",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-agenda-export"
+      ]
+    },
+    {
+      "id": "planner-interaction-quality",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-interaction-quality"
+      ]
+    },
+    {
+      "id": "planner-state-hygiene",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:planner-state-hygiene"
+      ]
+    },
+    {
+      "id": "unit",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:unit"
+      ]
+    },
+    {
+      "id": "build",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "build"
+      ]
+    },
+    {
+      "id": "travel-location-priority",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:travel-location-priority"
+      ]
+    },
+    {
+      "id": "travel-news-prefetch",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:travel-news-prefetch"
+      ]
+    },
+    {
+      "id": "travel-location-browser-smoke-static",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:travel-location-browser-smoke:static"
+      ]
+    },
+    {
+      "id": "travel-news-workflow",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:travel-news-workflow"
+      ]
+    },
+    {
+      "id": "travel-local-ui-quality",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:travel-local-ui-quality"
+      ]
+    },
+    {
+      "id": "travel-local-e2e-closure",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:travel-local-e2e-closure"
+      ]
+    },
+    {
+      "id": "insight-rca-metrics",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-rca-metrics"
+      ]
+    },
+    {
+      "id": "insight-angle-diverse-child",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-angle-diverse-child"
+      ]
+    },
+    {
+      "id": "insight-useful-variant-rescue-63c",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-useful-variant-rescue-63c"
+      ]
+    },
+    {
+      "id": "insight-source-diverse-child",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-source-diverse-child"
+      ]
+    },
+    {
+      "id": "insight-post-tree-rerank",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-post-tree-rerank"
+      ]
+    },
+    {
+      "id": "insight-real-snapshot-ratchet",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-real-snapshot-ratchet"
+      ]
+    },
+    {
+      "id": "insight-real-snapshot-workflow",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-real-snapshot-workflow"
+      ]
+    },
+    {
+      "id": "insight-quality-dashboard",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-quality-dashboard"
+      ]
+    },
+    {
+      "id": "insight-wave-closure",
+      "cmd": "npm",
+      "args": [
+        "run",
+        "test:insight-wave-closure"
+      ]
+    }
+  ]
+}

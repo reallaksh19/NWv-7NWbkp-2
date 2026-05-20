@@ -1,0 +1,46 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment Variables
+.env
+.env.production
+.env.development
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+docs/
+node_modules
+dist
+nwv7_workspace.zip
+*.png
+lint_output.txt
+new_lint.txt
+fix_lint5.cjs
+fix_app.cjs
+playwright-script.cjs
+run_ui_test.mjs
+fix_globals.cjs
+fix_lint_final.cjs
+generate_download_link.cjs
+verify_manual.js
+output_checkpoint.txt
+fix_lint.patch

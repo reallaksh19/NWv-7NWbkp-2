@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "2.0.0",
+  "generatedAt": "2026-05-20T13:22:15.872092Z",
+  "currencies": [
+    {
+      "name": "USD/INR",
+      "pair": "USDINR",
+      "symbol": "USDINR=X",
+      "value": "₹96.8100",
+      "rate": 96.80999755859375,
+      "change": "0.5398",
+      "changePercent": "0.56",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-20T13:20:33.191797Z"
+    },
+    {
+      "name": "EUR/INR",
+      "pair": "EURINR",
+      "symbol": "EURINR=X",
+      "value": "₹112.2683",
+      "rate": 112.26830291748047,
+      "change": "0.0373",
+      "changePercent": "0.03",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-20T13:20:33.204338Z"
+    },
+    {
+      "name": "JPY/INR",
+      "pair": "JPYINR",
+      "symbol": "JPYINR=X",
+      "value": "₹0.6087",
+      "rate": 0.6086599826812744,
+      "change": "0.0025",
+      "changePercent": "0.42",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-20T13:20:33.266906Z"
+    },
+    {
+      "name": "OMR/INR",
+      "pair": "OMRINR",
+      "symbol": "OMRINR=X",
+      "value": "₹250.9500",
+      "rate": 250.9499969482422,
+      "change": "0.0000",
+      "changePercent": "0.00",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-20T13:20:33.278596Z"
+    },
+    {
+      "name": "GBP/INR",
+      "pair": "GBPINR",
+      "symbol": "GBPINR=X",
+      "value": "₹129.6886",
+      "rate": 129.6885986328125,
+      "change": "0.5795",
+      "changePercent": "0.45",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-20T13:20:33.310276Z"
+    }
+  ],
+  "sourceHealth": {
+    "status": "ok",
+    "freshnessMs": 0,
+    "winner": "yahoo_yfinance",
+    "providersTried": [
+      {
+        "provider": "rbi_reference",
+        "status": "failed",
+        "latencyMs": null,
+        "count": 0,
+        "message": "RBI reference scrape failed: unknown"
+      },
+      {
+        "provider": "yahoo_yfinance",
+        "status": "ok",
+        "latencyMs": null,
+        "count": 5,
+        "message": "5 FX pairs fetched from Yahoo fallback"
+      }
+    ],
+    "notes": []
+  }
+}

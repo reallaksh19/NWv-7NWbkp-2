@@ -1,0 +1,39 @@
+name: NWv-7 Certification
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  certify:
+    name: Static + Vitest + Build Certification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Block rejected patch artifacts
+        run: |
+          if find . \( -name "*.rej" -o -name "*.orig" \) -print -quit | grep -q .; then
+            echo "Rejected patch or backup artifacts were found. Apply or delete them before merging."
+            find . \( -name "*.rej" -o -name "*.orig" \) -print
+            exit 1
+          fi
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full certification gate
+        run: npm run test:certify

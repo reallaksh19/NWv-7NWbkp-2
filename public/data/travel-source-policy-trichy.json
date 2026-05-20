@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "type": "travel-location-news-policy",
+  "generatedFor": {
+    "key": "trichy",
+    "display": "Trichy",
+    "countryCode": "IN",
+    "countryLabel": "India",
+    "edition": {
+      "country": "IN",
+      "lang": "en",
+      "timeRange": "30d"
+    }
+  },
+  "freshness": {
+    "maxAgeMinutes": 180,
+    "staleAfterMinutes": 360
+  },
+  "dedupe": {
+    "keyFields": [
+      "url",
+      "title",
+      "source"
+    ],
+    "titleSimilarityThreshold": 0.84
+  },
+  "queries": [
+    {
+      "id": "trichy-travel-1",
+      "locationKey": "trichy",
+      "label": "Trichy news",
+      "query": "Trichy news",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Trichy%20news&hl=en&gl=IN&ceid=IN:en",
+      "priority": "high"
+    },
+    {
+      "id": "trichy-travel-2",
+      "locationKey": "trichy",
+      "label": "Trichy local news",
+      "query": "Trichy local news",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Trichy%20local%20news&hl=en&gl=IN&ceid=IN:en",
+      "priority": "high"
+    },
+    {
+      "id": "trichy-travel-3",
+      "locationKey": "trichy",
+      "label": "India breaking news",
+      "query": "India breaking news",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=India%20breaking%20news&hl=en&gl=IN&ceid=IN:en",
+      "priority": "high"
+    },
+    {
+      "id": "trichy-travel-4",
+      "locationKey": "trichy",
+      "label": "Trichy travel advisory",
+      "query": "Trichy travel advisory",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Trichy%20travel%20advisory&hl=en&gl=IN&ceid=IN:en",
+      "priority": "medium"
+    },
+    {
+      "id": "trichy-travel-5",
+      "locationKey": "trichy",
+      "label": "Trichy airport",
+      "query": "Trichy airport",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Trichy%20airport&hl=en&gl=IN&ceid=IN:en",
+      "priority": "medium"
+    },
+    {
+      "id": "trichy-travel-6",
+      "locationKey": "trichy",
+      "label": "Trichy weather alert",
+      "query": "Trichy weather alert",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Trichy%20weather%20alert&hl=en&gl=IN&ceid=IN:en",
+      "priority": "medium"
+    },
+    {
+      "id": "trichy-travel-7",
+      "locationKey": "trichy",
+      "label": "India tourism",
+      "query": "India tourism",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=India%20tourism&hl=en&gl=IN&ceid=IN:en",
+      "priority": "low"
+    },
+    {
+      "id": "trichy-travel-8",
+      "locationKey": "trichy",
+      "label": "India transport",
+      "query": "India transport",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=India%20transport&hl=en&gl=IN&ceid=IN:en",
+      "priority": "low"
+    }
+  ]
+}

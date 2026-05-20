@@ -1,0 +1,98 @@
+.travel-location-settings {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(45, 212, 191, 0.20);
+  border-radius: 18px;
+  background:
+    radial-gradient(360px 120px at 100% 0%, rgba(20, 184, 166, 0.12), transparent 68%),
+    rgba(15, 23, 42, 0.64);
+}
+
+.travel-location-settings__copy span {
+  color: #99f6e4;
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.travel-location-settings__copy h3 {
+  margin: 3px 0 4px;
+  color: #f8fafc;
+  font-size: 1rem;
+}
+
+.travel-location-settings__copy p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.travel-location-settings__controls {
+  display: grid;
+  gap: 10px;
+}
+
+.travel-location-settings__controls label span {
+  display: block;
+  margin-bottom: 5px;
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.travel-location-settings__controls select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.72);
+  color: #f8fafc;
+  padding: 0 12px;
+}
+
+.travel-location-settings__toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.travel-location-settings__toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #14b8a6;
+}
+
+.travel-location-settings__status {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.32);
+}
+
+.travel-location-settings__status strong {
+  color: #f8fafc;
+  font-size: 0.82rem;
+}
+
+.travel-location-settings__status span {
+  color: #99f6e4;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+@media (max-width: 760px) {
+  .travel-location-settings {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-location-settings__status {
+    flex-direction: column;
+  }
+}

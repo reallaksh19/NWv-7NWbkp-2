@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": "insight-source-policy-v1",
+  "slots": {
+    "now": [
+      {
+        "url": "https://www.thehindu.com/news/national/feeder/default.rss",
+        "source": "The Hindu",
+        "sourceGroup": "the_hindu",
+        "tier": "A",
+        "topic": "national"
+      },
+      {
+        "url": "https://economictimes.indiatimes.com/rssfeeds/1977021501.cms",
+        "source": "Economic Times",
+        "sourceGroup": "economic_times",
+        "tier": "A",
+        "topic": "business"
+      },
+      {
+        "url": "https://feeds.feedburner.com/ndtvnews-top-stories",
+        "source": "NDTV",
+        "sourceGroup": "ndtv",
+        "tier": "B",
+        "topic": "top"
+      },
+      {
+        "url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        "source": "Hindustan Times",
+        "sourceGroup": "hindustan_times",
+        "tier": "B",
+        "topic": "national"
+      },
+      {
+        "url": "https://news.google.com/rss/search?q=India+breaking+news&hl=en-IN&gl=IN&ceid=IN:en",
+        "source": "Google News",
+        "sourceGroup": "google_news",
+        "tier": "B",
+        "topic": "breaking"
+      }
+    ],
+    "minus4h": [
+      {
+        "url": "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
+        "source": "Times of India",
+        "sourceGroup": "times_of_india",
+        "tier": "B",
+        "topic": "national"
+      },
+      {
+        "url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml",
+        "source": "Hindustan Times",
+        "sourceGroup": "hindustan_times",
+        "tier": "B",
+        "topic": "national"
+      },
+      {
+        "url": "https://feeds.feedburner.com/ndtvnews-india-news",
+        "source": "NDTV India",
+        "sourceGroup": "ndtv",
+        "tier": "B",
+        "topic": "india"
+      },
+      {
+        "url": "https://www.thehindu.com/news/national/feeder/default.rss",
+        "source": "The Hindu",
+        "sourceGroup": "the_hindu",
+        "tier": "A",
+        "topic": "national"
+      }
+    ],
+    "minus12h": [
+      {
+        "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+        "source": "BBC World",
+        "sourceGroup": "bbc",
+        "tier": "A",
+        "topic": "world"
+      },
+      {
+        "url": "https://feeds.bbci.co.uk/news/india/rss.xml",
+        "source": "BBC India",
+        "sourceGroup": "bbc",
+        "tier": "A",
+        "topic": "india"
+      },
+      {
+        "url": "https://www.thehindu.com/news/international/feeder/default.rss",
+        "source": "The Hindu Intl",
+        "sourceGroup": "the_hindu",
+        "tier": "A",
+        "topic": "international"
+      },
+      {
+        "url": "https://rss.app/feeds/v1.1/_Bg5JB2jvVd0zOhwA.json",
+        "source": "Reuters India",
+        "sourceGroup": "reuters",
+        "tier": "A",
+        "topic": "india"
+      }
+    ],
+    "minus24h": [
+      {
+        "url": "https://economictimes.indiatimes.com/rssfeeds/1368519714.cms",
+        "source": "ET Markets",
+        "sourceGroup": "economic_times",
+        "tier": "A",
+        "topic": "markets"
+      },
+      {
+        "url": "https://www.moneycontrol.com/rss/latestnews.xml",
+        "source": "Moneycontrol",
+        "sourceGroup": "moneycontrol",
+        "tier": "B",
+        "topic": "markets"
+      },
+      {
+        "url": "https://www.thehindubusinessline.com/news/feeder/default.rss",
+        "source": "Business Line",
+        "sourceGroup": "business_line",
+        "tier": "A",
+        "topic": "business"
+      },
+      {
+        "url": "https://www.financialexpress.com/feed/",
+        "source": "Financial Express",
+        "sourceGroup": "financial_express",
+        "tier": "A",
+        "topic": "business"
+      }
+    ]
+  },
+  "requiredCoverage": {
+    "minFeedsPerSlot": 3,
+    "minTierAFeeds": 6,
+    "minSourceGroups": 8,
+    "minTopics": 5
+  }
+}

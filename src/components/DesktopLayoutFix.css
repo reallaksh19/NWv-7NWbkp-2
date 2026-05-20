@@ -1,0 +1,313 @@
+/* Desktop layout correction for NWv-7
+ *
+ * The legacy app styles only promoted the bottom navigation to a top navigation
+ * inside a 1024px media query. Browser desktop-mode requests on tablets, narrow
+ * laptops, or zoomed desktop windows could still produce a mobile bottom bar.
+ * These rules key from the React-resolved .bottom-nav--desktop class instead.
+ */
+
+/* Shared nav wrapper. Required because BottomNav now renders the same full
+ * 12-tab list for mobile and desktop through .bottom-nav__items.
+ */
+.bottom-nav .bottom-nav__items {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.bottom-nav .bottom-nav__items::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile keeps the bottom rail but now includes every primary/secondary tab.
+ * Horizontal scroll is intentional and avoids hiding tabs behind More.
+ */
+.bottom-nav:not(.bottom-nav--desktop) .bottom-nav__items {
+  gap: 0;
+}
+
+.bottom-nav:not(.bottom-nav--desktop) .bottom-nav__item {
+  min-width: 64px;
+}
+
+@media (max-width: 390px) {
+  .bottom-nav:not(.bottom-nav--desktop) .bottom-nav__item {
+    min-width: 60px;
+  }
+}
+
+.runtime-badge--icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bottom-nav.bottom-nav--desktop {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 52px;
+  height: auto;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  overflow-x: visible;
+  overflow-y: visible;
+  background: rgba(10, 13, 17, 0.96);
+  border-top: none;
+  border-bottom: 1px solid var(--border-default);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+.bottom-nav--desktop .bottom-nav__brand {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 148px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.bottom-nav--desktop .bottom-nav__brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-primary);
+  color: #04110e;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+
+.bottom-nav--desktop .bottom-nav__brand-text {
+  font-size: 0.85rem;
+  font-weight: 750;
+  color: var(--text-secondary);
+}
+
+.bottom-nav--desktop .bottom-nav__items {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px 6px;
+  overflow: visible;
+}
+
+.bottom-nav--desktop .bottom-nav__item {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: auto;
+  height: 36px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.bottom-nav--desktop .bottom-nav__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.bottom-nav--desktop .bottom-nav__item.active {
+  color: var(--accent-primary);
+  background: rgba(0, 212, 170, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(0, 212, 170, 0.2);
+}
+
+.bottom-nav--desktop .bottom-nav__icon {
+  margin-bottom: 0;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.bottom-nav--desktop .bottom-nav__label {
+  display: inline;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.bottom-nav--desktop .bottom-nav__layout-toggle {
+  flex: 0 0 auto;
+  min-width: 78px;
+  height: 30px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bottom-nav--desktop .bottom-nav__layout-toggle:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* Apply desktop shell spacing/width whenever React has resolved desktop mode,
+ * including widths below the old 1024px CSS breakpoint.
+ */
+html[data-layout-mode="desktop"] .page-container {
+  width: 100%;
+  max-width: none;
+  padding-top: 58px;
+  padding-bottom: 0;
+}
+
+html[data-layout-mode="desktop"] .header,
+html[data-layout-mode="desktop"] .timeline-header {
+  top: 52px;
+}
+
+html[data-layout-mode="desktop"] .main-content {
+  width: 100%;
+  max-width: min(1440px, calc(100vw - 48px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+html[data-layout-mode="desktop"] .main-content[style] {
+  max-width: min(1440px, calc(100vw - 48px)) !important;
+}
+
+html[data-layout-mode="desktop"] .main-content.market-page,
+html[data-layout-mode="desktop"] .main-content.market-page--revamp {
+  max-width: min(1480px, calc(100vw - 48px)) !important;
+}
+
+html[data-layout-mode="desktop"] .dashboard-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+html[data-layout-mode="desktop"] .main-page-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+html[data-layout-mode="desktop"] .market-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 0.9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+html[data-layout-mode="desktop"] .market-movers-grid,
+html[data-layout-mode="desktop"] .market-macro-grid,
+html[data-layout-mode="desktop"] .market-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+html[data-layout-mode="desktop"] .dw-container {
+  max-width: min(1320px, calc(100vw - 64px));
+  margin: 0 auto;
+}
+
+html[data-layout-mode="desktop"] .dw-cards-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+
+html[data-layout-mode="desktop"] .dw-card.expanded {
+  grid-column: span 3;
+}
+
+@media (max-width: 1180px) {
+  .bottom-nav--desktop .bottom-nav__brand-text {
+    display: none;
+  }
+
+  .bottom-nav--desktop .bottom-nav__brand {
+    min-width: 40px;
+  }
+
+  .bottom-nav--desktop .bottom-nav__item {
+    padding: 5px 7px;
+  }
+
+  .bottom-nav--desktop .bottom-nav__label {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .bottom-nav.bottom-nav--desktop {
+    align-items: flex-start;
+  }
+
+  .bottom-nav--desktop .bottom-nav__items {
+    justify-content: flex-start;
+  }
+
+  html[data-layout-mode="desktop"] .page-container {
+    padding-top: 92px;
+  }
+
+  html[data-layout-mode="desktop"] .header,
+  html[data-layout-mode="desktop"] .timeline-header {
+    top: 88px;
+  }
+
+  html[data-layout-mode="desktop"] .main-content,
+  html[data-layout-mode="desktop"] .main-content[style] {
+    max-width: min(100%, calc(100vw - 24px)) !important;
+  }
+
+  html[data-layout-mode="desktop"] .market-hero-grid,
+  html[data-layout-mode="desktop"] .market-movers-grid,
+  html[data-layout-mode="desktop"] .market-macro-grid,
+  html[data-layout-mode="desktop"] .market-bottom-grid,
+  html[data-layout-mode="desktop"] .dw-cards-list {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-layout-mode="desktop"] .dw-card.expanded {
+    grid-column: span 1;
+  }
+}

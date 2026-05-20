@@ -1,0 +1,305 @@
+/* ==========================================================================
+   NWv-7 Desktop Polish
+   Slice 6
+
+   Purpose:
+   Final CSS-only desktop integration layer.
+   Imported after desktopRevamp.css.
+   No feature logic changes.
+   ========================================================================== */
+
+html[data-layout-mode='desktop'] {
+  --desktop-polish-max: 1520px;
+  --desktop-polish-wide: 1560px;
+  --desktop-polish-gutter: 32px;
+  --desktop-polish-panel: rgba(15, 23, 42, 0.78);
+  --desktop-polish-panel-strong: rgba(12, 17, 25, 0.92);
+  --desktop-polish-border: rgba(148, 163, 184, 0.22);
+  --desktop-polish-text: #f8fafc;
+  --desktop-polish-muted: #cbd5e1;
+}
+
+/* --------------------------------------------------------------------------
+   Root width guard
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] body,
+html[data-layout-mode='desktop'] #root,
+html[data-layout-mode='desktop'] .app,
+html[data-layout-mode='desktop'] .app-shell {
+  width: 100%;
+  min-width: 100%;
+  overflow-x: hidden;
+}
+
+html[data-layout-mode='desktop'] .page-container {
+  width: 100%;
+  max-width: none;
+}
+
+html[data-layout-mode='desktop'] .main-content {
+  width: min(var(--desktop-polish-max), calc(100vw - (var(--desktop-polish-gutter) * 2)));
+  max-width: min(var(--desktop-polish-max), calc(100vw - (var(--desktop-polish-gutter) * 2))) !important;
+  margin-inline: auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop nav guard
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .bottom-nav.bottom-nav--desktop {
+  max-width: 100vw;
+  overflow: visible;
+}
+
+html[data-layout-mode='desktop'] .bottom-nav--desktop .bottom-nav__items {
+  min-width: 0;
+  max-width: 100%;
+}
+
+html[data-layout-mode='desktop'] .bottom-nav--desktop .bottom-nav__item {
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Main page desktop polish
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .main-page-grid {
+  width: 100%;
+  grid-template-columns: minmax(360px, 440px) minmax(0, 1fr);
+}
+
+html[data-layout-mode='desktop'] .left-col,
+html[data-layout-mode='desktop'] .right-col {
+  min-width: 0;
+}
+
+html[data-layout-mode='desktop'] .news-sections {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html[data-layout-mode='desktop'] #top-stories {
+  grid-column: 1 / -1;
+}
+
+/* --------------------------------------------------------------------------
+   Critical QuickWeather contrast guard
+   Existing desktopRevamp.css can force dark text on the weather card.
+   This keeps Slice 1 readable on desktop.
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .quick-weather-card .qw-city-row__name,
+html[data-layout-mode='desktop'] .quick-weather-card .qw-city-row__temp,
+html[data-layout-mode='desktop'] .quick-weather-card .qw-city-slot__temp,
+html[data-layout-mode='desktop'] .quick-weather-card .qw-highlight-text,
+html[data-layout-mode='desktop'] .quick-weather-card .qw-highlight-text-container {
+  color: #ffffff !important;
+}
+
+html[data-layout-mode='desktop'] .quick-weather-card .qw-city-slot__label,
+html[data-layout-mode='desktop'] .quick-weather-card .qw-city-row__state,
+html[data-layout-mode='desktop'] .quick-weather-card .qw-pop-low {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-layout-mode='desktop'] .quick-weather-card .qw-city-row {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-layout-mode='desktop'] .quick-weather-card input {
+  color: #ffffff;
+}
+
+html[data-layout-mode='desktop'] .quick-weather-card input::placeholder {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* --------------------------------------------------------------------------
+   Market desktop polish
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .main-content.market-page,
+html[data-layout-mode='desktop'] .main-content.market-page--revamp {
+  width: min(var(--desktop-polish-wide), calc(100vw - 64px));
+  max-width: min(var(--desktop-polish-wide), calc(100vw - 64px)) !important;
+}
+
+html[data-layout-mode='desktop'] .market-trust-panel,
+html[data-layout-mode='desktop'] .market-card,
+html[data-layout-mode='desktop'] .market-panel,
+html[data-layout-mode='desktop'] .market-board-card {
+  background-color: var(--desktop-polish-panel);
+  border-color: var(--desktop-polish-border);
+}
+
+html[data-layout-mode='desktop'] .market-trust-panel h2,
+html[data-layout-mode='desktop'] .market-trust-panel__tile strong,
+html[data-layout-mode='desktop'] .market-card h2,
+html[data-layout-mode='desktop'] .market-card h3 {
+  color: var(--desktop-polish-text);
+}
+
+html[data-layout-mode='desktop'] .market-trust-panel p,
+html[data-layout-mode='desktop'] .market-trust-panel__meta span,
+html[data-layout-mode='desktop'] .market-trust-panel__tile span {
+  color: var(--desktop-polish-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Weather desktop polish
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .weather-trust-panel,
+html[data-layout-mode='desktop'] .dw-container {
+  width: min(1360px, calc(100vw - 64px));
+  max-width: min(1360px, calc(100vw - 64px));
+  margin-inline: auto;
+}
+
+html[data-layout-mode='desktop'] .weather-trust-panel,
+html[data-layout-mode='desktop'] .dw-container,
+html[data-layout-mode='desktop'] .dw-card {
+  border-color: var(--desktop-polish-border);
+}
+
+html[data-layout-mode='desktop'] .weather-trust-panel h2,
+html[data-layout-mode='desktop'] .weather-trust-panel__city-temp,
+html[data-layout-mode='desktop'] .weather-trust-panel__grade strong,
+html[data-layout-mode='desktop'] .dw-city-title,
+html[data-layout-mode='desktop'] .dw-current-temp,
+html[data-layout-mode='desktop'] .dw-temp-val {
+  color: var(--desktop-polish-text);
+}
+
+html[data-layout-mode='desktop'] .weather-trust-panel p,
+html[data-layout-mode='desktop'] .weather-trust-panel__meta span,
+html[data-layout-mode='desktop'] .weather-trust-panel__city-name,
+html[data-layout-mode='desktop'] .weather-trust-panel__city-meta,
+html[data-layout-mode='desktop'] .dw-header-sub,
+html[data-layout-mode='desktop'] .dw-detail-text {
+  color: var(--desktop-polish-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Following desktop polish
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .following-page__content--pro {
+  width: min(1360px, calc(100vw - 64px));
+  max-width: min(1360px, calc(100vw - 64px));
+}
+
+html[data-layout-mode='desktop'] .following-page__hero {
+  padding-inline: max(20px, calc((100vw - min(1360px, calc(100vw - 64px))) / 2));
+}
+
+html[data-layout-mode='desktop'] .following-page__topic-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html[data-layout-mode='desktop'] .topic-card--pro,
+html[data-layout-mode='desktop'] .following-page__stat,
+html[data-layout-mode='desktop'] .following-page__suggestions-section,
+html[data-layout-mode='desktop'] .following-page__loading,
+html[data-layout-mode='desktop'] .following-page__message {
+  background-color: var(--desktop-polish-panel);
+  border-color: var(--desktop-polish-border);
+}
+
+html[data-layout-mode='desktop'] .topic-card__name,
+html[data-layout-mode='desktop'] .topic-card__latest strong,
+html[data-layout-mode='desktop'] .following-page__stat strong,
+html[data-layout-mode='desktop'] .following-page__section-title {
+  color: var(--desktop-polish-text);
+}
+
+html[data-layout-mode='desktop'] .topic-card__query,
+html[data-layout-mode='desktop'] .topic-card__latest span,
+html[data-layout-mode='desktop'] .topic-card__footer,
+html[data-layout-mode='desktop'] .following-page__stat span,
+html[data-layout-mode='desktop'] .following-page__hero p {
+  color: var(--desktop-polish-muted);
+}
+
+/* --------------------------------------------------------------------------
+   General card contrast guard
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] .modern-card,
+html[data-layout-mode='desktop'] .news-card,
+html[data-layout-mode='desktop'] .news-item,
+html[data-layout-mode='desktop'] .insight-card,
+html[data-layout-mode='desktop'] .planner-card {
+  background-color: var(--desktop-polish-panel);
+  border-color: var(--desktop-polish-border);
+}
+
+html[data-layout-mode='desktop'] .modern-card__title,
+html[data-layout-mode='desktop'] .news-section__title,
+html[data-layout-mode='desktop'] .news-card__title,
+html[data-layout-mode='desktop'] .news-item__title,
+html[data-layout-mode='desktop'] .insight-card h2,
+html[data-layout-mode='desktop'] .insight-card h3 {
+  color: var(--desktop-polish-text) !important;
+}
+
+html[data-layout-mode='desktop'] .news-card__summary,
+html[data-layout-mode='desktop'] .news-item__summary,
+html[data-layout-mode='desktop'] .meta,
+html[data-layout-mode='desktop'] .text-muted {
+  color: var(--desktop-polish-muted) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility
+   -------------------------------------------------------------------------- */
+
+html[data-layout-mode='desktop'] a:focus-visible,
+html[data-layout-mode='desktop'] button:focus-visible,
+html[data-layout-mode='desktop'] input:focus-visible,
+html[data-layout-mode='desktop'] select:focus-visible {
+  outline: 2px solid #7fffe0;
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Medium desktop safety
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  html[data-layout-mode='desktop'] {
+    --desktop-polish-gutter: 18px;
+  }
+
+  html[data-layout-mode='desktop'] .main-page-grid,
+  html[data-layout-mode='desktop'] .market-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-layout-mode='desktop'] .left-col {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  html[data-layout-mode='desktop'] .following-page__content--pro {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-layout-mode='desktop'] .following-page__rail {
+    position: static;
+  }
+}
+
+@media (max-width: 980px) {
+  html[data-layout-mode='desktop'] .news-sections,
+  html[data-layout-mode='desktop'] .market-movers-grid,
+  html[data-layout-mode='desktop'] .market-macro-grid,
+  html[data-layout-mode='desktop'] .market-bottom-grid,
+  html[data-layout-mode='desktop'] .dw-cards-list,
+  html[data-layout-mode='desktop'] .following-page__topic-grid {
+    grid-template-columns: 1fr;
+  }
+}

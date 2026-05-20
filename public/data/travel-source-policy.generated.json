@@ -1,0 +1,443 @@
+{
+  "schemaVersion": 1,
+  "type": "travel-source-policy-index-generated",
+  "generatedAt": "2026-05-20T08:55:04.640Z",
+  "policies": [
+    {
+      "schemaVersion": 1,
+      "type": "travel-location-news-policy",
+      "generatedFor": {
+        "key": "colombo",
+        "display": "Colombo",
+        "countryCode": "LK",
+        "countryLabel": "Sri Lanka",
+        "edition": {
+          "country": "LK",
+          "lang": "en",
+          "timeRange": "30d"
+        }
+      },
+      "freshness": {
+        "maxAgeMinutes": 180,
+        "staleAfterMinutes": 360
+      },
+      "dedupe": {
+        "keyFields": [
+          "url",
+          "title",
+          "source"
+        ],
+        "titleSimilarityThreshold": 0.84
+      },
+      "queries": [
+        {
+          "id": "colombo-travel-1",
+          "locationKey": "colombo",
+          "label": "Colombo news",
+          "query": "Colombo news",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Colombo%20news&hl=en&gl=LK&ceid=LK:en",
+          "priority": "high"
+        },
+        {
+          "id": "colombo-travel-2",
+          "locationKey": "colombo",
+          "label": "Colombo local news",
+          "query": "Colombo local news",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Colombo%20local%20news&hl=en&gl=LK&ceid=LK:en",
+          "priority": "high"
+        },
+        {
+          "id": "colombo-travel-3",
+          "locationKey": "colombo",
+          "label": "Sri Lanka breaking news",
+          "query": "Sri Lanka breaking news",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Sri%20Lanka%20breaking%20news&hl=en&gl=LK&ceid=LK:en",
+          "priority": "high"
+        },
+        {
+          "id": "colombo-travel-4",
+          "locationKey": "colombo",
+          "label": "Colombo travel advisory",
+          "query": "Colombo travel advisory",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Colombo%20travel%20advisory&hl=en&gl=LK&ceid=LK:en",
+          "priority": "medium"
+        },
+        {
+          "id": "colombo-travel-5",
+          "locationKey": "colombo",
+          "label": "Colombo airport",
+          "query": "Colombo airport",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Colombo%20airport&hl=en&gl=LK&ceid=LK:en",
+          "priority": "medium"
+        },
+        {
+          "id": "colombo-travel-6",
+          "locationKey": "colombo",
+          "label": "Colombo weather alert",
+          "query": "Colombo weather alert",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Colombo%20weather%20alert&hl=en&gl=LK&ceid=LK:en",
+          "priority": "medium"
+        },
+        {
+          "id": "colombo-travel-7",
+          "locationKey": "colombo",
+          "label": "Sri Lanka tourism",
+          "query": "Sri Lanka tourism",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Sri%20Lanka%20tourism&hl=en&gl=LK&ceid=LK:en",
+          "priority": "low"
+        },
+        {
+          "id": "colombo-travel-8",
+          "locationKey": "colombo",
+          "label": "Sri Lanka transport",
+          "query": "Sri Lanka transport",
+          "country": "LK",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Sri%20Lanka%20transport&hl=en&gl=LK&ceid=LK:en",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "type": "travel-location-news-policy",
+      "generatedFor": {
+        "key": "chennai",
+        "display": "Chennai",
+        "countryCode": "IN",
+        "countryLabel": "India",
+        "edition": {
+          "country": "IN",
+          "lang": "en",
+          "timeRange": "30d"
+        }
+      },
+      "freshness": {
+        "maxAgeMinutes": 180,
+        "staleAfterMinutes": 360
+      },
+      "dedupe": {
+        "keyFields": [
+          "url",
+          "title",
+          "source"
+        ],
+        "titleSimilarityThreshold": 0.84
+      },
+      "queries": [
+        {
+          "id": "chennai-travel-1",
+          "locationKey": "chennai",
+          "label": "Chennai news",
+          "query": "Chennai news",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Chennai%20news&hl=en&gl=IN&ceid=IN:en",
+          "priority": "high"
+        },
+        {
+          "id": "chennai-travel-2",
+          "locationKey": "chennai",
+          "label": "Chennai local news",
+          "query": "Chennai local news",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Chennai%20local%20news&hl=en&gl=IN&ceid=IN:en",
+          "priority": "high"
+        },
+        {
+          "id": "chennai-travel-3",
+          "locationKey": "chennai",
+          "label": "India breaking news",
+          "query": "India breaking news",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=India%20breaking%20news&hl=en&gl=IN&ceid=IN:en",
+          "priority": "high"
+        },
+        {
+          "id": "chennai-travel-4",
+          "locationKey": "chennai",
+          "label": "Chennai travel advisory",
+          "query": "Chennai travel advisory",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Chennai%20travel%20advisory&hl=en&gl=IN&ceid=IN:en",
+          "priority": "medium"
+        },
+        {
+          "id": "chennai-travel-5",
+          "locationKey": "chennai",
+          "label": "Chennai airport",
+          "query": "Chennai airport",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Chennai%20airport&hl=en&gl=IN&ceid=IN:en",
+          "priority": "medium"
+        },
+        {
+          "id": "chennai-travel-6",
+          "locationKey": "chennai",
+          "label": "Chennai weather alert",
+          "query": "Chennai weather alert",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Chennai%20weather%20alert&hl=en&gl=IN&ceid=IN:en",
+          "priority": "medium"
+        },
+        {
+          "id": "chennai-travel-7",
+          "locationKey": "chennai",
+          "label": "India tourism",
+          "query": "India tourism",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=India%20tourism&hl=en&gl=IN&ceid=IN:en",
+          "priority": "low"
+        },
+        {
+          "id": "chennai-travel-8",
+          "locationKey": "chennai",
+          "label": "India transport",
+          "query": "India transport",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=India%20transport&hl=en&gl=IN&ceid=IN:en",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "type": "travel-location-news-policy",
+      "generatedFor": {
+        "key": "trichy",
+        "display": "Trichy",
+        "countryCode": "IN",
+        "countryLabel": "India",
+        "edition": {
+          "country": "IN",
+          "lang": "en",
+          "timeRange": "30d"
+        }
+      },
+      "freshness": {
+        "maxAgeMinutes": 180,
+        "staleAfterMinutes": 360
+      },
+      "dedupe": {
+        "keyFields": [
+          "url",
+          "title",
+          "source"
+        ],
+        "titleSimilarityThreshold": 0.84
+      },
+      "queries": [
+        {
+          "id": "trichy-travel-1",
+          "locationKey": "trichy",
+          "label": "Trichy news",
+          "query": "Trichy news",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Trichy%20news&hl=en&gl=IN&ceid=IN:en",
+          "priority": "high"
+        },
+        {
+          "id": "trichy-travel-2",
+          "locationKey": "trichy",
+          "label": "Trichy local news",
+          "query": "Trichy local news",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Trichy%20local%20news&hl=en&gl=IN&ceid=IN:en",
+          "priority": "high"
+        },
+        {
+          "id": "trichy-travel-3",
+          "locationKey": "trichy",
+          "label": "India breaking news",
+          "query": "India breaking news",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=India%20breaking%20news&hl=en&gl=IN&ceid=IN:en",
+          "priority": "high"
+        },
+        {
+          "id": "trichy-travel-4",
+          "locationKey": "trichy",
+          "label": "Trichy travel advisory",
+          "query": "Trichy travel advisory",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Trichy%20travel%20advisory&hl=en&gl=IN&ceid=IN:en",
+          "priority": "medium"
+        },
+        {
+          "id": "trichy-travel-5",
+          "locationKey": "trichy",
+          "label": "Trichy airport",
+          "query": "Trichy airport",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Trichy%20airport&hl=en&gl=IN&ceid=IN:en",
+          "priority": "medium"
+        },
+        {
+          "id": "trichy-travel-6",
+          "locationKey": "trichy",
+          "label": "Trichy weather alert",
+          "query": "Trichy weather alert",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Trichy%20weather%20alert&hl=en&gl=IN&ceid=IN:en",
+          "priority": "medium"
+        },
+        {
+          "id": "trichy-travel-7",
+          "locationKey": "trichy",
+          "label": "India tourism",
+          "query": "India tourism",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=India%20tourism&hl=en&gl=IN&ceid=IN:en",
+          "priority": "low"
+        },
+        {
+          "id": "trichy-travel-8",
+          "locationKey": "trichy",
+          "label": "India transport",
+          "query": "India transport",
+          "country": "IN",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=India%20transport&hl=en&gl=IN&ceid=IN:en",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "type": "travel-location-news-policy",
+      "generatedFor": {
+        "key": "muscat",
+        "display": "Muscat",
+        "countryCode": "OM",
+        "countryLabel": "Oman",
+        "edition": {
+          "country": "OM",
+          "lang": "en",
+          "timeRange": "30d"
+        }
+      },
+      "freshness": {
+        "maxAgeMinutes": 180,
+        "staleAfterMinutes": 360
+      },
+      "dedupe": {
+        "keyFields": [
+          "url",
+          "title",
+          "source"
+        ],
+        "titleSimilarityThreshold": 0.84
+      },
+      "queries": [
+        {
+          "id": "muscat-travel-1",
+          "locationKey": "muscat",
+          "label": "Muscat news",
+          "query": "Muscat news",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Muscat%20news&hl=en&gl=OM&ceid=OM:en",
+          "priority": "high"
+        },
+        {
+          "id": "muscat-travel-2",
+          "locationKey": "muscat",
+          "label": "Muscat local news",
+          "query": "Muscat local news",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Muscat%20local%20news&hl=en&gl=OM&ceid=OM:en",
+          "priority": "high"
+        },
+        {
+          "id": "muscat-travel-3",
+          "locationKey": "muscat",
+          "label": "Oman breaking news",
+          "query": "Oman breaking news",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Oman%20breaking%20news&hl=en&gl=OM&ceid=OM:en",
+          "priority": "high"
+        },
+        {
+          "id": "muscat-travel-4",
+          "locationKey": "muscat",
+          "label": "Muscat travel advisory",
+          "query": "Muscat travel advisory",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Muscat%20travel%20advisory&hl=en&gl=OM&ceid=OM:en",
+          "priority": "medium"
+        },
+        {
+          "id": "muscat-travel-5",
+          "locationKey": "muscat",
+          "label": "Muscat airport",
+          "query": "Muscat airport",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Muscat%20airport&hl=en&gl=OM&ceid=OM:en",
+          "priority": "medium"
+        },
+        {
+          "id": "muscat-travel-6",
+          "locationKey": "muscat",
+          "label": "Muscat weather alert",
+          "query": "Muscat weather alert",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Muscat%20weather%20alert&hl=en&gl=OM&ceid=OM:en",
+          "priority": "medium"
+        },
+        {
+          "id": "muscat-travel-7",
+          "locationKey": "muscat",
+          "label": "Oman tourism",
+          "query": "Oman tourism",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Oman%20tourism&hl=en&gl=OM&ceid=OM:en",
+          "priority": "low"
+        },
+        {
+          "id": "muscat-travel-8",
+          "locationKey": "muscat",
+          "label": "Oman transport",
+          "query": "Oman transport",
+          "country": "OM",
+          "lang": "en",
+          "url": "https://news.google.com/rss/search?q=Oman%20transport&hl=en&gl=OM&ceid=OM:en",
+          "priority": "low"
+        }
+      ]
+    }
+  ]
+}

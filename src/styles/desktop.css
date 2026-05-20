@@ -1,0 +1,48 @@
+
+/* PC / Desktop Overrides */
+@media (min-width: 1024px) {
+    .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        font-size: 18px; /* Increased base font size */
+    }
+
+    /* Settings Page Grid Fix */
+    .settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Prevent squishing */
+        gap: 20px;
+    }
+
+    .setting-card {
+        padding: 25px; /* More breathing room */
+    }
+
+    /* Icon Sizes */
+    .nav-icon {
+        font-size: 2rem; /* Larger icons */
+    }
+
+    .weather-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* News Cards */
+    .news-card {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .news-image {
+        width: 250px; /* Fixed width for images on PC */
+        height: 160px;
+        object-fit: cover;
+    }
+
+    .news-content {
+        flex: 1;
+    }
+}

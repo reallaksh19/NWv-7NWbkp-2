@@ -1,0 +1,196 @@
+{
+  "schema_version": 2,
+  "manifest_type": "benchmark_sample",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "sample_id": "S3_LONG_WEEKEND",
+  "kind": "stress_case",
+  "day": "2025-08-15",
+  "week_start": "2025-08-11",
+  "week_end": "2025-08-17",
+  "purpose": "Long-weekend / civic / travel / local-planning stress case used to validate temporal boosts and practical weekly-plan utility.",
+  "why_this_third": [
+    "It should follow S1 baseline and S2 anti-distortion setup so temporal tuning is judged in full context.",
+    "It is the practical relevance sample for alerts, civic items, local utility, shopping, and airlines.",
+    "It verifies that weekend and locality boosts improve usefulness without degrading serious sections or planner precision."
+  ],
+  "in_scope": {
+    "news_sections": [
+      "world",
+      "india",
+      "chennai",
+      "trichy",
+      "local",
+      "business",
+      "technology",
+      "sports",
+      "entertainment",
+      "social"
+    ],
+    "upahead_categories": [
+      "movies",
+      "events",
+      "festivals",
+      "alerts",
+      "sports",
+      "shopping",
+      "civic",
+      "weather_alerts",
+      "airlines",
+      "weekly_plan"
+    ]
+  },
+  "optimization_role": {
+    "news_defaults_weight": "medium",
+    "upahead_defaults_weight": "high",
+    "temporal_tuning_weight": "highest",
+    "local_utility_role": "mandatory"
+  },
+  "required_inputs": {
+    "raw_news_path": "benchmarks/raw/S3_LONG_WEEKEND/news/",
+    "raw_upahead_path": "benchmarks/raw/S3_LONG_WEEKEND/upahead/",
+    "normalized_news_path": "benchmarks/normalized/S3_LONG_WEEKEND/news/",
+    "normalized_upahead_path": "benchmarks/normalized/S3_LONG_WEEKEND/upahead/",
+    "gold_news_path": "benchmarks/gold/S3_LONG_WEEKEND/news/",
+    "gold_upahead_path": "benchmarks/gold/S3_LONG_WEEKEND/upahead/"
+  },
+  "daily_news_expectations": {
+    "core": [
+      "Local, Chennai, Trichy, and civic-relevant stories should improve in usefulness without overwhelming unrelated sections.",
+      "Weekend and entertainment boosts should make the feed feel timely, but should not degrade serious-section recall excessively.",
+      "Travel, event, and alert relevance should improve where appropriate.",
+      "Temporal boosts should help local and practical stories, not indiscriminately inflate low-signal content."
+    ],
+    "anti_patterns": [
+      "Weekend boosts causing entertainment or social stories to dominate serious sections without gold support.",
+      "Weak local filler outranking more important world, india, business, or technology stories inappropriately.",
+      "Generic travel or shopping chatter surfacing without clear actionability or local value.",
+      "Duplicate or near-duplicate local items consuming too many top positions."
+    ]
+  },
+  "upahead_expectations": {
+    "core": [
+      "Alerts, civic items, events, shopping, airlines, and weather_alerts should have strong practical planning value.",
+      "Weekly plan should reflect same-day and next-day usefulness clearly.",
+      "Date extraction and day assignment should be reliable enough for real planning.",
+      "Long-weekend planner output should favor utility over content volume."
+    ],
+    "anti_patterns": [
+      "Weakly actionable shopping or airline content crowding out better alerts, civic, or event items.",
+      "Old notices or stale advisories leaking into weekly plan.",
+      "Weather alerts included without timely relevance.",
+      "Weekly plan overloaded with repetitive leisure items while practical items are missed."
+    ]
+  },
+  "special_traps": {
+    "daily_news": [
+      "temporal_overboost",
+      "local_filler_overpromotion",
+      "shopping_or_travel_chatter_leak",
+      "serious_section_recall_drop",
+      "duplicate_local_cluster_leak"
+    ],
+    "upahead": [
+      "weak_local_utility",
+      "stale_alert_leak",
+      "shopping_spam_planner_leak",
+      "weather_alert_timing_failure",
+      "weekly_plan_underutility"
+    ]
+  },
+  "metrics": {
+    "news": [
+      "Precision@10",
+      "Recall@10",
+      "Recall@15",
+      "nDCG@10",
+      "nDCG@15",
+      "PairwiseAgreement",
+      "DuplicateLeak@10",
+      "StaleLeak@10",
+      "OffTopic@10",
+      "SectionBleed@10",
+      "LocalUtilityHitRate",
+      "TemporalBoostBenefitRate",
+      "SeriousSectionRecall@10"
+    ],
+    "upahead": [
+      "EventPrecision",
+      "EventRecall",
+      "EventF1",
+      "DateExactAccuracy",
+      "DateBucketAccuracy",
+      "CategoryAccuracy",
+      "FutureOnlyPrecision",
+      "WeeklyPlanRecall",
+      "WeeklyPlanPrecision",
+      "WeeklyPlanDuplicateLeak",
+      "PlannerActionabilityScore",
+      "PracticalUtilityRate",
+      "StaleAlertLeakRate",
+      "WeatherAlertTimingAccuracy"
+    ]
+  },
+  "suggested_pass_gates": {
+    "news": {
+      "Precision@10_min": 0.66,
+      "nDCG@10_min": 0.75,
+      "LocalUtilityHitRate_min": 0.7,
+      "SeriousSectionRecall@10_min": 0.65,
+      "DuplicateLeak@10_max": 1
+    },
+    "upahead": {
+      "EventPrecision_min": 0.75,
+      "DateBucketAccuracy_min": 0.82,
+      "WeeklyPlanRecall_min": 0.8,
+      "PracticalUtilityRate_min": 0.75,
+      "StaleAlertLeakRate_max": 0.05
+    }
+  },
+  "hard_rejection_conditions": [
+    "Weekend or entertainment boosts materially reduce serious-section usefulness without corresponding local/planner benefit.",
+    "Weak local filler occupies top positions at the expense of stronger, more relevant stories without gold support.",
+    "Shopping, airline, or travel chatter leaks into planner output without real actionability.",
+    "Stale alerts or mistimed weather items leak into weekly plan.",
+    "Practical utility does not improve despite heavier temporal/local weighting."
+  ],
+  "root_cause_buckets": {
+    "daily_news": [
+      "parse_failure",
+      "source_weight_issue",
+      "freshness_issue",
+      "keyword_overweight",
+      "keyword_underweight",
+      "temporal_boost_issue",
+      "section_misclassification",
+      "duplicate_cluster_failure",
+      "stale_filter_failure",
+      "hard_exclusion_failure",
+      "local_filler_overpromotion",
+      "travel_or_shopping_chatter_leak"
+    ],
+    "upahead": [
+      "planner_category_failure",
+      "date_extraction_failure",
+      "planner_threshold_issue",
+      "future_detection_failure",
+      "weekly_plan_assignment_failure",
+      "actionability_failure",
+      "stale_alert_leak",
+      "weather_alert_timing_failure",
+      "weak_local_utility"
+    ]
+  },
+  "execution_order": [
+    "Freeze raw snapshot files.",
+    "Generate normalized candidate files.",
+    "Draft gold labels for each news section with explicit local-utility and anti-filler constraints.",
+    "Draft gold labels for each Up Ahead category with practical-utility emphasis.",
+    "Review and tighten gold labels.",
+    "Run the app logic on the frozen inputs.",
+    "Score output against gold files.",
+    "Classify misses into root-cause buckets.",
+    "Reject any candidate config that boosts weekend/local content without practical utility gains.",
+    "Recommend no more than 5 bounded config changes."
+  ],
+  "suite_completion_note": "S1_NEUTRAL, S2_FESTIVAL_STRESS, and S3_LONG_WEEKEND together form the full three-sample strict benchmark set."
+}

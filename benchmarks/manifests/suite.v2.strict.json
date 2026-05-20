@@ -1,0 +1,158 @@
+{
+  "schema_version": 2,
+  "manifest_type": "benchmark_suite",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "suite_id": "news_weather_sectionwise_v2_strict",
+  "suite_version": 2,
+  "purpose": "Machine-readable suite manifest for strict sectionwise benchmark evaluation of daily news ranking and Up Ahead planning.",
+  "governing_docs": [
+    "docs/SECTIONWISE_BENCHMARK_WI.md",
+    "docs/SECTIONWISE_BENCHMARK_WI_V2_STRICT.md"
+  ],
+  "samples": [
+    {
+      "sample_id": "S1_NEUTRAL",
+      "manifest_path": "benchmarks/manifests/S1_NEUTRAL.v2.strict.json",
+      "kind": "baseline",
+      "order": 1,
+      "required": true
+    },
+    {
+      "sample_id": "S2_FESTIVAL_STRESS",
+      "manifest_path": "benchmarks/manifests/S2_FESTIVAL_STRESS.v2.strict.json",
+      "kind": "stress_case",
+      "order": 2,
+      "required": true
+    },
+    {
+      "sample_id": "S3_LONG_WEEKEND",
+      "manifest_path": "benchmarks/manifests/S3_LONG_WEEKEND.v2.strict.json",
+      "kind": "stress_case",
+      "order": 3,
+      "required": true
+    }
+  ],
+  "execution_policy": {
+    "run_order": [
+      "S1_NEUTRAL",
+      "S2_FESTIVAL_STRESS",
+      "S3_LONG_WEEKEND"
+    ],
+    "why_this_order": [
+      "S1_NEUTRAL defines the clean default baseline.",
+      "S2_FESTIVAL_STRESS validates anti-distortion behavior against holiday and festival noise.",
+      "S3_LONG_WEEKEND validates temporal, local, civic, and practical planner robustness."
+    ],
+    "strict_requirements": [
+      "No sample may be skipped in an official benchmark run.",
+      "S2_FESTIVAL_STRESS hard rejection conditions override aggregate score gains.",
+      "Candidate configs must be compared against the same frozen snapshots and same gold files.",
+      "At most 5 bounded config changes may be proposed per iteration."
+    ]
+  },
+  "aggregate_weighting": {
+    "news": {
+      "S1_NEUTRAL": 0.45,
+      "S2_FESTIVAL_STRESS": 0.25,
+      "S3_LONG_WEEKEND": 0.3
+    },
+    "upahead": {
+      "S1_NEUTRAL": 0.25,
+      "S2_FESTIVAL_STRESS": 0.35,
+      "S3_LONG_WEEKEND": 0.4
+    }
+  },
+  "scoring_summary": {
+    "news_primary_metrics": [
+      "Precision@10",
+      "Recall@10",
+      "Recall@15",
+      "nDCG@10",
+      "nDCG@15",
+      "PairwiseAgreement",
+      "DuplicateLeak@10",
+      "StaleLeak@10",
+      "OffTopic@10",
+      "SectionBleed@10"
+    ],
+    "news_special_metrics": {
+      "S2_FESTIVAL_STRESS": [
+        "SeriousSectionRecall@10",
+        "EntertainmentBleedRate",
+        "FestivalNoiseLeakRate",
+        "ShoppingSpamLeakRate"
+      ],
+      "S3_LONG_WEEKEND": [
+        "LocalUtilityHitRate",
+        "TemporalBoostBenefitRate",
+        "SeriousSectionRecall@10"
+      ]
+    },
+    "upahead_primary_metrics": [
+      "EventPrecision",
+      "EventRecall",
+      "EventF1",
+      "DateExactAccuracy",
+      "DateBucketAccuracy",
+      "CategoryAccuracy",
+      "FutureOnlyPrecision",
+      "WeeklyPlanRecall",
+      "WeeklyPlanPrecision",
+      "WeeklyPlanDuplicateLeak",
+      "PlannerActionabilityScore"
+    ],
+    "upahead_special_metrics": {
+      "S2_FESTIVAL_STRESS": [
+        "MovieReviewContaminationRate",
+        "WeakFestivalUtilityRate",
+        "ShoppingSpamPlannerLeakRate"
+      ],
+      "S3_LONG_WEEKEND": [
+        "PracticalUtilityRate",
+        "StaleAlertLeakRate",
+        "WeatherAlertTimingAccuracy"
+      ]
+    }
+  },
+  "pass_fail_policy": {
+    "candidate_acceptance_rules": [
+      "Overall aggregate score must improve versus current default.",
+      "No sample may regress by more than 0.03.",
+      "Stale or duplicate leakage must not materially worsen.",
+      "A gain in one section must not be purchased by obvious damage in unrelated sections.",
+      "All changes must be explainable and bounded."
+    ],
+    "hard_rejection_overrides": [
+      "If S2_FESTIVAL_STRESS fails its hard rejection conditions, reject the candidate even if aggregate score improves.",
+      "If S3_LONG_WEEKEND increases weekend/local content without practical utility gains, reject the candidate.",
+      "If benchmark inputs are not frozen and reproducible, the run is invalid."
+    ]
+  },
+  "required_artifacts": {
+    "raw": [
+      "benchmarks/raw/<sample>/news/*.json",
+      "benchmarks/raw/<sample>/upahead/raw_items.json",
+      "benchmarks/raw/<sample>/upahead/feed_manifest.json"
+    ],
+    "normalized": [
+      "benchmarks/normalized/<sample>/news/*.normalized.json",
+      "benchmarks/normalized/<sample>/upahead/normalized_items.json",
+      "benchmarks/normalized/<sample>/upahead/timeline.normalized.json"
+    ],
+    "gold": [
+      "benchmarks/gold/<sample>/news/*.yaml",
+      "benchmarks/gold/<sample>/upahead/*.yaml"
+    ],
+    "run_outputs": [
+      "benchmarks/runs/YYYY-MM-DD__config_name/<sample>/news_results.json",
+      "benchmarks/runs/YYYY-MM-DD__config_name/<sample>/upahead_results.json",
+      "benchmarks/runs/YYYY-MM-DD__config_name/<sample>/logs/",
+      "benchmarks/runs/YYYY-MM-DD__config_name/aggregate_report.json"
+    ]
+  },
+  "next_recommended_files": [
+    "benchmarks/manifests/sections.json",
+    "benchmarks/manifests/categories.json",
+    "benchmarks/manifests/scoring.v2.strict.json"
+  ]
+}

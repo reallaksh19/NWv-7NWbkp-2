@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "type": "travel-location-news-policy",
+  "generatedFor": {
+    "key": "colombo",
+    "display": "Colombo",
+    "countryCode": "LK",
+    "countryLabel": "Sri Lanka",
+    "edition": {
+      "country": "LK",
+      "lang": "en",
+      "timeRange": "30d"
+    }
+  },
+  "freshness": {
+    "maxAgeMinutes": 180,
+    "staleAfterMinutes": 360
+  },
+  "dedupe": {
+    "keyFields": [
+      "url",
+      "title",
+      "source"
+    ],
+    "titleSimilarityThreshold": 0.84
+  },
+  "queries": [
+    {
+      "id": "colombo-travel-1",
+      "locationKey": "colombo",
+      "label": "Colombo news",
+      "query": "Colombo news",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Colombo%20news&hl=en&gl=LK&ceid=LK:en",
+      "priority": "high"
+    },
+    {
+      "id": "colombo-travel-2",
+      "locationKey": "colombo",
+      "label": "Colombo local news",
+      "query": "Colombo local news",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Colombo%20local%20news&hl=en&gl=LK&ceid=LK:en",
+      "priority": "high"
+    },
+    {
+      "id": "colombo-travel-3",
+      "locationKey": "colombo",
+      "label": "Sri Lanka breaking news",
+      "query": "Sri Lanka breaking news",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Sri%20Lanka%20breaking%20news&hl=en&gl=LK&ceid=LK:en",
+      "priority": "high"
+    },
+    {
+      "id": "colombo-travel-4",
+      "locationKey": "colombo",
+      "label": "Colombo travel advisory",
+      "query": "Colombo travel advisory",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Colombo%20travel%20advisory&hl=en&gl=LK&ceid=LK:en",
+      "priority": "medium"
+    },
+    {
+      "id": "colombo-travel-5",
+      "locationKey": "colombo",
+      "label": "Colombo airport",
+      "query": "Colombo airport",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Colombo%20airport&hl=en&gl=LK&ceid=LK:en",
+      "priority": "medium"
+    },
+    {
+      "id": "colombo-travel-6",
+      "locationKey": "colombo",
+      "label": "Colombo weather alert",
+      "query": "Colombo weather alert",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Colombo%20weather%20alert&hl=en&gl=LK&ceid=LK:en",
+      "priority": "medium"
+    },
+    {
+      "id": "colombo-travel-7",
+      "locationKey": "colombo",
+      "label": "Sri Lanka tourism",
+      "query": "Sri Lanka tourism",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Sri%20Lanka%20tourism&hl=en&gl=LK&ceid=LK:en",
+      "priority": "low"
+    },
+    {
+      "id": "colombo-travel-8",
+      "locationKey": "colombo",
+      "label": "Sri Lanka transport",
+      "query": "Sri Lanka transport",
+      "country": "LK",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Sri%20Lanka%20transport&hl=en&gl=LK&ceid=LK:en",
+      "priority": "low"
+    }
+  ]
+}

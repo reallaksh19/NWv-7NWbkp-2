@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "type": "travel-location-news-policy",
+  "generatedFor": {
+    "key": "chennai",
+    "display": "Chennai",
+    "countryCode": "IN",
+    "countryLabel": "India",
+    "edition": {
+      "country": "IN",
+      "lang": "en",
+      "timeRange": "30d"
+    }
+  },
+  "freshness": {
+    "maxAgeMinutes": 180,
+    "staleAfterMinutes": 360
+  },
+  "dedupe": {
+    "keyFields": [
+      "url",
+      "title",
+      "source"
+    ],
+    "titleSimilarityThreshold": 0.84
+  },
+  "queries": [
+    {
+      "id": "chennai-travel-1",
+      "locationKey": "chennai",
+      "label": "Chennai news",
+      "query": "Chennai news",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Chennai%20news&hl=en&gl=IN&ceid=IN:en",
+      "priority": "high"
+    },
+    {
+      "id": "chennai-travel-2",
+      "locationKey": "chennai",
+      "label": "Chennai local news",
+      "query": "Chennai local news",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Chennai%20local%20news&hl=en&gl=IN&ceid=IN:en",
+      "priority": "high"
+    },
+    {
+      "id": "chennai-travel-3",
+      "locationKey": "chennai",
+      "label": "India breaking news",
+      "query": "India breaking news",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=India%20breaking%20news&hl=en&gl=IN&ceid=IN:en",
+      "priority": "high"
+    },
+    {
+      "id": "chennai-travel-4",
+      "locationKey": "chennai",
+      "label": "Chennai travel advisory",
+      "query": "Chennai travel advisory",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Chennai%20travel%20advisory&hl=en&gl=IN&ceid=IN:en",
+      "priority": "medium"
+    },
+    {
+      "id": "chennai-travel-5",
+      "locationKey": "chennai",
+      "label": "Chennai airport",
+      "query": "Chennai airport",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Chennai%20airport&hl=en&gl=IN&ceid=IN:en",
+      "priority": "medium"
+    },
+    {
+      "id": "chennai-travel-6",
+      "locationKey": "chennai",
+      "label": "Chennai weather alert",
+      "query": "Chennai weather alert",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=Chennai%20weather%20alert&hl=en&gl=IN&ceid=IN:en",
+      "priority": "medium"
+    },
+    {
+      "id": "chennai-travel-7",
+      "locationKey": "chennai",
+      "label": "India tourism",
+      "query": "India tourism",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=India%20tourism&hl=en&gl=IN&ceid=IN:en",
+      "priority": "low"
+    },
+    {
+      "id": "chennai-travel-8",
+      "locationKey": "chennai",
+      "label": "India transport",
+      "query": "India transport",
+      "country": "IN",
+      "lang": "en",
+      "url": "https://news.google.com/rss/search?q=India%20transport&hl=en&gl=IN&ceid=IN:en",
+      "priority": "low"
+    }
+  ]
+}

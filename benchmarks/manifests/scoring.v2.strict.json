@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "manifest_type": "scoring_policy",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "news": {
+    "section_score_formula": {
+      "name": "NewsSectionScore",
+      "formula_text": "0.28*nDCG@10 + 0.20*Precision@10 + 0.15*Recall@10 + 0.10*Recall@15 + 0.10*PairwiseAgreement + 0.17*(1-PenaltyScore)",
+      "weights": {
+        "nDCG@10": 0.28,
+        "Precision@10": 0.2,
+        "Recall@10": 0.15,
+        "Recall@15": 0.1,
+        "PairwiseAgreement": 0.1,
+        "PenaltyComplement": 0.17
+      }
+    },
+    "penalty_formula": {
+      "name": "PenaltyScore",
+      "formula_text": "0.30*DuplicateLeakRate + 0.25*StaleLeakRate + 0.20*OffTopicRate + 0.25*SectionBleedRate",
+      "weights": {
+        "DuplicateLeakRate": 0.3,
+        "StaleLeakRate": 0.25,
+        "OffTopicRate": 0.2,
+        "SectionBleedRate": 0.25
+      }
+    },
+    "primary_metrics": [
+      "Precision@10",
+      "Recall@10",
+      "Recall@15",
+      "nDCG@10",
+      "nDCG@15",
+      "PairwiseAgreement",
+      "DuplicateLeak@10",
+      "StaleLeak@10",
+      "OffTopic@10",
+      "SectionBleed@10"
+    ],
+    "sample_specific_metrics": {
+      "S2_FESTIVAL_STRESS": [
+        "SeriousSectionRecall@10",
+        "EntertainmentBleedRate",
+        "FestivalNoiseLeakRate",
+        "ShoppingSpamLeakRate"
+      ],
+      "S3_LONG_WEEKEND": [
+        "LocalUtilityHitRate",
+        "TemporalBoostBenefitRate",
+        "SeriousSectionRecall@10"
+      ]
+    }
+  },
+  "upahead": {
+    "category_score_formula": {
+      "name": "UpAheadCategoryScore",
+      "formula_text": "0.23*EventF1 + 0.20*DateBucketAccuracy + 0.15*DateExactAccuracy + 0.15*CategoryAccuracy + 0.15*WeeklyPlanRecall + 0.12*(1-PlannerPenaltyScore)",
+      "weights": {
+        "EventF1": 0.23,
+        "DateBucketAccuracy": 0.2,
+        "DateExactAccuracy": 0.15,
+        "CategoryAccuracy": 0.15,
+        "WeeklyPlanRecall": 0.15,
+        "PlannerPenaltyComplement": 0.12
+      }
+    },
+    "penalty_formula": {
+      "name": "PlannerPenaltyScore",
+      "formula_text": "0.35*FalsePositiveRate + 0.20*DuplicateLeakRate + 0.20*PastEventLeakRate + 0.25*WeakActionLeakRate",
+      "weights": {
+        "FalsePositiveRate": 0.35,
+        "DuplicateLeakRate": 0.2,
+        "PastEventLeakRate": 0.2,
+        "WeakActionLeakRate": 0.25
+      }
+    },
+    "primary_metrics": [
+      "EventPrecision",
+      "EventRecall",
+      "EventF1",
+      "DateExactAccuracy",
+      "DateBucketAccuracy",
+      "CategoryAccuracy",
+      "FutureOnlyPrecision",
+      "WeeklyPlanRecall",
+      "WeeklyPlanPrecision",
+      "WeeklyPlanDuplicateLeak",
+      "PlannerActionabilityScore"
+    ],
+    "sample_specific_metrics": {
+      "S2_FESTIVAL_STRESS": [
+        "MovieReviewContaminationRate",
+        "WeakFestivalUtilityRate",
+        "ShoppingSpamPlannerLeakRate"
+      ],
+      "S3_LONG_WEEKEND": [
+        "PracticalUtilityRate",
+        "StaleAlertLeakRate",
+        "WeatherAlertTimingAccuracy"
+      ]
+    }
+  },
+  "aggregate_weighting": {
+    "news": {
+      "S1_NEUTRAL": 0.45,
+      "S2_FESTIVAL_STRESS": 0.25,
+      "S3_LONG_WEEKEND": 0.3
+    },
+    "upahead": {
+      "S1_NEUTRAL": 0.25,
+      "S2_FESTIVAL_STRESS": 0.35,
+      "S3_LONG_WEEKEND": 0.4
+    }
+  },
+  "pass_gates": {
+    "S1_NEUTRAL": {
+      "news": {
+        "Precision@10_min": 0.7,
+        "nDCG@10_min": 0.78,
+        "DuplicateLeak@10_max": 1,
+        "StaleLeak@10_max": 1
+      },
+      "upahead": {
+        "EventPrecision_min": 0.7,
+        "DateBucketAccuracy_min": 0.8,
+        "WeeklyPlanRecall_min": 0.75
+      }
+    },
+    "S2_FESTIVAL_STRESS": {
+      "news": {
+        "Precision@10_min": 0.65,
+        "nDCG@10_min": 0.74,
+        "EntertainmentBleedRate_max": 0.2,
+        "FestivalNoiseLeakRate_max": 0.1,
+        "ShoppingSpamLeakRate_max": 0.05
+      },
+      "upahead": {
+        "EventPrecision_min": 0.72,
+        "DateBucketAccuracy_min": 0.8,
+        "WeeklyPlanRecall_min": 0.8,
+        "MovieReviewContaminationRate_max": 0.0,
+        "ShoppingSpamPlannerLeakRate_max": 0.08
+      }
+    },
+    "S3_LONG_WEEKEND": {
+      "news": {
+        "Precision@10_min": 0.66,
+        "nDCG@10_min": 0.75,
+        "LocalUtilityHitRate_min": 0.7,
+        "SeriousSectionRecall@10_min": 0.65,
+        "DuplicateLeak@10_max": 1
+      },
+      "upahead": {
+        "EventPrecision_min": 0.75,
+        "DateBucketAccuracy_min": 0.82,
+        "WeeklyPlanRecall_min": 0.8,
+        "PracticalUtilityRate_min": 0.75,
+        "StaleAlertLeakRate_max": 0.05
+      }
+    }
+  },
+  "candidate_acceptance_rules": [
+    "Overall aggregate score must improve versus current default.",
+    "No sample may regress by more than 0.03.",
+    "Stale or duplicate leakage must not materially worsen.",
+    "A gain in one section must not be purchased by obvious damage in unrelated sections.",
+    "All changes must be explainable and bounded."
+  ],
+  "hard_rejection_overrides": [
+    "Reject a candidate if S2_FESTIVAL_STRESS fails its hard rejection conditions, even if aggregate score improves.",
+    "Reject a candidate if S3_LONG_WEEKEND boosts weekend/local content without practical utility gains.",
+    "Reject a run if benchmark inputs are not frozen and reproducible.",
+    "Reject a run if placeholder gold, one-day pseudo-weeks, or empty unexplained gold files are used."
+  ],
+  "tuning_policy": {
+    "max_changes_per_iteration": 5,
+    "requirements_for_each_change": [
+      "Small and bounded delta",
+      "Sections/categories impacted",
+      "Likely benefit",
+      "Likely regression risk",
+      "Benchmark evidence for why it is proposed"
+    ]
+  }
+}

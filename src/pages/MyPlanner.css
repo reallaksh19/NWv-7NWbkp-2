@@ -1,0 +1,890 @@
+/* ==========================================================================
+   My Planner command center
+   Slice 25
+   ========================================================================== */
+
+.planner-evidence {
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(168, 85, 247, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.74);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+}
+
+.planner-evidence--active {
+    border-color: rgba(34, 197, 94, 0.34);
+}
+
+.planner-evidence--attention {
+    border-color: rgba(245, 158, 11, 0.34);
+}
+
+.planner-evidence--empty,
+.planner-evidence--quiet {
+    border-color: rgba(148, 163, 184, 0.22);
+}
+
+.planner-evidence__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 74px;
+    gap: 14px;
+    align-items: center;
+}
+
+.planner-evidence__eyebrow {
+    color: #c084fc;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-evidence h2 {
+    margin: 4px 0;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1.08rem;
+    line-height: 1.18;
+}
+
+.planner-evidence p {
+    margin: 0;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.planner-evidence__score {
+    min-height: 64px;
+    border-radius: 16px;
+    border: 1px solid rgba(192, 132, 252, 0.24);
+    background: rgba(168, 85, 247, 0.08);
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.planner-evidence__score span {
+    display: block;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.58rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+}
+
+.planner-evidence__score strong {
+    display: block;
+    color: #d8b4fe;
+    font-size: 1.45rem;
+    font-weight: 950;
+    line-height: 1;
+}
+
+.planner-evidence__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 14px;
+}
+
+.planner-evidence__tile {
+    min-height: 58px;
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.planner-evidence__tile span {
+    display: block;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.64rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.planner-evidence__tile strong {
+    display: block;
+    margin-top: 5px;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.planner-evidence__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.planner-evidence__chips span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #ede9fe;
+    background: rgba(168, 85, 247, 0.10);
+    border: 1px solid rgba(168, 85, 247, 0.18);
+    font-size: 0.68rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.planner-evidence__upcoming {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.planner-evidence__section-title {
+    color: #c084fc;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.planner-evidence__upcoming-item {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr) 88px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.planner-evidence__upcoming-item span,
+.planner-evidence__upcoming-item em {
+    color: var(--text-muted, #8b949e);
+    font-size: 0.72rem;
+    font-style: normal;
+}
+
+.planner-evidence__upcoming-item strong {
+    color: var(--text-primary, #FFFFFF);
+    font-size: 0.82rem;
+    line-height: 1.3;
+}
+
+.planner-evidence__details {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.planner-evidence__details summary {
+    cursor: pointer;
+    color: #c084fc;
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.planner-evidence__details ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+@media (max-width: 760px) {
+    .planner-evidence {
+        padding: 14px;
+    }
+
+    .planner-evidence__header {
+        grid-template-columns: 1fr;
+    }
+
+    .planner-evidence__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .planner-evidence__upcoming-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}/* ==========================================================================
+   My Planner controls
+   Slice 26
+   ========================================================================== */
+
+.planner-controls {
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(88, 166, 255, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.74);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+}
+
+.planner-controls__eyebrow {
+    color: #93c5fd;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-controls h2 {
+    margin: 4px 0;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1.08rem;
+    line-height: 1.18;
+}
+
+.planner-controls p {
+    margin: 0;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.planner-controls__grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(130px, 1fr)) auto;
+    gap: 10px;
+    align-items: end;
+    margin-top: 14px;
+}
+
+.planner-controls__field {
+    display: grid;
+    gap: 5px;
+}
+
+.planner-controls__field span {
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.64rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.planner-controls__field input,
+.planner-controls__field select {
+    width: 100%;
+    min-height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: rgba(255, 255, 255, 0.055);
+    color: var(--text-primary, #FFFFFF);
+    padding: 8px 10px;
+    font: inherit;
+    outline: none;
+}
+
+.planner-controls__field input:focus,
+.planner-controls__field select:focus {
+    border-color: rgba(88, 166, 255, 0.54);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.14);
+}
+
+.planner-controls__reset {
+    min-height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(88, 166, 255, 0.24);
+    background: rgba(88, 166, 255, 0.10);
+    color: #bfdbfe;
+    font-weight: 850;
+    cursor: pointer;
+    padding: 0 14px;
+}
+
+.planner-controls__reset:hover {
+    background: rgba(88, 166, 255, 0.18);
+}
+
+@media (max-width: 900px) {
+    .planner-controls__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .planner-controls__field--search,
+    .planner-controls__reset {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 560px) {
+    .planner-controls {
+        padding: 14px;
+    }
+
+    .planner-controls__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==========================================================================
+   My Planner bulk actions
+   Slice 27
+   ========================================================================== */
+
+.planner-bulk {
+    margin: 0 0 16px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background:
+        radial-gradient(360px 150px at 100% 0%, rgba(34, 197, 94, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.72);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+}
+
+.planner-bulk--active {
+    border-color: rgba(34, 197, 94, 0.34);
+}
+
+.planner-bulk__eyebrow {
+    color: #86efac;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-bulk__copy strong {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 0.98rem;
+}
+
+.planner-bulk__copy span {
+    display: block;
+    margin-top: 3px;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.78rem;
+}
+
+.planner-bulk__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.planner-bulk__actions button {
+    min-height: 36px;
+    border-radius: 11px;
+    border: 1px solid rgba(34, 197, 94, 0.22);
+    background: rgba(34, 197, 94, 0.10);
+    color: #bbf7d0;
+    font-weight: 850;
+    cursor: pointer;
+    padding: 0 12px;
+}
+
+.planner-bulk__actions button:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+.planner-bulk__actions .planner-bulk__danger {
+    border-color: rgba(239, 68, 68, 0.28);
+    background: rgba(239, 68, 68, 0.10);
+    color: #fecaca;
+}
+
+.planner-item-select {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-primary, #58a6ff);
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+    .planner-bulk {
+        grid-template-columns: 1fr;
+    }
+
+    .planner-bulk__actions {
+        justify-content: stretch;
+    }
+
+    .planner-bulk__actions button {
+        flex: 1 1 calc(50% - 8px);
+    }
+}
+
+
+/* ==========================================================================
+   My Planner item inspector
+   Slice 29
+   ========================================================================== */
+
+.planner-item-inspect-btn {
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(255, 255, 255, 0.055);
+    color: var(--text-secondary, #9CA5B0);
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.planner-item-inspect-btn:hover {
+    border-color: rgba(88, 166, 255, 0.44);
+    color: #bfdbfe;
+    background: rgba(88, 166, 255, 0.10);
+}
+
+.planner-inspector {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    pointer-events: auto;
+}
+
+.planner-inspector__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.66);
+    backdrop-filter: blur(8px);
+}
+
+.planner-inspector__sheet {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    bottom: 18px;
+    width: min(430px, calc(100% - 36px));
+    padding: 18px;
+    overflow: auto;
+    border-radius: 22px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(88, 166, 255, 0.12), transparent 62%),
+        rgba(15, 23, 42, 0.96);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+}
+
+.planner-inspector__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 36px;
+    gap: 12px;
+    align-items: start;
+}
+
+.planner-inspector__eyebrow {
+    color: #93c5fd;
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-inspector h2 {
+    margin: 5px 0;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1.08rem;
+    line-height: 1.25;
+}
+
+.planner-inspector p {
+    margin: 0;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.planner-inspector__close {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary, #FFFFFF);
+    cursor: pointer;
+}
+
+.planner-inspector__facts {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.planner-inspector__fact {
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.planner-inspector__fact span {
+    display: block;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.planner-inspector__fact strong {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 0.86rem;
+    line-height: 1.35;
+}
+
+.planner-inspector__link {
+    display: inline-flex;
+    margin-top: 14px;
+    color: #bfdbfe;
+    text-decoration: none;
+    font-weight: 850;
+    font-size: 0.84rem;
+}
+
+.planner-inspector__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 16px;
+}
+
+.planner-inspector__actions button {
+    min-height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(88, 166, 255, 0.24);
+    background: rgba(88, 166, 255, 0.10);
+    color: #bfdbfe;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.planner-inspector__actions .planner-inspector__danger {
+    border-color: rgba(239, 68, 68, 0.28);
+    background: rgba(239, 68, 68, 0.10);
+    color: #fecaca;
+}
+
+.planner-inspector__details {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.planner-inspector__details summary {
+    cursor: pointer;
+    color: #93c5fd;
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.planner-inspector__details ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+    .planner-inspector__sheet {
+        top: auto;
+        right: 8px;
+        bottom: 8px;
+        left: 8px;
+        width: auto;
+        max-height: 86vh;
+    }
+
+    .planner-inspector__actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==========================================================================
+   My Planner agenda export
+   Slice 30
+   ========================================================================== */
+
+.planner-agenda-export {
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(14, 165, 233, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.74);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+}
+
+.planner-agenda-export--ready {
+    border-color: rgba(14, 165, 233, 0.34);
+}
+
+.planner-agenda-export--empty {
+    border-color: rgba(148, 163, 184, 0.22);
+}
+
+.planner-agenda-export__eyebrow {
+    color: #7dd3fc;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-agenda-export h2 {
+    margin: 4px 0;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1.08rem;
+    line-height: 1.18;
+}
+
+.planner-agenda-export p {
+    margin: 0;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.planner-agenda-export__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.planner-agenda-export__meta span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #e0f2fe;
+    background: rgba(14, 165, 233, 0.10);
+    border: 1px solid rgba(14, 165, 233, 0.18);
+    font-size: 0.68rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.planner-agenda-export__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.planner-agenda-export__actions button {
+    min-height: 36px;
+    border-radius: 11px;
+    border: 1px solid rgba(14, 165, 233, 0.24);
+    background: rgba(14, 165, 233, 0.10);
+    color: #bae6fd;
+    font-weight: 850;
+    cursor: pointer;
+    padding: 0 12px;
+}
+
+.planner-agenda-export__actions button:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+@media print {
+    .planner-controls,
+    .planner-bulk,
+    .planner-agenda-export,
+    .planner-inspector,
+    .ua-plan-delete-btn,
+    .planner-item-select,
+    .planner-item-inspect-btn,
+    .ua-plan-action-btn {
+        display: none !important;
+    }
+
+    .page-container,
+    .main-content {
+        background: #fff !important;
+        color: #000 !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .planner-agenda-export {
+        padding: 14px;
+    }
+
+    .planner-agenda-export__actions button {
+        flex: 1 1 calc(50% - 8px);
+    }
+}
+
+
+/* ==========================================================================
+   My Planner interaction quality
+   Slice 31
+   ========================================================================== */
+
+.planner-interaction-quality {
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(45, 212, 191, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.74);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+}
+
+.planner-interaction-quality--ready,
+.planner-interaction-quality--active,
+.planner-interaction-quality--focused {
+    border-color: rgba(45, 212, 191, 0.34);
+}
+
+.planner-interaction-quality--empty {
+    border-color: rgba(148, 163, 184, 0.22);
+}
+
+.planner-interaction-quality__eyebrow {
+    color: #5eead4;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-interaction-quality h2 {
+    margin: 4px 0;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1.08rem;
+    line-height: 1.18;
+}
+
+.planner-interaction-quality p {
+    margin: 0;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.planner-interaction-quality__checks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.planner-interaction-quality__check {
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.planner-interaction-quality__check span {
+    display: block;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.planner-interaction-quality__check strong {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.planner-interaction-quality__check--active,
+.planner-interaction-quality__check--focused,
+.planner-interaction-quality__check--ready {
+    border-color: rgba(45, 212, 191, 0.20);
+    background: rgba(45, 212, 191, 0.07);
+}
+
+.planner-interaction-quality__notes {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+@media print {
+    .planner-interaction-quality {
+        display: none !important;
+    }
+}
+
+
+/* ==========================================================================
+   My Planner state hygiene
+   Slice 32
+   ========================================================================== */
+
+.planner-state-hygiene {
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(132, 204, 22, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.74);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+}
+
+.planner-state-hygiene--clean {
+    border-color: rgba(132, 204, 22, 0.34);
+}
+
+.planner-state-hygiene--needs-cleanup {
+    border-color: rgba(245, 158, 11, 0.38);
+}
+
+.planner-state-hygiene__eyebrow {
+    color: #bef264;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.planner-state-hygiene h2 {
+    margin: 4px 0;
+    color: var(--text-primary, #FFFFFF);
+    font-size: 1.08rem;
+    line-height: 1.18;
+}
+
+.planner-state-hygiene p {
+    margin: 0;
+    color: var(--text-secondary, #9CA5B0);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.planner-state-hygiene__notes {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+@media print {
+    .planner-state-hygiene {
+        display: none !important;
+    }
+}

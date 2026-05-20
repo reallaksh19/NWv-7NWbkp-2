@@ -1,0 +1,343 @@
+/* Detailed Weather Card Container */
+.dw-container {
+    display: flex;
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-default);
+    /* Remove fixed height to allow content to dictate, but ensure sidebar stretches */
+    min-height: 80vh;
+    align-items: stretch;
+}
+
+/* Sidebar (Vertical Tabs) */
+.dw-sidebar {
+    width: 60px; /* Narrow on mobile */
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-default);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding-top: 10px;
+}
+
+@media (min-width: 768px) {
+    .dw-sidebar {
+        width: 180px; /* Wider on desktop */
+    }
+}
+
+.dw-city-tab {
+    padding: 16px 4px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-left: 3px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.dw-city-tab:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--text-primary);
+}
+
+.dw-city-tab.active {
+    background: var(--bg-primary); /* Match content bg */
+    border-left-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.dw-city-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.dw-city-name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+    .dw-city-tab {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 16px 20px;
+        gap: 12px;
+    }
+
+    .dw-city-name {
+        font-size: 0.95rem;
+        text-transform: none;
+        letter-spacing: normal;
+    }
+}
+
+/* Content Area */
+.dw-content {
+    flex: 1;
+    padding: 16px;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+    .dw-content {
+        padding: 24px;
+    }
+}
+
+/* Header */
+.dw-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-default);
+}
+
+.dw-header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.dw-city-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.dw-current-temp {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+}
+
+.dw-header-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+/* Cards List */
+.dw-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Card Styling */
+.dw-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.dw-card:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+.dw-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dw-card.expanded {
+    border-color: var(--accent-primary);
+    background: var(--bg-card); /* Keep same bg */
+    cursor: default;
+    transform: none;
+}
+
+.dw-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.dw-period-badge {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dw-expand-hint {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dw-expand-hint--disabled {
+    opacity: 0.55;
+}
+
+/* Main Section (Icon + Temp) */
+.dw-card-main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.dw-main-icon {
+    width: 64px;
+    display: flex;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.dw-main-temp {
+    display: flex;
+    flex-direction: column;
+}
+
+.dw-temp-val {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-primary);
+}
+
+.dw-temp-feels {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Detailed Rows Grid */
+.dw-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Rows overlap borders */
+}
+
+.dw-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.dw-detail-row:last-child {
+    border-bottom: none;
+}
+
+.dw-detail-icon {
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    color: var(--text-muted);
+}
+
+.dw-detail-text {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.dw-sep {
+    color: var(--border-default);
+    margin: 0 8px;
+}
+
+.dw-desc {
+    font-style: italic;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Hourly Container (Expanded) */
+.dw-hourly-container {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-default);
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px; /* For scrollbar space */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-default) transparent;
+}
+
+.dw-hourly-container::-webkit-scrollbar {
+    height: 4px;
+}
+.dw-hourly-container::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border-radius: 2px;
+}
+
+.dw-hourly-slot {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 50px;
+}
+
+.dw-slot-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.dw-slot-icon {
+    font-size: 1.2rem;
+}
+
+.dw-slot-temp {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.dw-slot-precip {
+    font-size: 0.7rem;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Footer */
+.dw-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding-top: 16px;
+    border-top: 1px dashed var(--border-default);
+}

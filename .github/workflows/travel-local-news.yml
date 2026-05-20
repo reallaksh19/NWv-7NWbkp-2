@@ -1,0 +1,41 @@
+name: Travel local news prefetch
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      location_key:
+        description: 'Travel location key (colombo, muscat, chennai, trichy)'
+        required: false
+        default: 'colombo'
+
+jobs:
+  collect-travel-news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Collect travel local news
+        run: node scripts/collect_travel_local_news.mjs
+        env:
+          TRAVEL_LOCATION_KEY: ${{ github.event.inputs.location_key || 'colombo' }}
+
+      - name: Commit updated travel news JSON
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: update travel-local news JSON [skip ci]'
+          file_pattern: 'public/data/travel-local-*.json'
+          branch: ${{ github.ref_name }}

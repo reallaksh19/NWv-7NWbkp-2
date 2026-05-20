@@ -1,0 +1,159 @@
+{
+  "schema_version": 2,
+  "manifest_type": "benchmark_sample",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "sample_id": "S1_NEUTRAL",
+  "kind": "baseline",
+  "day": "2025-06-18",
+  "week_start": "2025-06-16",
+  "week_end": "2025-06-22",
+  "purpose": "Primary default-tuning window for durable baseline ranking and planner behavior.",
+  "why_this_first": [
+    "It is the least distorted of the three benchmark windows.",
+    "It is best for calibrating durable default weights before stress testing holiday/festival and long-weekend behavior.",
+    "It provides the reference baseline against which S2_FESTIVAL_STRESS and S3_LONG_WEEKEND should be judged."
+  ],
+  "in_scope": {
+    "news_sections": [
+      "world",
+      "india",
+      "chennai",
+      "trichy",
+      "local",
+      "business",
+      "technology",
+      "sports",
+      "entertainment",
+      "social"
+    ],
+    "upahead_categories": [
+      "movies",
+      "events",
+      "festivals",
+      "alerts",
+      "sports",
+      "shopping",
+      "civic",
+      "weather_alerts",
+      "airlines",
+      "weekly_plan"
+    ]
+  },
+  "optimization_role": {
+    "news_defaults_weight": "highest",
+    "upahead_defaults_weight": "medium",
+    "temporal_tuning_weight": "medium"
+  },
+  "required_inputs": {
+    "raw_news_path": "benchmarks/raw/S1_NEUTRAL/news/",
+    "raw_upahead_path": "benchmarks/raw/S1_NEUTRAL/upahead/",
+    "normalized_news_path": "benchmarks/normalized/S1_NEUTRAL/news/",
+    "normalized_upahead_path": "benchmarks/normalized/S1_NEUTRAL/upahead/",
+    "gold_news_path": "benchmarks/gold/S1_NEUTRAL/news/",
+    "gold_upahead_path": "benchmarks/gold/S1_NEUTRAL/upahead/"
+  },
+  "daily_news_expectations": {
+    "core": [
+      "World, India, Business, and Technology should show strong top-10 relevance.",
+      "Freshness should matter visibly without over-penalizing important continuing stories.",
+      "Duplicate and section-bleed leakage should stay low.",
+      "Source quality should matter, but no single source should dominate solely because of weight inflation."
+    ],
+    "anti_patterns": [
+      "Stale items in top positions.",
+      "Same-event duplicates occupying multiple top slots.",
+      "Entertainment or social spillover into serious sections without gold support.",
+      "Weak local stories outranking stronger world/business/technology stories without clear section rationale."
+    ]
+  },
+  "upahead_expectations": {
+    "core": [
+      "Movies, events, and alerts should be detected with good precision.",
+      "Date extraction should be correct or within the allowed bucket for weekly planning.",
+      "The weekly plan should include useful, future-looking, actionable items rather than article noise."
+    ],
+    "anti_patterns": [
+      "Reviews, recaps, box office chatter, and gossip included as planner positives.",
+      "Past-only items included without still-actionable value.",
+      "Weekly plan overfilled with weak or repetitive items."
+    ]
+  },
+  "metrics": {
+    "news": [
+      "Precision@10",
+      "Recall@10",
+      "Recall@15",
+      "nDCG@10",
+      "nDCG@15",
+      "PairwiseAgreement",
+      "DuplicateLeak@10",
+      "StaleLeak@10",
+      "OffTopic@10",
+      "SectionBleed@10"
+    ],
+    "upahead": [
+      "EventPrecision",
+      "EventRecall",
+      "EventF1",
+      "DateExactAccuracy",
+      "DateBucketAccuracy",
+      "CategoryAccuracy",
+      "FutureOnlyPrecision",
+      "WeeklyPlanRecall",
+      "WeeklyPlanPrecision",
+      "WeeklyPlanDuplicateLeak",
+      "PlannerActionabilityScore"
+    ]
+  },
+  "suggested_pass_gates": {
+    "news": {
+      "Precision@10_min": 0.7,
+      "nDCG@10_min": 0.78,
+      "DuplicateLeak@10_max": 1,
+      "StaleLeak@10_max": 1
+    },
+    "upahead": {
+      "EventPrecision_min": 0.7,
+      "DateBucketAccuracy_min": 0.8,
+      "WeeklyPlanRecall_min": 0.75
+    }
+  },
+  "root_cause_buckets": {
+    "daily_news": [
+      "parse_failure",
+      "source_weight_issue",
+      "freshness_issue",
+      "keyword_overweight",
+      "keyword_underweight",
+      "temporal_boost_issue",
+      "section_misclassification",
+      "duplicate_cluster_failure",
+      "stale_filter_failure",
+      "hard_exclusion_failure"
+    ],
+    "upahead": [
+      "planner_category_failure",
+      "date_extraction_failure",
+      "planner_threshold_issue",
+      "future_detection_failure",
+      "weekly_plan_assignment_failure",
+      "actionability_failure"
+    ]
+  },
+  "execution_order": [
+    "Freeze raw snapshot files.",
+    "Generate normalized candidate files.",
+    "Draft gold labels for each news section.",
+    "Draft gold labels for each Up Ahead category.",
+    "Review and tighten gold labels.",
+    "Run the app logic on the frozen inputs.",
+    "Score output against gold files.",
+    "Classify misses into root-cause buckets.",
+    "Recommend no more than 5 bounded config changes."
+  ],
+  "next_after_this": [
+    "Create S2_FESTIVAL_STRESS.v2.strict.json after S1 gold is stable.",
+    "Use S2 only after S1 baseline is working, so holiday/festival stress is compared against a clean reference.",
+    "Create S3_LONG_WEEKEND.v2.strict.json after S2, to validate temporal and planner robustness."
+  ]
+}

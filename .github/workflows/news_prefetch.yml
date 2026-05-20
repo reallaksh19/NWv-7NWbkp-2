@@ -1,0 +1,163 @@
+name: News Prefetch
+
+# Runs hourly during IST 7am–7:30pm (UTC 1:30–14:00), plus 3 overnight runs.
+# All times are IST (UTC+5:30). Cron uses UTC.
+#
+# IST 7:30am  = UTC 02:00
+# IST 8:30am  = UTC 03:00
+# ...
+# IST 7:30pm  = UTC 14:00
+# IST 10:30pm = UTC 17:00
+# IST 1:30am  = UTC 20:00
+# IST 4:30am  = UTC 23:00
+
+on:
+
+concurrency:
+  group: news-prefetch
+  cancel-in-progress: false
+
+  schedule:
+    - cron: '30 1-13 * * *'    # every hour IST ~7:30am–7:30pm (UTC 1:30–13:30)
+    - cron: '0 17,20,23 * * *' # IST ~10:30pm, 1:30am, 4:30am
+  workflow_dispatch:            # allow manual trigger
+
+jobs:
+  prefetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch Insight stories
+        run: python scripts/fetch_insight_stories.py
+
+      - name: Validate Insight prefetch quality
+        run: python scripts/validate_insight_prefetch_output.py
+
+      - name: Upload Insight quality report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: insight-quality-report
+          path: |
+            public/newsdata/insight_quality_report.json
+            public/newsdata/insight_quality_summary.md
+          if-no-files-found: warn
+
+      - name: Fetch Sections stories
+        run: python scripts/fetch_sections_stories.py
+
+      - name: Validate Sections prefetch quality
+        run: python scripts/validate_sections_prefetch_output.py
+
+      - name: Upload Sections quality report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sections-quality-report
+          path: |
+            public/newsdata/sections_quality_report.json
+            public/newsdata/sections_quality_summary.md
+          if-no-files-found: warn
+
+      - name: Decide whether news data commit is needed
+        id: prefetch_commit
+        run: python scripts/prefetch_commit_decision.py
+
+      - name: Upload prefetch commit manifest
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prefetch-commit-manifest
+          path: public/newsdata/prefetch_commit_manifest.json
+          if-no-files-found: warn
+
+      - name: Setup Node for Pages publish
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Node dependencies for Pages publish
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        run: npm ci
+
+      - name: Build Pages site with latest newsdata
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        run: |
+          npm run build
+          node scripts/write_pages_data_manifest.mjs
+
+      - name: Run real Insight snapshot quality benchmark
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        run: npm run test:real-insight-snapshot-quality
+
+      - name: Upload real Insight quality benchmark report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-insight-quality-report
+          path: |
+            public/newsdata/real_insight_quality_report.json
+            public/newsdata/real_insight_quality_summary.md
+          if-no-files-found: warn
+
+      - name: Publish updated Pages site
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx gh-pages -d dist -u "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+
+      - name: Verify deployed Pages newsdata
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        run: |
+          node scripts/verify_pages_newsdata.mjs --retries 10 --delay-ms 15000
+
+      - name: Upload Pages newsdata verification report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pages-newsdata-verification
+          path: |
+            public/newsdata/pages_newsdata_verify_report.json
+            public/newsdata/pages_newsdata_verify_summary.md
+          if-no-files-found: warn
+
+      - name: Skip Pages publish for diagnostic-only changes
+        if: steps.prefetch_commit.outputs.should_commit != 'true'
+        run: |
+          echo "No meaningful news content changes. Pages publish skipped."
+
+
+      - name: Commit data
+        if: steps.prefetch_commit.outputs.should_commit == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/newsdata/insight_latest.json public/newsdata/sections_latest.json public/newsdata/source_health.json public/newsdata/prefetch_commit_manifest.json
+          if git diff --staged --quiet; then
+            echo "No meaningful news-data changes — skipping commit"
+            exit 0
+          fi
+          git commit -m "data: news prefetch $(date -u +'%Y-%m-%dT%H:%MZ')"
+          git push
+
+      - name: Skip commit for diagnostic-only changes
+        if: steps.prefetch_commit.outputs.should_commit != 'true'
+        run: |
+          echo "No meaningful news content changes. Quality reports were uploaded as artifacts only."

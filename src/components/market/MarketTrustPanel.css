@@ -1,0 +1,243 @@
+.market-trust-panel {
+    margin: 0 0 16px;
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background:
+        radial-gradient(420px 180px at 100% 0%, rgba(0, 212, 170, 0.10), transparent 62%),
+        rgba(15, 23, 42, 0.78);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.20);
+}
+
+.market-trust-panel--good {
+    border-color: rgba(34, 197, 94, 0.34);
+}
+
+.market-trust-panel--info {
+    border-color: rgba(88, 166, 255, 0.34);
+}
+
+.market-trust-panel--warn {
+    border-color: rgba(245, 158, 11, 0.38);
+}
+
+.market-trust-panel--danger {
+    border-color: rgba(239, 68, 68, 0.40);
+}
+
+.market-trust-panel__summary {
+    display: grid;
+    grid-template-columns: 78px minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+}
+
+.market-trust-panel__grade {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border-radius: 18px;
+    background: rgba(0, 212, 170, 0.12);
+    border: 1px solid rgba(0, 212, 170, 0.28);
+}
+
+.market-trust-panel__grade span {
+    display: block;
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.58rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+}
+
+.market-trust-panel__grade strong {
+    display: block;
+    color: #7fffe0;
+    font-size: 1.9rem;
+    font-weight: 950;
+    line-height: 1;
+}
+
+.market-trust-panel__eyebrow {
+    color: #7fffe0;
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.market-trust-panel h2 {
+    margin: 4px 0;
+    color: var(--text-primary, #f8fafc);
+    font-size: 1.08rem;
+    line-height: 1.18;
+}
+
+.market-trust-panel p {
+    margin: 0;
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.market-trust-panel__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 9px;
+}
+
+.market-trust-panel__meta span {
+    padding: 3px 7px;
+    border-radius: 999px;
+    color: var(--text-muted, #94a3b8);
+    background: rgba(255, 255, 255, 0.055);
+    font-size: 0.72rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.market-trust-panel__refresh {
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text-primary, #f8fafc);
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.market-trust-panel__refresh:hover {
+    background: rgba(0, 212, 170, 0.10);
+    border-color: rgba(0, 212, 170, 0.42);
+}
+
+.market-trust-panel__refresh[disabled] {
+    opacity: 0.62;
+    cursor: wait;
+}
+
+.market-trust-panel__coverage {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 14px;
+}
+
+.market-trust-panel__tile {
+    min-height: 56px;
+    padding: 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.market-trust-panel__tile span {
+    display: block;
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.68rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.market-trust-panel__tile strong {
+    display: block;
+    margin-top: 5px;
+    color: var(--text-primary, #f8fafc);
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.market-trust-panel__tile--ok {
+    border-color: rgba(34, 197, 94, 0.22);
+}
+
+.market-trust-panel__tile--ok strong {
+    color: #86efac;
+}
+
+.market-trust-panel__tile--missing {
+    border-color: rgba(239, 68, 68, 0.18);
+    opacity: 0.84;
+}
+
+.market-trust-panel__tile--missing strong {
+    color: #fecaca;
+}
+
+.market-trust-panel__details {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.market-trust-panel__details summary {
+    cursor: pointer;
+    color: #7fffe0;
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.market-trust-panel__source-grid {
+    display: grid;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.market-trust-panel__source-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.045);
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.78rem;
+}
+
+.market-trust-panel__source-row strong {
+    color: var(--text-primary, #f8fafc);
+}
+
+.market-trust-panel__source-status--live {
+    color: #86efac !important;
+}
+
+.market-trust-panel__source-status--snapshot {
+    color: #fcd34d !important;
+}
+
+.market-trust-panel__source-status--failed {
+    color: #fecaca !important;
+}
+
+.market-trust-panel__empty-source {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    color: var(--text-muted, #94a3b8);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+@media (max-width: 760px) {
+    .market-trust-panel__summary {
+        grid-template-columns: 1fr;
+    }
+
+    .market-trust-panel__grade {
+        width: 100%;
+        height: auto;
+        min-height: 58px;
+    }
+
+    .market-trust-panel__refresh {
+        width: 100%;
+    }
+
+    .market-trust-panel__coverage {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

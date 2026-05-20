@@ -1,0 +1,56 @@
+name: UpAhead Refresh
+
+# Runs 5× per day for events/offers/alerts/movies (IST 4am, 10am, 2pm, 6pm, 8pm)
+# Plus weekly festivals refresh (Sunday IST 3am = Saturday UTC 21:30)
+#
+# IST 4:00am  = UTC 22:30 (previous day)
+# IST 10:00am = UTC 04:30
+# IST 2:00pm  = UTC 08:30
+# IST 6:00pm  = UTC 12:30
+# IST 8:00pm  = UTC 14:30
+# Sunday IST 3:00am = Saturday UTC 21:30
+
+on:
+  schedule:
+    - cron: '30 22 * * *'         # IST ~4:00am  (UTC prev-day 22:30)
+    - cron: '30 4,8,12,14 * * *'  # IST ~10am, 2pm, 6pm, 8pm
+    - cron: '30 21 * * 6'         # Weekly festivals: Saturday UTC 21:30 = Sunday IST 3:00am
+  workflow_dispatch:
+
+jobs:
+  upahead:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch UpAhead events
+        run: python scripts/fetch_upahead_events.py
+
+      - name: Fetch Festivals (weekly Saturday UTC run only)
+        if: ${{ github.event.schedule == '30 21 * * 6' || github.event_name == 'workflow_dispatch' }}
+        run: python scripts/fetch_festivals.py
+
+      - name: Commit data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/ public/newsdata/source_health.json
+          if git diff --staged --quiet; then
+            echo "No changes — skipping commit"
+            exit 0
+          fi
+          git commit -m "data: upahead refresh $(date -u +'%Y-%m-%dT%H:%MZ')"
+          git push

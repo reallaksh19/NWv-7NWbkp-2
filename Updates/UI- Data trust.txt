@@ -1,0 +1,4750 @@
+UI- Data trust
+
+Yes — this should be a **clean UI slice**, not another large diagnostic panel embedded everywhere.
+
+The right pattern:
+
+```txt
+Every major tab/page gets a small Grade Badge in top-right.
+Badge shows only A/B/C/D/F.
+Click badge -> modal popup opens.
+Popup contains:
+  - Overall grade
+  - Data trust
+  - Source freshness
+  - Audit checks
+  - Gate results
+  - Weaknesses / warnings
+  - Raw diagnostic facts
+```
+
+For **Main Tab**, implement a robust grader using current page data:
+
+```txt
+Inputs:
+- newsData.frontPage / section arrays
+- breakingNews
+- weatherData
+- loading/errors
+- section enablement from settings
+- freshness/time fields if available
+- source diversity
+- missing sections
+- duplicate story rate
+- weather availability
+```
+
+# Slice 60A — Universal Grade Badge + Main Tab Audit Modal
+
+This slice implements the UI shell and Main Tab grading foundation.
+
+## Files changed
+
+```txt
+- src/services/pageAuditGrading.js
+- src/services/pageAuditGrading.cert.test.js
+- src/components/audit/GradeBadge.jsx
+- src/components/audit/GradeBadge.css
+- src/components/audit/AuditDetailModal.jsx
+- src/components/audit/AuditDetailModal.css
+- src/pages/MainPage.jsx
+- scripts/test_main_grade_audit_static.mjs
+- scripts/run_certification_gate.mjs
+- package.json
+```
+
+## Create
+
+```bash
+scripts/apply_slice60A_main_grade_audit_modal.mjs
+```
+
+## Full code
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+function insertBeforeOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${insertion}${anchor}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Main tab grading service                                                 */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/pageAuditGrading.js', `function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function asObject(value) {
+  return value && typeof value === 'object' ? value : {};
+}
+
+function unique(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function storyKey(story) {
+  return String(story?.id || story?.url || story?.link || story?.title || '').trim();
+}
+
+function storySource(story) {
+  return String(story?.sourceGroup || story?.source || 'unknown').trim().toLowerCase();
+}
+
+function storyTime(story) {
+  const candidates = [
+    story?.publishedAt,
+    story?.fetchedAt,
+    story?.timestamp,
+    story?.timeMs,
+  ];
+
+  for (const candidate of candidates) {
+    const value = Number(candidate);
+    if (Number.isFinite(value) && value > 0) return value;
+  }
+
+  return 0;
+}
+
+function gradeFromScore(score) {
+  if (score >= 88) return 'A';
+  if (score >= 74) return 'B';
+  if (score >= 60) return 'C';
+  if (score >= 45) return 'D';
+  return 'F';
+}
+
+function toneFromGrade(grade) {
+  if (grade === 'A' || grade === 'B') return 'good';
+  if (grade === 'C') return 'warn';
+  return 'bad';
+}
+
+function clampScore(score) {
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+export function auditMainTabQuality({
+  newsData = {},
+  weatherData = {},
+  breakingNews = [],
+  settings = {},
+  loading = false,
+  errors = {},
+  now = Date.now(),
+} = {}) {
+  const news = asObject(newsData);
+  const weather = asObject(weatherData);
+  const sectionSettings = asObject(settings.sections);
+
+  const frontPage = asArray(news.frontPage);
+  const sectionNames = ['india', 'chennai', 'local', 'world'];
+  const enabledSections = sectionNames.filter(section => sectionSettings?.[section]?.enabled !== false);
+
+  const sectionStories = enabledSections.flatMap(section => asArray(news[section]));
+  const allStories = [...frontPage, ...sectionStories, ...asArray(breakingNews)];
+
+  const keys = allStories.map(storyKey).filter(Boolean);
+  const duplicateCount = Math.max(0, keys.length - unique(keys).length);
+  const duplicateRate = keys.length > 0 ? duplicateCount / keys.length : 0;
+
+  const sourceGroups = unique(allStories.map(storySource));
+  const sectionHealth = enabledSections.map(section => {
+    const stories = asArray(news[section]);
+    const sources = unique(stories.map(storySource));
+
+    return {
+      section,
+      storyCount: stories.length,
+      sourceGroupCount: sources.length,
+      status: stories.length >= 3 && sources.length >= 2 ? 'PASS' : stories.length > 0 ? 'WARN' : 'FAIL',
+    };
+  });
+
+  const missingSections = sectionHealth.filter(item => item.status === 'FAIL').map(item => item.section);
+  const weakSections = sectionHealth.filter(item => item.status === 'WARN').map(item => item.section);
+
+  const timestamps = allStories.map(storyTime).filter(Boolean);
+  const newestAgeMinutes = timestamps.length > 0
+    ? Math.max(0, Math.round((now - Math.max(...timestamps)) / 60000))
+    : null;
+
+  const stale = newestAgeMinutes == null ? true : newestAgeMinutes > 360;
+  const weatherCities = Object.keys(weather).filter(city => weather[city]);
+  const weatherCityCount = weatherCities.length;
+  const weatherReadyCount = weatherCities.filter(city => weather[city]?.current || weather[city]?.temp || weather[city]?.weeklyForecast).length;
+
+  const audits = [
+    {
+      id: 'frontpage-volume',
+      label: 'Front page story volume',
+      status: frontPage.length >= 10 ? 'PASS' : frontPage.length >= 5 ? 'WARN' : 'FAIL',
+      detail: \`\${frontPage.length} front-page stories available.\`,
+    },
+    {
+      id: 'source-diversity',
+      label: 'Source diversity',
+      status: sourceGroups.length >= 6 ? 'PASS' : sourceGroups.length >= 3 ? 'WARN' : 'FAIL',
+      detail: \`\${sourceGroups.length} unique source groups across visible main-tab news.\`,
+    },
+    {
+      id: 'section-coverage',
+      label: 'Section coverage',
+      status: missingSections.length === 0 && weakSections.length === 0 ? 'PASS' : missingSections.length === 0 ? 'WARN' : 'FAIL',
+      detail: missingSections.length
+        ? \`Missing sections: \${missingSections.join(', ')}.\`
+        : weakSections.length
+          ? \`Weak sections: \${weakSections.join(', ')}.\`
+          : 'All enabled sections have visible stories.',
+    },
+    {
+      id: 'duplicate-rate',
+      label: 'Duplicate story control',
+      status: duplicateRate <= 0.08 ? 'PASS' : duplicateRate <= 0.18 ? 'WARN' : 'FAIL',
+      detail: \`\${duplicateCount} duplicate-like story keys from \${keys.length || 0} keyed stories.\`,
+    },
+    {
+      id: 'freshness',
+      label: 'Freshness',
+      status: !stale ? 'PASS' : newestAgeMinutes == null ? 'WARN' : 'FAIL',
+      detail: newestAgeMinutes == null
+        ? 'No usable story timestamp found.'
+        : \`Newest visible story is about \${newestAgeMinutes} minutes old.\`,
+    },
+    {
+      id: 'weather-availability',
+      label: 'Weather availability',
+      status: weatherReadyCount >= 3 ? 'PASS' : weatherReadyCount >= 1 ? 'WARN' : 'FAIL',
+      detail: \`\${weatherReadyCount} weather locations ready from \${weatherCityCount} loaded locations.\`,
+    },
+    {
+      id: 'error-state',
+      label: 'Runtime error state',
+      status: Object.keys(asObject(errors)).length === 0 ? 'PASS' : 'FAIL',
+      detail: Object.keys(asObject(errors)).length === 0
+        ? 'No active error object from news context.'
+        : \`Errors present: \${Object.keys(asObject(errors)).join(', ')}.\`,
+    },
+    {
+      id: 'loading-state',
+      label: 'Loading gate',
+      status: loading ? 'WARN' : 'PASS',
+      detail: loading ? 'Main tab is still loading or refreshing.' : 'Main tab is not in blocking loading state.',
+    },
+  ];
+
+  const weights = {
+    PASS: 100,
+    WARN: 62,
+    FAIL: 15,
+  };
+
+  const score = clampScore(
+    audits.reduce((sum, audit) => sum + (weights[audit.status] ?? 40), 0) / audits.length
+  );
+
+  const grade = gradeFromScore(score);
+  const warnings = audits.filter(audit => audit.status === 'WARN').map(audit => audit.detail);
+  const failures = audits.filter(audit => audit.status === 'FAIL').map(audit => audit.detail);
+
+  return {
+    schemaVersion: 1,
+    target: 'main-tab',
+    title: 'Main tab data quality',
+    grade,
+    score,
+    tone: toneFromGrade(grade),
+    generatedAt: now,
+    summary: {
+      frontPageStoryCount: frontPage.length,
+      totalVisibleStoryCount: allStories.length,
+      sourceGroupCount: sourceGroups.length,
+      duplicateRate: Number(duplicateRate.toFixed(3)),
+      newestAgeMinutes,
+      enabledSections,
+      missingSections,
+      weakSections,
+      weatherReadyCount,
+      loading,
+    },
+    gates: audits,
+    audits,
+    dataTrust: {
+      status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+      sourceDiversity: sourceGroups.length,
+      duplicateRate: Number(duplicateRate.toFixed(3)),
+      stale,
+      weatherReadyCount,
+    },
+    warnings,
+    failures,
+  };
+}
+
+export function auditGradeLabel(audit) {
+  return audit?.grade || 'F';
+}
+
+export function auditGradeTone(audit) {
+  return audit?.tone || toneFromGrade(audit?.grade || 'F');
+}
+`);
+
+write('src/services/pageAuditGrading.cert.test.js', `import { describe, expect, it } from 'vitest';
+import { auditMainTabQuality } from './pageAuditGrading';
+
+function story(id, sourceGroup, publishedAt = Date.now()) {
+  return {
+    id,
+    title: 'Story ' + id,
+    sourceGroup,
+    publishedAt,
+  };
+}
+
+describe('Main tab audit grading certification', () => {
+  it('gives strong grade for diverse fresh data', () => {
+    const now = Date.now();
+    const audit = auditMainTabQuality({
+      now,
+      newsData: {
+        frontPage: Array.from({ length: 12 }, (_, index) => story('top-' + index, 'source_' + (index % 6), now - 60000)),
+        india: [story('india-1', 'source_a', now), story('india-2', 'source_b', now), story('india-3', 'source_c', now)],
+        chennai: [story('tn-1', 'source_d', now), story('tn-2', 'source_e', now), story('tn-3', 'source_f', now)],
+        local: [story('local-1', 'source_g', now), story('local-2', 'source_h', now), story('local-3', 'source_i', now)],
+        world: [story('world-1', 'source_j', now), story('world-2', 'source_k', now), story('world-3', 'source_l', now)],
+      },
+      weatherData: {
+        chennai: { current: { temp: 32 } },
+        trichy: { current: { temp: 34 } },
+        muscat: { current: { temp: 35 } },
+        colombo: { current: { temp: 29 } },
+      },
+      settings: {
+        sections: {
+          india: { enabled: true },
+          chennai: { enabled: true },
+          local: { enabled: true },
+          world: { enabled: true },
+        },
+      },
+    });
+
+    expect(['A', 'B']).toContain(audit.grade);
+    expect(audit.summary.sourceGroupCount).toBeGreaterThanOrEqual(6);
+    expect(audit.failures).toEqual([]);
+  });
+
+  it('downgrades weak main tab data', () => {
+    const audit = auditMainTabQuality({
+      now: Date.now(),
+      newsData: {
+        frontPage: [story('same', 'single'), story('same', 'single')],
+        india: [],
+        chennai: [],
+        local: [],
+        world: [],
+      },
+      weatherData: {},
+      settings: {
+        sections: {
+          india: { enabled: true },
+          chennai: { enabled: true },
+          local: { enabled: true },
+          world: { enabled: true },
+        },
+      },
+    });
+
+    expect(['D', 'F']).toContain(audit.grade);
+    expect(audit.failures.length).toBeGreaterThan(0);
+  });
+
+  it('keeps loading as warning instead of hard failure', () => {
+    const audit = auditMainTabQuality({
+      loading: true,
+      newsData: {
+        frontPage: Array.from({ length: 10 }, (_, index) => story('s-' + index, 'src_' + index)),
+      },
+      weatherData: {
+        chennai: { current: { temp: 30 } },
+      },
+    });
+
+    const loadingGate = audit.gates.find(gate => gate.id === 'loading-state');
+    expect(loadingGate.status).toBe('WARN');
+  });
+});
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Grade Badge UI                                                           */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/audit/GradeBadge.jsx', `import { useState } from 'react';
+import AuditDetailModal from './AuditDetailModal.jsx';
+import { auditGradeLabel, auditGradeTone } from '../../services/pageAuditGrading.js';
+import './GradeBadge.css';
+
+export default function GradeBadge({ audit, label = 'Quality grade', corner = true }) {
+  const [open, setOpen] = useState(false);
+  const grade = auditGradeLabel(audit);
+  const tone = auditGradeTone(audit);
+
+  return (
+    <>
+      <button
+        type="button"
+        className={
+          'grade-badge grade-badge--' + tone + (corner ? ' grade-badge--corner' : '')
+        }
+        onClick={() => setOpen(true)}
+        aria-label={label + ': ' + grade + '. Open audit details'}
+        title={label + ': ' + grade}
+        data-grade-badge={grade}
+      >
+        <span className="grade-badge__letter">{grade}</span>
+      </button>
+
+      {open && (
+        <AuditDetailModal
+          audit={audit}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+`);
+
+write('src/components/audit/GradeBadge.css', `.grade-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 950;
+  line-height: 1;
+  z-index: 40;
+}
+
+.grade-badge--corner {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  right: 12px;
+}
+
+.grade-badge__letter {
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+}
+
+.grade-badge--good {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.95), rgba(21, 128, 61, 0.95));
+}
+
+.grade-badge--warn {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(180, 83, 9, 0.95));
+}
+
+.grade-badge--bad {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(153, 27, 27, 0.95));
+}
+
+.grade-badge:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 560px) {
+  .grade-badge--corner {
+    top: calc(env(safe-area-inset-top, 0px) + 10px);
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+}
+`);
+
+write('src/components/audit/AuditDetailModal.jsx', `function statusClass(status) {
+  const value = String(status || '').toLowerCase();
+  if (value === 'pass') return 'audit-modal__status audit-modal__status--pass';
+  if (value === 'warn') return 'audit-modal__status audit-modal__status--warn';
+  return 'audit-modal__status audit-modal__status--fail';
+}
+
+function KeyValue({ label, value }) {
+  return (
+    <div className="audit-modal__kv">
+      <span>{label}</span>
+      <strong>{value == null || value === '' ? '—' : String(value)}</strong>
+    </div>
+  );
+}
+
+export default function AuditDetailModal({ audit, onClose }) {
+  const gates = Array.isArray(audit?.gates) ? audit.gates : [];
+  const warnings = Array.isArray(audit?.warnings) ? audit.warnings : [];
+  const failures = Array.isArray(audit?.failures) ? audit.failures : [];
+  const summary = audit?.summary || {};
+
+  return (
+    <div className="audit-modal__backdrop" role="presentation" onClick={onClose}>
+      <section
+        className="audit-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Audit and data trust details"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <header className="audit-modal__header">
+          <div>
+            <div className="audit-modal__eyebrow">Data trust / audits / gates</div>
+            <h2>{audit?.title || 'Page quality audit'}</h2>
+          </div>
+
+          <div className={'audit-modal__grade audit-modal__grade--' + (audit?.tone || 'bad')}>
+            {audit?.grade || 'F'}
+          </div>
+
+          <button type="button" className="audit-modal__close" onClick={onClose} aria-label="Close audit popup">
+            ×
+          </button>
+        </header>
+
+        <div className="audit-modal__score-row">
+          <KeyValue label="Score" value={audit?.score != null ? audit.score + '/100' : '—'} />
+          <KeyValue label="Target" value={audit?.target || '—'} />
+          <KeyValue label="Data trust" value={audit?.dataTrust?.status || '—'} />
+          <KeyValue label="Generated" value={audit?.generatedAt ? new Date(audit.generatedAt).toLocaleString() : '—'} />
+        </div>
+
+        <div className="audit-modal__summary">
+          <KeyValue label="Visible stories" value={summary.totalVisibleStoryCount} />
+          <KeyValue label="Front page" value={summary.frontPageStoryCount} />
+          <KeyValue label="Source groups" value={summary.sourceGroupCount} />
+          <KeyValue label="Duplicate rate" value={summary.duplicateRate != null ? Math.round(summary.duplicateRate * 100) + '%' : '—'} />
+          <KeyValue label="Freshness" value={summary.newestAgeMinutes == null ? 'unknown' : summary.newestAgeMinutes + ' min'} />
+          <KeyValue label="Weather ready" value={summary.weatherReadyCount} />
+        </div>
+
+        <div className="audit-modal__section">
+          <h3>Gate results</h3>
+          <div className="audit-modal__gates">
+            {gates.map(gate => (
+              <article key={gate.id || gate.label} className="audit-modal__gate">
+                <div>
+                  <strong>{gate.label}</strong>
+                  <p>{gate.detail}</p>
+                </div>
+                <span className={statusClass(gate.status)}>{gate.status}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {(failures.length > 0 || warnings.length > 0) && (
+          <div className="audit-modal__section">
+            <h3>Warnings / failures</h3>
+            <div className="audit-modal__messages">
+              {failures.map((item, index) => (
+                <div key={'failure-' + index} className="audit-modal__message audit-modal__message--fail">
+                  {item}
+                </div>
+              ))}
+              {warnings.map((item, index) => (
+                <div key={'warning-' + index} className="audit-modal__message audit-modal__message--warn">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+`);
+
+write('src/components/audit/AuditDetailModal.css', `.audit-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.audit-modal {
+  width: min(760px, 100%);
+  max-height: min(760px, 92vh);
+  overflow: auto;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 24px;
+  background:
+    radial-gradient(560px 220px at 100% 0%, rgba(59, 130, 246, 0.16), transparent 65%),
+    rgba(15, 23, 42, 0.96);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+  color: var(--text-primary, #fff);
+}
+
+.audit-modal__header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.94);
+}
+
+.audit-modal__eyebrow {
+  color: #93c5fd;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.audit-modal h2,
+.audit-modal h3 {
+  margin: 0;
+}
+
+.audit-modal h2 {
+  margin-top: 4px;
+  font-size: 1.15rem;
+}
+
+.audit-modal h3 {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.audit-modal__grade {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  font-size: 1.25rem;
+  font-weight: 950;
+}
+
+.audit-modal__grade--good {
+  background: rgba(34, 197, 94, 0.26);
+  color: #bbf7d0;
+}
+
+.audit-modal__grade--warn {
+  background: rgba(245, 158, 11, 0.24);
+  color: #fde68a;
+}
+
+.audit-modal__grade--bad {
+  background: rgba(248, 113, 113, 0.24);
+  color: #fecaca;
+}
+
+.audit-modal__close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.7);
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.audit-modal__score-row,
+.audit-modal__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 18px 0;
+}
+
+.audit-modal__summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 10px;
+}
+
+.audit-modal__kv {
+  padding: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.30);
+}
+
+.audit-modal__kv span,
+.audit-modal__kv strong {
+  display: block;
+}
+
+.audit-modal__kv span {
+  color: #94a3b8;
+  font-size: 0.70rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.audit-modal__kv strong {
+  margin-top: 4px;
+  color: #f8fafc;
+  font-size: 0.86rem;
+}
+
+.audit-modal__section {
+  padding: 18px;
+}
+
+.audit-modal__gates {
+  display: grid;
+  gap: 8px;
+}
+
+.audit-modal__gate {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.28);
+}
+
+.audit-modal__gate strong {
+  display: block;
+  color: #f8fafc;
+  font-size: 0.88rem;
+}
+
+.audit-modal__gate p {
+  margin: 4px 0 0;
+  color: #aeb7c2;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.audit-modal__status {
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.audit-modal__status--pass {
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+}
+
+.audit-modal__status--warn {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fcd34d;
+}
+
+.audit-modal__status--fail {
+  background: rgba(248, 113, 113, 0.18);
+  color: #fca5a5;
+}
+
+.audit-modal__messages {
+  display: grid;
+  gap: 8px;
+}
+
+.audit-modal__message {
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 0.82rem;
+}
+
+.audit-modal__message--fail {
+  border: 1px solid rgba(248, 113, 113, 0.24);
+  background: rgba(127, 29, 29, 0.22);
+  color: #fecaca;
+}
+
+.audit-modal__message--warn {
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  background: rgba(120, 53, 15, 0.22);
+  color: #fde68a;
+}
+
+@media (max-width: 640px) {
+  .audit-modal__score-row,
+  .audit-modal__summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .audit-modal__header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .audit-modal__grade {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 42px;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Patch MainPage.jsx                                                       */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/pages/MainPage.jsx', source => {
+  let text = source;
+
+  text = insertAfterOnce(
+    text,
+    `import SidebarNews from '../components/SidebarNews';`,
+    `
+import GradeBadge from '../components/audit/GradeBadge.jsx';
+import { auditMainTabQuality } from '../services/pageAuditGrading.js';
+import '../components/audit/AuditDetailModal.css';`,
+    'main page audit imports'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `    const isUrgentMode = currentSegment.id === 'urgent_only';
+
+`,
+    `    const mainTabAudit = React.useMemo(() => auditMainTabQuality({
+        newsData,
+        weatherData,
+        breakingNews,
+        settings,
+        loading,
+        errors: _errors,
+    }), [newsData, weatherData, breakingNews, settings, loading, _errors]);
+
+`,
+    'main page audit memo'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `        <div className={\`page-container mode-\${uiMode} \${isWebView ? 'page-container--desktop' : ''}\`}>`,
+    `
+            <GradeBadge audit={mainTabAudit} label="Main tab quality grade" />
+`,
+    'main page grade badge render'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 4) Static test + package scripts                                             */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_main_grade_audit_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const grading = read('src/services/pageAuditGrading.js');
+const gradingTest = read('src/services/pageAuditGrading.cert.test.js');
+const badge = read('src/components/audit/GradeBadge.jsx');
+const badgeCss = read('src/components/audit/GradeBadge.css');
+const modal = read('src/components/audit/AuditDetailModal.jsx');
+const modalCss = read('src/components/audit/AuditDetailModal.css');
+const mainPage = read('src/pages/MainPage.jsx');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'auditMainTabQuality',
+  'frontpage-volume',
+  'source-diversity',
+  'section-coverage',
+  'duplicate-rate',
+  'weather-availability',
+  'gradeFromScore'
+]) {
+  assert(grading.includes(token), 'pageAuditGrading.js missing token: ' + token);
+}
+
+for (const token of [
+  'Main tab audit grading certification',
+  'gives strong grade',
+  'downgrades weak main tab data',
+  'keeps loading as warning'
+]) {
+  assert(gradingTest.includes(token), 'pageAuditGrading.cert.test.js missing token: ' + token);
+}
+
+for (const token of [
+  'data-grade-badge',
+  'AuditDetailModal',
+  'grade-badge--corner'
+]) {
+  assert(badge.includes(token) || badgeCss.includes(token), 'GradeBadge missing token: ' + token);
+}
+
+for (const token of [
+  'Data trust / audits / gates',
+  'Gate results',
+  'Warnings / failures',
+  'audit-modal__backdrop'
+]) {
+  assert(modal.includes(token) || modalCss.includes(token), 'Audit modal missing token: ' + token);
+}
+
+for (const token of [
+  'GradeBadge',
+  'auditMainTabQuality',
+  'mainTabAudit',
+  'Main tab quality grade'
+]) {
+  assert(mainPage.includes(token), 'MainPage.jsx missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:main-grade-audit"'),
+  'package.json must include test:main-grade-audit'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:main-grade-audit']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include main grade audit test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Main tab grade audit modal',
+  guarantees: [
+    'grade badge shows a single alphabet in top-right corner',
+    'clicking grade opens audit modal',
+    'modal includes data trust, audits and gate results',
+    'Main tab has robust data quality grading',
+    'weather availability is included in Main tab audit',
+    'source diversity, freshness, duplicates and section coverage are checked'
+  ]
+}, null, 2));
+
+console.log('PASS: Main grade audit static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:main-grade-audit'] =
+    'node scripts/test_main_grade_audit_static.mjs && vitest run --config vitest.config.js src/services/pageAuditGrading.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:main-grade-audit']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:market-trust']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:market-trust']],",
+      "  ['npm', ['run', 'test:market-trust']],\\n  ['npm', ['run', 'test:main-grade-audit']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:weather-trust']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-trust']],",
+      "  ['npm', ['run', 'test:weather-trust']],\\n  ['npm', ['run', 'test:main-grade-audit']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'main-grade-audit')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'market-trust');
+      const command = {
+        id: 'main-grade-audit',
+        cmd: 'npm',
+        args: ['run', 'test:main-grade-audit'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:main-grade-audit')) return source;
+
+    if (source.includes("'test:market-trust',")) {
+      return source.replace(
+        "'test:market-trust',",
+        "'test:market-trust',\\n  'test:main-grade-audit',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 60A Main tab grade audit modal patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice60A_main_grade_audit_modal.mjs
+
+node scripts/test_main_grade_audit_static.mjs
+npm run test:main-grade-audit
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice60A_main_grade_audit_modal.mjs
+  - src/services/pageAuditGrading.js
+  - src/services/pageAuditGrading.cert.test.js
+  - src/components/audit/GradeBadge.jsx
+  - src/components/audit/GradeBadge.css
+  - src/components/audit/AuditDetailModal.jsx
+  - src/components/audit/AuditDetailModal.css
+  - src/pages/MainPage.jsx
+  - scripts/test_main_grade_audit_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed: YES/NO
+- Vitest grading test passed: YES/NO
+- ESLint passed: YES/NO
+- Vitest/unit passed: YES/NO
+- Production build passed: YES/NO
+- Full certification passed: YES/NO
+- Main tab grade gate:
+  - top-right grade icon visible: YES/NO
+  - grade icon opens popup: YES/NO
+  - popup shows data trust: YES/NO
+  - popup shows audits/gates: YES/NO
+  - Main Tab robust grading implemented: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+Next clean slice after this should be **Slice 60B — migrate existing Weather/Insight/Market trust panels into the same GradeBadge modal pattern**, so the UI becomes consistent instead of having large scattered trust panels.
+-------------------------------------------
+Current repo has large inline trust/audit panels in Weather, Market, and Insight. WeatherPage still renders `WeatherTrustPanel` inline, MarketPage renders `MarketTrustPanel` inline, and InsightPage already has multiple diagnostics/evidence panels inside the page body.  
+
+# Slice 60B — Unified Grade Badge for Weather / Market / Insight
+
+This assumes **Slice 60A is already applied** because it reuses:
+
+```txt
+src/components/audit/GradeBadge.jsx
+src/components/audit/AuditDetailModal.jsx
+src/services/pageAuditGrading.js
+```
+
+## What changes
+
+```txt
+- Weather page: remove inline WeatherTrustPanel, replace with top-right GradeBadge.
+- Market page: remove inline MarketTrustPanel, replace with top-right GradeBadge.
+- Insight page: keep story UI clean, expose Insight audit through GradeBadge.
+- Extend pageAuditGrading.js with Weather / Market / Insight audit functions.
+- Upgrade GradeBadge to own modal CSS import, so each page does not need CSS imports.
+```
+
+## Create
+
+```bash
+scripts/apply_slice60B_unified_grade_badge_tabs.mjs
+```
+
+## Full code
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function optionalPatchFile(path, patcher) {
+  const before = read(path);
+  if (!before) {
+    console.log(`skip optional missing file: ${path}`);
+    return;
+  }
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+function insertBeforeOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${insertion}${anchor}`);
+}
+
+function replaceOnce(source, before, after, label) {
+  if (!source.includes(before)) {
+    if (source.includes(after.trim())) return source;
+    throw new Error(`Missing replace target for ${label}`);
+  }
+  return source.replace(before, after);
+}
+
+function removeBlock(source, before, after, label) {
+  const start = source.indexOf(before);
+  if (start < 0) {
+    console.log(`skip block removal, missing start: ${label}`);
+    return source;
+  }
+  const end = source.indexOf(after, start);
+  if (end < 0) {
+    throw new Error(`Missing block end for ${label}`);
+  }
+  return source.slice(0, start) + source.slice(end + after.length);
+}
+
+function insertImportAfterLastImport(source, insertion) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  const importMatches = [...source.matchAll(/^import .+;$/gm)];
+  if (!importMatches.length) return insertion + '\n' + source;
+  const last = importMatches[importMatches.length - 1];
+  const index = last.index + last[0].length;
+  return source.slice(0, index) + '\n' + insertion + source.slice(index);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) GradeBadge owns modal CSS                                                */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/components/audit/GradeBadge.jsx', source => {
+  let text = source;
+
+  text = insertAfterOnce(
+    text,
+    `import './GradeBadge.css';`,
+    `
+import './AuditDetailModal.css';`,
+    'GradeBadge modal CSS import'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 2) Extend page audit grading service                                        */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/services/pageAuditGrading.js', source => {
+  if (source.includes('auditWeatherTabQuality')) return source;
+
+  const insertion = `
+function gate(id, label, status, detail) {
+  return { id, label, status, detail };
+}
+
+function scoreAuditGates(gates) {
+  const weights = {
+    PASS: 100,
+    WARN: 62,
+    FAIL: 15,
+  };
+
+  return clampScore(
+    gates.reduce((sum, item) => sum + (weights[item.status] ?? 40), 0) / Math.max(1, gates.length)
+  );
+}
+
+function makePageAudit({ target, title, gates, summary = {}, dataTrust = {}, now = Date.now() }) {
+  const score = scoreAuditGates(gates);
+  const grade = gradeFromScore(score);
+  const warnings = gates.filter(item => item.status === 'WARN').map(item => item.detail);
+  const failures = gates.filter(item => item.status === 'FAIL').map(item => item.detail);
+
+  return {
+    schemaVersion: 1,
+    target,
+    title,
+    grade,
+    score,
+    tone: toneFromGrade(grade),
+    generatedAt: now,
+    summary,
+    gates,
+    audits: gates,
+    dataTrust: {
+      status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+      ...dataTrust,
+    },
+    warnings,
+    failures,
+  };
+}
+
+function getSectionLength(value) {
+  if (Array.isArray(value)) return value.length;
+  if (!value || typeof value !== 'object') return 0;
+  return Object.keys(value).length;
+}
+
+function isUsableSection(value) {
+  return getSectionLength(value) > 0;
+}
+
+function getNewestAgeMinutesFromItems(items, now) {
+  const timestamps = asArray(items)
+    .map(item => Number(item?.publishedAt || item?.fetchedAt || item?.timestamp || item?.timeMs || 0))
+    .filter(value => Number.isFinite(value) && value > 0);
+
+  if (timestamps.length === 0) return null;
+  return Math.max(0, Math.round((now - Math.max(...timestamps)) / 60000));
+}
+
+export function auditWeatherTabQuality({
+  weatherData = {},
+  cities = [],
+  activeCity = '',
+  error = null,
+  loading = false,
+  now = Date.now(),
+} = {}) {
+  const data = asObject(weatherData);
+  const cityList = asArray(cities).length ? asArray(cities) : Object.keys(data);
+  const active = activeCity || cityList[0] || '';
+  const readyCities = cityList.filter(city => data?.[city]?.current || data?.[city]?.temp || data?.[city]?.weeklyForecast);
+  const weeklyReady = cityList.filter(city => asArray(data?.[city]?.weeklyForecast).length >= 5);
+  const sourceModes = unique(cityList.map(city => data?.[city]?.sourceMode).filter(Boolean));
+  const staleCities = cityList.filter(city => data?.[city]?.isStale || data?.[city]?.sourceMode === 'cache');
+  const fallbackCities = cityList.filter(city => data?.[city]?.sourceMode === 'fallback' || data?.[city]?.sourceMode === 'snapshot');
+  const activeReady = Boolean(data?.[active]);
+
+  const gates = [
+    gate(
+      'weather-city-coverage',
+      'Configured city coverage',
+      readyCities.length >= Math.min(3, cityList.length) ? 'PASS' : readyCities.length > 0 ? 'WARN' : 'FAIL',
+      \`\${readyCities.length} of \${cityList.length} configured weather cities have usable data.\`
+    ),
+    gate(
+      'weather-active-city',
+      'Active city readiness',
+      activeReady ? 'PASS' : 'FAIL',
+      activeReady ? \`Active city \${active} is ready.\` : \`Active city \${active || 'unknown'} has no weather payload.\`
+    ),
+    gate(
+      'weather-weekly-forecast',
+      'Weekly forecast coverage',
+      weeklyReady.length >= Math.min(3, cityList.length) ? 'PASS' : weeklyReady.length > 0 ? 'WARN' : 'FAIL',
+      \`\${weeklyReady.length} city/cities have 5+ day weekly forecast.\`
+    ),
+    gate(
+      'weather-source-mode',
+      'Source mode trust',
+      fallbackCities.length === 0 && staleCities.length === 0 ? 'PASS' : fallbackCities.length === 0 ? 'WARN' : 'FAIL',
+      sourceModes.length
+        ? \`Source modes: \${sourceModes.join(', ')}. Stale: \${staleCities.length}, fallback/snapshot: \${fallbackCities.length}.\`
+        : 'No source mode metadata available.'
+    ),
+    gate(
+      'weather-error-state',
+      'Weather error state',
+      error ? 'WARN' : 'PASS',
+      error ? 'Weather context reports degraded update or cached fallback.' : 'No active weather error.'
+    ),
+    gate(
+      'weather-loading-state',
+      'Loading gate',
+      loading ? 'WARN' : 'PASS',
+      loading ? 'Weather tab is still loading or refreshing.' : 'Weather tab is not in blocking loading state.'
+    ),
+  ];
+
+  return makePageAudit({
+    target: 'weather-tab',
+    title: 'Weather tab data quality',
+    gates,
+    now,
+    summary: {
+      configuredCities: cityList,
+      activeCity: active,
+      readyCityCount: readyCities.length,
+      weeklyReadyCount: weeklyReady.length,
+      staleCityCount: staleCities.length,
+      fallbackCityCount: fallbackCities.length,
+      sourceModes,
+      loading,
+    },
+    dataTrust: {
+      readyCityCount: readyCities.length,
+      weeklyReadyCount: weeklyReady.length,
+      staleCityCount: staleCities.length,
+      fallbackCityCount: fallbackCities.length,
+    },
+  });
+}
+
+export function auditMarketTabQuality({
+  marketData = {},
+  sourceHealth = {},
+  sessionState = {},
+  error = null,
+  loading = false,
+  lastFetch = null,
+  now = Date.now(),
+} = {}) {
+  const data = asObject(marketData);
+  const indices = asArray(data.indices);
+  const gainers = asArray(data?.movers?.gainers);
+  const losers = asArray(data?.movers?.losers);
+  const sectorals = asArray(data.sectorals);
+  const commodities = asArray(data.commodities);
+  const currencies = asArray(data.currencies);
+  const mutualFunds = asArray(data.mutualFunds);
+  const sourceRows = Object.values(asObject(sourceHealth));
+  const sourceOkCount = sourceRows.filter(item => item?.ok !== false).length;
+  const sourceFailCount = sourceRows.filter(item => item?.ok === false).length;
+  const newestAgeMinutes = lastFetch ? Math.max(0, Math.round((now - Number(lastFetch)) / 60000)) : null;
+
+  const gates = [
+    gate(
+      'market-index-coverage',
+      'Index coverage',
+      indices.length >= 4 ? 'PASS' : indices.length > 0 ? 'WARN' : 'FAIL',
+      \`\${indices.length} index row(s) available.\`
+    ),
+    gate(
+      'market-movers',
+      'Mover coverage',
+      gainers.length > 0 && losers.length > 0 ? 'PASS' : gainers.length + losers.length > 0 ? 'WARN' : 'FAIL',
+      \`\${gainers.length} gainers and \${losers.length} losers available.\`
+    ),
+    gate(
+      'market-breadth-sections',
+      'Market breadth sections',
+      [sectorals, commodities, currencies, mutualFunds].filter(section => section.length > 0).length >= 2 ? 'PASS' : 'WARN',
+      \`Sectorals \${sectorals.length}, commodities \${commodities.length}, currencies \${currencies.length}, mutual funds \${mutualFunds.length}.\`
+    ),
+    gate(
+      'market-source-health',
+      'Source health',
+      sourceFailCount === 0 ? 'PASS' : sourceOkCount >= sourceFailCount ? 'WARN' : 'FAIL',
+      \`\${sourceOkCount} source(s) OK, \${sourceFailCount} failing.\`
+    ),
+    gate(
+      'market-session-freshness',
+      'Session freshness',
+      data.isSnapshot ? 'WARN' : data.isStale ? 'WARN' : newestAgeMinutes == null || newestAgeMinutes <= 60 ? 'PASS' : newestAgeMinutes <= 240 ? 'WARN' : 'FAIL',
+      sessionState?.label
+        ? \`\${sessionState.label}; age \${sessionState.ageLabel || (newestAgeMinutes == null ? 'unknown' : newestAgeMinutes + ' min')}.\`
+        : newestAgeMinutes == null ? 'No lastFetch timestamp.' : \`Latest market fetch age \${newestAgeMinutes} minutes.\`
+    ),
+    gate(
+      'market-error-state',
+      'Market error state',
+      error ? 'WARN' : 'PASS',
+      error ? String(error) : 'No active market error.'
+    ),
+    gate(
+      'market-loading-state',
+      'Loading gate',
+      loading ? 'WARN' : 'PASS',
+      loading ? 'Market tab is still loading or refreshing.' : 'Market tab is not in blocking loading state.'
+    ),
+  ];
+
+  return makePageAudit({
+    target: 'market-tab',
+    title: 'Market tab data quality',
+    gates,
+    now,
+    summary: {
+      indexCount: indices.length,
+      gainerCount: gainers.length,
+      loserCount: losers.length,
+      sectoralCount: sectorals.length,
+      commodityCount: commodities.length,
+      currencyCount: currencies.length,
+      mutualFundCount: mutualFunds.length,
+      sourceOkCount,
+      sourceFailCount,
+      sourceMode: data.isSnapshot ? 'snapshot' : data.isStale ? 'cache' : 'live',
+      newestAgeMinutes,
+      loading,
+    },
+    dataTrust: {
+      sourceOkCount,
+      sourceFailCount,
+      sourceMode: data.isSnapshot ? 'snapshot' : data.isStale ? 'cache' : 'live',
+      newestAgeMinutes,
+    },
+  });
+}
+
+export function auditInsightTabQuality({
+  result = null,
+  diagnostics = null,
+  behaviorEvidence = null,
+  source = 'live',
+  loading = false,
+  error = null,
+  now = Date.now(),
+} = {}) {
+  const parents = asArray(result?.parents);
+  const storiesById = result?.storiesById instanceof Map
+    ? result.storiesById
+    : new Map(Object.entries(asObject(result?.storiesById)));
+
+  const sourceGroups = unique(
+    [...storiesById.values()].map(story => story?.sourceGroup || story?.source || 'unknown')
+  );
+
+  const weakTrees = parents.filter(parent => parent?.weakTree).length;
+  const childCounts = parents.map(parent => asArray(parent?.childStoryIds).length);
+  const avgChildCount = childCounts.length
+    ? childCounts.reduce((sum, value) => sum + value, 0) / childCounts.length
+    : 0;
+
+  const angleCounts = parents.map(parent => {
+    const childStories = asArray(parent?.childStoryIds)
+      .map(id => storiesById.get(id))
+      .filter(Boolean);
+    return unique(childStories.map(story => story?.angle || 'unknown')).length;
+  });
+
+  const multiAngleParents = angleCounts.filter(count => count >= 2).length;
+  const avgAngleCount = angleCounts.length
+    ? angleCounts.reduce((sum, value) => sum + value, 0) / angleCounts.length
+    : 0;
+
+  const behaviorStatus = behaviorEvidence?.status || '';
+  const runtimeGate = result?.runtimeQualityGate || null;
+
+  const gates = [
+    gate(
+      'insight-parent-volume',
+      'Parent cluster volume',
+      parents.length >= 5 ? 'PASS' : parents.length >= 2 ? 'WARN' : 'FAIL',
+      \`\${parents.length} parent cluster(s) generated.\`
+    ),
+    gate(
+      'insight-child-depth',
+      'Child-story depth',
+      avgChildCount >= 3 ? 'PASS' : avgChildCount >= 1.5 ? 'WARN' : 'FAIL',
+      \`Average child stories per cluster: \${avgChildCount.toFixed(1)}.\`
+    ),
+    gate(
+      'insight-angle-diversity',
+      'Angle diversity',
+      avgAngleCount >= 2 && multiAngleParents >= 2 ? 'PASS' : multiAngleParents >= 1 ? 'WARN' : 'FAIL',
+      \`\${multiAngleParents} multi-angle parent(s); average angle count \${avgAngleCount.toFixed(1)}.\`
+    ),
+    gate(
+      'insight-source-diversity',
+      'Source diversity',
+      sourceGroups.length >= 6 ? 'PASS' : sourceGroups.length >= 3 ? 'WARN' : 'FAIL',
+      \`\${sourceGroups.length} source group(s) represented in storiesById.\`
+    ),
+    gate(
+      'insight-weak-tree-control',
+      'Weak-tree control',
+      weakTrees === 0 ? 'PASS' : weakTrees <= Math.max(1, Math.floor(parents.length / 3)) ? 'WARN' : 'FAIL',
+      \`\${weakTrees} weak tree(s) among \${parents.length} parent(s).\`
+    ),
+    gate(
+      'insight-runtime-quality-gate',
+      'Runtime quality gate',
+      runtimeGate?.recovered ? 'PASS' : runtimeGate?.attempted ? 'WARN' : 'PASS',
+      runtimeGate?.reason || 'No runtime recovery required.'
+    ),
+    gate(
+      'insight-behavior-evidence',
+      'Behavior evidence',
+      behaviorStatus === 'pass' || behaviorStatus === 'PASS' ? 'PASS' : behaviorStatus ? 'WARN' : 'WARN',
+      behaviorEvidence?.summaryTitle || 'Behavior evidence available only after pipeline diagnostics run.'
+    ),
+    gate(
+      'insight-error-state',
+      'Insight error state',
+      error ? 'FAIL' : 'PASS',
+      error ? String(error) : 'No active Insight error.'
+    ),
+    gate(
+      'insight-loading-state',
+      'Loading gate',
+      loading ? 'WARN' : 'PASS',
+      loading ? 'Insight pipeline is still loading.' : 'Insight pipeline is not in blocking loading state.'
+    ),
+  ];
+
+  return makePageAudit({
+    target: 'insight-tab',
+    title: 'Insight tab data quality',
+    gates,
+    now,
+    summary: {
+      parentCount: parents.length,
+      storyCount: storiesById.size,
+      sourceGroupCount: sourceGroups.length,
+      weakTreeCount: weakTrees,
+      multiAngleParentCount: multiAngleParents,
+      avgAngleCount: Number(avgAngleCount.toFixed(2)),
+      avgChildCount: Number(avgChildCount.toFixed(2)),
+      signalScore: diagnostics?.signalScore,
+      source,
+      loading,
+    },
+    dataTrust: {
+      parentCount: parents.length,
+      storyCount: storiesById.size,
+      sourceGroupCount: sourceGroups.length,
+      weakTreeCount: weakTrees,
+      multiAngleParentCount: multiAngleParents,
+      runtimeRecovered: Boolean(runtimeGate?.recovered),
+    },
+  });
+}
+
+`;
+
+  return insertBeforeOnce(
+    source,
+    `export function auditGradeLabel(audit) {`,
+    insertion,
+    'tab audit functions before auditGradeLabel'
+  );
+});
+
+/* -------------------------------------------------------------------------- */
+/* 3) WeatherPage: replace inline trust panel with GradeBadge                  */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/pages/WeatherPage.jsx', source => {
+  let text = source;
+
+  text = text.replace(
+    `import WeatherTrustPanel from '../components/weather/WeatherTrustPanel';\n`,
+    ''
+  );
+
+  text = insertImportAfterLastImport(
+    text,
+    `import GradeBadge from '../components/audit/GradeBadge.jsx';
+import { auditWeatherTabQuality } from '../services/pageAuditGrading.js';`
+  );
+
+  text = insertAfterOnce(
+    text,
+    `    const cities = getConfiguredWeatherCities(settings);\n`,
+    `    const weatherTabAudit = React.useMemo(() => auditWeatherTabQuality({
+        weatherData: displayData || {},
+        cities,
+        activeCity,
+        error,
+        loading,
+    }), [displayData, cities, activeCity, error, loading]);
+
+`,
+    'weather tab audit memo'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `        <div className="page-container" style={{ padding: 0 }}>`,
+    `
+            <GradeBadge audit={weatherTabAudit} label="Weather tab quality grade" />
+`,
+    'weather page grade badge'
+  );
+
+  text = removeBlock(
+    text,
+    `                <WeatherTrustPanel`,
+    `                />\n\n`,
+    'WeatherTrustPanel inline block'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 4) MarketPage: replace inline trust panel with GradeBadge                   */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/pages/MarketPage.jsx', source => {
+  let text = source;
+
+  text = text.replace(
+    `import MarketTrustPanel from '../components/market/MarketTrustPanel';\n`,
+    ''
+  );
+
+  text = insertImportAfterLastImport(
+    text,
+    `import GradeBadge from '../components/audit/GradeBadge.jsx';
+import { auditMarketTabQuality } from '../services/pageAuditGrading.js';`
+  );
+
+  text = insertAfterOnce(
+    text,
+    `    const sectoralIndices = (marketData?.sectorals?.length ? marketData.sectorals : getIndexByName(indices, ['BANK NIFTY', 'NIFTY IT', 'NIFTY PHARMA', 'NIFTY AUTO']))
+        .filter((item, idx, arr) => arr.findIndex((candidate) => candidate.name === item.name) === idx);
+
+`,
+    `    const marketTabAudit = React.useMemo(() => auditMarketTabQuality({
+        marketData,
+        sourceHealth,
+        sessionState,
+        error,
+        loading,
+        lastFetch,
+    }), [marketData, sourceHealth, sessionState, error, loading, lastFetch]);
+
+`,
+    'market tab audit memo'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `        <div className="page-container market-page-shell" style={{ padding: 0 }}>`,
+    `
+            <GradeBadge audit={marketTabAudit} label="Market tab quality grade" />
+`,
+    'market page grade badge'
+  );
+
+  text = removeBlock(
+    text,
+    `                <MarketTrustPanel`,
+    `                />\n\n`,
+    'MarketTrustPanel inline block'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 5) InsightPage: expose diagnostics through GradeBadge                       */
+/* -------------------------------------------------------------------------- */
+
+optionalPatchFile('src/pages/InsightPage.jsx', source => {
+  let text = source;
+
+  text = insertImportAfterLastImport(
+    text,
+    `import GradeBadge from '../components/audit/GradeBadge.jsx';
+import { auditInsightTabQuality } from '../services/pageAuditGrading.js';`
+  );
+
+  text = insertAfterOnce(
+    text,
+    `  const runtimeQualityGate = result?.runtimeQualityGate || null;
+
+`,
+    `  const insightTabAudit = React.useMemo(() => auditInsightTabQuality({
+    result,
+    diagnostics,
+    behaviorEvidence,
+    source,
+    loading: false,
+  }), [result, diagnostics, behaviorEvidence, source]);
+
+`,
+    'InsightTab audit memo'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `    <div className="scroll insight-page">`,
+    `
+      <GradeBadge audit={insightTabAudit} label="Insight tab quality grade" />
+`,
+    'InsightTab grade badge render'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 6) Certification tests                                                      */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/pageAuditGradingTabs.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  auditInsightTabQuality,
+  auditMarketTabQuality,
+  auditWeatherTabQuality,
+} from './pageAuditGrading';
+
+describe('Unified tab audit grading certification', () => {
+  it('grades Weather tab using city, weekly and source-mode gates', () => {
+    const audit = auditWeatherTabQuality({
+      weatherData: {
+        chennai: { current: { temp: 32 }, weeklyForecast: [{}, {}, {}, {}, {}], sourceMode: 'live-multi-model' },
+        trichy: { current: { temp: 34 }, weeklyForecast: [{}, {}, {}, {}, {}], sourceMode: 'live-multi-model' },
+        muscat: { current: { temp: 35 }, weeklyForecast: [{}, {}, {}, {}, {}], sourceMode: 'live-multi-model' },
+      },
+      cities: ['chennai', 'trichy', 'muscat'],
+      activeCity: 'chennai',
+    });
+
+    expect(['A', 'B']).toContain(audit.grade);
+    expect(audit.target).toBe('weather-tab');
+    expect(audit.gates.some(gate => gate.id === 'weather-weekly-forecast')).toBe(true);
+  });
+
+  it('grades Market tab using market coverage and source health gates', () => {
+    const audit = auditMarketTabQuality({
+      marketData: {
+        indices: [{ name: 'NIFTY' }, { name: 'SENSEX' }, { name: 'BANK' }, { name: 'MIDCAP' }],
+        movers: {
+          gainers: [{ symbol: 'A' }],
+          losers: [{ symbol: 'B' }],
+        },
+        sectorals: [{ name: 'IT' }],
+        commodities: [{ name: 'Gold' }],
+        currencies: [{ name: 'USDINR' }],
+      },
+      sourceHealth: {
+        a: { ok: true },
+        b: { ok: true },
+      },
+      lastFetch: Date.now(),
+    });
+
+    expect(['A', 'B']).toContain(audit.grade);
+    expect(audit.target).toBe('market-tab');
+    expect(audit.gates.some(gate => gate.id === 'market-source-health')).toBe(true);
+  });
+
+  it('downgrades Insight tab when no multi-angle clusters exist', () => {
+    const result = {
+      parents: [
+        { parentId: 'p1', childStoryIds: ['s1'], clusterStoryIds: ['s1'], weakTree: true },
+      ],
+      storiesById: new Map([
+        ['s1', { id: 's1', sourceGroup: 'single', angle: 'base_report' }],
+      ]),
+    };
+
+    const audit = auditInsightTabQuality({ result, source: 'fixture' });
+
+    expect(['C', 'D', 'F']).toContain(audit.grade);
+    expect(audit.target).toBe('insight-tab');
+    expect(audit.gates.some(gate => gate.id === 'insight-angle-diversity')).toBe(true);
+  });
+});
+`);
+
+write('scripts/test_unified_grade_badge_tabs_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const grading = read('src/services/pageAuditGrading.js');
+const tabTests = read('src/services/pageAuditGradingTabs.cert.test.js');
+const gradeBadge = read('src/components/audit/GradeBadge.jsx');
+const weatherPage = read('src/pages/WeatherPage.jsx');
+const marketPage = read('src/pages/MarketPage.jsx');
+const insightPage = fs.existsSync('src/pages/InsightPage.jsx') ? read('src/pages/InsightPage.jsx') : '';
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'auditWeatherTabQuality',
+  'auditMarketTabQuality',
+  'auditInsightTabQuality',
+  'makePageAudit',
+  'weather-weekly-forecast',
+  'market-source-health',
+  'insight-angle-diversity'
+]) {
+  assert(grading.includes(token), 'pageAuditGrading.js missing token: ' + token);
+}
+
+for (const token of [
+  'Unified tab audit grading certification',
+  'grades Weather tab',
+  'grades Market tab',
+  'downgrades Insight tab'
+]) {
+  assert(tabTests.includes(token), 'pageAuditGradingTabs.cert.test.js missing token: ' + token);
+}
+
+assert(gradeBadge.includes('AuditDetailModal.css'), 'GradeBadge must import AuditDetailModal.css');
+
+for (const token of [
+  'GradeBadge',
+  'auditWeatherTabQuality',
+  'weatherTabAudit',
+  'Weather tab quality grade'
+]) {
+  assert(weatherPage.includes(token), 'WeatherPage.jsx missing token: ' + token);
+}
+
+assert(!weatherPage.includes('<WeatherTrustPanel'), 'WeatherTrustPanel must not remain inline on WeatherPage');
+
+for (const token of [
+  'GradeBadge',
+  'auditMarketTabQuality',
+  'marketTabAudit',
+  'Market tab quality grade'
+]) {
+  assert(marketPage.includes(token), 'MarketPage.jsx missing token: ' + token);
+}
+
+assert(!marketPage.includes('<MarketTrustPanel'), 'MarketTrustPanel must not remain inline on MarketPage');
+
+if (insightPage) {
+  for (const token of [
+    'GradeBadge',
+    'auditInsightTabQuality',
+    'insightTabAudit',
+    'Insight tab quality grade'
+  ]) {
+    assert(insightPage.includes(token), 'InsightPage.jsx missing token: ' + token);
+  }
+}
+
+assert(
+  packageJson.includes('"test:unified-grade-badge-tabs"'),
+  'package.json must include test:unified-grade-badge-tabs'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:unified-grade-badge-tabs']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include unified grade badge tabs test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Unified GradeBadge tab audits',
+  guarantees: [
+    'Weather trust panel is migrated into GradeBadge modal',
+    'Market trust panel is migrated into GradeBadge modal',
+    'Insight diagnostics are exposed through GradeBadge modal',
+    'Weather/Market/Insight have robust page audit grading functions',
+    'GradeBadge owns its modal CSS',
+    'static and Vitest certification are included'
+  ]
+}, null, 2));
+
+console.log('PASS: Unified GradeBadge tabs static slice');
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 7) package.json + certification                                             */
+/* -------------------------------------------------------------------------- */
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:unified-grade-badge-tabs'] =
+    'node scripts/test_unified_grade_badge_tabs_static.mjs && vitest run --config vitest.config.js src/services/pageAuditGradingTabs.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:unified-grade-badge-tabs']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:main-grade-audit']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:main-grade-audit']],",
+      "  ['npm', ['run', 'test:main-grade-audit']],\\n  ['npm', ['run', 'test:unified-grade-badge-tabs']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:weather-trust']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:weather-trust']],",
+      "  ['npm', ['run', 'test:weather-trust']],\\n  ['npm', ['run', 'test:unified-grade-badge-tabs']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'unified-grade-badge-tabs')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'main-grade-audit');
+      const command = {
+        id: 'unified-grade-badge-tabs',
+        cmd: 'npm',
+        args: ['run', 'test:unified-grade-badge-tabs'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:unified-grade-badge-tabs')) return source;
+
+    if (source.includes("'test:main-grade-audit',")) {
+      return source.replace(
+        "'test:main-grade-audit',",
+        "'test:main-grade-audit',\\n  'test:unified-grade-badge-tabs',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 60B Unified GradeBadge tabs patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice60B_unified_grade_badge_tabs.mjs
+
+node scripts/test_unified_grade_badge_tabs_static.mjs
+npm run test:unified-grade-badge-tabs
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice60B_unified_grade_badge_tabs.mjs
+  - src/services/pageAuditGrading.js
+  - src/services/pageAuditGradingTabs.cert.test.js
+  - src/components/audit/GradeBadge.jsx
+  - src/pages/WeatherPage.jsx
+  - src/pages/MarketPage.jsx
+  - src/pages/InsightPage.jsx
+  - scripts/test_unified_grade_badge_tabs_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed:
+  - node scripts/test_unified_grade_badge_tabs_static.mjs: YES/NO
+- Vitest tab audit tests passed:
+  - npm run test:unified-grade-badge-tabs: YES/NO
+- ESLint passed:
+  - npm run lint: YES/NO
+- Vitest/unit passed:
+  - npm run test:unit: YES/NO
+- Production build passed:
+  - npm run build: YES/NO
+- Full certification passed:
+  - npm run test:certify: YES/NO
+- Unified grade UI gate:
+  - Weather page uses GradeBadge modal: YES/NO
+  - Market page uses GradeBadge modal: YES/NO
+  - Insight page uses GradeBadge modal: YES/NO
+  - old inline WeatherTrustPanel removed: YES/NO
+  - old inline MarketTrustPanel removed: YES/NO
+  - audits/gates available in popup: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+Next logical slice: **60C — add an optional “More diagnostics” link inside the grade popup** so advanced panels can still be opened without cluttering the normal page UI.
+-------------------------------------------------------
+# Slice 60C — More Diagnostics inside Grade popup
+
+This slice keeps the page UI clean and moves advanced details into the Grade popup.
+
+## What this adds
+
+```txt
+- Grade popup gets a “More diagnostics” toggle.
+- More diagnostics is hidden by default.
+- When opened, it shows deeper raw facts, advanced gates, source/freshness details, section health, runtime details.
+- Main / Weather / Market / Insight audits now provide advanced diagnostic sections.
+- No large trust panels need to clutter normal page UI.
+```
+
+Create:
+
+```bash
+scripts/apply_slice60C_more_diagnostics_grade_popup.mjs
+```
+
+Paste this full code:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function replaceOnce(source, before, after, label) {
+  if (!source.includes(before)) {
+    if (source.includes(after.trim())) return source;
+    throw new Error(`Missing replace target for ${label}`);
+  }
+
+  return source.replace(before, after);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+function insertBeforeOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${insertion}${anchor}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Replace AuditDetailModal with expandable More Diagnostics UI             */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/audit/AuditDetailModal.jsx', `import { useMemo, useState } from 'react';
+
+function statusClass(status) {
+  const value = String(status || '').toLowerCase();
+  if (value === 'pass') return 'audit-modal__status audit-modal__status--pass';
+  if (value === 'warn') return 'audit-modal__status audit-modal__status--warn';
+  return 'audit-modal__status audit-modal__status--fail';
+}
+
+function normalizeMoreDiagnostics(value) {
+  return Array.isArray(value) ? value.filter(Boolean) : [];
+}
+
+function stringifyDiagnosticValue(value) {
+  if (value == null || value === '') return '—';
+
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) return '—';
+    return Number.isInteger(value) ? String(value) : value.toFixed(2);
+  }
+
+  if (typeof value === 'boolean') return value ? 'YES' : 'NO';
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) return 'None';
+    return value.map(item => stringifyDiagnosticValue(item)).join(', ');
+  }
+
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value, null, 2);
+    } catch {
+      return String(value);
+    }
+  }
+
+  return String(value);
+}
+
+function KeyValue({ label, value }) {
+  return (
+    <div className="audit-modal__kv">
+      <span>{label}</span>
+      <strong>{stringifyDiagnosticValue(value)}</strong>
+    </div>
+  );
+}
+
+function DiagnosticMetric({ metric }) {
+  return (
+    <div className="audit-modal__diagnostic-metric">
+      <span>{metric.label}</span>
+      <strong>{stringifyDiagnosticValue(metric.value)}</strong>
+      {metric.hint && <em>{metric.hint}</em>}
+    </div>
+  );
+}
+
+function DiagnosticSection({ section }) {
+  const metrics = Array.isArray(section.metrics) ? section.metrics : [];
+  const rows = Array.isArray(section.rows) ? section.rows : [];
+  const notes = Array.isArray(section.notes) ? section.notes : [];
+  const raw = section.raw;
+
+  return (
+    <article className="audit-modal__diagnostic-section" data-diagnostic-section={section.id || section.title}>
+      <div className="audit-modal__diagnostic-head">
+        <div>
+          <h4>{section.title || 'Diagnostic section'}</h4>
+          {section.description && <p>{section.description}</p>}
+        </div>
+        {section.status && <span className={statusClass(section.status)}>{section.status}</span>}
+      </div>
+
+      {metrics.length > 0 && (
+        <div className="audit-modal__diagnostic-metrics">
+          {metrics.map((metric, index) => (
+            <DiagnosticMetric key={(metric.id || metric.label || 'metric') + '-' + index} metric={metric} />
+          ))}
+        </div>
+      )}
+
+      {rows.length > 0 && (
+        <div className="audit-modal__diagnostic-rows">
+          {rows.map((row, rowIndex) => (
+            <div key={(row.id || row.label || 'row') + '-' + rowIndex} className="audit-modal__diagnostic-row">
+              <strong>{row.label || row.id || 'Row'}</strong>
+              <span>{stringifyDiagnosticValue(row.value ?? row.detail ?? row.status)}</span>
+              {row.detail && row.value != null && <em>{row.detail}</em>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {notes.length > 0 && (
+        <ul className="audit-modal__diagnostic-notes">
+          {notes.map((note, index) => (
+            <li key={'note-' + index}>{note}</li>
+          ))}
+        </ul>
+      )}
+
+      {raw != null && (
+        <details className="audit-modal__raw">
+          <summary>Raw diagnostic JSON</summary>
+          <pre>{stringifyDiagnosticValue(raw)}</pre>
+        </details>
+      )}
+    </article>
+  );
+}
+
+export default function AuditDetailModal({ audit, onClose }) {
+  const [showMoreDiagnostics, setShowMoreDiagnostics] = useState(false);
+
+  const gates = Array.isArray(audit?.gates) ? audit.gates : [];
+  const warnings = Array.isArray(audit?.warnings) ? audit.warnings : [];
+  const failures = Array.isArray(audit?.failures) ? audit.failures : [];
+  const summary = audit?.summary || {};
+  const moreDiagnostics = useMemo(
+    () => normalizeMoreDiagnostics(audit?.moreDiagnostics),
+    [audit]
+  );
+
+  return (
+    <div className="audit-modal__backdrop" role="presentation" onClick={onClose}>
+      <section
+        className="audit-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Audit and data trust details"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <header className="audit-modal__header">
+          <div>
+            <div className="audit-modal__eyebrow">Data trust / audits / gates</div>
+            <h2>{audit?.title || 'Page quality audit'}</h2>
+          </div>
+
+          <div className={'audit-modal__grade audit-modal__grade--' + (audit?.tone || 'bad')}>
+            {audit?.grade || 'F'}
+          </div>
+
+          <button type="button" className="audit-modal__close" onClick={onClose} aria-label="Close audit popup">
+            ×
+          </button>
+        </header>
+
+        <div className="audit-modal__score-row">
+          <KeyValue label="Score" value={audit?.score != null ? audit.score + '/100' : '—'} />
+          <KeyValue label="Target" value={audit?.target || '—'} />
+          <KeyValue label="Data trust" value={audit?.dataTrust?.status || '—'} />
+          <KeyValue label="Generated" value={audit?.generatedAt ? new Date(audit.generatedAt).toLocaleString() : '—'} />
+        </div>
+
+        <div className="audit-modal__summary">
+          <KeyValue label="Visible stories" value={summary.totalVisibleStoryCount ?? summary.storyCount ?? summary.parentCount ?? '—'} />
+          <KeyValue label="Front page" value={summary.frontPageStoryCount ?? '—'} />
+          <KeyValue label="Source groups" value={summary.sourceGroupCount ?? '—'} />
+          <KeyValue label="Duplicate rate" value={summary.duplicateRate != null ? Math.round(summary.duplicateRate * 100) + '%' : '—'} />
+          <KeyValue label="Freshness" value={summary.newestAgeMinutes == null ? 'unknown' : summary.newestAgeMinutes + ' min'} />
+          <KeyValue label="Weather ready" value={summary.weatherReadyCount ?? summary.readyCityCount ?? '—'} />
+        </div>
+
+        <div className="audit-modal__section">
+          <h3>Gate results</h3>
+          <div className="audit-modal__gates">
+            {gates.map(gate => (
+              <article key={gate.id || gate.label} className="audit-modal__gate">
+                <div>
+                  <strong>{gate.label}</strong>
+                  <p>{gate.detail}</p>
+                </div>
+                <span className={statusClass(gate.status)}>{gate.status}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {(failures.length > 0 || warnings.length > 0) && (
+          <div className="audit-modal__section">
+            <h3>Warnings / failures</h3>
+            <div className="audit-modal__messages">
+              {failures.map((item, index) => (
+                <div key={'failure-' + index} className="audit-modal__message audit-modal__message--fail">
+                  {item}
+                </div>
+              ))}
+              {warnings.map((item, index) => (
+                <div key={'warning-' + index} className="audit-modal__message audit-modal__message--warn">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {moreDiagnostics.length > 0 && (
+          <div className="audit-modal__section audit-modal__section--more">
+            <button
+              type="button"
+              className="audit-modal__more-toggle"
+              onClick={() => setShowMoreDiagnostics(value => !value)}
+              aria-expanded={showMoreDiagnostics}
+              data-audit-more-diagnostics-toggle="true"
+            >
+              <span>{showMoreDiagnostics ? 'Hide more diagnostics' : 'More diagnostics'}</span>
+              <strong>{moreDiagnostics.length}</strong>
+            </button>
+
+            {showMoreDiagnostics && (
+              <div className="audit-modal__more-panel" data-audit-more-diagnostics-panel="open">
+                {moreDiagnostics.map((section, index) => (
+                  <DiagnosticSection key={(section.id || section.title || 'section') + '-' + index} section={section} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Replace AuditDetailModal.css with More Diagnostics styling               */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/audit/AuditDetailModal.css', `.audit-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.audit-modal {
+  width: min(820px, 100%);
+  max-height: min(800px, 92vh);
+  overflow: auto;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 24px;
+  background:
+    radial-gradient(560px 220px at 100% 0%, rgba(59, 130, 246, 0.16), transparent 65%),
+    rgba(15, 23, 42, 0.96);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+  color: var(--text-primary, #fff);
+}
+
+.audit-modal__header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.94);
+}
+
+.audit-modal__eyebrow {
+  color: #93c5fd;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.audit-modal h2,
+.audit-modal h3,
+.audit-modal h4 {
+  margin: 0;
+}
+
+.audit-modal h2 {
+  margin-top: 4px;
+  font-size: 1.15rem;
+}
+
+.audit-modal h3 {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.audit-modal h4 {
+  color: #f8fafc;
+  font-size: 0.9rem;
+}
+
+.audit-modal__grade {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  font-size: 1.25rem;
+  font-weight: 950;
+}
+
+.audit-modal__grade--good {
+  background: rgba(34, 197, 94, 0.26);
+  color: #bbf7d0;
+}
+
+.audit-modal__grade--warn {
+  background: rgba(245, 158, 11, 0.24);
+  color: #fde68a;
+}
+
+.audit-modal__grade--bad {
+  background: rgba(248, 113, 113, 0.24);
+  color: #fecaca;
+}
+
+.audit-modal__close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.7);
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.audit-modal__score-row,
+.audit-modal__summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 18px 0;
+}
+
+.audit-modal__summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 10px;
+}
+
+.audit-modal__kv {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.30);
+}
+
+.audit-modal__kv span,
+.audit-modal__kv strong {
+  display: block;
+  min-width: 0;
+}
+
+.audit-modal__kv span {
+  color: #94a3b8;
+  font-size: 0.70rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.audit-modal__kv strong {
+  margin-top: 4px;
+  overflow: hidden;
+  color: #f8fafc;
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audit-modal__section {
+  padding: 18px;
+}
+
+.audit-modal__section--more {
+  padding-top: 0;
+}
+
+.audit-modal__gates {
+  display: grid;
+  gap: 8px;
+}
+
+.audit-modal__gate {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.28);
+}
+
+.audit-modal__gate strong {
+  display: block;
+  color: #f8fafc;
+  font-size: 0.88rem;
+}
+
+.audit-modal__gate p {
+  margin: 4px 0 0;
+  color: #aeb7c2;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.audit-modal__status {
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.audit-modal__status--pass {
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+}
+
+.audit-modal__status--warn {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fcd34d;
+}
+
+.audit-modal__status--fail {
+  background: rgba(248, 113, 113, 0.18);
+  color: #fca5a5;
+}
+
+.audit-modal__messages {
+  display: grid;
+  gap: 8px;
+}
+
+.audit-modal__message {
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 0.82rem;
+}
+
+.audit-modal__message--fail {
+  border: 1px solid rgba(248, 113, 113, 0.24);
+  background: rgba(127, 29, 29, 0.22);
+  color: #fecaca;
+}
+
+.audit-modal__message--warn {
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  background: rgba(120, 53, 15, 0.22);
+  color: #fde68a;
+}
+
+.audit-modal__more-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid rgba(147, 197, 253, 0.28);
+  border-radius: 16px;
+  background: rgba(30, 64, 175, 0.18);
+  color: #bfdbfe;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.audit-modal__more-toggle strong {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.28);
+  color: #eff6ff;
+  font-size: 0.74rem;
+}
+
+.audit-modal__more-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.audit-modal__diagnostic-section {
+  padding: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.34);
+}
+
+.audit-modal__diagnostic-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.audit-modal__diagnostic-head p {
+  margin: 4px 0 0;
+  color: #aeb7c2;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.audit-modal__diagnostic-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.audit-modal__diagnostic-metric {
+  min-width: 0;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.66);
+}
+
+.audit-modal__diagnostic-metric span,
+.audit-modal__diagnostic-metric strong,
+.audit-modal__diagnostic-metric em {
+  display: block;
+  min-width: 0;
+}
+
+.audit-modal__diagnostic-metric span {
+  color: #94a3b8;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.audit-modal__diagnostic-metric strong {
+  margin-top: 4px;
+  overflow: hidden;
+  color: #f8fafc;
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audit-modal__diagnostic-metric em {
+  margin-top: 3px;
+  color: #bfdbfe;
+  font-size: 0.70rem;
+  font-style: normal;
+}
+
+.audit-modal__diagnostic-rows {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.audit-modal__diagnostic-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.52);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+}
+
+.audit-modal__diagnostic-row strong {
+  color: #f8fafc;
+}
+
+.audit-modal__diagnostic-row em {
+  grid-column: 1 / -1;
+  color: #93c5fd;
+  font-style: normal;
+}
+
+.audit-modal__diagnostic-notes {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: #cbd5e1;
+  font-size: 0.78rem;
+}
+
+.audit-modal__raw {
+  margin-top: 10px;
+  border-radius: 12px;
+  color: #bfdbfe;
+  font-size: 0.78rem;
+}
+
+.audit-modal__raw summary {
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.audit-modal__raw pre {
+  max-height: 220px;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.28);
+  color: #e5e7eb;
+  font-size: 0.72rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 720px) {
+  .audit-modal__score-row,
+  .audit-modal__summary,
+  .audit-modal__diagnostic-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .audit-modal__header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .audit-modal__grade {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 42px;
+  }
+}
+
+@media (max-width: 520px) {
+  .audit-modal__score-row,
+  .audit-modal__summary,
+  .audit-modal__diagnostic-metrics,
+  .audit-modal__diagnostic-row {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-modal__gate,
+  .audit-modal__diagnostic-head {
+    grid-template-columns: 1fr;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 3) Patch pageAuditGrading.js to carry moreDiagnostics                       */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/services/pageAuditGrading.js', source => {
+  let text = source;
+
+  text = replaceOnce(
+    text,
+    `function makePageAudit({ target, title, gates, summary = {}, dataTrust = {}, now = Date.now() }) {`,
+    `function makePageAudit({ target, title, gates, summary = {}, dataTrust = {}, moreDiagnostics = [], now = Date.now() }) {`,
+    'makePageAudit moreDiagnostics parameter'
+  );
+
+  text = replaceOnce(
+    text,
+    `    dataTrust: {
+      status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+      ...dataTrust,
+    },
+    warnings,`,
+    `    dataTrust: {
+      status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+      ...dataTrust,
+    },
+    moreDiagnostics,
+    warnings,`,
+    'makePageAudit return moreDiagnostics'
+  );
+
+  if (!text.includes('function diagnosticMetric(')) {
+    text = insertBeforeOnce(
+      text,
+      `function gate(id, label, status, detail) {`,
+      `function diagnosticMetric(label, value, hint = '') {
+  return { label, value, hint };
+}
+
+function diagnosticRow(label, value, detail = '') {
+  return { label, value, detail };
+}
+
+function diagnosticSection({ id, title, description, status = null, metrics = [], rows = [], notes = [], raw = null }) {
+  return { id, title, description, status, metrics, rows, notes, raw };
+}
+
+`,
+      'diagnostic helpers'
+    );
+  }
+
+  text = replaceOnce(
+    text,
+    `    dataTrust: {
+      status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+      sourceDiversity: sourceGroups.length,
+      duplicateRate: Number(duplicateRate.toFixed(3)),
+      stale,
+      weatherReadyCount,
+    },
+    warnings,`,
+    `    dataTrust: {
+      status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+      sourceDiversity: sourceGroups.length,
+      duplicateRate: Number(duplicateRate.toFixed(3)),
+      stale,
+      weatherReadyCount,
+    },
+    moreDiagnostics: [
+      diagnosticSection({
+        id: 'main-section-health',
+        title: 'Section health',
+        description: 'Per-section volume and source diversity behind the Main tab grade.',
+        status: missingSections.length === 0 ? weakSections.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Enabled sections', enabledSections.length),
+          diagnosticMetric('Missing sections', missingSections.length),
+          diagnosticMetric('Weak sections', weakSections.length),
+          diagnosticMetric('Section stories', sectionStories.length),
+        ],
+        rows: sectionHealth.map(item => diagnosticRow(
+          item.section,
+          item.status,
+          item.storyCount + ' stories / ' + item.sourceGroupCount + ' source groups'
+        )),
+        raw: { sectionHealth, enabledSections, missingSections, weakSections },
+      }),
+      diagnosticSection({
+        id: 'main-data-trust',
+        title: 'Data trust details',
+        description: 'Source diversity, freshness, duplicate control and weather readiness.',
+        status: failures.length === 0 ? warnings.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Visible stories', allStories.length),
+          diagnosticMetric('Front page stories', frontPage.length),
+          diagnosticMetric('Source groups', sourceGroups.length),
+          diagnosticMetric('Duplicate rate', Number(duplicateRate.toFixed(3))),
+          diagnosticMetric('Newest age min', newestAgeMinutes ?? 'unknown'),
+          diagnosticMetric('Weather ready', weatherReadyCount),
+        ],
+        notes: [
+          stale ? 'Newest story is stale or timestamp is unavailable.' : 'Freshness gate has usable story timestamps.',
+          duplicateRate > 0.08 ? 'Duplicate pressure is visible in main-tab story keys.' : 'Duplicate pressure is within expected range.',
+        ],
+        raw: { sourceGroups, duplicateCount, duplicateRate, timestamps, weatherCities },
+      }),
+    ],
+    warnings,`,
+    'main audit moreDiagnostics'
+  );
+
+  text = replaceOnce(
+    text,
+    `    dataTrust: {
+      readyCityCount: readyCities.length,
+      weeklyReadyCount: weeklyReady.length,
+      staleCityCount: staleCities.length,
+      fallbackCityCount: fallbackCities.length,
+    },
+  });`,
+    `    moreDiagnostics: [
+      diagnosticSection({
+        id: 'weather-city-readiness',
+        title: 'Weather city readiness',
+        description: 'Configured city coverage, active city state and weekly forecast readiness.',
+        status: readyCities.length === cityList.length ? 'PASS' : readyCities.length > 0 ? 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Configured cities', cityList.length),
+          diagnosticMetric('Ready cities', readyCities.length),
+          diagnosticMetric('Weekly ready', weeklyReady.length),
+          diagnosticMetric('Active city', active),
+        ],
+        rows: cityList.map(city => diagnosticRow(
+          city,
+          data?.[city] ? 'ready' : 'missing',
+          asArray(data?.[city]?.weeklyForecast).length + ' weekly days; source ' + (data?.[city]?.sourceMode || 'unknown')
+        )),
+        raw: { cityList, readyCities, weeklyReady, staleCities, fallbackCities, active },
+      }),
+      diagnosticSection({
+        id: 'weather-source-trust',
+        title: 'Weather source trust',
+        description: 'Source mode, stale/cache/fallback visibility and runtime error state.',
+        status: fallbackCities.length === 0 && !error ? staleCities.length === 0 ? 'PASS' : 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Source modes', sourceModes),
+          diagnosticMetric('Stale cities', staleCities.length),
+          diagnosticMetric('Fallback cities', fallbackCities.length),
+          diagnosticMetric('Loading', loading),
+          diagnosticMetric('Error', Boolean(error)),
+        ],
+        notes: [
+          error ? 'Weather context reports a degraded update or cached fallback.' : 'No active weather error reported.',
+          fallbackCities.length ? 'At least one city is using fallback/snapshot data.' : 'No fallback/snapshot city detected.',
+        ],
+        raw: { sourceModes, staleCities, fallbackCities, error },
+      }),
+    ],
+    dataTrust: {
+      readyCityCount: readyCities.length,
+      weeklyReadyCount: weeklyReady.length,
+      staleCityCount: staleCities.length,
+      fallbackCityCount: fallbackCities.length,
+    },
+  });`,
+    'weather audit moreDiagnostics'
+  );
+
+  text = replaceOnce(
+    text,
+    `    dataTrust: {
+      sourceOkCount,
+      sourceFailCount,
+      sourceMode: data.isSnapshot ? 'snapshot' : data.isStale ? 'cache' : 'live',
+      newestAgeMinutes,
+    },
+  });`,
+    `    moreDiagnostics: [
+      diagnosticSection({
+        id: 'market-coverage',
+        title: 'Market coverage',
+        description: 'Coverage across indices, movers and auxiliary market sections.',
+        status: indices.length >= 4 && gainers.length > 0 && losers.length > 0 ? 'PASS' : indices.length > 0 ? 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Indices', indices.length),
+          diagnosticMetric('Gainers', gainers.length),
+          diagnosticMetric('Losers', losers.length),
+          diagnosticMetric('Sectorals', sectorals.length),
+          diagnosticMetric('Commodities', commodities.length),
+          diagnosticMetric('Currencies', currencies.length),
+          diagnosticMetric('Mutual funds', mutualFunds.length),
+        ],
+        raw: {
+          indexNames: indices.map(item => item.name || item.symbol).filter(Boolean),
+          gainers: gainers.slice(0, 5),
+          losers: losers.slice(0, 5),
+        },
+      }),
+      diagnosticSection({
+        id: 'market-source-health',
+        title: 'Market source health',
+        description: 'Source health and freshness details behind the market grade.',
+        status: sourceFailCount === 0 ? 'PASS' : sourceOkCount >= sourceFailCount ? 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Sources OK', sourceOkCount),
+          diagnosticMetric('Sources failing', sourceFailCount),
+          diagnosticMetric('Source mode', data.isSnapshot ? 'snapshot' : data.isStale ? 'cache' : 'live'),
+          diagnosticMetric('Newest age min', newestAgeMinutes ?? 'unknown'),
+          diagnosticMetric('Loading', loading),
+          diagnosticMetric('Error', Boolean(error)),
+        ],
+        rows: Object.entries(asObject(sourceHealth)).map(([name, item]) => diagnosticRow(
+          name,
+          item?.ok === false ? 'FAIL' : 'PASS',
+          item?.message || item?.reason || ''
+        )),
+        raw: { sourceHealth, sessionState, lastFetch },
+      }),
+    ],
+    dataTrust: {
+      sourceOkCount,
+      sourceFailCount,
+      sourceMode: data.isSnapshot ? 'snapshot' : data.isStale ? 'cache' : 'live',
+      newestAgeMinutes,
+    },
+  });`,
+    'market audit moreDiagnostics'
+  );
+
+  text = replaceOnce(
+    text,
+    `    dataTrust: {
+      parentCount: parents.length,
+      storyCount: storiesById.size,
+      sourceGroupCount: sourceGroups.length,
+      weakTreeCount: weakTrees,
+      multiAngleParentCount: multiAngleParents,
+      runtimeRecovered: Boolean(runtimeGate?.recovered),
+    },
+  });`,
+    `    moreDiagnostics: [
+      diagnosticSection({
+        id: 'insight-tree-quality',
+        title: 'Insight tree quality',
+        description: 'Cluster depth, angle diversity, source diversity and weak-tree control.',
+        status: multiAngleParents >= 2 && weakTrees === 0 ? 'PASS' : multiAngleParents >= 1 ? 'WARN' : 'FAIL',
+        metrics: [
+          diagnosticMetric('Parents', parents.length),
+          diagnosticMetric('Stories', storiesById.size),
+          diagnosticMetric('Source groups', sourceGroups.length),
+          diagnosticMetric('Weak trees', weakTrees),
+          diagnosticMetric('Multi-angle parents', multiAngleParents),
+          diagnosticMetric('Avg angles', Number(avgAngleCount.toFixed(2))),
+          diagnosticMetric('Avg children', Number(avgChildCount.toFixed(2))),
+        ],
+        rows: parents.slice(0, 10).map(parent => diagnosticRow(
+          parent?.canonicalHeadline || parent?.parentId || 'cluster',
+          parent?.weakTree ? 'weak' : 'ok',
+          asArray(parent?.childStoryIds).length + ' children / ' + asArray(parent?.clusterStoryIds).length + ' cluster stories'
+        )),
+        raw: { sourceGroups, weakTrees, angleCounts, childCounts },
+      }),
+      diagnosticSection({
+        id: 'insight-runtime-gates',
+        title: 'Insight runtime gates',
+        description: 'Runtime quality gate, source mode and behavior evidence status.',
+        status: runtimeGate?.attempted && !runtimeGate?.recovered ? 'WARN' : 'PASS',
+        metrics: [
+          diagnosticMetric('Source', source),
+          diagnosticMetric('Signal score', diagnostics?.signalScore ?? 'unknown'),
+          diagnosticMetric('Runtime recovered', Boolean(runtimeGate?.recovered)),
+          diagnosticMetric('Runtime attempted', Boolean(runtimeGate?.attempted)),
+          diagnosticMetric('Behavior status', behaviorStatus || 'unknown'),
+          diagnosticMetric('Loading', loading),
+          diagnosticMetric('Error', Boolean(error)),
+        ],
+        notes: [
+          runtimeGate?.reason || 'No runtime recovery reason recorded.',
+          behaviorEvidence?.summaryTitle || 'No behavior evidence title recorded.',
+        ],
+        raw: { runtimeGate, behaviorEvidence, diagnostics },
+      }),
+    ],
+    dataTrust: {
+      parentCount: parents.length,
+      storyCount: storiesById.size,
+      sourceGroupCount: sourceGroups.length,
+      weakTreeCount: weakTrees,
+      multiAngleParentCount: multiAngleParents,
+      runtimeRecovered: Boolean(runtimeGate?.recovered),
+    },
+  });`,
+    'insight audit moreDiagnostics'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 4) Certification                                                            */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/pageAuditMoreDiagnostics.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  auditInsightTabQuality,
+  auditMainTabQuality,
+  auditMarketTabQuality,
+  auditWeatherTabQuality,
+} from './pageAuditGrading';
+
+function story(id, sourceGroup, publishedAt = Date.now()) {
+  return {
+    id,
+    title: 'Story ' + id,
+    sourceGroup,
+    publishedAt,
+  };
+}
+
+describe('Grade popup more diagnostics certification', () => {
+  it('adds moreDiagnostics to Main tab audit', () => {
+    const now = Date.now();
+    const audit = auditMainTabQuality({
+      now,
+      newsData: {
+        frontPage: Array.from({ length: 10 }, (_, index) => story('top-' + index, 'src_' + index, now)),
+        india: [story('i1', 'a', now), story('i2', 'b', now), story('i3', 'c', now)],
+        chennai: [story('c1', 'd', now), story('c2', 'e', now), story('c3', 'f', now)],
+        local: [story('l1', 'g', now), story('l2', 'h', now), story('l3', 'i', now)],
+        world: [story('w1', 'j', now), story('w2', 'k', now), story('w3', 'l', now)],
+      },
+      weatherData: {
+        chennai: { current: { temp: 32 } },
+        trichy: { current: { temp: 33 } },
+        muscat: { current: { temp: 34 } },
+      },
+    });
+
+    expect(Array.isArray(audit.moreDiagnostics)).toBe(true);
+    expect(audit.moreDiagnostics.length).toBeGreaterThanOrEqual(2);
+    expect(audit.moreDiagnostics.some(section => section.id === 'main-section-health')).toBe(true);
+  });
+
+  it('adds moreDiagnostics to Weather tab audit', () => {
+    const audit = auditWeatherTabQuality({
+      weatherData: {
+        chennai: { current: { temp: 32 }, weeklyForecast: [{}, {}, {}, {}, {}], sourceMode: 'live-multi-model' },
+        trichy: { current: { temp: 33 }, weeklyForecast: [{}, {}, {}, {}, {}], sourceMode: 'live-multi-model' },
+      },
+      cities: ['chennai', 'trichy'],
+      activeCity: 'chennai',
+    });
+
+    expect(audit.moreDiagnostics.some(section => section.id === 'weather-city-readiness')).toBe(true);
+    expect(audit.moreDiagnostics.some(section => section.id === 'weather-source-trust')).toBe(true);
+  });
+
+  it('adds moreDiagnostics to Market tab audit', () => {
+    const audit = auditMarketTabQuality({
+      marketData: {
+        indices: [{ name: 'NIFTY' }, { name: 'SENSEX' }, { name: 'BANK' }, { name: 'MIDCAP' }],
+        movers: {
+          gainers: [{ symbol: 'A' }],
+          losers: [{ symbol: 'B' }],
+        },
+        sectorals: [{ name: 'IT' }],
+        commodities: [{ name: 'Gold' }],
+      },
+      sourceHealth: {
+        nse: { ok: true },
+      },
+      lastFetch: Date.now(),
+    });
+
+    expect(audit.moreDiagnostics.some(section => section.id === 'market-coverage')).toBe(true);
+    expect(audit.moreDiagnostics.some(section => section.id === 'market-source-health')).toBe(true);
+  });
+
+  it('adds moreDiagnostics to Insight tab audit', () => {
+    const result = {
+      parents: [
+        { parentId: 'p1', canonicalHeadline: 'Parent 1', childStoryIds: ['s1', 's2'], clusterStoryIds: ['s1', 's2'], weakTree: false },
+      ],
+      storiesById: new Map([
+        ['s1', { id: 's1', sourceGroup: 'a', angle: 'base_report' }],
+        ['s2', { id: 's2', sourceGroup: 'b', angle: 'official_response' }],
+      ]),
+    };
+
+    const audit = auditInsightTabQuality({
+      result,
+      diagnostics: { signalScore: 80 },
+      behaviorEvidence: { status: 'pass', summaryTitle: 'Behavior evidence passed' },
+      source: 'fixture',
+    });
+
+    expect(audit.moreDiagnostics.some(section => section.id === 'insight-tree-quality')).toBe(true);
+    expect(audit.moreDiagnostics.some(section => section.id === 'insight-runtime-gates')).toBe(true);
+  });
+});
+`);
+
+write('scripts/test_grade_popup_more_diagnostics_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const modal = read('src/components/audit/AuditDetailModal.jsx');
+const modalCss = read('src/components/audit/AuditDetailModal.css');
+const grading = read('src/services/pageAuditGrading.js');
+const cert = read('src/services/pageAuditMoreDiagnostics.cert.test.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'More diagnostics',
+  'data-audit-more-diagnostics-toggle',
+  'data-audit-more-diagnostics-panel',
+  'DiagnosticSection',
+  'Raw diagnostic JSON',
+  'normalizeMoreDiagnostics'
+]) {
+  assert(modal.includes(token), 'AuditDetailModal.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '.audit-modal__more-toggle',
+  '.audit-modal__more-panel',
+  '.audit-modal__diagnostic-section',
+  '.audit-modal__diagnostic-metrics',
+  '.audit-modal__raw'
+]) {
+  assert(modalCss.includes(token), 'AuditDetailModal.css missing token: ' + token);
+}
+
+for (const token of [
+  'moreDiagnostics',
+  'diagnosticSection',
+  'main-section-health',
+  'weather-city-readiness',
+  'market-coverage',
+  'insight-tree-quality',
+  'insight-runtime-gates'
+]) {
+  assert(grading.includes(token), 'pageAuditGrading.js missing token: ' + token);
+}
+
+for (const token of [
+  'Grade popup more diagnostics certification',
+  'adds moreDiagnostics to Main tab audit',
+  'adds moreDiagnostics to Weather tab audit',
+  'adds moreDiagnostics to Market tab audit',
+  'adds moreDiagnostics to Insight tab audit'
+]) {
+  assert(cert.includes(token), 'pageAuditMoreDiagnostics.cert.test.js missing token: ' + token);
+}
+
+assert(
+  packageJson.includes('"test:grade-popup-more-diagnostics"'),
+  'package.json must include test:grade-popup-more-diagnostics'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:grade-popup-more-diagnostics']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include grade popup more diagnostics test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Grade popup more diagnostics',
+  guarantees: [
+    'Grade popup has a More diagnostics toggle',
+    'More diagnostics is hidden by default',
+    'More diagnostics can render metrics, rows, notes and raw JSON',
+    'Main audit provides advanced diagnostic sections',
+    'Weather audit provides advanced diagnostic sections',
+    'Market audit provides advanced diagnostic sections',
+    'Insight audit provides advanced diagnostic sections'
+  ]
+}, null, 2));
+
+console.log('PASS: Grade popup more diagnostics static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:grade-popup-more-diagnostics'] =
+    'node scripts/test_grade_popup_more_diagnostics_static.mjs && vitest run --config vitest.config.js src/services/pageAuditMoreDiagnostics.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:grade-popup-more-diagnostics']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:unified-grade-badge-tabs']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:unified-grade-badge-tabs']],",
+      "  ['npm', ['run', 'test:unified-grade-badge-tabs']],\\n  ['npm', ['run', 'test:grade-popup-more-diagnostics']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:main-grade-audit']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:main-grade-audit']],",
+      "  ['npm', ['run', 'test:main-grade-audit']],\\n  ['npm', ['run', 'test:grade-popup-more-diagnostics']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'grade-popup-more-diagnostics')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'unified-grade-badge-tabs');
+      const command = {
+        id: 'grade-popup-more-diagnostics',
+        cmd: 'npm',
+        args: ['run', 'test:grade-popup-more-diagnostics'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:grade-popup-more-diagnostics')) return source;
+
+    if (source.includes("'test:unified-grade-badge-tabs',")) {
+      return source.replace(
+        "'test:unified-grade-badge-tabs',",
+        "'test:unified-grade-badge-tabs',\\n  'test:grade-popup-more-diagnostics',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 60C Grade popup more diagnostics patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice60C_more_diagnostics_grade_popup.mjs
+
+node scripts/test_grade_popup_more_diagnostics_static.mjs
+npm run test:grade-popup-more-diagnostics
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice60C_more_diagnostics_grade_popup.mjs
+  - src/components/audit/AuditDetailModal.jsx
+  - src/components/audit/AuditDetailModal.css
+  - src/services/pageAuditGrading.js
+  - src/services/pageAuditMoreDiagnostics.cert.test.js
+  - scripts/test_grade_popup_more_diagnostics_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed:
+  - node scripts/test_grade_popup_more_diagnostics_static.mjs: YES/NO
+- Vitest more diagnostics test passed:
+  - npm run test:grade-popup-more-diagnostics: YES/NO
+- ESLint passed:
+  - npm run lint: YES/NO
+- Vitest/unit passed:
+  - npm run test:unit: YES/NO
+- Production build passed:
+  - npm run build: YES/NO
+- Full certification passed:
+  - npm run test:certify: YES/NO
+- Grade popup diagnostics gate:
+  - More diagnostics toggle visible in grade popup: YES/NO
+  - More diagnostics hidden by default: YES/NO
+  - More diagnostics expands inside popup: YES/NO
+  - Main tab advanced diagnostics present: YES/NO
+  - Weather tab advanced diagnostics present: YES/NO
+  - Market tab advanced diagnostics present: YES/NO
+  - Insight tab advanced diagnostics present: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+
+Next slice after this should be **60D — Grade Badge positioning and collision safety**, to prevent the fixed top-right badge from overlapping sticky headers, mobile notches, or page controls.
+----------------------------------------------------------------
+# Slice 60D — Grade Badge positioning and collision safety
+
+This prevents the fixed top-right grade icon from overlapping sticky headers, mobile notch areas, or page controls.
+
+## What this adds
+
+```txt
+- GradeBadge can use safe positions: top-right, below-header, inline.
+- Badge auto-offsets using CSS variables.
+- Pages can set per-page offset without hardcoding everywhere.
+- Mobile-safe notch spacing using safe-area env().
+- Optional compact placement for pages with heavy top-right controls.
+- Static + Vitest certification.
+```
+
+## Create
+
+```bash
+scripts/apply_slice60D_grade_badge_position_safety.mjs
+```
+
+## Full code
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+function replaceOnce(source, before, after, label) {
+  if (!source.includes(before)) {
+    if (source.includes(after.trim())) return source;
+    throw new Error(`Missing replace target for ${label}`);
+  }
+  return source.replace(before, after);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Grade badge placement helpers                                            */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/audit/gradeBadgePlacement.js', `export const GRADE_BADGE_POSITIONS = {
+  TOP_RIGHT: 'top-right',
+  BELOW_HEADER: 'below-header',
+  INLINE: 'inline',
+  FLOATING_LOW: 'floating-low',
+};
+
+export function normalizeGradeBadgePosition(value) {
+  const normalized = String(value || '').trim().toLowerCase();
+
+  if (Object.values(GRADE_BADGE_POSITIONS).includes(normalized)) {
+    return normalized;
+  }
+
+  return GRADE_BADGE_POSITIONS.TOP_RIGHT;
+}
+
+export function getGradeBadgeClassName({
+  tone = 'bad',
+  position = GRADE_BADGE_POSITIONS.TOP_RIGHT,
+  compact = false,
+  className = '',
+} = {}) {
+  const safePosition = normalizeGradeBadgePosition(position);
+  const classes = [
+    'grade-badge',
+    'grade-badge--' + tone,
+    'grade-badge--position-' + safePosition,
+  ];
+
+  if (compact) classes.push('grade-badge--compact');
+  if (className) classes.push(className);
+
+  return classes.join(' ');
+}
+
+export function getGradeBadgeStyle({
+  topOffset = null,
+  rightOffset = null,
+  zIndex = null,
+} = {}) {
+  const style = {};
+
+  if (topOffset != null) {
+    style['--grade-badge-top-offset'] = typeof topOffset === 'number'
+      ? topOffset + 'px'
+      : String(topOffset);
+  }
+
+  if (rightOffset != null) {
+    style['--grade-badge-right-offset'] = typeof rightOffset === 'number'
+      ? rightOffset + 'px'
+      : String(rightOffset);
+  }
+
+  if (zIndex != null) {
+    style['--grade-badge-z-index'] = String(zIndex);
+  }
+
+  return style;
+}
+
+export function getRecommendedGradeBadgePosition(pageId) {
+  const id = String(pageId || '').toLowerCase();
+
+  if (id.includes('weather')) return GRADE_BADGE_POSITIONS.BELOW_HEADER;
+  if (id.includes('market')) return GRADE_BADGE_POSITIONS.BELOW_HEADER;
+  if (id.includes('insight')) return GRADE_BADGE_POSITIONS.FLOATING_LOW;
+
+  return GRADE_BADGE_POSITIONS.TOP_RIGHT;
+}
+`);
+
+write('src/components/audit/gradeBadgePlacement.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  GRADE_BADGE_POSITIONS,
+  getGradeBadgeClassName,
+  getGradeBadgeStyle,
+  getRecommendedGradeBadgePosition,
+  normalizeGradeBadgePosition,
+} from './gradeBadgePlacement';
+
+describe('Grade badge placement certification', () => {
+  it('normalizes invalid placement to top-right', () => {
+    expect(normalizeGradeBadgePosition('bad-position')).toBe(GRADE_BADGE_POSITIONS.TOP_RIGHT);
+  });
+
+  it('builds collision-safe placement class names', () => {
+    const className = getGradeBadgeClassName({
+      tone: 'good',
+      position: 'below-header',
+      compact: true,
+    });
+
+    expect(className).toContain('grade-badge--good');
+    expect(className).toContain('grade-badge--position-below-header');
+    expect(className).toContain('grade-badge--compact');
+  });
+
+  it('exposes CSS variable style offsets', () => {
+    const style = getGradeBadgeStyle({
+      topOffset: 72,
+      rightOffset: '18px',
+      zIndex: 70,
+    });
+
+    expect(style['--grade-badge-top-offset']).toBe('72px');
+    expect(style['--grade-badge-right-offset']).toBe('18px');
+    expect(style['--grade-badge-z-index']).toBe('70');
+  });
+
+  it('recommends lower placement for collision-heavy pages', () => {
+    expect(getRecommendedGradeBadgePosition('weather')).toBe('below-header');
+    expect(getRecommendedGradeBadgePosition('market')).toBe('below-header');
+    expect(getRecommendedGradeBadgePosition('insight')).toBe('floating-low');
+  });
+});
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Patch GradeBadge component                                               */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/components/audit/GradeBadge.jsx', source => {
+  let text = source;
+
+  text = insertAfterOnce(
+    text,
+    `import { auditGradeLabel, auditGradeTone } from '../../services/pageAuditGrading.js';`,
+    `
+import { getGradeBadgeClassName, getGradeBadgeStyle } from './gradeBadgePlacement.js';`,
+    'GradeBadge placement import'
+  );
+
+  text = replaceOnce(
+    text,
+    `export default function GradeBadge({ audit, label = 'Quality grade', corner = true }) {`,
+    `export default function GradeBadge({
+  audit,
+  label = 'Quality grade',
+  position = 'top-right',
+  compact = false,
+  topOffset = null,
+  rightOffset = null,
+  zIndex = null,
+  className = '',
+}) {`,
+    'GradeBadge props'
+  );
+
+  text = replaceOnce(
+    text,
+    `  const tone = auditGradeTone(audit);`,
+    `  const tone = auditGradeTone(audit);
+  const badgeClassName = getGradeBadgeClassName({
+    tone,
+    position,
+    compact,
+    className,
+  });
+  const badgeStyle = getGradeBadgeStyle({
+    topOffset,
+    rightOffset,
+    zIndex,
+  });`,
+    'GradeBadge class style construction'
+  );
+
+  text = replaceOnce(
+    text,
+    `        className={
+          'grade-badge grade-badge--' + tone + (corner ? ' grade-badge--corner' : '')
+        }`,
+    `        className={badgeClassName}
+        style={badgeStyle}`,
+    'GradeBadge className style usage'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 3) Replace GradeBadge CSS with collision-safe placements                    */
+/* -------------------------------------------------------------------------- */
+
+write('src/components/audit/GradeBadge.css', `.grade-badge {
+  --grade-badge-top-offset: 12px;
+  --grade-badge-right-offset: 12px;
+  --grade-badge-z-index: 40;
+  --grade-badge-size: 42px;
+
+  display: inline-grid;
+  place-items: center;
+  width: var(--grade-badge-size);
+  height: var(--grade-badge-size);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 950;
+  line-height: 1;
+  z-index: var(--grade-badge-z-index);
+}
+
+.grade-badge--position-top-right {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--grade-badge-top-offset));
+  right: calc(env(safe-area-inset-right, 0px) + var(--grade-badge-right-offset));
+}
+
+.grade-badge--position-below-header {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--grade-badge-top-offset, 72px));
+  right: calc(env(safe-area-inset-right, 0px) + var(--grade-badge-right-offset, 12px));
+}
+
+.grade-badge--position-floating-low {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--grade-badge-top-offset, 88px));
+  right: calc(env(safe-area-inset-right, 0px) + var(--grade-badge-right-offset, 12px));
+}
+
+.grade-badge--position-inline {
+  position: relative;
+  top: auto;
+  right: auto;
+  box-shadow: none;
+}
+
+.grade-badge--compact {
+  --grade-badge-size: 36px;
+  border-radius: 12px;
+}
+
+.grade-badge__letter {
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+}
+
+.grade-badge--compact .grade-badge__letter {
+  font-size: 0.98rem;
+}
+
+.grade-badge--good {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.95), rgba(21, 128, 61, 0.95));
+}
+
+.grade-badge--warn {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(180, 83, 9, 0.95));
+}
+
+.grade-badge--bad {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(153, 27, 27, 0.95));
+}
+
+.grade-badge:hover {
+  transform: translateY(-1px);
+}
+
+.grade-badge:focus-visible {
+  outline: 3px solid rgba(147, 197, 253, 0.75);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .grade-badge {
+    --grade-badge-size: 38px;
+    --grade-badge-top-offset: 10px;
+    --grade-badge-right-offset: 10px;
+    border-radius: 12px;
+  }
+
+  .grade-badge--position-below-header {
+    --grade-badge-top-offset: 64px;
+  }
+
+  .grade-badge--position-floating-low {
+    --grade-badge-top-offset: 78px;
+  }
+}
+
+@media (max-width: 380px) {
+  .grade-badge--position-top-right,
+  .grade-badge--position-below-header,
+  .grade-badge--position-floating-low {
+    --grade-badge-right-offset: 8px;
+  }
+}
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 4) Patch page usage offsets                                                 */
+/* -------------------------------------------------------------------------- */
+
+function patchGradeBadgeUsage(path, label, props) {
+  patchFile(path, source => {
+    const target = `<GradeBadge audit={${props.auditVar}} label="${label}" />`;
+    const replacement = `<GradeBadge
+                audit={${props.auditVar}}
+                label="${label}"
+                position="${props.position}"
+                topOffset="${props.topOffset}"
+                compact={${props.compact ? 'true' : 'false'}}
+            />`;
+
+    if (source.includes(replacement)) return source;
+    if (!source.includes(target)) {
+      console.log(`skip ${path}; exact GradeBadge target not found for ${label}`);
+      return source;
+    }
+
+    return source.replace(target, replacement);
+  });
+}
+
+if (fs.existsSync('src/pages/MainPage.jsx')) {
+  patchGradeBadgeUsage('src/pages/MainPage.jsx', 'Main tab quality grade', {
+    auditVar: 'mainTabAudit',
+    position: 'top-right',
+    topOffset: '12px',
+    compact: false,
+  });
+}
+
+if (fs.existsSync('src/pages/WeatherPage.jsx')) {
+  patchGradeBadgeUsage('src/pages/WeatherPage.jsx', 'Weather tab quality grade', {
+    auditVar: 'weatherTabAudit',
+    position: 'below-header',
+    topOffset: '74px',
+    compact: true,
+  });
+}
+
+if (fs.existsSync('src/pages/MarketPage.jsx')) {
+  patchGradeBadgeUsage('src/pages/MarketPage.jsx', 'Market tab quality grade', {
+    auditVar: 'marketTabAudit',
+    position: 'below-header',
+    topOffset: '74px',
+    compact: true,
+  });
+}
+
+if (fs.existsSync('src/pages/InsightPage.jsx')) {
+  patchGradeBadgeUsage('src/pages/InsightPage.jsx', 'Insight tab quality grade', {
+    auditVar: 'insightTabAudit',
+    position: 'floating-low',
+    topOffset: '86px',
+    compact: true,
+  });
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5) Certification                                                            */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_grade_badge_position_safety_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const placement = read('src/components/audit/gradeBadgePlacement.js');
+const placementTest = read('src/components/audit/gradeBadgePlacement.cert.test.js');
+const badge = read('src/components/audit/GradeBadge.jsx');
+const css = read('src/components/audit/GradeBadge.css');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'GRADE_BADGE_POSITIONS',
+  'normalizeGradeBadgePosition',
+  'getGradeBadgeClassName',
+  'getGradeBadgeStyle',
+  'getRecommendedGradeBadgePosition'
+]) {
+  assert(placement.includes(token), 'gradeBadgePlacement.js missing token: ' + token);
+}
+
+for (const token of [
+  'Grade badge placement certification',
+  'normalizes invalid placement',
+  'builds collision-safe placement class names',
+  'exposes CSS variable style offsets',
+  'recommends lower placement'
+]) {
+  assert(placementTest.includes(token), 'gradeBadgePlacement.cert.test.js missing token: ' + token);
+}
+
+for (const token of [
+  'position = \\'top-right\\'',
+  'compact = false',
+  'topOffset = null',
+  'getGradeBadgeClassName',
+  'getGradeBadgeStyle',
+  'style={badgeStyle}'
+]) {
+  assert(badge.includes(token), 'GradeBadge.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '--grade-badge-top-offset',
+  '--grade-badge-right-offset',
+  'env(safe-area-inset-top',
+  'grade-badge--position-top-right',
+  'grade-badge--position-below-header',
+  'grade-badge--position-floating-low',
+  'grade-badge--position-inline',
+  'grade-badge--compact'
+]) {
+  assert(css.includes(token), 'GradeBadge.css missing token: ' + token);
+}
+
+const pageChecks = [
+  ['src/pages/MainPage.jsx', 'position="top-right"'],
+  ['src/pages/WeatherPage.jsx', 'position="below-header"'],
+  ['src/pages/MarketPage.jsx', 'position="below-header"'],
+  ['src/pages/InsightPage.jsx', 'position="floating-low"'],
+];
+
+for (const [path, token] of pageChecks) {
+  if (fs.existsSync(path)) {
+    const content = read(path);
+    assert(content.includes(token), path + ' missing grade badge position token: ' + token);
+  }
+}
+
+assert(
+  packageJson.includes('"test:grade-badge-position-safety"'),
+  'package.json must include test:grade-badge-position-safety'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:grade-badge-position-safety']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include grade badge position safety test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Grade badge positioning and collision safety',
+  guarantees: [
+    'GradeBadge supports top-right, below-header, floating-low and inline placements',
+    'GradeBadge uses safe-area CSS variables',
+    'GradeBadge accepts per-page top/right offsets',
+    'Weather and Market can avoid header/control collision',
+    'Insight can use lower floating placement',
+    'static and Vitest certification are included'
+  ]
+}, null, 2));
+
+console.log('PASS: Grade badge position safety static slice');
+`);
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:grade-badge-position-safety'] =
+    'node scripts/test_grade_badge_position_safety_static.mjs && vitest run --config vitest.config.js src/components/audit/gradeBadgePlacement.cert.test.js';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:grade-badge-position-safety']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:grade-popup-more-diagnostics']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:grade-popup-more-diagnostics']],",
+      "  ['npm', ['run', 'test:grade-popup-more-diagnostics']],\\n  ['npm', ['run', 'test:grade-badge-position-safety']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:unified-grade-badge-tabs']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:unified-grade-badge-tabs']],",
+      "  ['npm', ['run', 'test:unified-grade-badge-tabs']],\\n  ['npm', ['run', 'test:grade-badge-position-safety']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'grade-badge-position-safety')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'grade-popup-more-diagnostics');
+      const command = {
+        id: 'grade-badge-position-safety',
+        cmd: 'npm',
+        args: ['run', 'test:grade-badge-position-safety'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:grade-badge-position-safety')) return source;
+
+    if (source.includes("'test:grade-popup-more-diagnostics',")) {
+      return source.replace(
+        "'test:grade-popup-more-diagnostics',",
+        "'test:grade-popup-more-diagnostics',\\n  'test:grade-badge-position-safety',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 60D Grade badge positioning and collision safety patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice60D_grade_badge_position_safety.mjs
+
+node scripts/test_grade_badge_position_safety_static.mjs
+npm run test:grade-badge-position-safety
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice60D_grade_badge_position_safety.mjs
+  - src/components/audit/gradeBadgePlacement.js
+  - src/components/audit/gradeBadgePlacement.cert.test.js
+  - src/components/audit/GradeBadge.jsx
+  - src/components/audit/GradeBadge.css
+  - src/pages/MainPage.jsx
+  - src/pages/WeatherPage.jsx
+  - src/pages/MarketPage.jsx
+  - src/pages/InsightPage.jsx
+  - scripts/test_grade_badge_position_safety_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed:
+  - node scripts/test_grade_badge_position_safety_static.mjs: YES/NO
+- Vitest placement test passed:
+  - npm run test:grade-badge-position-safety: YES/NO
+- ESLint passed:
+  - npm run lint: YES/NO
+- Vitest/unit passed:
+  - npm run test:unit: YES/NO
+- Production build passed:
+  - npm run build: YES/NO
+- Full certification passed:
+  - npm run test:certify: YES/NO
+- Position safety gate:
+  - top-right placement supported: YES/NO
+  - below-header placement supported: YES/NO
+  - floating-low placement supported: YES/NO
+  - safe-area CSS used: YES/NO
+  - per-page offsets applied: YES/NO
+  - mobile compact badge supported: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+-------------------------------------
+
+# Slice 60E — Grade popup export, copy, legend, and end-to-end certification
+
+This is the closure slice for the Grade UI system.
+
+## What this adds
+
+```txt
+- Grade popup shows “what this grade means”.
+- Grade popup has Copy audit JSON.
+- Grade popup has Download audit JSON.
+- Escape key closes popup.
+- Export payload is normalized and safe.
+- End-to-end static certification verifies Main / Weather / Market / Insight grade system wiring.
+```
+
+Create:
+
+```bash
+scripts/apply_slice60E_grade_popup_export_and_e2e.mjs
+```
+
+Paste this full code:
+
+```js
+import fs from 'node:fs';
+
+function read(path) {
+  if (!fs.existsSync(path)) return '';
+  return fs.readFileSync(path, 'utf8');
+}
+
+function write(path, content) {
+  const dir = path.split('/').slice(0, -1).join('/');
+  if (dir) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path, content, 'utf8');
+  console.log(`patched: ${path}`);
+}
+
+function patchFile(path, patcher) {
+  const before = read(path);
+  if (!before) throw new Error(`Missing file: ${path}`);
+  const after = patcher(before);
+  if (after !== before) write(path, after);
+  else console.log(`no change needed: ${path}`);
+}
+
+function replaceOnce(source, before, after, label) {
+  if (!source.includes(before)) {
+    if (source.includes(after.trim())) return source;
+    throw new Error(`Missing replace target for ${label}`);
+  }
+
+  return source.replace(before, after);
+}
+
+function insertAfterOnce(source, anchor, insertion, label) {
+  if (source.includes(insertion.trim().split('\n')[0])) return source;
+  if (!source.includes(anchor)) throw new Error(`Missing anchor for ${label}`);
+  return source.replace(anchor, `${anchor}${insertion}`);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 1) Audit export / grade legend service                                      */
+/* -------------------------------------------------------------------------- */
+
+write('src/services/auditExport.js', `const GRADE_EXPLANATIONS = {
+  A: {
+    label: 'Excellent',
+    description: 'Data is broad, fresh, low-duplicate and all major gates passed.',
+    action: 'No immediate action required.',
+  },
+  B: {
+    label: 'Good',
+    description: 'Data is usable with minor weaknesses or soft warnings.',
+    action: 'Review warnings if decisions are important.',
+  },
+  C: {
+    label: 'Watch',
+    description: 'Data is partially usable but has meaningful gaps.',
+    action: 'Open More diagnostics before relying on this page.',
+  },
+  D: {
+    label: 'Weak',
+    description: 'Important gates are degraded or missing.',
+    action: 'Treat this page as limited until the failed gates improve.',
+  },
+  F: {
+    label: 'Fail',
+    description: 'Data quality is not reliable for decision support.',
+    action: 'Do not rely on this page without checking raw diagnostics.',
+  },
+};
+
+function safeJsonClone(value) {
+  try {
+    return JSON.parse(JSON.stringify(value ?? null));
+  } catch {
+    return null;
+  }
+}
+
+function sanitizeFilePart(value) {
+  return String(value || 'audit')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'audit';
+}
+
+export function getGradeExplanation(grade) {
+  const key = String(grade || 'F').toUpperCase();
+  return GRADE_EXPLANATIONS[key] || GRADE_EXPLANATIONS.F;
+}
+
+export function createAuditExportPayload(audit) {
+  const grade = String(audit?.grade || 'F').toUpperCase();
+  const explanation = getGradeExplanation(grade);
+
+  return {
+    schemaVersion: 1,
+    exportType: 'nw-page-audit',
+    exportedAt: new Date().toISOString(),
+    target: audit?.target || 'unknown',
+    title: audit?.title || 'Page quality audit',
+    grade,
+    score: Number.isFinite(Number(audit?.score)) ? Number(audit.score) : null,
+    tone: audit?.tone || 'bad',
+    gradeExplanation: explanation,
+    generatedAt: audit?.generatedAt || null,
+    dataTrust: safeJsonClone(audit?.dataTrust) || {},
+    summary: safeJsonClone(audit?.summary) || {},
+    gates: safeJsonClone(audit?.gates) || [],
+    warnings: safeJsonClone(audit?.warnings) || [],
+    failures: safeJsonClone(audit?.failures) || [],
+    moreDiagnostics: safeJsonClone(audit?.moreDiagnostics) || [],
+  };
+}
+
+export function stringifyAuditExport(audit) {
+  return JSON.stringify(createAuditExportPayload(audit), null, 2);
+}
+
+export function buildAuditFileName(audit) {
+  const target = sanitizeFilePart(audit?.target || audit?.title || 'audit');
+  const grade = sanitizeFilePart(audit?.grade || 'grade');
+  const date = new Date().toISOString().slice(0, 10);
+  return \`\${target}-grade-\${grade}-audit-\${date}.json\`;
+}
+
+export function getGradeLegendRows() {
+  return Object.entries(GRADE_EXPLANATIONS).map(([grade, value]) => ({
+    grade,
+    ...value,
+  }));
+}
+`);
+
+write('src/services/auditExport.cert.test.js', `import { describe, expect, it } from 'vitest';
+import {
+  buildAuditFileName,
+  createAuditExportPayload,
+  getGradeExplanation,
+  getGradeLegendRows,
+  stringifyAuditExport,
+} from './auditExport';
+
+describe('Audit export and grade legend certification', () => {
+  it('returns useful grade explanation', () => {
+    expect(getGradeExplanation('A').label).toBe('Excellent');
+    expect(getGradeExplanation('F').action).toContain('Do not rely');
+    expect(getGradeExplanation('bad').label).toBe('Fail');
+  });
+
+  it('creates normalized export payload', () => {
+    const payload = createAuditExportPayload({
+      target: 'main-tab',
+      title: 'Main tab data quality',
+      grade: 'B',
+      score: 82,
+      dataTrust: { status: 'WARN' },
+      gates: [{ id: 'source-diversity', status: 'PASS' }],
+      moreDiagnostics: [{ id: 'raw', metrics: [{ label: 'Stories', value: 10 }] }],
+    });
+
+    expect(payload.schemaVersion).toBe(1);
+    expect(payload.exportType).toBe('nw-page-audit');
+    expect(payload.grade).toBe('B');
+    expect(payload.gradeExplanation.label).toBe('Good');
+    expect(payload.gates.length).toBe(1);
+  });
+
+  it('stringifies export payload as JSON', () => {
+    const text = stringifyAuditExport({
+      target: 'weather-tab',
+      grade: 'C',
+      score: 61,
+    });
+
+    expect(text).toContain('"exportType": "nw-page-audit"');
+    expect(text).toContain('"grade": "C"');
+  });
+
+  it('builds safe file names', () => {
+    const fileName = buildAuditFileName({
+      target: 'Weather Tab',
+      grade: 'A',
+    });
+
+    expect(fileName).toContain('weather-tab-grade-a-audit-');
+    expect(fileName.endsWith('.json')).toBe(true);
+  });
+
+  it('lists all grade legend rows', () => {
+    const rows = getGradeLegendRows();
+    expect(rows.map(row => row.grade)).toEqual(['A', 'B', 'C', 'D', 'F']);
+  });
+});
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 2) Patch AuditDetailModal for actions, legend and Escape close              */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/components/audit/AuditDetailModal.jsx', source => {
+  let text = source;
+
+  text = replaceOnce(
+    text,
+    `import { useMemo, useState } from 'react';`,
+    `import { useEffect, useMemo, useState } from 'react';
+import {
+  buildAuditFileName,
+  getGradeExplanation,
+  stringifyAuditExport,
+} from '../../services/auditExport.js';`,
+    'AuditDetailModal imports'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `function KeyValue({ label, value }) {
+  return (
+    <div className="audit-modal__kv">
+      <span>{label}</span>
+      <strong>{stringifyDiagnosticValue(value)}</strong>
+    </div>
+  );
+}
+
+`,
+    `function GradeMeaning({ grade }) {
+  const explanation = getGradeExplanation(grade);
+
+  return (
+    <div className="audit-modal__grade-meaning" data-audit-grade-meaning={grade || 'F'}>
+      <strong>{grade || 'F'} — {explanation.label}</strong>
+      <span>{explanation.description}</span>
+      <em>{explanation.action}</em>
+    </div>
+  );
+}
+
+`,
+    'GradeMeaning component'
+  );
+
+  text = replaceOnce(
+    text,
+    `  const [showMoreDiagnostics, setShowMoreDiagnostics] = useState(false);`,
+    `  const [showMoreDiagnostics, setShowMoreDiagnostics] = useState(false);
+  const [actionMessage, setActionMessage] = useState('');`,
+    'action message state'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `  const moreDiagnostics = useMemo(
+    () => normalizeMoreDiagnostics(audit?.moreDiagnostics),
+    [audit]
+  );
+
+`,
+    `  useEffect(() => {
+    function onKeyDown(event) {
+      if (event.key === 'Escape') onClose?.();
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
+  async function copyAuditJson() {
+    const text = stringifyAuditExport(audit);
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setActionMessage('Audit JSON copied.');
+    } catch {
+      setActionMessage('Copy failed. Use Download JSON instead.');
+    }
+  }
+
+  function downloadAuditJson() {
+    try {
+      const text = stringifyAuditExport(audit);
+      const blob = new Blob([text], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = buildAuditFileName(audit);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setActionMessage('Audit JSON downloaded.');
+    } catch {
+      setActionMessage('Download failed.');
+    }
+  }
+
+`,
+    'audit modal actions'
+  );
+
+  text = insertAfterOnce(
+    text,
+    `        <div className="audit-modal__score-row">
+          <KeyValue label="Score" value={audit?.score != null ? audit.score + '/100' : '—'} />
+          <KeyValue label="Target" value={audit?.target || '—'} />
+          <KeyValue label="Data trust" value={audit?.dataTrust?.status || '—'} />
+          <KeyValue label="Generated" value={audit?.generatedAt ? new Date(audit.generatedAt).toLocaleString() : '—'} />
+        </div>
+
+`,
+    `        <div className="audit-modal__actions-row">
+          <GradeMeaning grade={audit?.grade || 'F'} />
+
+          <div className="audit-modal__actions">
+            <button type="button" onClick={copyAuditJson} data-audit-copy-json="true">
+              Copy audit JSON
+            </button>
+            <button type="button" onClick={downloadAuditJson} data-audit-download-json="true">
+              Download JSON
+            </button>
+          </div>
+        </div>
+
+        {actionMessage && (
+          <div className="audit-modal__action-message" role="status">
+            {actionMessage}
+          </div>
+        )}
+
+`,
+    'audit actions row'
+  );
+
+  return text;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 3) Patch AuditDetailModal CSS                                               */
+/* -------------------------------------------------------------------------- */
+
+patchFile('src/components/audit/AuditDetailModal.css', source => {
+  if (source.includes('.audit-modal__actions-row')) return source;
+
+  return `${source}
+
+/* Grade popup export / copy / legend controls */
+
+.audit-modal__actions-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: stretch;
+  padding: 14px 18px 0;
+}
+
+.audit-modal__grade-meaning {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(147, 197, 253, 0.20);
+  border-radius: 16px;
+  background: rgba(30, 64, 175, 0.16);
+}
+
+.audit-modal__grade-meaning strong,
+.audit-modal__grade-meaning span,
+.audit-modal__grade-meaning em {
+  display: block;
+}
+
+.audit-modal__grade-meaning strong {
+  color: #f8fafc;
+  font-size: 0.92rem;
+}
+
+.audit-modal__grade-meaning span {
+  margin-top: 4px;
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.audit-modal__grade-meaning em {
+  margin-top: 4px;
+  color: #bfdbfe;
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.audit-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 150px;
+}
+
+.audit-modal__actions button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(147, 197, 253, 0.28);
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.14);
+  color: #bfdbfe;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.audit-modal__actions button:hover {
+  background: rgba(59, 130, 246, 0.22);
+}
+
+.audit-modal__action-message {
+  margin: 10px 18px 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  border-radius: 12px;
+  background: rgba(22, 101, 52, 0.18);
+  color: #bbf7d0;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+@media (max-width: 680px) {
+  .audit-modal__actions-row {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-modal__actions {
+    flex-direction: row;
+    min-width: 0;
+  }
+
+  .audit-modal__actions button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 420px) {
+  .audit-modal__actions {
+    flex-direction: column;
+  }
+}
+`;
+});
+
+/* -------------------------------------------------------------------------- */
+/* 4) E2E static certification                                                  */
+/* -------------------------------------------------------------------------- */
+
+write('scripts/test_grade_system_e2e_static.mjs', `import fs from 'fs';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function read(path) {
+  assert(fs.existsSync(path), 'Missing file: ' + path);
+  return fs.readFileSync(path, 'utf8');
+}
+
+const requiredFiles = [
+  'src/components/audit/GradeBadge.jsx',
+  'src/components/audit/GradeBadge.css',
+  'src/components/audit/AuditDetailModal.jsx',
+  'src/components/audit/AuditDetailModal.css',
+  'src/components/audit/gradeBadgePlacement.js',
+  'src/services/pageAuditGrading.js',
+  'src/services/auditExport.js',
+];
+
+for (const file of requiredFiles) {
+  read(file);
+}
+
+const badge = read('src/components/audit/GradeBadge.jsx');
+const modal = read('src/components/audit/AuditDetailModal.jsx');
+const modalCss = read('src/components/audit/AuditDetailModal.css');
+const grading = read('src/services/pageAuditGrading.js');
+const auditExport = read('src/services/auditExport.js');
+const packageJson = read('package.json');
+const certGate = read('scripts/run_certification_gate.mjs');
+
+for (const token of [
+  'data-grade-badge',
+  'getGradeBadgeClassName',
+  'AuditDetailModal'
+]) {
+  assert(badge.includes(token), 'GradeBadge.jsx missing token: ' + token);
+}
+
+for (const token of [
+  'Copy audit JSON',
+  'Download JSON',
+  'data-audit-copy-json',
+  'data-audit-download-json',
+  'data-audit-grade-meaning',
+  'Escape',
+  'More diagnostics'
+]) {
+  assert(modal.includes(token), 'AuditDetailModal.jsx missing token: ' + token);
+}
+
+for (const token of [
+  '.audit-modal__actions-row',
+  '.audit-modal__grade-meaning',
+  '.audit-modal__actions',
+  '.audit-modal__action-message'
+]) {
+  assert(modalCss.includes(token), 'AuditDetailModal.css missing token: ' + token);
+}
+
+for (const token of [
+  'auditMainTabQuality',
+  'auditWeatherTabQuality',
+  'auditMarketTabQuality',
+  'auditInsightTabQuality',
+  'moreDiagnostics'
+]) {
+  assert(grading.includes(token), 'pageAuditGrading.js missing token: ' + token);
+}
+
+for (const token of [
+  'createAuditExportPayload',
+  'stringifyAuditExport',
+  'buildAuditFileName',
+  'getGradeExplanation',
+  'getGradeLegendRows'
+]) {
+  assert(auditExport.includes(token), 'auditExport.js missing token: ' + token);
+}
+
+const pageChecks = [
+  ['src/pages/MainPage.jsx', 'Main tab quality grade'],
+  ['src/pages/WeatherPage.jsx', 'Weather tab quality grade'],
+  ['src/pages/MarketPage.jsx', 'Market tab quality grade'],
+  ['src/pages/InsightPage.jsx', 'Insight tab quality grade'],
+];
+
+for (const [file, token] of pageChecks) {
+  if (fs.existsSync(file)) {
+    const content = read(file);
+    assert(content.includes('GradeBadge'), file + ' must use GradeBadge');
+    assert(content.includes(token), file + ' missing label token: ' + token);
+  }
+}
+
+assert(
+  packageJson.includes('"test:grade-system-e2e"'),
+  'package.json must include test:grade-system-e2e'
+);
+
+assert(
+  certGate.includes("['npm', ['run', 'test:grade-system-e2e']]") ||
+    certGate.includes('certification_manifest.json'),
+  'certification gate must include grade system e2e test or be manifest-driven'
+);
+
+console.log(JSON.stringify({
+  status: 'PASS',
+  checked: 'Grade system end-to-end static certification',
+  guarantees: [
+    'GradeBadge exists and opens the audit modal',
+    'Grade popup includes grade meaning',
+    'Grade popup supports Copy audit JSON',
+    'Grade popup supports Download JSON',
+    'Grade popup supports More diagnostics',
+    'Main/Weather/Market/Insight use GradeBadge where pages exist',
+    'Audit export payload is normalized',
+    'Grade system certification is included'
+  ]
+}, null, 2));
+
+console.log('PASS: Grade system e2e static certification');
+`);
+
+/* -------------------------------------------------------------------------- */
+/* 5) package.json + certification                                             */
+/* -------------------------------------------------------------------------- */
+
+patchFile('package.json', source => {
+  const pkg = JSON.parse(source);
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts['test:audit-export'] =
+    'vitest run --config vitest.config.js src/services/auditExport.cert.test.js';
+  pkg.scripts['test:grade-system-e2e'] =
+    'node scripts/test_grade_system_e2e_static.mjs && npm run test:audit-export';
+  return JSON.stringify(pkg, null, 2) + '\\n';
+});
+
+patchFile('scripts/run_certification_gate.mjs', source => {
+  if (source.includes("['npm', ['run', 'test:grade-system-e2e']]")) return source;
+  if (source.includes('certification_manifest.json')) return source;
+
+  if (source.includes("  ['npm', ['run', 'test:grade-badge-position-safety']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:grade-badge-position-safety']],",
+      "  ['npm', ['run', 'test:grade-badge-position-safety']],\\n  ['npm', ['run', 'test:grade-system-e2e']],"
+    );
+  }
+
+  if (source.includes("  ['npm', ['run', 'test:grade-popup-more-diagnostics']],")) {
+    return source.replace(
+      "  ['npm', ['run', 'test:grade-popup-more-diagnostics']],",
+      "  ['npm', ['run', 'test:grade-popup-more-diagnostics']],\\n  ['npm', ['run', 'test:grade-system-e2e']],"
+    );
+  }
+
+  return source;
+});
+
+if (fs.existsSync('scripts/certification_manifest.json')) {
+  patchFile('scripts/certification_manifest.json', source => {
+    const manifest = JSON.parse(source);
+    manifest.commands = Array.isArray(manifest.commands) ? manifest.commands : [];
+
+    if (!manifest.commands.some(entry => entry.id === 'grade-system-e2e')) {
+      const insertIndex = manifest.commands.findIndex(entry => entry.id === 'grade-badge-position-safety');
+      const command = {
+        id: 'grade-system-e2e',
+        cmd: 'npm',
+        args: ['run', 'test:grade-system-e2e'],
+      };
+
+      if (insertIndex >= 0) manifest.commands.splice(insertIndex + 1, 0, command);
+      else manifest.commands.push(command);
+    }
+
+    return JSON.stringify(manifest, null, 2) + '\\n';
+  });
+}
+
+if (fs.existsSync('scripts/validate_certification_manifest.mjs')) {
+  patchFile('scripts/validate_certification_manifest.mjs', source => {
+    if (source.includes('test:grade-system-e2e')) return source;
+
+    if (source.includes("'test:grade-badge-position-safety',")) {
+      return source.replace(
+        "'test:grade-badge-position-safety',",
+        "'test:grade-badge-position-safety',\\n  'test:grade-system-e2e',"
+      );
+    }
+
+    return source;
+  });
+}
+
+console.log('\\nSlice 60E Grade popup export and e2e certification patch complete.');
+```
+
+## Run
+
+```bash
+node scripts/apply_slice60E_grade_popup_export_and_e2e.mjs
+
+node scripts/test_grade_system_e2e_static.mjs
+npm run test:audit-export
+npm run test:grade-system-e2e
+npm run lint
+npm run test:unit
+npm run build
+npm run test:certify
+```
+
+## Expected checkpoint
+
+```txt
+CHECKPOINT RESULT:
+- Slice applied: YES
+- Files changed:
+  - scripts/apply_slice60E_grade_popup_export_and_e2e.mjs
+  - src/services/auditExport.js
+  - src/services/auditExport.cert.test.js
+  - src/components/audit/AuditDetailModal.jsx
+  - src/components/audit/AuditDetailModal.css
+  - scripts/test_grade_system_e2e_static.mjs
+  - scripts/run_certification_gate.mjs
+  - package.json
+- Static test passed:
+  - node scripts/test_grade_system_e2e_static.mjs: YES/NO
+- Audit export test passed:
+  - npm run test:audit-export: YES/NO
+- Grade system E2E static passed:
+  - npm run test:grade-system-e2e: YES/NO
+- ESLint passed:
+  - npm run lint: YES/NO
+- Vitest/unit passed:
+  - npm run test:unit: YES/NO
+- Production build passed:
+  - npm run build: YES/NO
+- Full certification passed:
+  - npm run test:certify: YES/NO
+- Grade system closure gate:
+  - grade meaning visible: YES/NO
+  - copy audit JSON available: YES/NO
+  - download audit JSON available: YES/NO
+  - Escape closes popup: YES/NO
+  - Main/Weather/Market/Insight grade badge certified: YES/NO
+- Exact failed command, if any:
+  - ...
+```
+	

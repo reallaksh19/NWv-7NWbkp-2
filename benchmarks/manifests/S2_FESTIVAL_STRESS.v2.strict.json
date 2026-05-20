@@ -1,0 +1,201 @@
+{
+  "schema_version": 2,
+  "manifest_type": "benchmark_sample",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "sample_id": "S2_FESTIVAL_STRESS",
+  "kind": "stress_case",
+  "day": "2025-01-15",
+  "week_start": "2025-01-13",
+  "week_end": "2025-01-19",
+  "purpose": "Holiday / festival / release / shopping noise stress case used to prevent default ranking and planner distortion.",
+  "why_this_second": [
+    "It should only be run after S1_NEUTRAL is stable, so stress-case behavior is compared against a trustworthy baseline.",
+    "It is the anti-distortion sample that tests whether attractive but noisy leisure content overwhelms serious sections.",
+    "It is the most important planner stress window for filtering reviews, recaps, shopping spam, and weak festival utility."
+  ],
+  "in_scope": {
+    "news_sections": [
+      "world",
+      "india",
+      "chennai",
+      "trichy",
+      "local",
+      "business",
+      "technology",
+      "sports",
+      "entertainment",
+      "social"
+    ],
+    "upahead_categories": [
+      "movies",
+      "events",
+      "festivals",
+      "alerts",
+      "sports",
+      "shopping",
+      "civic",
+      "weather_alerts",
+      "airlines",
+      "weekly_plan"
+    ]
+  },
+  "optimization_role": {
+    "news_defaults_weight": "medium",
+    "upahead_defaults_weight": "high",
+    "temporal_tuning_weight": "high",
+    "anti_distortion_role": "mandatory"
+  },
+  "required_inputs": {
+    "raw_news_path": "benchmarks/raw/S2_FESTIVAL_STRESS/news/",
+    "raw_upahead_path": "benchmarks/raw/S2_FESTIVAL_STRESS/upahead/",
+    "normalized_news_path": "benchmarks/normalized/S2_FESTIVAL_STRESS/news/",
+    "normalized_upahead_path": "benchmarks/normalized/S2_FESTIVAL_STRESS/upahead/",
+    "gold_news_path": "benchmarks/gold/S2_FESTIVAL_STRESS/news/",
+    "gold_upahead_path": "benchmarks/gold/S2_FESTIVAL_STRESS/upahead/"
+  },
+  "daily_news_expectations": {
+    "core": [
+      "World, India, Business, and Technology must remain disciplined under holiday/festival noise.",
+      "Entertainment may rise naturally, but it must not dominate unrelated sections without gold support.",
+      "Festival keywords must not inflate weak or stale items into top positions.",
+      "Duplicate same-event clusters must not leak into multiple top slots.",
+      "Section bleed must be measured explicitly."
+    ],
+    "anti_patterns": [
+      "Entertainment or social stories displacing stronger serious-section candidates without gold support.",
+      "Holiday explainers, generic shopping noise, or festival chatter surfacing in Business or Technology without strong section relevance.",
+      "Stale festival content or weak keyword matches surfacing due to overweighted temporal or keyword boosts.",
+      "Same-event duplicate clusters occupying multiple top positions."
+    ]
+  },
+  "upahead_expectations": {
+    "core": [
+      "Movies, festivals, events, shopping, and alerts should surface only when they are actually future-looking and actionable.",
+      "Weekly plan should emphasize real planning utility rather than holiday content volume.",
+      "Date extraction should be correct or within allowed bucket tolerance.",
+      "Planner output should remain useful even when release and sale content volume is high."
+    ],
+    "anti_patterns": [
+      "Movie reviews, recaps, interviews, box-office chatter, or gossip included as planner positives.",
+      "Generic sale spam taking planner slots from better alerts or real dated events.",
+      "Weakly actionable festival explainers crowding weekly plan output.",
+      "Past-only items included without still-actionable value."
+    ]
+  },
+  "special_traps": {
+    "daily_news": [
+      "entertainment_bleed",
+      "festival_keyword_overweight",
+      "shopping_spam_leak",
+      "temporal_overboost",
+      "serious_section_recall_drop"
+    ],
+    "upahead": [
+      "movie_review_contamination",
+      "weak_festival_utility",
+      "shopping_spam_planner_leak",
+      "future_detection_failure",
+      "weekly_plan_overfill"
+    ]
+  },
+  "metrics": {
+    "news": [
+      "Precision@10",
+      "Recall@10",
+      "Recall@15",
+      "nDCG@10",
+      "nDCG@15",
+      "PairwiseAgreement",
+      "DuplicateLeak@10",
+      "StaleLeak@10",
+      "OffTopic@10",
+      "SectionBleed@10",
+      "SeriousSectionRecall@10",
+      "EntertainmentBleedRate",
+      "FestivalNoiseLeakRate",
+      "ShoppingSpamLeakRate"
+    ],
+    "upahead": [
+      "EventPrecision",
+      "EventRecall",
+      "EventF1",
+      "DateExactAccuracy",
+      "DateBucketAccuracy",
+      "CategoryAccuracy",
+      "FutureOnlyPrecision",
+      "WeeklyPlanRecall",
+      "WeeklyPlanPrecision",
+      "WeeklyPlanDuplicateLeak",
+      "PlannerActionabilityScore",
+      "MovieReviewContaminationRate",
+      "WeakFestivalUtilityRate",
+      "ShoppingSpamPlannerLeakRate"
+    ]
+  },
+  "suggested_pass_gates": {
+    "news": {
+      "Precision@10_min": 0.65,
+      "nDCG@10_min": 0.74,
+      "EntertainmentBleedRate_max": 0.2,
+      "FestivalNoiseLeakRate_max": 0.1,
+      "ShoppingSpamLeakRate_max": 0.05
+    },
+    "upahead": {
+      "EventPrecision_min": 0.72,
+      "DateBucketAccuracy_min": 0.8,
+      "WeeklyPlanRecall_min": 0.8,
+      "MovieReviewContaminationRate_max": 0.0,
+      "ShoppingSpamPlannerLeakRate_max": 0.08
+    }
+  },
+  "hard_rejection_conditions": [
+    "Entertainment/social occupies more than 3 of front-page top 10 unless gold explicitly supports it.",
+    "Business or Technology Recall@10 drops more than 0.05 below stable S1 baseline.",
+    "Planner false positives increase more than 0.08 against baseline.",
+    "Movie reviews, box office, recap, gossip, or interview content appears in movies or weekly_plan gold matches.",
+    "Stale festival explainers leak into serious-section top bands."
+  ],
+  "root_cause_buckets": {
+    "daily_news": [
+      "parse_failure",
+      "source_weight_issue",
+      "freshness_issue",
+      "keyword_overweight",
+      "keyword_underweight",
+      "temporal_boost_issue",
+      "section_misclassification",
+      "duplicate_cluster_failure",
+      "stale_filter_failure",
+      "hard_exclusion_failure",
+      "festival_noise_leak",
+      "entertainment_bleed"
+    ],
+    "upahead": [
+      "planner_category_failure",
+      "date_extraction_failure",
+      "planner_threshold_issue",
+      "future_detection_failure",
+      "weekly_plan_assignment_failure",
+      "actionability_failure",
+      "movie_review_contamination",
+      "shopping_spam_leak",
+      "weak_festival_utility"
+    ]
+  },
+  "execution_order": [
+    "Freeze raw snapshot files.",
+    "Generate normalized candidate files.",
+    "Draft gold labels for each news section with explicit anti-noise exclusions.",
+    "Draft gold labels for each Up Ahead category with aggressive contamination filtering.",
+    "Review and tighten gold labels.",
+    "Run the app logic on the frozen inputs.",
+    "Score output against gold files.",
+    "Classify misses into root-cause buckets.",
+    "Reject any candidate config that passes aggregate score but fails hard stress conditions.",
+    "Recommend no more than 5 bounded config changes."
+  ],
+  "next_after_this": [
+    "Create S3_LONG_WEEKEND.v2.strict.json after S2 is in place.",
+    "Use S3 to validate temporal and planner robustness once both baseline and anti-distortion cases are defined."
+  ]
+}

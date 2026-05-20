@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "type": "travel-source-policy-index",
+  "description": "Static source-policy seed for travel-local prefetch and browser fallback.",
+  "locations": [
+    {
+      "key": "colombo",
+      "display": "Colombo",
+      "countryCode": "LK",
+      "countryLabel": "Sri Lanka",
+      "acceptedAliases": ["colombo", "columbo", "sri lanka", "srilanka", "ceylon"],
+      "edition": {
+        "country": "LK",
+        "lang": "en",
+        "timeRange": "30d"
+      },
+      "queries": [
+        "Colombo news",
+        "Colombo local news",
+        "Sri Lanka breaking news",
+        "Colombo travel advisory",
+        "Colombo airport",
+        "Colombo weather alert",
+        "Sri Lanka tourism",
+        "Sri Lanka transport"
+      ]
+    },
+    {
+      "key": "muscat",
+      "display": "Muscat",
+      "countryCode": "OM",
+      "countryLabel": "Oman",
+      "acceptedAliases": ["muscat", "masqat", "oman"],
+      "edition": {
+        "country": "OM",
+        "lang": "en",
+        "timeRange": "30d"
+      },
+      "queries": [
+        "Muscat news",
+        "Muscat local news",
+        "Oman breaking news",
+        "Muscat travel advisory",
+        "Muscat airport"
+      ]
+    },
+    {
+      "key": "chennai",
+      "display": "Chennai",
+      "countryCode": "IN",
+      "countryLabel": "India",
+      "acceptedAliases": ["chennai", "madras", "tamil nadu"],
+      "edition": {
+        "country": "IN",
+        "lang": "en",
+        "timeRange": "30d"
+      },
+      "queries": [
+        "Chennai news",
+        "Chennai local news",
+        "Tamil Nadu breaking news",
+        "Chennai travel advisory"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+name: Insight Real Snapshot Quality
+
+on:
+  push:
+    branches: [main, "claude/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  insight-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: node scripts/verify_real_insight_quality_report.mjs
+        name: Real snapshot quality ratchet
+      - run: npm run test:insight-real-snapshot-ratchet
+        name: Ratchet unit tests

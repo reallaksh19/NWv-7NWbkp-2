@@ -1,0 +1,154 @@
+{
+  "schema_version": 2,
+  "manifest_type": "categories_catalog",
+  "benchmark_suite": "sectionwise_v2_strict",
+  "categories": [
+    {
+      "id": "movies",
+      "group": "upahead",
+      "priority": "high",
+      "purpose": "Movie and OTT releases with real planning value.",
+      "quality_expectations": [
+        "High future-only precision",
+        "Strong review/recap contamination control",
+        "Reliable date extraction"
+      ],
+      "anti_patterns": [
+        "Reviews, box office, gossip, interviews, or recaps treated as planner positives"
+      ]
+    },
+    {
+      "id": "events",
+      "group": "upahead",
+      "priority": "high",
+      "purpose": "Events, concerts, exhibitions, theatre, and practical things-to-do items.",
+      "quality_expectations": [
+        "Good actionability",
+        "Correct date/day placement",
+        "Low duplicate event leak"
+      ],
+      "anti_patterns": [
+        "Past-event recaps",
+        "Weakly specified generic listings without planning value"
+      ]
+    },
+    {
+      "id": "festivals",
+      "group": "upahead",
+      "priority": "medium",
+      "purpose": "Actual upcoming festivals and useful date-linked observances.",
+      "quality_expectations": [
+        "Useful future festival timing",
+        "Low weak-explainer contamination"
+      ],
+      "anti_patterns": [
+        "Weak festival explainers crowding planner output",
+        "Past-only observance content without utility"
+      ]
+    },
+    {
+      "id": "alerts",
+      "group": "upahead",
+      "priority": "high",
+      "purpose": "Operational alerts with immediate planning value.",
+      "quality_expectations": [
+        "High practical utility",
+        "Low stale leak",
+        "Good location relevance"
+      ],
+      "anti_patterns": [
+        "Old advisories presented as current",
+        "Generic non-actionable alert chatter"
+      ]
+    },
+    {
+      "id": "sports",
+      "group": "upahead",
+      "priority": "medium",
+      "purpose": "Upcoming sports fixtures or event opportunities relevant to planning.",
+      "quality_expectations": [
+        "Good future-event precision",
+        "Low opinion/prediction contamination"
+      ],
+      "anti_patterns": [
+        "Predictions/opinions treated as planner events",
+        "Recaps or post-match stories in weekly plan"
+      ]
+    },
+    {
+      "id": "shopping",
+      "group": "upahead",
+      "priority": "medium",
+      "purpose": "Sales/offers only when they have real actionability and timing relevance.",
+      "quality_expectations": [
+        "Useful dated offers only",
+        "Low spam rate"
+      ],
+      "anti_patterns": [
+        "Generic sale spam",
+        "Low-value offer clutter taking planner slots"
+      ]
+    },
+    {
+      "id": "civic",
+      "group": "upahead",
+      "priority": "high",
+      "purpose": "Civic notices, road closures, VIP movement, and public disruptions with real planning value.",
+      "quality_expectations": [
+        "High practical utility",
+        "Strong date/day relevance",
+        "Low stale leak"
+      ],
+      "anti_patterns": [
+        "Generic political chatter without planning value",
+        "Old civic notices"
+      ]
+    },
+    {
+      "id": "weather_alerts",
+      "group": "upahead",
+      "priority": "high",
+      "purpose": "Weather warnings and advisories that should materially affect near-term planning.",
+      "quality_expectations": [
+        "Strong timing accuracy",
+        "Low stale leak",
+        "High practical utility"
+      ],
+      "anti_patterns": [
+        "Mistimed warnings",
+        "General weather content treated as alert"
+      ]
+    },
+    {
+      "id": "airlines",
+      "group": "upahead",
+      "priority": "medium",
+      "purpose": "Airline deals or travel items only when time-bound and actionable.",
+      "quality_expectations": [
+        "Useful date-linked offers or disruptions",
+        "Low travel-chatter contamination"
+      ],
+      "anti_patterns": [
+        "Generic travel promotion",
+        "Weakly actionable fare chatter"
+      ]
+    },
+    {
+      "id": "weekly_plan",
+      "group": "upahead",
+      "priority": "highest",
+      "purpose": "The final 7-day utility view assembled from category outputs.",
+      "quality_expectations": [
+        "High practical utility",
+        "Strong today/tomorrow usefulness",
+        "Low false positive rate",
+        "Balanced coverage without clutter"
+      ],
+      "anti_patterns": [
+        "Repetitive weak items",
+        "Leisure-heavy overfill when higher-utility alerts/events exist",
+        "Stale items or wrong-day assignments"
+      ]
+    }
+  ]
+}

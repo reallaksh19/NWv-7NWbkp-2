@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <script id="redirect-script">
+    (function() {
+      // Check if running on GitHub Pages
+      if (window.location.hostname.endsWith('github.io')) {
+        // We are in the source file (index.html in root).
+        // If we were in the built file (docs/index.html), this script would have been stripped by Vite.
+        // Therefore, if this script is running, we are serving source code.
+
+        var path = window.location.pathname;
+
+        // Avoid redirect loop if we are already in docs (though script shouldn't be there)
+        if (!path.includes('/docs/')) {
+            // Construct target URL: /RepoName/docs/
+            // Assuming path starts with /RepoName/
+            var segments = path.split('/').filter(Boolean);
+            var repoName = segments[0];
+
+            // Handle user.github.io (root domain) vs user.github.io/repo
+            // If segments is empty, we are at root of domain.
+
+            var targetUrl;
+            if (repoName) {
+                targetUrl = window.location.origin + '/' + repoName + '/docs/';
+            } else {
+                targetUrl = window.location.origin + '/docs/';
+            }
+
+            console.warn('Source code served on GitHub Pages. Redirecting to build artifact:', targetUrl);
+            window.location.replace(targetUrl);
+        }
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <title>News & Weather App</title>
+</head>
+
+<body>
+  <div id="root">
+    <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #0A0D11;
+      color: #FFFFFF;
+      font-family: system-ui, -apple-system, sans-serif;">
+      <h1 style="color: #00D4AA; margin-bottom: 10px;">News & Weather</h1>
+      <p style="color: #9CA5B0;">Initializing application...</p>
+      <div style="margin-top: 20px; font-size: 0.8rem; color: #555;">v1.0.1</div>
+    </div>
+  </div>
+  <script>
+    // --- Error Handlers (Minimal Bootstrap) ---
+    // Note: Full debug logging is now handled by the DebugConsole React component.
+    // These listeners ensure we still catch critical startup failures before React mounts.
+
+    // Global Error Handler for Synchronous Errors
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error('Global Error:', message, source, lineno, colno, error);
+      // Fallback display if console is hidden or broken
+      const root = document.getElementById('root');
+      if (root && root.innerText.includes("Initializing")) {
+         root.innerHTML += `<div style="color:red; padding:10px;">Global Error: ${message}</div>`;
+      }
+    };
+
+    // Global Error Handler for Unhandled Promise Rejections (Async)
+    window.addEventListener('unhandledrejection', function(event) {
+      console.error('Unhandled Rejection:', event.reason);
+    });
+
+    // Capture Resource Loading Errors
+    window.addEventListener('error', function(event) {
+      if (event.target && (event.target.tagName === 'SCRIPT' || event.target.tagName === 'LINK')) {
+        console.error('Resource Loading Error:', event.target.src || event.target.href);
+      }
+    }, true);
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

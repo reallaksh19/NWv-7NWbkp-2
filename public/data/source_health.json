@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-05-20T13:22:15.871978Z",
+  "sections": {
+    "indices": {
+      "status": "ok",
+      "freshnessMs": 0,
+      "winner": "yahoo_yfinance",
+      "providersTried": [
+        {
+          "provider": "yahoo_yfinance",
+          "status": "ok",
+          "latencyMs": null,
+          "count": 6,
+          "message": "6 Indian indices fetched"
+        }
+      ],
+      "notes": []
+    },
+    "globalIndices": {
+      "status": "ok",
+      "freshnessMs": 0,
+      "winner": "yahoo_yfinance",
+      "providersTried": [
+        {
+          "provider": "yahoo_yfinance",
+          "status": "ok",
+          "latencyMs": null,
+          "count": 5,
+          "message": "5 global indices fetched"
+        }
+      ],
+      "notes": []
+    },
+    "movers": {
+      "status": "ok",
+      "freshnessMs": 0,
+      "winner": "yahoo_yfinance",
+      "providersTried": [
+        {
+          "provider": "yahoo_yfinance",
+          "status": "ok",
+          "latencyMs": null,
+          "count": 16,
+          "message": "16 stocks scanned for movers"
+        }
+      ],
+      "notes": []
+    },
+    "commodities": {
+      "status": "ok",
+      "freshnessMs": 0,
+      "winner": "yahoo_yfinance",
+      "providersTried": [
+        {
+          "provider": "yahoo_yfinance",
+          "status": "ok",
+          "latencyMs": null,
+          "count": 3,
+          "message": "3 commodity rows fetched"
+        }
+      ],
+      "notes": []
+    },
+    "fx": {
+      "status": "ok",
+      "freshnessMs": 0,
+      "winner": "yahoo_yfinance",
+      "providersTried": [
+        {
+          "provider": "rbi_reference",
+          "status": "failed",
+          "latencyMs": null,
+          "count": 0,
+          "message": "RBI reference scrape failed: unknown"
+        },
+        {
+          "provider": "yahoo_yfinance",
+          "status": "ok",
+          "latencyMs": null,
+          "count": 5,
+          "message": "5 FX pairs fetched from Yahoo fallback"
+        }
+      ],
+      "notes": []
+    },
+    "mutualFunds": {
+      "status": "ok",
+      "freshnessMs": 0,
+      "winner": "amfi_navall",
+      "providersTried": [
+        {
+          "provider": "amfi_navall",
+          "status": "ok",
+          "latencyMs": null,
+          "count": 14367,
+          "message": "14367 AMFI NAV rows parsed; 300 selected"
+        }
+      ],
+      "notes": []
+    },
+    "eodBhavcopy": {
+      "status": "failed",
+      "freshnessMs": 0,
+      "winner": "none",
+      "providersTried": [
+        {
+          "provider": "nse_bhavcopy",
+          "status": "failed",
+          "latencyMs": null,
+          "count": 0,
+          "message": "nse_bhavcopy bhavcopy unavailable from known candidate URLs"
+        },
+        {
+          "provider": "bse_bhavcopy",
+          "status": "failed",
+          "latencyMs": null,
+          "count": 0,
+          "message": "bse_bhavcopy bhavcopy unavailable from known candidate URLs"
+        }
+      ],
+      "notes": []
+    }
+  }
+}
