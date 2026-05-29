@@ -1,16 +1,16 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-05-28T11:03:34.658733Z",
-  "generated_at": "2026-05-28T11:03:34.658738Z",
-  "fetchedAt": 1779966214658,
+  "generatedAt": "2026-05-29T07:01:53.155885Z",
+  "generated_at": "2026-05-29T07:01:53.155889Z",
+  "fetchedAt": 1780038113155,
   "sourceMode": "snapshot-worker-v2",
   "indices": [
     {
       "name": "NIFTY 50",
       "symbol": "^NSEI",
-      "value": "23,907.15",
-      "change": "-6.55",
-      "changePercent": "-0.03",
+      "value": "23,855.55",
+      "change": "-51.60",
+      "changePercent": "-0.22",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -18,9 +18,9 @@
     {
       "name": "SENSEX",
       "symbol": "^BSESN",
-      "value": "75,867.80",
-      "change": "-141.91",
-      "changePercent": "-0.19",
+      "value": "75,752.66",
+      "change": "-115.14",
+      "changePercent": "-0.15",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -28,39 +28,39 @@
     {
       "name": "NIFTY BANK",
       "symbol": "^NSEBANK",
-      "value": "54,853.85",
-      "change": "-239.05",
-      "changePercent": "-0.43",
-      "direction": "down",
+      "value": "54,881.45",
+      "change": "27.60",
+      "changePercent": "0.05",
+      "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "NIFTY IT",
       "symbol": "^CNXIT",
-      "value": "28,906.70",
-      "change": "-71.80",
-      "changePercent": "-0.25",
-      "direction": "down",
+      "value": "29,516.85",
+      "change": "610.15",
+      "changePercent": "2.11",
+      "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "NIFTY AUTO",
       "symbol": "^CNXAUTO",
-      "value": "26,864.20",
-      "change": "383.70",
-      "changePercent": "1.45",
-      "direction": "up",
+      "value": "26,683.40",
+      "change": "-180.80",
+      "changePercent": "-0.67",
+      "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "NIFTY PHARMA",
       "symbol": "^CNXPHARMA",
-      "value": "24,716.00",
-      "change": "56.80",
-      "changePercent": "0.23",
+      "value": "24,749.35",
+      "change": "33.35",
+      "changePercent": "0.13",
       "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -68,47 +68,47 @@
   ],
   "globalIndices": [
     {
-      "name": "NIKKEI 225",
-      "symbol": "^N225",
-      "value": "64,693.12",
-      "change": "-306.29",
-      "changePercent": "-0.47",
-      "direction": "down",
-      "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "NASDAQ",
-      "symbol": "^IXIC",
-      "value": "26,674.73",
-      "change": "18.55",
-      "changePercent": "0.07",
+      "name": "S&P 500",
+      "symbol": "^GSPC",
+      "value": "7,563.63",
+      "change": "43.27",
+      "changePercent": "0.58",
       "direction": "up",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "DOW JONES",
       "symbol": "^DJI",
-      "value": "50,644.28",
-      "change": "182.60",
-      "changePercent": "0.36",
+      "value": "50,668.97",
+      "change": "24.69",
+      "changePercent": "0.05",
+      "direction": "up",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
+      "name": "NASDAQ",
+      "symbol": "^IXIC",
+      "value": "26,917.47",
+      "change": "242.74",
+      "changePercent": "0.91",
+      "direction": "up",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
+      "name": "NIKKEI 225",
+      "symbol": "^N225",
+      "value": "66,329.50",
+      "change": "1636.38",
+      "changePercent": "2.53",
       "direction": "up",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "HANG SENG",
       "symbol": "^HSI",
-      "value": "25,006.16",
-      "change": "-322.07",
-      "changePercent": "-1.27",
-      "direction": "down",
-      "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "S&P 500",
-      "symbol": "^GSPC",
-      "value": "7,520.36",
-      "change": "1.24",
-      "changePercent": "0.02",
+      "value": "25,204.07",
+      "change": "197.91",
+      "changePercent": "0.79",
       "direction": "up",
       "sourceMode": "yahoo-yfinance"
     }
@@ -116,84 +116,84 @@
   "movers": {
     "gainers": [
       {
-        "symbol": "MARUTI",
-        "price": "13364.00",
-        "change": "156.00",
-        "changePercent": "1.18",
+        "symbol": "INFY",
+        "price": "1201.70",
+        "change": "41.80",
+        "changePercent": "3.60",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
       {
-        "symbol": "AXISBANK",
-        "price": "1304.10",
-        "change": "4.80",
-        "changePercent": "0.37",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "symbol": "TCS",
-        "price": "2284.20",
-        "change": "8.00",
-        "changePercent": "0.35",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "symbol": "BHARTIARTL",
-        "price": "1852.20",
-        "change": "5.30",
-        "changePercent": "0.29",
+        "symbol": "WIPRO",
+        "price": "204.98",
+        "change": "3.40",
+        "changePercent": "1.69",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "symbol": "LT",
-        "price": "4047.50",
-        "change": "9.70",
-        "changePercent": "0.24",
+        "price": "4111.70",
+        "change": "64.20",
+        "changePercent": "1.59",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "ICICIBANK",
+        "price": "1280.10",
+        "change": "7.40",
+        "changePercent": "0.58",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "TCS",
+        "price": "2292.90",
+        "change": "8.70",
+        "changePercent": "0.38",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       }
     ],
     "losers": [
       {
-        "symbol": "ITC",
-        "price": "291.95",
-        "change": "-9.70",
-        "changePercent": "-3.22",
+        "symbol": "BHARTIARTL",
+        "price": "1831.90",
+        "change": "-20.30",
+        "changePercent": "-1.10",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       },
       {
-        "symbol": "HDFCBANK",
-        "price": "758.65",
-        "change": "-20.25",
-        "changePercent": "-2.60",
-        "direction": "down",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "symbol": "WIPRO",
-        "price": "201.58",
-        "change": "-2.15",
+        "symbol": "RELIANCE",
+        "price": "1336.20",
+        "change": "-14.30",
         "changePercent": "-1.06",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       },
       {
-        "symbol": "INFY",
-        "price": "1159.90",
-        "change": "-7.80",
-        "changePercent": "-0.67",
+        "symbol": "ITC",
+        "price": "288.90",
+        "change": "-3.05",
+        "changePercent": "-1.04",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       },
       {
-        "symbol": "ICICIBANK",
-        "price": "1272.70",
-        "change": "-6.40",
-        "changePercent": "-0.50",
+        "symbol": "HINDUNILVR",
+        "price": "2176.30",
+        "change": "-22.10",
+        "changePercent": "-1.01",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "BAJFINANCE",
+        "price": "923.60",
+        "change": "-7.55",
+        "changePercent": "-0.81",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       }
@@ -204,39 +204,39 @@
     {
       "name": "NIFTY BANK",
       "symbol": "^NSEBANK",
-      "value": "54,853.85",
-      "change": "-239.05",
-      "changePercent": "-0.43",
-      "direction": "down",
+      "value": "54,881.45",
+      "change": "27.60",
+      "changePercent": "0.05",
+      "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "NIFTY IT",
       "symbol": "^CNXIT",
-      "value": "28,906.70",
-      "change": "-71.80",
-      "changePercent": "-0.25",
-      "direction": "down",
+      "value": "29,516.85",
+      "change": "610.15",
+      "changePercent": "2.11",
+      "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "NIFTY AUTO",
       "symbol": "^CNXAUTO",
-      "value": "26,864.20",
-      "change": "383.70",
-      "changePercent": "1.45",
-      "direction": "up",
+      "value": "26,683.40",
+      "change": "-180.80",
+      "changePercent": "-0.67",
+      "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
     },
     {
       "name": "NIFTY PHARMA",
       "symbol": "^CNXPHARMA",
-      "value": "24,716.00",
-      "change": "56.80",
-      "changePercent": "0.23",
+      "value": "24,749.35",
+      "change": "33.35",
+      "changePercent": "0.13",
       "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -246,99 +246,99 @@
     {
       "name": "Gold",
       "symbol": "GC=F",
-      "value": "$4413.90",
+      "value": "$4548.20",
       "unit": "$/oz",
-      "change": "-33.60",
-      "changePercent": "-0.76",
-      "direction": "down",
-      "source": "yahoo-yfinance"
-    },
-    {
-      "name": "Crude Oil",
-      "symbol": "CL=F",
-      "value": "$90.89",
-      "unit": "$/bbl",
-      "change": "2.21",
-      "changePercent": "2.49",
+      "change": "48.90",
+      "changePercent": "1.09",
       "direction": "up",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Silver",
       "symbol": "SI=F",
-      "value": "$73.35",
+      "value": "$75.88",
       "unit": "$/oz",
-      "change": "-1.25",
-      "changePercent": "-1.67",
+      "change": "0.23",
+      "changePercent": "0.30",
+      "direction": "up",
+      "source": "yahoo-yfinance"
+    },
+    {
+      "name": "Crude Oil",
+      "symbol": "CL=F",
+      "value": "$87.55",
+      "unit": "$/bbl",
+      "change": "-1.35",
+      "changePercent": "-1.52",
       "direction": "down",
       "source": "yahoo-yfinance"
     }
   ],
   "currencies": [
     {
-      "name": "USD/INR",
-      "pair": "USDINR",
-      "symbol": "USDINR=X",
-      "value": "₹95.6800",
-      "rate": 95.68000030517578,
-      "change": "-0.2250",
-      "changePercent": "-0.23",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.246201Z"
-    },
-    {
       "name": "OMR/INR",
       "pair": "OMRINR",
       "symbol": "OMRINR=X",
-      "value": "₹248.0200",
-      "rate": 248.02000427246094,
+      "value": "₹248.0100",
+      "rate": 248.00999450683594,
       "change": "0.0000",
       "changePercent": "0.00",
       "direction": "up",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.290068Z"
-    },
-    {
-      "name": "EUR/INR",
-      "pair": "EURINR",
-      "symbol": "EURINR=X",
-      "value": "₹111.1386",
-      "rate": 111.13860321044922,
-      "change": "-0.1564",
-      "changePercent": "-0.14",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.296323Z"
-    },
-    {
-      "name": "GBP/INR",
-      "pair": "GBPINR",
-      "symbol": "GBPINR=X",
-      "value": "₹128.2253",
-      "rate": 128.2252960205078,
-      "change": "-0.0166",
-      "changePercent": "-0.01",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.302346Z"
+      "asOf": "2026-05-29T07:00:10.200309Z"
     },
     {
       "name": "JPY/INR",
       "pair": "JPYINR",
       "symbol": "JPYINR=X",
-      "value": "₹0.5996",
-      "rate": 0.5996099710464478,
-      "change": "-0.0009",
-      "changePercent": "-0.15",
+      "value": "₹0.5989",
+      "rate": 0.5988500118255615,
+      "change": "-0.0005",
+      "changePercent": "-0.08",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.317437Z"
+      "asOf": "2026-05-29T07:00:10.234924Z"
+    },
+    {
+      "name": "GBP/INR",
+      "pair": "GBPINR",
+      "symbol": "GBPINR=X",
+      "value": "₹128.1657",
+      "rate": 128.1656951904297,
+      "change": "-0.7940",
+      "changePercent": "-0.62",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-29T07:00:10.241501Z"
+    },
+    {
+      "name": "USD/INR",
+      "pair": "USDINR",
+      "symbol": "USDINR=X",
+      "value": "₹95.3550",
+      "rate": 95.3550033569336,
+      "change": "-0.6939",
+      "changePercent": "-0.72",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-29T07:00:10.273163Z"
+    },
+    {
+      "name": "EUR/INR",
+      "pair": "EURINR",
+      "symbol": "EURINR=X",
+      "value": "₹111.1173",
+      "rate": 111.11730194091797,
+      "change": "0.0083",
+      "changePercent": "0.01",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-29T07:00:10.324155Z"
     }
   ],
   "mutualFunds": [
@@ -354,7 +354,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.612926Z"
+        "fetchedAt": "2026-05-29T07:00:13.551441Z"
       },
       "extras": {}
     },
@@ -370,7 +370,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.613547Z"
+        "fetchedAt": "2026-05-29T07:00:13.552021Z"
       },
       "extras": {}
     },
@@ -386,7 +386,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.613617Z"
+        "fetchedAt": "2026-05-29T07:00:13.552087Z"
       },
       "extras": {}
     },
@@ -402,7 +402,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.613655Z"
+        "fetchedAt": "2026-05-29T07:00:13.552121Z"
       },
       "extras": {}
     },
@@ -418,7 +418,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.615070Z"
+        "fetchedAt": "2026-05-29T07:00:13.555527Z"
       },
       "extras": {}
     },
@@ -434,7 +434,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.615134Z"
+        "fetchedAt": "2026-05-29T07:00:13.555590Z"
       },
       "extras": {}
     },
@@ -450,7 +450,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.615350Z"
+        "fetchedAt": "2026-05-29T07:00:13.555812Z"
       },
       "extras": {}
     },
@@ -466,7 +466,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.616428Z"
+        "fetchedAt": "2026-05-29T07:00:13.556895Z"
       },
       "extras": {}
     },
@@ -482,7 +482,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617153Z"
+        "fetchedAt": "2026-05-29T07:00:13.557596Z"
       },
       "extras": {}
     },
@@ -498,7 +498,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617228Z"
+        "fetchedAt": "2026-05-29T07:00:13.557671Z"
       },
       "extras": {}
     },
@@ -514,7 +514,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617378Z"
+        "fetchedAt": "2026-05-29T07:00:13.557814Z"
       },
       "extras": {}
     },
@@ -530,7 +530,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617738Z"
+        "fetchedAt": "2026-05-29T07:00:13.558176Z"
       },
       "extras": {}
     },
@@ -546,7 +546,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617849Z"
+        "fetchedAt": "2026-05-29T07:00:13.558286Z"
       },
       "extras": {}
     },
@@ -562,7 +562,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.618489Z"
+        "fetchedAt": "2026-05-29T07:00:13.558932Z"
       },
       "extras": {}
     },
@@ -573,12 +573,12 @@
       "isinDividendReinvestment": "INF579M01688",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  DAILY DIVIDEND REINVESTMENT",
       "category": "360 ONE Mutual Fund",
-      "nav": 1000.111,
-      "navDate": "27-May-2026",
+      "nav": 1000.1136,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619013Z"
+        "fetchedAt": "2026-05-29T07:00:13.559450Z"
       },
       "extras": {}
     },
@@ -589,12 +589,12 @@
       "isinDividendReinvestment": "-",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  GROWTH",
       "category": "360 ONE Mutual Fund",
-      "nav": 2132.9919,
-      "navDate": "27-May-2026",
+      "nav": 2133.3634,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619017Z"
+        "fetchedAt": "2026-05-29T07:00:13.559456Z"
       },
       "extras": {}
     },
@@ -605,12 +605,12 @@
       "isinDividendReinvestment": "INF579M01696",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  WEEKLY DIVIDEND",
       "category": "360 ONE Mutual Fund",
-      "nav": 1005.17,
-      "navDate": "27-May-2026",
+      "nav": 1005.3451,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619021Z"
+        "fetchedAt": "2026-05-29T07:00:13.559460Z"
       },
       "extras": {}
     },
@@ -621,12 +621,12 @@
       "isinDividendReinvestment": "INF579M01563",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  DAILY DIVIDEND REINVESTMENT",
       "category": "360 ONE Mutual Fund",
-      "nav": 1000.111,
-      "navDate": "27-May-2026",
+      "nav": 1000.1136,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619028Z"
+        "fetchedAt": "2026-05-29T07:00:13.559464Z"
       },
       "extras": {}
     },
@@ -637,12 +637,12 @@
       "isinDividendReinvestment": "-",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  GROWTH",
       "category": "360 ONE Mutual Fund",
-      "nav": 2117.8269,
-      "navDate": "27-May-2026",
+      "nav": 2118.1888,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619032Z"
+        "fetchedAt": "2026-05-29T07:00:13.559468Z"
       },
       "extras": {}
     },
@@ -653,12 +653,12 @@
       "isinDividendReinvestment": "INF579M01571",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  WEEKLY DIVIDEND",
       "category": "360 ONE Mutual Fund",
-      "nav": 1005.1738,
-      "navDate": "27-May-2026",
+      "nav": 1005.3456,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619037Z"
+        "fetchedAt": "2026-05-29T07:00:13.559472Z"
       },
       "extras": {}
     },
@@ -674,7 +674,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619042Z"
+        "fetchedAt": "2026-05-29T07:00:13.559478Z"
       },
       "extras": {}
     },
@@ -690,7 +690,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619046Z"
+        "fetchedAt": "2026-05-29T07:00:13.559482Z"
       },
       "extras": {}
     },
@@ -706,7 +706,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619051Z"
+        "fetchedAt": "2026-05-29T07:00:13.559486Z"
       },
       "extras": {}
     },
@@ -722,7 +722,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619057Z"
+        "fetchedAt": "2026-05-29T07:00:13.559490Z"
       },
       "extras": {}
     },
@@ -738,7 +738,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619061Z"
+        "fetchedAt": "2026-05-29T07:00:13.559494Z"
       },
       "extras": {}
     },
@@ -754,7 +754,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619066Z"
+        "fetchedAt": "2026-05-29T07:00:13.559498Z"
       },
       "extras": {}
     },
@@ -770,7 +770,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619070Z"
+        "fetchedAt": "2026-05-29T07:00:13.559505Z"
       },
       "extras": {}
     },
@@ -786,7 +786,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619074Z"
+        "fetchedAt": "2026-05-29T07:00:13.559509Z"
       },
       "extras": {}
     },
@@ -802,7 +802,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619081Z"
+        "fetchedAt": "2026-05-29T07:00:13.559513Z"
       },
       "extras": {}
     },
@@ -818,7 +818,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619085Z"
+        "fetchedAt": "2026-05-29T07:00:13.559517Z"
       },
       "extras": {}
     },
@@ -829,12 +829,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund - Growth",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 443.9652,
-      "navDate": "27-May-2026",
+      "nav": 444.0455,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619093Z"
+        "fetchedAt": "2026-05-29T07:00:13.559522Z"
       },
       "extras": {}
     },
@@ -845,12 +845,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund - Growth - Direct Plan",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 449.8655,
-      "navDate": "27-May-2026",
+      "nav": 449.9486,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619097Z"
+        "fetchedAt": "2026-05-29T07:00:13.559526Z"
       },
       "extras": {}
     },
@@ -862,11 +862,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Daily IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 100.195,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619101Z"
+        "fetchedAt": "2026-05-29T07:00:13.559530Z"
       },
       "extras": {}
     },
@@ -878,11 +878,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Direct - daily IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 100.195,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619108Z"
+        "fetchedAt": "2026-05-29T07:00:13.559537Z"
       },
       "extras": {}
     },
@@ -893,12 +893,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -DIRECT - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 143.9302,
-      "navDate": "27-May-2026",
+      "nav": 143.9568,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619112Z"
+        "fetchedAt": "2026-05-29T07:00:13.559541Z"
       },
       "extras": {}
     },
@@ -909,12 +909,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -Direct - weekly IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 100.3064,
-      "navDate": "27-May-2026",
+      "nav": 100.325,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619117Z"
+        "fetchedAt": "2026-05-29T07:00:13.559545Z"
       },
       "extras": {}
     },
@@ -926,11 +926,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Institutional - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 108.023,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619121Z"
+        "fetchedAt": "2026-05-29T07:00:13.559553Z"
       },
       "extras": {}
     },
@@ -941,12 +941,12 @@
       "isinDividendReinvestment": "INF209K01KY6",
       "name": "Aditya Birla Sun Life Liquid Fund -Institutional - weekly  IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 108.2555,
-      "navDate": "27-May-2026",
+      "nav": 108.2751,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619125Z"
+        "fetchedAt": "2026-05-29T07:00:13.559557Z"
       },
       "extras": {}
     },
@@ -957,12 +957,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -Regular - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 109.4891,
-      "navDate": "27-May-2026",
+      "nav": 109.5089,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619129Z"
+        "fetchedAt": "2026-05-29T07:00:13.559564Z"
       },
       "extras": {}
     },
@@ -974,11 +974,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Retail - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 163.694,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619134Z"
+        "fetchedAt": "2026-05-29T07:00:13.559568Z"
       },
       "extras": {}
     },
@@ -989,12 +989,12 @@
       "isinDividendReinvestment": "INF209KA1LJ9",
       "name": "Aditya Birla Sun Life Liquid Fund -weekly IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 100.3043,
-      "navDate": "27-May-2026",
+      "nav": 100.3225,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619138Z"
+        "fetchedAt": "2026-05-29T07:00:13.559572Z"
       },
       "extras": {}
     },
@@ -1005,12 +1005,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund- Discipline Advantage Plan",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 301.0428,
-      "navDate": "27-May-2026",
+      "nav": 301.0974,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619142Z"
+        "fetchedAt": "2026-05-29T07:00:13.559576Z"
       },
       "extras": {}
     },
@@ -1021,12 +1021,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund-Institutional (Growth)",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 739.3446,
-      "navDate": "27-May-2026",
+      "nav": 739.4784,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619146Z"
+        "fetchedAt": "2026-05-29T07:00:13.559580Z"
       },
       "extras": {}
     },
@@ -1037,12 +1037,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund-Retail (Growth)",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 720.4635,
-      "navDate": "27-May-2026",
+      "nav": 720.5938,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619152Z"
+        "fetchedAt": "2026-05-29T07:00:13.559584Z"
       },
       "extras": {}
     },
@@ -1058,7 +1058,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619158Z"
+        "fetchedAt": "2026-05-29T07:00:13.559589Z"
       },
       "extras": {}
     },
@@ -1074,7 +1074,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619162Z"
+        "fetchedAt": "2026-05-29T07:00:13.559593Z"
       },
       "extras": {}
     },
@@ -1090,7 +1090,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619166Z"
+        "fetchedAt": "2026-05-29T07:00:13.559600Z"
       },
       "extras": {}
     },
@@ -1106,7 +1106,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619170Z"
+        "fetchedAt": "2026-05-29T07:00:13.559604Z"
       },
       "extras": {}
     },
@@ -1122,7 +1122,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619175Z"
+        "fetchedAt": "2026-05-29T07:00:13.559608Z"
       },
       "extras": {}
     },
@@ -1138,7 +1138,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619181Z"
+        "fetchedAt": "2026-05-29T07:00:13.559612Z"
       },
       "extras": {}
     }

@@ -1,19 +1,19 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-05-28T11:03:34.658787Z",
+  "generatedAt": "2026-05-29T07:01:53.155937Z",
   "asOf": {
-    "equities": "2026-05-28T11:03:34.658790Z",
+    "equities": "2026-05-29T07:01:53.155940Z",
     "mutualFunds": "27-May-2026",
-    "fx": "2026-05-28T11:03:34.658792Z"
+    "fx": "2026-05-29T07:01:53.155943Z"
   },
   "equities": {
     "indices": [
       {
         "name": "NIFTY 50",
         "symbol": "^NSEI",
-        "value": "23,907.15",
-        "change": "-6.55",
-        "changePercent": "-0.03",
+        "value": "23,855.55",
+        "change": "-51.60",
+        "changePercent": "-0.22",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -21,9 +21,9 @@
       {
         "name": "SENSEX",
         "symbol": "^BSESN",
-        "value": "75,867.80",
-        "change": "-141.91",
-        "changePercent": "-0.19",
+        "value": "75,752.66",
+        "change": "-115.14",
+        "changePercent": "-0.15",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -31,39 +31,39 @@
       {
         "name": "NIFTY BANK",
         "symbol": "^NSEBANK",
-        "value": "54,853.85",
-        "change": "-239.05",
-        "changePercent": "-0.43",
-        "direction": "down",
+        "value": "54,881.45",
+        "change": "27.60",
+        "changePercent": "0.05",
+        "direction": "up",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "NIFTY IT",
         "symbol": "^CNXIT",
-        "value": "28,906.70",
-        "change": "-71.80",
-        "changePercent": "-0.25",
-        "direction": "down",
+        "value": "29,516.85",
+        "change": "610.15",
+        "changePercent": "2.11",
+        "direction": "up",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "NIFTY AUTO",
         "symbol": "^CNXAUTO",
-        "value": "26,864.20",
-        "change": "383.70",
-        "changePercent": "1.45",
-        "direction": "up",
+        "value": "26,683.40",
+        "change": "-180.80",
+        "changePercent": "-0.67",
+        "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "NIFTY PHARMA",
         "symbol": "^CNXPHARMA",
-        "value": "24,716.00",
-        "change": "56.80",
-        "changePercent": "0.23",
+        "value": "24,749.35",
+        "change": "33.35",
+        "changePercent": "0.13",
         "direction": "up",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -71,47 +71,47 @@
     ],
     "globalIndices": [
       {
-        "name": "NIKKEI 225",
-        "symbol": "^N225",
-        "value": "64,693.12",
-        "change": "-306.29",
-        "changePercent": "-0.47",
-        "direction": "down",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "name": "NASDAQ",
-        "symbol": "^IXIC",
-        "value": "26,674.73",
-        "change": "18.55",
-        "changePercent": "0.07",
+        "name": "S&P 500",
+        "symbol": "^GSPC",
+        "value": "7,563.63",
+        "change": "43.27",
+        "changePercent": "0.58",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "DOW JONES",
         "symbol": "^DJI",
-        "value": "50,644.28",
-        "change": "182.60",
-        "changePercent": "0.36",
+        "value": "50,668.97",
+        "change": "24.69",
+        "changePercent": "0.05",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "NASDAQ",
+        "symbol": "^IXIC",
+        "value": "26,917.47",
+        "change": "242.74",
+        "changePercent": "0.91",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "NIKKEI 225",
+        "symbol": "^N225",
+        "value": "66,329.50",
+        "change": "1636.38",
+        "changePercent": "2.53",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "HANG SENG",
         "symbol": "^HSI",
-        "value": "25,006.16",
-        "change": "-322.07",
-        "changePercent": "-1.27",
-        "direction": "down",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "name": "S&P 500",
-        "symbol": "^GSPC",
-        "value": "7,520.36",
-        "change": "1.24",
-        "changePercent": "0.02",
+        "value": "25,204.07",
+        "change": "197.91",
+        "changePercent": "0.79",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       }
@@ -119,84 +119,84 @@
     "movers": {
       "gainers": [
         {
-          "symbol": "MARUTI",
-          "price": "13364.00",
-          "change": "156.00",
-          "changePercent": "1.18",
+          "symbol": "INFY",
+          "price": "1201.70",
+          "change": "41.80",
+          "changePercent": "3.60",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "AXISBANK",
-          "price": "1304.10",
-          "change": "4.80",
-          "changePercent": "0.37",
-          "direction": "up",
-          "sourceMode": "yahoo-yfinance"
-        },
-        {
-          "symbol": "TCS",
-          "price": "2284.20",
-          "change": "8.00",
-          "changePercent": "0.35",
-          "direction": "up",
-          "sourceMode": "yahoo-yfinance"
-        },
-        {
-          "symbol": "BHARTIARTL",
-          "price": "1852.20",
-          "change": "5.30",
-          "changePercent": "0.29",
+          "symbol": "WIPRO",
+          "price": "204.98",
+          "change": "3.40",
+          "changePercent": "1.69",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "LT",
-          "price": "4047.50",
-          "change": "9.70",
-          "changePercent": "0.24",
+          "price": "4111.70",
+          "change": "64.20",
+          "changePercent": "1.59",
+          "direction": "up",
+          "sourceMode": "yahoo-yfinance"
+        },
+        {
+          "symbol": "ICICIBANK",
+          "price": "1280.10",
+          "change": "7.40",
+          "changePercent": "0.58",
+          "direction": "up",
+          "sourceMode": "yahoo-yfinance"
+        },
+        {
+          "symbol": "TCS",
+          "price": "2292.90",
+          "change": "8.70",
+          "changePercent": "0.38",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         }
       ],
       "losers": [
         {
-          "symbol": "ITC",
-          "price": "291.95",
-          "change": "-9.70",
-          "changePercent": "-3.22",
+          "symbol": "BHARTIARTL",
+          "price": "1831.90",
+          "change": "-20.30",
+          "changePercent": "-1.10",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "HDFCBANK",
-          "price": "758.65",
-          "change": "-20.25",
-          "changePercent": "-2.60",
-          "direction": "down",
-          "sourceMode": "yahoo-yfinance"
-        },
-        {
-          "symbol": "WIPRO",
-          "price": "201.58",
-          "change": "-2.15",
+          "symbol": "RELIANCE",
+          "price": "1336.20",
+          "change": "-14.30",
           "changePercent": "-1.06",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "INFY",
-          "price": "1159.90",
-          "change": "-7.80",
-          "changePercent": "-0.67",
+          "symbol": "ITC",
+          "price": "288.90",
+          "change": "-3.05",
+          "changePercent": "-1.04",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "ICICIBANK",
-          "price": "1272.70",
-          "change": "-6.40",
-          "changePercent": "-0.50",
+          "symbol": "HINDUNILVR",
+          "price": "2176.30",
+          "change": "-22.10",
+          "changePercent": "-1.01",
+          "direction": "down",
+          "sourceMode": "yahoo-yfinance"
+        },
+        {
+          "symbol": "BAJFINANCE",
+          "price": "923.60",
+          "change": "-7.55",
+          "changePercent": "-0.81",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         }
@@ -205,7 +205,7 @@
     },
     "eodBhavcopy": {
       "schemaVersion": "2.0.0",
-      "generatedAt": "2026-05-28T11:03:34.658246Z",
+      "generatedAt": "2026-05-29T07:01:53.155419Z",
       "nseRows": 0,
       "bseRows": 0,
       "sampleNse": [],
@@ -225,7 +225,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.612926Z"
+        "fetchedAt": "2026-05-29T07:00:13.551441Z"
       },
       "extras": {}
     },
@@ -241,7 +241,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.613547Z"
+        "fetchedAt": "2026-05-29T07:00:13.552021Z"
       },
       "extras": {}
     },
@@ -257,7 +257,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.613617Z"
+        "fetchedAt": "2026-05-29T07:00:13.552087Z"
       },
       "extras": {}
     },
@@ -273,7 +273,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.613655Z"
+        "fetchedAt": "2026-05-29T07:00:13.552121Z"
       },
       "extras": {}
     },
@@ -289,7 +289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.615070Z"
+        "fetchedAt": "2026-05-29T07:00:13.555527Z"
       },
       "extras": {}
     },
@@ -305,7 +305,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.615134Z"
+        "fetchedAt": "2026-05-29T07:00:13.555590Z"
       },
       "extras": {}
     },
@@ -321,7 +321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.615350Z"
+        "fetchedAt": "2026-05-29T07:00:13.555812Z"
       },
       "extras": {}
     },
@@ -337,7 +337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.616428Z"
+        "fetchedAt": "2026-05-29T07:00:13.556895Z"
       },
       "extras": {}
     },
@@ -353,7 +353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617153Z"
+        "fetchedAt": "2026-05-29T07:00:13.557596Z"
       },
       "extras": {}
     },
@@ -369,7 +369,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617228Z"
+        "fetchedAt": "2026-05-29T07:00:13.557671Z"
       },
       "extras": {}
     },
@@ -385,7 +385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617378Z"
+        "fetchedAt": "2026-05-29T07:00:13.557814Z"
       },
       "extras": {}
     },
@@ -401,7 +401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617738Z"
+        "fetchedAt": "2026-05-29T07:00:13.558176Z"
       },
       "extras": {}
     },
@@ -417,7 +417,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.617849Z"
+        "fetchedAt": "2026-05-29T07:00:13.558286Z"
       },
       "extras": {}
     },
@@ -433,7 +433,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.618489Z"
+        "fetchedAt": "2026-05-29T07:00:13.558932Z"
       },
       "extras": {}
     },
@@ -444,12 +444,12 @@
       "isinDividendReinvestment": "INF579M01688",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  DAILY DIVIDEND REINVESTMENT",
       "category": "360 ONE Mutual Fund",
-      "nav": 1000.111,
-      "navDate": "27-May-2026",
+      "nav": 1000.1136,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619013Z"
+        "fetchedAt": "2026-05-29T07:00:13.559450Z"
       },
       "extras": {}
     },
@@ -460,12 +460,12 @@
       "isinDividendReinvestment": "-",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  GROWTH",
       "category": "360 ONE Mutual Fund",
-      "nav": 2132.9919,
-      "navDate": "27-May-2026",
+      "nav": 2133.3634,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619017Z"
+        "fetchedAt": "2026-05-29T07:00:13.559456Z"
       },
       "extras": {}
     },
@@ -476,12 +476,12 @@
       "isinDividendReinvestment": "INF579M01696",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  WEEKLY DIVIDEND",
       "category": "360 ONE Mutual Fund",
-      "nav": 1005.17,
-      "navDate": "27-May-2026",
+      "nav": 1005.3451,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619021Z"
+        "fetchedAt": "2026-05-29T07:00:13.559460Z"
       },
       "extras": {}
     },
@@ -492,12 +492,12 @@
       "isinDividendReinvestment": "INF579M01563",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  DAILY DIVIDEND REINVESTMENT",
       "category": "360 ONE Mutual Fund",
-      "nav": 1000.111,
-      "navDate": "27-May-2026",
+      "nav": 1000.1136,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619028Z"
+        "fetchedAt": "2026-05-29T07:00:13.559464Z"
       },
       "extras": {}
     },
@@ -508,12 +508,12 @@
       "isinDividendReinvestment": "-",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  GROWTH",
       "category": "360 ONE Mutual Fund",
-      "nav": 2117.8269,
-      "navDate": "27-May-2026",
+      "nav": 2118.1888,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619032Z"
+        "fetchedAt": "2026-05-29T07:00:13.559468Z"
       },
       "extras": {}
     },
@@ -524,12 +524,12 @@
       "isinDividendReinvestment": "INF579M01571",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  WEEKLY DIVIDEND",
       "category": "360 ONE Mutual Fund",
-      "nav": 1005.1738,
-      "navDate": "27-May-2026",
+      "nav": 1005.3456,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619037Z"
+        "fetchedAt": "2026-05-29T07:00:13.559472Z"
       },
       "extras": {}
     },
@@ -545,7 +545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619042Z"
+        "fetchedAt": "2026-05-29T07:00:13.559478Z"
       },
       "extras": {}
     },
@@ -561,7 +561,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619046Z"
+        "fetchedAt": "2026-05-29T07:00:13.559482Z"
       },
       "extras": {}
     },
@@ -577,7 +577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619051Z"
+        "fetchedAt": "2026-05-29T07:00:13.559486Z"
       },
       "extras": {}
     },
@@ -593,7 +593,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619057Z"
+        "fetchedAt": "2026-05-29T07:00:13.559490Z"
       },
       "extras": {}
     },
@@ -609,7 +609,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619061Z"
+        "fetchedAt": "2026-05-29T07:00:13.559494Z"
       },
       "extras": {}
     },
@@ -625,7 +625,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619066Z"
+        "fetchedAt": "2026-05-29T07:00:13.559498Z"
       },
       "extras": {}
     },
@@ -641,7 +641,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619070Z"
+        "fetchedAt": "2026-05-29T07:00:13.559505Z"
       },
       "extras": {}
     },
@@ -657,7 +657,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619074Z"
+        "fetchedAt": "2026-05-29T07:00:13.559509Z"
       },
       "extras": {}
     },
@@ -673,7 +673,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619081Z"
+        "fetchedAt": "2026-05-29T07:00:13.559513Z"
       },
       "extras": {}
     },
@@ -689,7 +689,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619085Z"
+        "fetchedAt": "2026-05-29T07:00:13.559517Z"
       },
       "extras": {}
     },
@@ -700,12 +700,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund - Growth",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 443.9652,
-      "navDate": "27-May-2026",
+      "nav": 444.0455,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619093Z"
+        "fetchedAt": "2026-05-29T07:00:13.559522Z"
       },
       "extras": {}
     },
@@ -716,12 +716,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund - Growth - Direct Plan",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 449.8655,
-      "navDate": "27-May-2026",
+      "nav": 449.9486,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619097Z"
+        "fetchedAt": "2026-05-29T07:00:13.559526Z"
       },
       "extras": {}
     },
@@ -733,11 +733,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Daily IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 100.195,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619101Z"
+        "fetchedAt": "2026-05-29T07:00:13.559530Z"
       },
       "extras": {}
     },
@@ -749,11 +749,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Direct - daily IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 100.195,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619108Z"
+        "fetchedAt": "2026-05-29T07:00:13.559537Z"
       },
       "extras": {}
     },
@@ -764,12 +764,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -DIRECT - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 143.9302,
-      "navDate": "27-May-2026",
+      "nav": 143.9568,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619112Z"
+        "fetchedAt": "2026-05-29T07:00:13.559541Z"
       },
       "extras": {}
     },
@@ -780,12 +780,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -Direct - weekly IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 100.3064,
-      "navDate": "27-May-2026",
+      "nav": 100.325,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619117Z"
+        "fetchedAt": "2026-05-29T07:00:13.559545Z"
       },
       "extras": {}
     },
@@ -797,11 +797,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Institutional - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 108.023,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619121Z"
+        "fetchedAt": "2026-05-29T07:00:13.559553Z"
       },
       "extras": {}
     },
@@ -812,12 +812,12 @@
       "isinDividendReinvestment": "INF209K01KY6",
       "name": "Aditya Birla Sun Life Liquid Fund -Institutional - weekly  IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 108.2555,
-      "navDate": "27-May-2026",
+      "nav": 108.2751,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619125Z"
+        "fetchedAt": "2026-05-29T07:00:13.559557Z"
       },
       "extras": {}
     },
@@ -828,12 +828,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -Regular - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 109.4891,
-      "navDate": "27-May-2026",
+      "nav": 109.5089,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619129Z"
+        "fetchedAt": "2026-05-29T07:00:13.559564Z"
       },
       "extras": {}
     },
@@ -845,11 +845,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Retail - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 163.694,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619134Z"
+        "fetchedAt": "2026-05-29T07:00:13.559568Z"
       },
       "extras": {}
     },
@@ -860,12 +860,12 @@
       "isinDividendReinvestment": "INF209KA1LJ9",
       "name": "Aditya Birla Sun Life Liquid Fund -weekly IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 100.3043,
-      "navDate": "27-May-2026",
+      "nav": 100.3225,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619138Z"
+        "fetchedAt": "2026-05-29T07:00:13.559572Z"
       },
       "extras": {}
     },
@@ -876,12 +876,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund- Discipline Advantage Plan",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 301.0428,
-      "navDate": "27-May-2026",
+      "nav": 301.0974,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619142Z"
+        "fetchedAt": "2026-05-29T07:00:13.559576Z"
       },
       "extras": {}
     },
@@ -892,12 +892,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund-Institutional (Growth)",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 739.3446,
-      "navDate": "27-May-2026",
+      "nav": 739.4784,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619146Z"
+        "fetchedAt": "2026-05-29T07:00:13.559580Z"
       },
       "extras": {}
     },
@@ -908,12 +908,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund-Retail (Growth)",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 720.4635,
-      "navDate": "27-May-2026",
+      "nav": 720.5938,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619152Z"
+        "fetchedAt": "2026-05-29T07:00:13.559584Z"
       },
       "extras": {}
     },
@@ -929,7 +929,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619158Z"
+        "fetchedAt": "2026-05-29T07:00:13.559589Z"
       },
       "extras": {}
     },
@@ -945,7 +945,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619162Z"
+        "fetchedAt": "2026-05-29T07:00:13.559593Z"
       },
       "extras": {}
     },
@@ -961,7 +961,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619166Z"
+        "fetchedAt": "2026-05-29T07:00:13.559600Z"
       },
       "extras": {}
     },
@@ -977,7 +977,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619170Z"
+        "fetchedAt": "2026-05-29T07:00:13.559604Z"
       },
       "extras": {}
     },
@@ -993,7 +993,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619175Z"
+        "fetchedAt": "2026-05-29T07:00:13.559608Z"
       },
       "extras": {}
     },
@@ -1009,7 +1009,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619181Z"
+        "fetchedAt": "2026-05-29T07:00:13.559612Z"
       },
       "extras": {}
     },
@@ -1025,7 +1025,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619185Z"
+        "fetchedAt": "2026-05-29T07:00:13.559616Z"
       },
       "extras": {}
     },
@@ -1041,7 +1041,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619189Z"
+        "fetchedAt": "2026-05-29T07:00:13.559620Z"
       },
       "extras": {}
     },
@@ -1057,7 +1057,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619194Z"
+        "fetchedAt": "2026-05-29T07:00:13.559624Z"
       },
       "extras": {}
     },
@@ -1073,7 +1073,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619202Z"
+        "fetchedAt": "2026-05-29T07:00:13.559630Z"
       },
       "extras": {}
     },
@@ -1089,7 +1089,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619206Z"
+        "fetchedAt": "2026-05-29T07:00:13.559634Z"
       },
       "extras": {}
     },
@@ -1105,7 +1105,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619211Z"
+        "fetchedAt": "2026-05-29T07:00:13.559638Z"
       },
       "extras": {}
     },
@@ -1121,7 +1121,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619215Z"
+        "fetchedAt": "2026-05-29T07:00:13.559645Z"
       },
       "extras": {}
     },
@@ -1137,7 +1137,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619220Z"
+        "fetchedAt": "2026-05-29T07:00:13.559650Z"
       },
       "extras": {}
     },
@@ -1153,7 +1153,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619224Z"
+        "fetchedAt": "2026-05-29T07:00:13.559654Z"
       },
       "extras": {}
     },
@@ -1169,7 +1169,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619231Z"
+        "fetchedAt": "2026-05-29T07:00:13.559658Z"
       },
       "extras": {}
     },
@@ -1185,7 +1185,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619235Z"
+        "fetchedAt": "2026-05-29T07:00:13.559662Z"
       },
       "extras": {}
     },
@@ -1201,7 +1201,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619239Z"
+        "fetchedAt": "2026-05-29T07:00:13.559667Z"
       },
       "extras": {}
     },
@@ -1217,7 +1217,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619244Z"
+        "fetchedAt": "2026-05-29T07:00:13.559671Z"
       },
       "extras": {}
     },
@@ -1233,7 +1233,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619250Z"
+        "fetchedAt": "2026-05-29T07:00:13.559675Z"
       },
       "extras": {}
     },
@@ -1249,7 +1249,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619254Z"
+        "fetchedAt": "2026-05-29T07:00:13.559679Z"
       },
       "extras": {}
     },
@@ -1265,7 +1265,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619259Z"
+        "fetchedAt": "2026-05-29T07:00:13.559683Z"
       },
       "extras": {}
     },
@@ -1281,7 +1281,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619263Z"
+        "fetchedAt": "2026-05-29T07:00:13.559690Z"
       },
       "extras": {}
     },
@@ -1297,7 +1297,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619268Z"
+        "fetchedAt": "2026-05-29T07:00:13.559695Z"
       },
       "extras": {}
     },
@@ -1309,11 +1309,11 @@
       "name": "BANDHAN LIQUID Fund - Regular Plan - Daily IDCW",
       "category": "Bandhan Mutual Fund",
       "nav": 1001.4161,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619272Z"
+        "fetchedAt": "2026-05-29T07:00:13.559701Z"
       },
       "extras": {}
     },
@@ -1324,12 +1324,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Growth",
       "category": "Bandhan Mutual Fund",
-      "nav": 3326.2744,
-      "navDate": "27-May-2026",
+      "nav": 3326.8427,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619279Z"
+        "fetchedAt": "2026-05-29T07:00:13.559705Z"
       },
       "extras": {}
     },
@@ -1340,12 +1340,12 @@
       "isinDividendReinvestment": "INF194K01WE7",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Monthly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1004.9636,
-      "navDate": "27-May-2026",
+      "nav": 1000.9928,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619283Z"
+        "fetchedAt": "2026-05-29T07:00:13.559709Z"
       },
       "extras": {}
     },
@@ -1356,12 +1356,12 @@
       "isinDividendReinvestment": "INF194K01WB3",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Periodic IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1436.0839,
-      "navDate": "27-May-2026",
+      "nav": 1436.3293,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619287Z"
+        "fetchedAt": "2026-05-29T07:00:13.559713Z"
       },
       "extras": {}
     },
@@ -1372,12 +1372,12 @@
       "isinDividendReinvestment": "INF194K01WH0",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Weekly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1002.1696,
-      "navDate": "27-May-2026",
+      "nav": 1002.3408,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619291Z"
+        "fetchedAt": "2026-05-29T07:00:13.559739Z"
       },
       "extras": {}
     },
@@ -1388,12 +1388,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund - Unclaimed IDCW Less than 3 years",
       "category": "Bandhan Mutual Fund",
-      "nav": 1.7911,
-      "navDate": "27-May-2026",
+      "nav": 1.7915,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619298Z"
+        "fetchedAt": "2026-05-29T07:00:13.559743Z"
       },
       "extras": {}
     },
@@ -1405,11 +1405,11 @@
       "name": "BANDHAN LIQUID Fund - Unclaimed IDCW More than 3 years",
       "category": "Bandhan Mutual Fund",
       "nav": 1.0,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619302Z"
+        "fetchedAt": "2026-05-29T07:00:13.559748Z"
       },
       "extras": {}
     },
@@ -1420,12 +1420,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund - Unclaimed Redemption Less than 3 years",
       "category": "Bandhan Mutual Fund",
-      "nav": 1.7911,
-      "navDate": "27-May-2026",
+      "nav": 1.7915,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619308Z"
+        "fetchedAt": "2026-05-29T07:00:13.559752Z"
       },
       "extras": {}
     },
@@ -1437,11 +1437,11 @@
       "name": "BANDHAN LIQUID Fund - Unclaimed Redemption More than 3 years",
       "category": "Bandhan Mutual Fund",
       "nav": 1.0,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619313Z"
+        "fetchedAt": "2026-05-29T07:00:13.559758Z"
       },
       "extras": {}
     },
@@ -1452,12 +1452,12 @@
       "isinDividendReinvestment": "INF194K01J28",
       "name": "BANDHAN LIQUID Fund -Direct Plan -Monthly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1011.3373,
-      "navDate": "27-May-2026",
+      "nav": 1007.2208,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619317Z"
+        "fetchedAt": "2026-05-29T07:00:13.559762Z"
       },
       "extras": {}
     },
@@ -1468,12 +1468,12 @@
       "isinDividendReinvestment": "INF194K01J51",
       "name": "BANDHAN LIQUID Fund -Direct Plan -Weekly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1007.9315,
-      "navDate": "27-May-2026",
+      "nav": 1008.1081,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619321Z"
+        "fetchedAt": "2026-05-29T07:00:13.559767Z"
       },
       "extras": {}
     },
@@ -1485,11 +1485,11 @@
       "name": "BANDHAN LIQUID Fund -Direct Plan-Daily IDCW",
       "category": "Bandhan Mutual Fund",
       "nav": 1001.6663,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619325Z"
+        "fetchedAt": "2026-05-29T07:00:13.559770Z"
       },
       "extras": {}
     },
@@ -1500,12 +1500,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund -Direct Plan-Growth",
       "category": "Bandhan Mutual Fund",
-      "nav": 3362.9873,
-      "navDate": "27-May-2026",
+      "nav": 3363.5766,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619329Z"
+        "fetchedAt": "2026-05-29T07:00:13.559774Z"
       },
       "extras": {}
     },
@@ -1516,12 +1516,12 @@
       "isinDividendReinvestment": "INF194K01I94",
       "name": "BANDHAN LIQUID Fund -Direct Plan-Periodic IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1354.83,
-      "navDate": "27-May-2026",
+      "nav": 1355.0676,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619334Z"
+        "fetchedAt": "2026-05-29T07:00:13.559779Z"
       },
       "extras": {}
     },
@@ -1537,7 +1537,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619339Z"
+        "fetchedAt": "2026-05-29T07:00:13.559784Z"
       },
       "extras": {}
     },
@@ -1553,7 +1553,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619345Z"
+        "fetchedAt": "2026-05-29T07:00:13.559788Z"
       },
       "extras": {}
     },
@@ -1569,7 +1569,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619368Z"
+        "fetchedAt": "2026-05-29T07:00:13.559794Z"
       },
       "extras": {}
     },
@@ -1585,7 +1585,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619372Z"
+        "fetchedAt": "2026-05-29T07:00:13.559801Z"
       },
       "extras": {}
     },
@@ -1601,7 +1601,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619377Z"
+        "fetchedAt": "2026-05-29T07:00:13.559807Z"
       },
       "extras": {}
     },
@@ -1617,7 +1617,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619381Z"
+        "fetchedAt": "2026-05-29T07:00:13.559811Z"
       },
       "extras": {}
     },
@@ -1633,7 +1633,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619389Z"
+        "fetchedAt": "2026-05-29T07:00:13.559815Z"
       },
       "extras": {}
     },
@@ -1649,7 +1649,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619393Z"
+        "fetchedAt": "2026-05-29T07:00:13.559819Z"
       },
       "extras": {}
     },
@@ -1665,7 +1665,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619397Z"
+        "fetchedAt": "2026-05-29T07:00:13.559823Z"
       },
       "extras": {}
     },
@@ -1681,7 +1681,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619404Z"
+        "fetchedAt": "2026-05-29T07:00:13.559827Z"
       },
       "extras": {}
     },
@@ -1697,7 +1697,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619409Z"
+        "fetchedAt": "2026-05-29T07:00:13.559835Z"
       },
       "extras": {}
     },
@@ -1713,7 +1713,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619414Z"
+        "fetchedAt": "2026-05-29T07:00:13.559839Z"
       },
       "extras": {}
     },
@@ -1729,7 +1729,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619424Z"
+        "fetchedAt": "2026-05-29T07:00:13.559843Z"
       },
       "extras": {}
     },
@@ -1745,7 +1745,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619428Z"
+        "fetchedAt": "2026-05-29T07:00:13.559847Z"
       },
       "extras": {}
     },
@@ -1761,7 +1761,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619432Z"
+        "fetchedAt": "2026-05-29T07:00:13.559854Z"
       },
       "extras": {}
     },
@@ -1777,7 +1777,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619437Z"
+        "fetchedAt": "2026-05-29T07:00:13.559860Z"
       },
       "extras": {}
     },
@@ -1793,7 +1793,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619441Z"
+        "fetchedAt": "2026-05-29T07:00:13.559864Z"
       },
       "extras": {}
     },
@@ -1809,7 +1809,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619445Z"
+        "fetchedAt": "2026-05-29T07:00:13.559869Z"
       },
       "extras": {}
     },
@@ -1825,7 +1825,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619452Z"
+        "fetchedAt": "2026-05-29T07:00:13.559873Z"
       },
       "extras": {}
     },
@@ -1841,7 +1841,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619456Z"
+        "fetchedAt": "2026-05-29T07:00:13.559877Z"
       },
       "extras": {}
     },
@@ -1857,7 +1857,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619460Z"
+        "fetchedAt": "2026-05-29T07:00:13.559881Z"
       },
       "extras": {}
     },
@@ -1873,7 +1873,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619464Z"
+        "fetchedAt": "2026-05-29T07:00:13.559885Z"
       },
       "extras": {}
     },
@@ -1889,7 +1889,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619469Z"
+        "fetchedAt": "2026-05-29T07:00:13.559889Z"
       },
       "extras": {}
     },
@@ -1905,7 +1905,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619475Z"
+        "fetchedAt": "2026-05-29T07:00:13.559893Z"
       },
       "extras": {}
     },
@@ -1921,7 +1921,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619480Z"
+        "fetchedAt": "2026-05-29T07:00:13.559898Z"
       },
       "extras": {}
     },
@@ -1937,7 +1937,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619485Z"
+        "fetchedAt": "2026-05-29T07:00:13.559903Z"
       },
       "extras": {}
     },
@@ -1953,7 +1953,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619492Z"
+        "fetchedAt": "2026-05-29T07:00:13.559909Z"
       },
       "extras": {}
     },
@@ -1969,7 +1969,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619496Z"
+        "fetchedAt": "2026-05-29T07:00:13.559913Z"
       },
       "extras": {}
     },
@@ -1985,7 +1985,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619501Z"
+        "fetchedAt": "2026-05-29T07:00:13.559918Z"
       },
       "extras": {}
     },
@@ -2001,7 +2001,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619505Z"
+        "fetchedAt": "2026-05-29T07:00:13.559924Z"
       },
       "extras": {}
     },
@@ -2017,7 +2017,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619512Z"
+        "fetchedAt": "2026-05-29T07:00:13.559929Z"
       },
       "extras": {}
     },
@@ -2033,7 +2033,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619516Z"
+        "fetchedAt": "2026-05-29T07:00:13.559933Z"
       },
       "extras": {}
     },
@@ -2049,7 +2049,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619521Z"
+        "fetchedAt": "2026-05-29T07:00:13.559937Z"
       },
       "extras": {}
     },
@@ -2065,7 +2065,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619527Z"
+        "fetchedAt": "2026-05-29T07:00:13.559941Z"
       },
       "extras": {}
     },
@@ -2081,7 +2081,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619532Z"
+        "fetchedAt": "2026-05-29T07:00:13.559946Z"
       },
       "extras": {}
     },
@@ -2097,7 +2097,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619537Z"
+        "fetchedAt": "2026-05-29T07:00:13.559951Z"
       },
       "extras": {}
     },
@@ -2113,7 +2113,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619541Z"
+        "fetchedAt": "2026-05-29T07:00:13.559961Z"
       },
       "extras": {}
     },
@@ -2124,12 +2124,12 @@
       "isinDividendReinvestment": "-",
       "name": "DSP Liquidity Fund - Direct Plan - Growth",
       "category": "DSP Mutual Fund",
-      "nav": 3982.8101,
-      "navDate": "27-May-2026",
+      "nav": 3983.5428,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619546Z"
+        "fetchedAt": "2026-05-29T07:00:13.559965Z"
       },
       "extras": {}
     },
@@ -2141,11 +2141,11 @@
       "name": "DSP Liquidity Fund - Direct Plan - IDCW - Daily",
       "category": "DSP Mutual Fund",
       "nav": 1001.4663,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619550Z"
+        "fetchedAt": "2026-05-29T07:00:13.559970Z"
       },
       "extras": {}
     },
@@ -2156,12 +2156,12 @@
       "isinDividendReinvestment": "INF740KA1OD2",
       "name": "DSP Liquidity Fund - Direct Plan - IDCW - Weekly",
       "category": "DSP Mutual Fund",
-      "nav": 1002.4441,
-      "navDate": "27-May-2026",
+      "nav": 1001.4509,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619555Z"
+        "fetchedAt": "2026-05-29T07:00:13.559974Z"
       },
       "extras": {}
     },
@@ -2172,12 +2172,12 @@
       "isinDividendReinvestment": "-",
       "name": "DSP Liquidity Fund - Regular Plan - Growth",
       "category": "DSP Mutual Fund",
-      "nav": 3934.3443,
-      "navDate": "27-May-2026",
+      "nav": 3935.0583,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619559Z"
+        "fetchedAt": "2026-05-29T07:00:13.559978Z"
       },
       "extras": {}
     },
@@ -2188,12 +2188,12 @@
       "isinDividendReinvestment": "INF740K01FL7",
       "name": "DSP Liquidity Fund - Regular Plan - IDCW - Weekly",
       "category": "DSP Mutual Fund",
-      "nav": 1002.4292,
-      "navDate": "27-May-2026",
+      "nav": 1001.4509,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619563Z"
+        "fetchedAt": "2026-05-29T07:00:13.559982Z"
       },
       "extras": {}
     },
@@ -2205,11 +2205,11 @@
       "name": "DSP Liquidity Fund- Regular Plan - IDCW - Daily",
       "category": "DSP Mutual Fund",
       "nav": 1001.4663,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619569Z"
+        "fetchedAt": "2026-05-29T07:00:13.559986Z"
       },
       "extras": {}
     },
@@ -2225,7 +2225,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619575Z"
+        "fetchedAt": "2026-05-29T07:00:13.559991Z"
       },
       "extras": {}
     },
@@ -2241,7 +2241,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619579Z"
+        "fetchedAt": "2026-05-29T07:00:13.559995Z"
       },
       "extras": {}
     },
@@ -2257,7 +2257,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619586Z"
+        "fetchedAt": "2026-05-29T07:00:13.560001Z"
       },
       "extras": {}
     },
@@ -2273,7 +2273,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619592Z"
+        "fetchedAt": "2026-05-29T07:00:13.560006Z"
       },
       "extras": {}
     },
@@ -2289,7 +2289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619596Z"
+        "fetchedAt": "2026-05-29T07:00:13.560010Z"
       },
       "extras": {}
     },
@@ -2305,7 +2305,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619601Z"
+        "fetchedAt": "2026-05-29T07:00:13.560014Z"
       },
       "extras": {}
     },
@@ -2321,7 +2321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619605Z"
+        "fetchedAt": "2026-05-29T07:00:13.560022Z"
       },
       "extras": {}
     },
@@ -2337,7 +2337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619609Z"
+        "fetchedAt": "2026-05-29T07:00:13.560026Z"
       },
       "extras": {}
     },
@@ -2353,7 +2353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619613Z"
+        "fetchedAt": "2026-05-29T07:00:13.560030Z"
       },
       "extras": {}
     },
@@ -2369,7 +2369,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619620Z"
+        "fetchedAt": "2026-05-29T07:00:13.560035Z"
       },
       "extras": {}
     },
@@ -2385,7 +2385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619624Z"
+        "fetchedAt": "2026-05-29T07:00:13.560039Z"
       },
       "extras": {}
     },
@@ -2401,7 +2401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619628Z"
+        "fetchedAt": "2026-05-29T07:00:13.560045Z"
       },
       "extras": {}
     },
@@ -2417,7 +2417,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619633Z"
+        "fetchedAt": "2026-05-29T07:00:13.560051Z"
       },
       "extras": {}
     },
@@ -2433,7 +2433,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619637Z"
+        "fetchedAt": "2026-05-29T07:00:13.560056Z"
       },
       "extras": {}
     },
@@ -2449,7 +2449,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619644Z"
+        "fetchedAt": "2026-05-29T07:00:13.560060Z"
       },
       "extras": {}
     },
@@ -2465,7 +2465,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619648Z"
+        "fetchedAt": "2026-05-29T07:00:13.560064Z"
       },
       "extras": {}
     },
@@ -2481,7 +2481,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619654Z"
+        "fetchedAt": "2026-05-29T07:00:13.560068Z"
       },
       "extras": {}
     },
@@ -2497,7 +2497,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619658Z"
+        "fetchedAt": "2026-05-29T07:00:13.560073Z"
       },
       "extras": {}
     },
@@ -2513,7 +2513,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619663Z"
+        "fetchedAt": "2026-05-29T07:00:13.560077Z"
       },
       "extras": {}
     },
@@ -2529,7 +2529,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619669Z"
+        "fetchedAt": "2026-05-29T07:00:13.560081Z"
       },
       "extras": {}
     },
@@ -2541,11 +2541,11 @@
       "name": "Franklin India Liquid Fund - Regular Plan - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1509.0075,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619674Z"
+        "fetchedAt": "2026-05-29T07:00:13.560086Z"
       },
       "extras": {}
     },
@@ -2556,12 +2556,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Regular Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 6202.2962,
-      "navDate": "27-May-2026",
+      "nav": 6203.3048,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619678Z"
+        "fetchedAt": "2026-05-29T07:00:13.560090Z"
       },
       "extras": {}
     },
@@ -2572,12 +2572,12 @@
       "isinDividendReinvestment": "INF090I01BI6",
       "name": "Franklin India Liquid Fund - Regular Plan - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1244.815,
-      "navDate": "27-May-2026",
+      "nav": 1245.0174,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619687Z"
+        "fetchedAt": "2026-05-29T07:00:13.560099Z"
       },
       "extras": {}
     },
@@ -2588,12 +2588,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Super Institutional - Direct - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 4185.2257,
-      "navDate": "27-May-2026",
+      "nav": 4185.9897,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619692Z"
+        "fetchedAt": "2026-05-29T07:00:13.560104Z"
       },
       "extras": {}
     },
@@ -2605,11 +2605,11 @@
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1000.0,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619696Z"
+        "fetchedAt": "2026-05-29T07:00:13.560110Z"
       },
       "extras": {}
     },
@@ -2621,11 +2621,11 @@
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Direct - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1002.8152,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619700Z"
+        "fetchedAt": "2026-05-29T07:00:13.560117Z"
       },
       "extras": {}
     },
@@ -2636,12 +2636,12 @@
       "isinDividendReinvestment": "INF090I01JY6",
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Direct - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1022.4567,
-      "navDate": "27-May-2026",
+      "nav": 1022.6434,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619705Z"
+        "fetchedAt": "2026-05-29T07:00:13.560121Z"
       },
       "extras": {}
     },
@@ -2652,12 +2652,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 4148.4893,
-      "navDate": "27-May-2026",
+      "nav": 4149.2397,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619709Z"
+        "fetchedAt": "2026-05-29T07:00:13.560125Z"
       },
       "extras": {}
     },
@@ -2668,12 +2668,12 @@
       "isinDividendReinvestment": "INF090I01BH8",
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1036.9322,
-      "navDate": "27-May-2026",
+      "nav": 1037.1198,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619714Z"
+        "fetchedAt": "2026-05-29T07:00:13.560130Z"
       },
       "extras": {}
     },
@@ -2685,11 +2685,11 @@
       "name": "Franklin India Liquid Fund - Unclaimed IDCW Investor Education Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 10.0,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619720Z"
+        "fetchedAt": "2026-05-29T07:00:13.560134Z"
       },
       "extras": {}
     },
@@ -2700,12 +2700,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Unclaimed IDCW Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 17.6605,
-      "navDate": "27-May-2026",
+      "nav": 17.6638,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619725Z"
+        "fetchedAt": "2026-05-29T07:00:13.560138Z"
       },
       "extras": {}
     },
@@ -2717,11 +2717,11 @@
       "name": "Franklin India Liquid Fund - Unclaimed Redemption Investor Education Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 10.0,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619729Z"
+        "fetchedAt": "2026-05-29T07:00:13.560143Z"
       },
       "extras": {}
     },
@@ -2732,12 +2732,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Unclaimed Redemption Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 17.6605,
-      "navDate": "27-May-2026",
+      "nav": 17.6638,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619733Z"
+        "fetchedAt": "2026-05-29T07:00:13.560149Z"
       },
       "extras": {}
     },
@@ -2753,7 +2753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619738Z"
+        "fetchedAt": "2026-05-29T07:00:13.560154Z"
       },
       "extras": {}
     },
@@ -2765,11 +2765,11 @@
       "name": "Franklin India Liquid Fund - Institutional Plan - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1000.0,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619742Z"
+        "fetchedAt": "2026-05-29T07:00:13.560158Z"
       },
       "extras": {}
     },
@@ -2780,12 +2780,12 @@
       "isinDividendReinvestment": "INF090I01BE5",
       "name": "Franklin India Liquid Fund - Institutional Plan - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1055.1801,
-      "navDate": "27-May-2026",
+      "nav": 1055.3588,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619746Z"
+        "fetchedAt": "2026-05-29T07:00:13.560163Z"
       },
       "extras": {}
     },
@@ -2801,7 +2801,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619752Z"
+        "fetchedAt": "2026-05-29T07:00:13.560168Z"
       },
       "extras": {}
     },
@@ -2817,7 +2817,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619757Z"
+        "fetchedAt": "2026-05-29T07:00:13.560173Z"
       },
       "extras": {}
     },
@@ -2833,7 +2833,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619762Z"
+        "fetchedAt": "2026-05-29T07:00:13.560178Z"
       },
       "extras": {}
     },
@@ -2849,7 +2849,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619770Z"
+        "fetchedAt": "2026-05-29T07:00:13.560183Z"
       },
       "extras": {}
     },
@@ -2865,7 +2865,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619778Z"
+        "fetchedAt": "2026-05-29T07:00:13.560188Z"
       },
       "extras": {}
     },
@@ -2881,7 +2881,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619783Z"
+        "fetchedAt": "2026-05-29T07:00:13.560193Z"
       },
       "extras": {}
     },
@@ -2897,7 +2897,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619790Z"
+        "fetchedAt": "2026-05-29T07:00:13.560200Z"
       },
       "extras": {}
     },
@@ -2913,7 +2913,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619796Z"
+        "fetchedAt": "2026-05-29T07:00:13.560208Z"
       },
       "extras": {}
     },
@@ -2929,7 +2929,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619801Z"
+        "fetchedAt": "2026-05-29T07:00:13.560213Z"
       },
       "extras": {}
     },
@@ -2945,7 +2945,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619807Z"
+        "fetchedAt": "2026-05-29T07:00:13.560218Z"
       },
       "extras": {}
     },
@@ -2956,12 +2956,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - Growth Option - Direct Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 5468.689,
-      "navDate": "27-May-2026",
+      "nav": 5469.6355,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619812Z"
+        "fetchedAt": "2026-05-29T07:00:13.560224Z"
       },
       "extras": {}
     },
@@ -2972,12 +2972,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - Growth Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 5405.8111,
-      "navDate": "27-May-2026",
+      "nav": 5406.7327,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619816Z"
+        "fetchedAt": "2026-05-29T07:00:13.560228Z"
       },
       "extras": {}
     },
@@ -2989,11 +2989,11 @@
       "name": "HDFC Liquid Fund - IDCW Daily",
       "category": "HDFC Mutual Fund",
       "nav": 1019.82,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619820Z"
+        "fetchedAt": "2026-05-29T07:00:13.560232Z"
       },
       "extras": {}
     },
@@ -3005,11 +3005,11 @@
       "name": "HDFC Liquid Fund - IDCW Daily - Direct Plan",
       "category": "HDFC Mutual Fund",
       "nav": 1019.82,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619826Z"
+        "fetchedAt": "2026-05-29T07:00:13.560236Z"
       },
       "extras": {}
     },
@@ -3020,12 +3020,12 @@
       "isinDividendReinvestment": "INF179KB1HL8",
       "name": "HDFC Liquid Fund - IDCW Monthly",
       "category": "HDFC Mutual Fund",
-      "nav": 1026.6188,
-      "navDate": "27-May-2026",
+      "nav": 1026.7938,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619831Z"
+        "fetchedAt": "2026-05-29T07:00:13.560240Z"
       },
       "extras": {}
     },
@@ -3036,12 +3036,12 @@
       "isinDividendReinvestment": "INF179KB1HQ7",
       "name": "HDFC Liquid Fund - IDCW Monthly - Direct Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 1026.6242,
-      "navDate": "27-May-2026",
+      "nav": 1026.8019,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619835Z"
+        "fetchedAt": "2026-05-29T07:00:13.560248Z"
       },
       "extras": {}
     },
@@ -3052,12 +3052,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - IDCW Plan Weekly",
       "category": "HDFC Mutual Fund",
-      "nav": 1031.3498,
-      "navDate": "27-May-2026",
+      "nav": 1031.5257,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619840Z"
+        "fetchedAt": "2026-05-29T07:00:13.560254Z"
       },
       "extras": {}
     },
@@ -3068,12 +3068,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - IDCW Weekly - Direct Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 1031.3554,
-      "navDate": "27-May-2026",
+      "nav": 1031.5339,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619844Z"
+        "fetchedAt": "2026-05-29T07:00:13.560258Z"
       },
       "extras": {}
     },
@@ -3089,7 +3089,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619848Z"
+        "fetchedAt": "2026-05-29T07:00:13.560262Z"
       },
       "extras": {}
     },
@@ -3105,7 +3105,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619852Z"
+        "fetchedAt": "2026-05-29T07:00:13.560266Z"
       },
       "extras": {}
     },
@@ -3121,7 +3121,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619856Z"
+        "fetchedAt": "2026-05-29T07:00:13.560270Z"
       },
       "extras": {}
     },
@@ -3137,7 +3137,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619864Z"
+        "fetchedAt": "2026-05-29T07:00:13.560275Z"
       },
       "extras": {}
     },
@@ -3153,7 +3153,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619868Z"
+        "fetchedAt": "2026-05-29T07:00:13.560279Z"
       },
       "extras": {}
     },
@@ -3169,7 +3169,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619872Z"
+        "fetchedAt": "2026-05-29T07:00:13.560283Z"
       },
       "extras": {}
     },
@@ -3185,7 +3185,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619879Z"
+        "fetchedAt": "2026-05-29T07:00:13.560289Z"
       },
       "extras": {}
     },
@@ -3201,7 +3201,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619883Z"
+        "fetchedAt": "2026-05-29T07:00:13.560293Z"
       },
       "extras": {}
     },
@@ -3217,7 +3217,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619887Z"
+        "fetchedAt": "2026-05-29T07:00:13.560299Z"
       },
       "extras": {}
     },
@@ -3233,7 +3233,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619891Z"
+        "fetchedAt": "2026-05-29T07:00:13.560303Z"
       },
       "extras": {}
     },
@@ -3249,7 +3249,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619895Z"
+        "fetchedAt": "2026-05-29T07:00:13.560307Z"
       },
       "extras": {}
     },
@@ -3265,7 +3265,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619899Z"
+        "fetchedAt": "2026-05-29T07:00:13.560311Z"
       },
       "extras": {}
     },
@@ -3281,7 +3281,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619906Z"
+        "fetchedAt": "2026-05-29T07:00:13.560316Z"
       },
       "extras": {}
     },
@@ -3297,7 +3297,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619910Z"
+        "fetchedAt": "2026-05-29T07:00:13.560320Z"
       },
       "extras": {}
     },
@@ -3313,7 +3313,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619914Z"
+        "fetchedAt": "2026-05-29T07:00:13.560324Z"
       },
       "extras": {}
     },
@@ -3329,7 +3329,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619919Z"
+        "fetchedAt": "2026-05-29T07:00:13.560329Z"
       },
       "extras": {}
     },
@@ -3345,7 +3345,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619926Z"
+        "fetchedAt": "2026-05-29T07:00:13.560334Z"
       },
       "extras": {}
     },
@@ -3361,7 +3361,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619930Z"
+        "fetchedAt": "2026-05-29T07:00:13.560337Z"
       },
       "extras": {}
     },
@@ -3373,11 +3373,11 @@
       "name": "ICICI Prudential Liquid Fund - Daily IDCW",
       "category": "ICICI Prudential Mutual Fund",
       "nav": 100.1482,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619934Z"
+        "fetchedAt": "2026-05-29T07:00:13.560341Z"
       },
       "extras": {}
     },
@@ -3393,7 +3393,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619940Z"
+        "fetchedAt": "2026-05-29T07:00:13.560348Z"
       },
       "extras": {}
     },
@@ -3409,7 +3409,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619945Z"
+        "fetchedAt": "2026-05-29T07:00:13.560352Z"
       },
       "extras": {}
     },
@@ -3420,12 +3420,12 @@
       "isinDividendReinvestment": "INF109K01Q23",
       "name": "ICICI Prudential Liquid Fund - Direct Plan -  IDCW Others",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 191.1178,
-      "navDate": "27-May-2026",
+      "nav": 191.1502,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619949Z"
+        "fetchedAt": "2026-05-29T07:00:13.560356Z"
       },
       "extras": {}
     },
@@ -3437,11 +3437,11 @@
       "name": "ICICI Prudential Liquid Fund - Direct Plan - Daily IDCW",
       "category": "ICICI Prudential Mutual Fund",
       "nav": 100.1082,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619956Z"
+        "fetchedAt": "2026-05-29T07:00:13.560370Z"
       },
       "extras": {}
     },
@@ -3452,12 +3452,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Direct Plan - Growth",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 412.071,
-      "navDate": "27-May-2026",
+      "nav": 412.1409,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619960Z"
+        "fetchedAt": "2026-05-29T07:00:13.560374Z"
       },
       "extras": {}
     },
@@ -3473,7 +3473,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619964Z"
+        "fetchedAt": "2026-05-29T07:00:13.560378Z"
       },
       "extras": {}
     },
@@ -3489,7 +3489,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619970Z"
+        "fetchedAt": "2026-05-29T07:00:13.560383Z"
       },
       "extras": {}
     },
@@ -3500,12 +3500,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 100.2152,
-      "navDate": "27-May-2026",
+      "nav": 100.2322,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619974Z"
+        "fetchedAt": "2026-05-29T07:00:13.560389Z"
       },
       "extras": {}
     },
@@ -3521,7 +3521,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619988Z"
+        "fetchedAt": "2026-05-29T07:00:13.560393Z"
       },
       "extras": {}
     },
@@ -3532,12 +3532,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Growth",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 407.73,
-      "navDate": "27-May-2026",
+      "nav": 407.7979,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619992Z"
+        "fetchedAt": "2026-05-29T07:00:13.560399Z"
       },
       "extras": {}
     },
@@ -3553,7 +3553,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.619997Z"
+        "fetchedAt": "2026-05-29T07:00:13.560405Z"
       },
       "extras": {}
     },
@@ -3564,12 +3564,12 @@
       "isinDividendReinvestment": "INF109K01VT5",
       "name": "ICICI Prudential Liquid Fund - IDCW Others",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 189.4916,
-      "navDate": "27-May-2026",
+      "nav": 189.5232,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620001Z"
+        "fetchedAt": "2026-05-29T07:00:13.560409Z"
       },
       "extras": {}
     },
@@ -3585,7 +3585,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620005Z"
+        "fetchedAt": "2026-05-29T07:00:13.560413Z"
       },
       "extras": {}
     },
@@ -3601,7 +3601,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620009Z"
+        "fetchedAt": "2026-05-29T07:00:13.560419Z"
       },
       "extras": {}
     },
@@ -3617,7 +3617,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620014Z"
+        "fetchedAt": "2026-05-29T07:00:13.560424Z"
       },
       "extras": {}
     },
@@ -3633,7 +3633,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620018Z"
+        "fetchedAt": "2026-05-29T07:00:13.560428Z"
       },
       "extras": {}
     },
@@ -3649,7 +3649,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620022Z"
+        "fetchedAt": "2026-05-29T07:00:13.560432Z"
       },
       "extras": {}
     },
@@ -3660,12 +3660,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Weekly IDCW",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 100.1894,
-      "navDate": "27-May-2026",
+      "nav": 100.2061,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620029Z"
+        "fetchedAt": "2026-05-29T07:00:13.560436Z"
       },
       "extras": {}
     },
@@ -3681,7 +3681,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620033Z"
+        "fetchedAt": "2026-05-29T07:00:13.560440Z"
       },
       "extras": {}
     },
@@ -3697,7 +3697,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620037Z"
+        "fetchedAt": "2026-05-29T07:00:13.560444Z"
       },
       "extras": {}
     },
@@ -3713,7 +3713,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620041Z"
+        "fetchedAt": "2026-05-29T07:00:13.560450Z"
       },
       "extras": {}
     },
@@ -3729,7 +3729,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620046Z"
+        "fetchedAt": "2026-05-29T07:00:13.560454Z"
       },
       "extras": {}
     },
@@ -3745,7 +3745,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620050Z"
+        "fetchedAt": "2026-05-29T07:00:13.560458Z"
       },
       "extras": {}
     },
@@ -3761,7 +3761,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620056Z"
+        "fetchedAt": "2026-05-29T07:00:13.560462Z"
       },
       "extras": {}
     },
@@ -3777,7 +3777,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620060Z"
+        "fetchedAt": "2026-05-29T07:00:13.560467Z"
       },
       "extras": {}
     },
@@ -3793,7 +3793,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620064Z"
+        "fetchedAt": "2026-05-29T07:00:13.560473Z"
       },
       "extras": {}
     },
@@ -3809,7 +3809,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620069Z"
+        "fetchedAt": "2026-05-29T07:00:13.560479Z"
       },
       "extras": {}
     },
@@ -3825,7 +3825,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620076Z"
+        "fetchedAt": "2026-05-29T07:00:13.560486Z"
       },
       "extras": {}
     },
@@ -3841,7 +3841,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620080Z"
+        "fetchedAt": "2026-05-29T07:00:13.560490Z"
       },
       "extras": {}
     },
@@ -3857,7 +3857,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620087Z"
+        "fetchedAt": "2026-05-29T07:00:13.560495Z"
       },
       "extras": {}
     },
@@ -3873,7 +3873,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620091Z"
+        "fetchedAt": "2026-05-29T07:00:13.560501Z"
       },
       "extras": {}
     },
@@ -3889,7 +3889,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620096Z"
+        "fetchedAt": "2026-05-29T07:00:13.560506Z"
       },
       "extras": {}
     },
@@ -3905,7 +3905,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620100Z"
+        "fetchedAt": "2026-05-29T07:00:13.560510Z"
       },
       "extras": {}
     },
@@ -3921,7 +3921,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620104Z"
+        "fetchedAt": "2026-05-29T07:00:13.560514Z"
       },
       "extras": {}
     },
@@ -3937,7 +3937,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620109Z"
+        "fetchedAt": "2026-05-29T07:00:13.560518Z"
       },
       "extras": {}
     },
@@ -3953,7 +3953,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620113Z"
+        "fetchedAt": "2026-05-29T07:00:13.560524Z"
       },
       "extras": {}
     },
@@ -3969,7 +3969,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620117Z"
+        "fetchedAt": "2026-05-29T07:00:13.560528Z"
       },
       "extras": {}
     },
@@ -3985,7 +3985,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620121Z"
+        "fetchedAt": "2026-05-29T07:00:13.560533Z"
       },
       "extras": {}
     },
@@ -4001,7 +4001,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620131Z"
+        "fetchedAt": "2026-05-29T07:00:13.560537Z"
       },
       "extras": {}
     },
@@ -4017,7 +4017,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620135Z"
+        "fetchedAt": "2026-05-29T07:00:13.560541Z"
       },
       "extras": {}
     },
@@ -4033,7 +4033,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620142Z"
+        "fetchedAt": "2026-05-29T07:00:13.560545Z"
       },
       "extras": {}
     },
@@ -4049,7 +4049,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620147Z"
+        "fetchedAt": "2026-05-29T07:00:13.560553Z"
       },
       "extras": {}
     },
@@ -4065,7 +4065,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620156Z"
+        "fetchedAt": "2026-05-29T07:00:13.560557Z"
       },
       "extras": {}
     },
@@ -4081,7 +4081,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620160Z"
+        "fetchedAt": "2026-05-29T07:00:13.560561Z"
       },
       "extras": {}
     },
@@ -4097,7 +4097,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620164Z"
+        "fetchedAt": "2026-05-29T07:00:13.560565Z"
       },
       "extras": {}
     },
@@ -4113,7 +4113,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620168Z"
+        "fetchedAt": "2026-05-29T07:00:13.560569Z"
       },
       "extras": {}
     },
@@ -4129,7 +4129,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620173Z"
+        "fetchedAt": "2026-05-29T07:00:13.560576Z"
       },
       "extras": {}
     },
@@ -4145,7 +4145,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620177Z"
+        "fetchedAt": "2026-05-29T07:00:13.560580Z"
       },
       "extras": {}
     },
@@ -4161,7 +4161,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620183Z"
+        "fetchedAt": "2026-05-29T07:00:13.560584Z"
       },
       "extras": {}
     },
@@ -4177,7 +4177,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620188Z"
+        "fetchedAt": "2026-05-29T07:00:13.560588Z"
       },
       "extras": {}
     },
@@ -4193,7 +4193,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620192Z"
+        "fetchedAt": "2026-05-29T07:00:13.560594Z"
       },
       "extras": {}
     },
@@ -4209,7 +4209,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620197Z"
+        "fetchedAt": "2026-05-29T07:00:13.560598Z"
       },
       "extras": {}
     },
@@ -4225,7 +4225,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620201Z"
+        "fetchedAt": "2026-05-29T07:00:13.560602Z"
       },
       "extras": {}
     },
@@ -4241,7 +4241,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620208Z"
+        "fetchedAt": "2026-05-29T07:00:13.560607Z"
       },
       "extras": {}
     },
@@ -4257,7 +4257,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620213Z"
+        "fetchedAt": "2026-05-29T07:00:13.560613Z"
       },
       "extras": {}
     },
@@ -4273,7 +4273,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620217Z"
+        "fetchedAt": "2026-05-29T07:00:13.560617Z"
       },
       "extras": {}
     },
@@ -4289,7 +4289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620221Z"
+        "fetchedAt": "2026-05-29T07:00:13.560621Z"
       },
       "extras": {}
     },
@@ -4305,7 +4305,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620226Z"
+        "fetchedAt": "2026-05-29T07:00:13.560625Z"
       },
       "extras": {}
     },
@@ -4321,7 +4321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620237Z"
+        "fetchedAt": "2026-05-29T07:00:13.560629Z"
       },
       "extras": {}
     },
@@ -4337,7 +4337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620242Z"
+        "fetchedAt": "2026-05-29T07:00:13.560633Z"
       },
       "extras": {}
     },
@@ -4353,7 +4353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620246Z"
+        "fetchedAt": "2026-05-29T07:00:13.560643Z"
       },
       "extras": {}
     },
@@ -4369,7 +4369,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620251Z"
+        "fetchedAt": "2026-05-29T07:00:13.560647Z"
       },
       "extras": {}
     },
@@ -4385,7 +4385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620257Z"
+        "fetchedAt": "2026-05-29T07:00:13.560651Z"
       },
       "extras": {}
     },
@@ -4401,7 +4401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620261Z"
+        "fetchedAt": "2026-05-29T07:00:13.560655Z"
       },
       "extras": {}
     },
@@ -4417,7 +4417,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620266Z"
+        "fetchedAt": "2026-05-29T07:00:13.560659Z"
       },
       "extras": {}
     },
@@ -4433,7 +4433,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620270Z"
+        "fetchedAt": "2026-05-29T07:00:13.560665Z"
       },
       "extras": {}
     },
@@ -4449,7 +4449,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620274Z"
+        "fetchedAt": "2026-05-29T07:00:13.560670Z"
       },
       "extras": {}
     },
@@ -4465,7 +4465,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620278Z"
+        "fetchedAt": "2026-05-29T07:00:13.560674Z"
       },
       "extras": {}
     },
@@ -4481,7 +4481,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620284Z"
+        "fetchedAt": "2026-05-29T07:00:13.560678Z"
       },
       "extras": {}
     },
@@ -4497,7 +4497,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620289Z"
+        "fetchedAt": "2026-05-29T07:00:13.560682Z"
       },
       "extras": {}
     },
@@ -4513,7 +4513,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620293Z"
+        "fetchedAt": "2026-05-29T07:00:13.560686Z"
       },
       "extras": {}
     },
@@ -4529,7 +4529,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620297Z"
+        "fetchedAt": "2026-05-29T07:00:13.560694Z"
       },
       "extras": {}
     },
@@ -4545,7 +4545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620303Z"
+        "fetchedAt": "2026-05-29T07:00:13.560700Z"
       },
       "extras": {}
     },
@@ -4561,7 +4561,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620307Z"
+        "fetchedAt": "2026-05-29T07:00:13.560704Z"
       },
       "extras": {}
     },
@@ -4577,7 +4577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620312Z"
+        "fetchedAt": "2026-05-29T07:00:13.560709Z"
       },
       "extras": {}
     },
@@ -4593,7 +4593,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620317Z"
+        "fetchedAt": "2026-05-29T07:00:13.560714Z"
       },
       "extras": {}
     },
@@ -4609,7 +4609,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620321Z"
+        "fetchedAt": "2026-05-29T07:00:13.560718Z"
       },
       "extras": {}
     },
@@ -4625,7 +4625,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620326Z"
+        "fetchedAt": "2026-05-29T07:00:13.560723Z"
       },
       "extras": {}
     },
@@ -4641,7 +4641,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620331Z"
+        "fetchedAt": "2026-05-29T07:00:13.560728Z"
       },
       "extras": {}
     },
@@ -4657,7 +4657,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620338Z"
+        "fetchedAt": "2026-05-29T07:00:13.560732Z"
       },
       "extras": {}
     },
@@ -4673,7 +4673,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620342Z"
+        "fetchedAt": "2026-05-29T07:00:13.560736Z"
       },
       "extras": {}
     },
@@ -4689,7 +4689,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620350Z"
+        "fetchedAt": "2026-05-29T07:00:13.560745Z"
       },
       "extras": {}
     },
@@ -4705,7 +4705,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620354Z"
+        "fetchedAt": "2026-05-29T07:00:13.560750Z"
       },
       "extras": {}
     },
@@ -4721,7 +4721,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620358Z"
+        "fetchedAt": "2026-05-29T07:00:13.560753Z"
       },
       "extras": {}
     },
@@ -4737,7 +4737,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620363Z"
+        "fetchedAt": "2026-05-29T07:00:13.560758Z"
       },
       "extras": {}
     },
@@ -4753,7 +4753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620367Z"
+        "fetchedAt": "2026-05-29T07:00:13.560764Z"
       },
       "extras": {}
     },
@@ -4769,7 +4769,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620374Z"
+        "fetchedAt": "2026-05-29T07:00:13.560769Z"
       },
       "extras": {}
     },
@@ -4785,7 +4785,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620378Z"
+        "fetchedAt": "2026-05-29T07:00:13.560773Z"
       },
       "extras": {}
     },
@@ -4801,7 +4801,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620385Z"
+        "fetchedAt": "2026-05-29T07:00:13.560778Z"
       },
       "extras": {}
     },
@@ -4817,7 +4817,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620389Z"
+        "fetchedAt": "2026-05-29T07:00:13.560782Z"
       },
       "extras": {}
     },
@@ -4833,7 +4833,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620393Z"
+        "fetchedAt": "2026-05-29T07:00:13.560788Z"
       },
       "extras": {}
     },
@@ -4849,7 +4849,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620397Z"
+        "fetchedAt": "2026-05-29T07:00:13.560794Z"
       },
       "extras": {}
     },
@@ -4865,7 +4865,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620402Z"
+        "fetchedAt": "2026-05-29T07:00:13.560798Z"
       },
       "extras": {}
     },
@@ -4881,7 +4881,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620406Z"
+        "fetchedAt": "2026-05-29T07:00:13.560802Z"
       },
       "extras": {}
     },
@@ -4892,12 +4892,12 @@
       "isinDividendReinvestment": "-",
       "name": "Mirae Asset Liquid Fund - Direct Plan - Growth",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 2940.3445,
-      "navDate": "27-May-2026",
+      "nav": 2940.8728,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620411Z"
+        "fetchedAt": "2026-05-29T07:00:13.560807Z"
       },
       "extras": {}
     },
@@ -4908,12 +4908,12 @@
       "isinDividendReinvestment": "INF769K01CP4",
       "name": "Mirae Asset Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1216.2089,
-      "navDate": "27-May-2026",
+      "nav": 1216.4279,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620416Z"
+        "fetchedAt": "2026-05-29T07:00:13.560811Z"
       },
       "extras": {}
     },
@@ -4925,11 +4925,11 @@
       "name": "Mirae Asset Liquid Fund - Direct Plan -Daily IDCW",
       "category": "Mirae Asset Mutual Fund",
       "nav": 1075.8332,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620420Z"
+        "fetchedAt": "2026-05-29T07:00:13.560816Z"
       },
       "extras": {}
     },
@@ -4940,12 +4940,12 @@
       "isinDividendReinvestment": "INF769K01CQ2",
       "name": "Mirae Asset Liquid Fund - Direct Plan -Monthly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1135.0013,
-      "navDate": "27-May-2026",
+      "nav": 1135.2052,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620424Z"
+        "fetchedAt": "2026-05-29T07:00:13.560820Z"
       },
       "extras": {}
     },
@@ -4957,11 +4957,11 @@
       "name": "Mirae Asset Liquid Fund - Regular - Daily IDCW",
       "category": "Mirae Asset Mutual Fund",
       "nav": 1066.4347,
-      "navDate": "27-May-2026",
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620428Z"
+        "fetchedAt": "2026-05-29T07:00:13.560824Z"
       },
       "extras": {}
     },
@@ -4972,12 +4972,12 @@
       "isinDividendReinvestment": "-",
       "name": "Mirae Asset Liquid Fund - Regular Plan - Growth",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 2887.6549,
-      "navDate": "27-May-2026",
+      "nav": 2888.1656,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620436Z"
+        "fetchedAt": "2026-05-29T07:00:13.560828Z"
       },
       "extras": {}
     },
@@ -4988,12 +4988,12 @@
       "isinDividendReinvestment": "INF769K01820",
       "name": "Mirae Asset Liquid Fund - Regular Plan - Monthly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1152.6535,
-      "navDate": "27-May-2026",
+      "nav": 1152.8573,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620441Z"
+        "fetchedAt": "2026-05-29T07:00:13.560833Z"
       },
       "extras": {}
     },
@@ -5004,118 +5004,118 @@
       "isinDividendReinvestment": "INF769K01812",
       "name": "Mirae Asset Liquid Fund - Regular Plan - Weekly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1152.5501,
-      "navDate": "27-May-2026",
+      "nav": 1152.7546,
+      "navDate": "28-May-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-05-28T11:01:54.620447Z"
+        "fetchedAt": "2026-05-29T07:00:13.560839Z"
       },
       "extras": {}
     }
   ],
   "fx": [
     {
-      "name": "USD/INR",
-      "pair": "USDINR",
-      "symbol": "USDINR=X",
-      "value": "₹95.6800",
-      "rate": 95.68000030517578,
-      "change": "-0.2250",
-      "changePercent": "-0.23",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.246201Z"
-    },
-    {
       "name": "OMR/INR",
       "pair": "OMRINR",
       "symbol": "OMRINR=X",
-      "value": "₹248.0200",
-      "rate": 248.02000427246094,
+      "value": "₹248.0100",
+      "rate": 248.00999450683594,
       "change": "0.0000",
       "changePercent": "0.00",
       "direction": "up",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.290068Z"
-    },
-    {
-      "name": "EUR/INR",
-      "pair": "EURINR",
-      "symbol": "EURINR=X",
-      "value": "₹111.1386",
-      "rate": 111.13860321044922,
-      "change": "-0.1564",
-      "changePercent": "-0.14",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.296323Z"
-    },
-    {
-      "name": "GBP/INR",
-      "pair": "GBPINR",
-      "symbol": "GBPINR=X",
-      "value": "₹128.2253",
-      "rate": 128.2252960205078,
-      "change": "-0.0166",
-      "changePercent": "-0.01",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.302346Z"
+      "asOf": "2026-05-29T07:00:10.200309Z"
     },
     {
       "name": "JPY/INR",
       "pair": "JPYINR",
       "symbol": "JPYINR=X",
-      "value": "₹0.5996",
-      "rate": 0.5996099710464478,
-      "change": "-0.0009",
-      "changePercent": "-0.15",
+      "value": "₹0.5989",
+      "rate": 0.5988500118255615,
+      "change": "-0.0005",
+      "changePercent": "-0.08",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-05-28T11:01:51.317437Z"
+      "asOf": "2026-05-29T07:00:10.234924Z"
+    },
+    {
+      "name": "GBP/INR",
+      "pair": "GBPINR",
+      "symbol": "GBPINR=X",
+      "value": "₹128.1657",
+      "rate": 128.1656951904297,
+      "change": "-0.7940",
+      "changePercent": "-0.62",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-29T07:00:10.241501Z"
+    },
+    {
+      "name": "USD/INR",
+      "pair": "USDINR",
+      "symbol": "USDINR=X",
+      "value": "₹95.3550",
+      "rate": 95.3550033569336,
+      "change": "-0.6939",
+      "changePercent": "-0.72",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-29T07:00:10.273163Z"
+    },
+    {
+      "name": "EUR/INR",
+      "pair": "EURINR",
+      "symbol": "EURINR=X",
+      "value": "₹111.1173",
+      "rate": 111.11730194091797,
+      "change": "0.0083",
+      "changePercent": "0.01",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-05-29T07:00:10.324155Z"
     }
   ],
   "commodities": [
     {
       "name": "Gold",
       "symbol": "GC=F",
-      "value": "$4413.90",
+      "value": "$4548.20",
       "unit": "$/oz",
-      "change": "-33.60",
-      "changePercent": "-0.76",
-      "direction": "down",
-      "source": "yahoo-yfinance"
-    },
-    {
-      "name": "Crude Oil",
-      "symbol": "CL=F",
-      "value": "$90.89",
-      "unit": "$/bbl",
-      "change": "2.21",
-      "changePercent": "2.49",
+      "change": "48.90",
+      "changePercent": "1.09",
       "direction": "up",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Silver",
       "symbol": "SI=F",
-      "value": "$73.35",
+      "value": "$75.88",
       "unit": "$/oz",
-      "change": "-1.25",
-      "changePercent": "-1.67",
+      "change": "0.23",
+      "changePercent": "0.30",
+      "direction": "up",
+      "source": "yahoo-yfinance"
+    },
+    {
+      "name": "Crude Oil",
+      "symbol": "CL=F",
+      "value": "$87.55",
+      "unit": "$/bbl",
+      "change": "-1.35",
+      "changePercent": "-1.52",
       "direction": "down",
       "source": "yahoo-yfinance"
     }
   ],
   "sourceHealth": {
     "schemaVersion": "1.0.0",
-    "generatedAt": "2026-05-28T11:03:34.658721Z",
+    "generatedAt": "2026-05-29T07:01:53.155874Z",
     "sections": {
       "indices": {
         "status": "ok",
