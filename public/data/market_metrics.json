@@ -1,19 +1,19 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-06-01T08:43:23.239807Z",
+  "generatedAt": "2026-06-01T15:32:28.891876Z",
   "asOf": {
-    "equities": "2026-06-01T08:43:23.239810Z",
+    "equities": "2026-06-01T15:32:28.891879Z",
     "mutualFunds": "29-May-2026",
-    "fx": "2026-06-01T08:43:23.239813Z"
+    "fx": "2026-06-01T15:32:28.891882Z"
   },
   "equities": {
     "indices": [
       {
         "name": "NIFTY 50",
         "symbol": "^NSEI",
-        "value": "23,430.10",
-        "change": "-117.65",
-        "changePercent": "-0.50",
+        "value": "23,382.60",
+        "change": "-165.15",
+        "changePercent": "-0.70",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -21,9 +21,9 @@
       {
         "name": "SENSEX",
         "symbol": "^BSESN",
-        "value": "74,512.73",
-        "change": "-263.02",
-        "changePercent": "-0.35",
+        "value": "74,267.34",
+        "change": "-508.40",
+        "changePercent": "-0.68",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -31,9 +31,9 @@
       {
         "name": "NIFTY BANK",
         "symbol": "^NSEBANK",
-        "value": "53,596.60",
-        "change": "-642.60",
-        "changePercent": "-1.18",
+        "value": "53,643.10",
+        "change": "-596.10",
+        "changePercent": "-1.10",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -41,9 +41,9 @@
       {
         "name": "NIFTY IT",
         "symbol": "^CNXIT",
-        "value": "30,075.25",
-        "change": "995.10",
-        "changePercent": "3.42",
+        "value": "29,854.25",
+        "change": "774.10",
+        "changePercent": "2.66",
         "direction": "up",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -51,9 +51,9 @@
       {
         "name": "NIFTY AUTO",
         "symbol": "^CNXAUTO",
-        "value": "26,003.80",
-        "change": "-334.65",
-        "changePercent": "-1.27",
+        "value": "25,891.90",
+        "change": "-446.55",
+        "changePercent": "-1.70",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -61,9 +61,9 @@
       {
         "name": "NIFTY PHARMA",
         "symbol": "^CNXPHARMA",
-        "value": "24,263.55",
-        "change": "-82.25",
-        "changePercent": "-0.34",
+        "value": "24,214.25",
+        "change": "-131.55",
+        "changePercent": "-0.54",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -71,38 +71,11 @@
     ],
     "globalIndices": [
       {
-        "name": "S&P 500",
-        "symbol": "^GSPC",
-        "value": "7,580.06",
-        "change": "16.43",
-        "changePercent": "0.22",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "name": "DOW JONES",
-        "symbol": "^DJI",
-        "value": "51,032.46",
-        "change": "363.49",
-        "changePercent": "0.72",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
         "name": "NASDAQ",
         "symbol": "^IXIC",
-        "value": "26,972.62",
-        "change": "55.15",
-        "changePercent": "0.20",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "name": "NIKKEI 225",
-        "symbol": "^N225",
-        "value": "66,934.33",
-        "change": "604.83",
-        "changePercent": "0.91",
+        "value": "27,057.60",
+        "change": "84.98",
+        "changePercent": "0.32",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
@@ -114,39 +87,58 @@
         "changePercent": "0.86",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "S&P 500",
+        "symbol": "^GSPC",
+        "value": "7,588.78",
+        "change": "8.72",
+        "changePercent": "0.12",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "NIKKEI 225",
+        "symbol": "^N225",
+        "value": "nan",
+        "change": "nan",
+        "changePercent": "nan",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "DOW JONES",
+        "symbol": "^DJI",
+        "value": "50,947.82",
+        "change": "-84.64",
+        "changePercent": "-0.17",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
       }
     ],
     "movers": {
       "gainers": [
         {
           "symbol": "INFY",
-          "price": "1211.40",
-          "change": "50.50",
-          "changePercent": "4.35",
+          "price": "1202.50",
+          "change": "41.60",
+          "changePercent": "3.58",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "TCS",
-          "price": "2311.00",
-          "change": "52.10",
-          "changePercent": "2.31",
+          "price": "2297.40",
+          "change": "38.50",
+          "changePercent": "1.70",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "WIPRO",
-          "price": "206.69",
-          "change": "2.44",
-          "changePercent": "1.19",
-          "direction": "up",
-          "sourceMode": "yahoo-yfinance"
-        },
-        {
-          "symbol": "SUNPHARMA",
-          "price": "1805.60",
-          "change": "6.40",
-          "changePercent": "0.36",
+          "price": "206.41",
+          "change": "2.16",
+          "changePercent": "1.06",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         }
@@ -154,41 +146,41 @@
       "losers": [
         {
           "symbol": "HINDUNILVR",
-          "price": "2100.50",
-          "change": "-53.00",
-          "changePercent": "-2.46",
+          "price": "2084.30",
+          "change": "-69.20",
+          "changePercent": "-3.21",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "ITC",
-          "price": "281.00",
-          "change": "-5.90",
-          "changePercent": "-2.06",
-          "direction": "down",
-          "sourceMode": "yahoo-yfinance"
-        },
-        {
-          "symbol": "KOTAKBANK",
-          "price": "377.35",
-          "change": "-6.85",
-          "changePercent": "-1.78",
+          "price": "279.65",
+          "change": "-7.25",
+          "changePercent": "-2.53",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "BAJFINANCE",
-          "price": "892.50",
-          "change": "-15.75",
-          "changePercent": "-1.73",
+          "price": "889.05",
+          "change": "-19.20",
+          "changePercent": "-2.11",
+          "direction": "down",
+          "sourceMode": "yahoo-yfinance"
+        },
+        {
+          "symbol": "KOTAKBANK",
+          "price": "377.40",
+          "change": "-6.80",
+          "changePercent": "-1.77",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "LT",
-          "price": "4013.50",
-          "change": "-63.00",
-          "changePercent": "-1.55",
+          "price": "4010.80",
+          "change": "-65.70",
+          "changePercent": "-1.61",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         }
@@ -197,7 +189,7 @@
     },
     "eodBhavcopy": {
       "schemaVersion": "2.0.0",
-      "generatedAt": "2026-06-01T08:43:23.239221Z",
+      "generatedAt": "2026-06-01T15:32:28.891342Z",
       "nseRows": 0,
       "bseRows": 0,
       "sampleNse": [],
@@ -217,7 +209,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.624704Z"
+        "fetchedAt": "2026-06-01T15:30:47.749279Z"
       },
       "extras": {}
     },
@@ -233,7 +225,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.625273Z"
+        "fetchedAt": "2026-06-01T15:30:47.749793Z"
       },
       "extras": {}
     },
@@ -249,7 +241,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.625337Z"
+        "fetchedAt": "2026-06-01T15:30:47.749854Z"
       },
       "extras": {}
     },
@@ -265,7 +257,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.625369Z"
+        "fetchedAt": "2026-06-01T15:30:47.749886Z"
       },
       "extras": {}
     },
@@ -281,7 +273,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.626696Z"
+        "fetchedAt": "2026-06-01T15:30:47.750972Z"
       },
       "extras": {}
     },
@@ -297,7 +289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.626762Z"
+        "fetchedAt": "2026-06-01T15:30:47.751037Z"
       },
       "extras": {}
     },
@@ -313,7 +305,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.626981Z"
+        "fetchedAt": "2026-06-01T15:30:47.751238Z"
       },
       "extras": {}
     },
@@ -329,7 +321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.628070Z"
+        "fetchedAt": "2026-06-01T15:30:47.752198Z"
       },
       "extras": {}
     },
@@ -345,7 +337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.628776Z"
+        "fetchedAt": "2026-06-01T15:30:47.752834Z"
       },
       "extras": {}
     },
@@ -361,7 +353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.628868Z"
+        "fetchedAt": "2026-06-01T15:30:47.752903Z"
       },
       "extras": {}
     },
@@ -377,7 +369,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.629016Z"
+        "fetchedAt": "2026-06-01T15:30:47.753046Z"
       },
       "extras": {}
     },
@@ -393,7 +385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.629371Z"
+        "fetchedAt": "2026-06-01T15:30:47.753361Z"
       },
       "extras": {}
     },
@@ -409,7 +401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.629479Z"
+        "fetchedAt": "2026-06-01T15:30:47.753457Z"
       },
       "extras": {}
     },
@@ -425,7 +417,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630107Z"
+        "fetchedAt": "2026-06-01T15:30:47.754037Z"
       },
       "extras": {}
     },
@@ -441,7 +433,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630631Z"
+        "fetchedAt": "2026-06-01T15:30:47.754496Z"
       },
       "extras": {}
     },
@@ -457,7 +449,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630636Z"
+        "fetchedAt": "2026-06-01T15:30:47.754500Z"
       },
       "extras": {}
     },
@@ -473,7 +465,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630640Z"
+        "fetchedAt": "2026-06-01T15:30:47.754505Z"
       },
       "extras": {}
     },
@@ -489,7 +481,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630644Z"
+        "fetchedAt": "2026-06-01T15:30:47.754510Z"
       },
       "extras": {}
     },
@@ -505,7 +497,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630648Z"
+        "fetchedAt": "2026-06-01T15:30:47.754514Z"
       },
       "extras": {}
     },
@@ -521,7 +513,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630653Z"
+        "fetchedAt": "2026-06-01T15:30:47.754518Z"
       },
       "extras": {}
     },
@@ -537,7 +529,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630658Z"
+        "fetchedAt": "2026-06-01T15:30:47.754523Z"
       },
       "extras": {}
     },
@@ -553,7 +545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630664Z"
+        "fetchedAt": "2026-06-01T15:30:47.754527Z"
       },
       "extras": {}
     },
@@ -569,7 +561,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630671Z"
+        "fetchedAt": "2026-06-01T15:30:47.754531Z"
       },
       "extras": {}
     },
@@ -585,7 +577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630675Z"
+        "fetchedAt": "2026-06-01T15:30:47.754535Z"
       },
       "extras": {}
     },
@@ -601,7 +593,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630680Z"
+        "fetchedAt": "2026-06-01T15:30:47.754539Z"
       },
       "extras": {}
     },
@@ -617,7 +609,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630684Z"
+        "fetchedAt": "2026-06-01T15:30:47.754543Z"
       },
       "extras": {}
     },
@@ -633,7 +625,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630688Z"
+        "fetchedAt": "2026-06-01T15:30:47.754548Z"
       },
       "extras": {}
     },
@@ -649,7 +641,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630692Z"
+        "fetchedAt": "2026-06-01T15:30:47.754555Z"
       },
       "extras": {}
     },
@@ -665,7 +657,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630696Z"
+        "fetchedAt": "2026-06-01T15:30:47.754559Z"
       },
       "extras": {}
     },
@@ -681,7 +673,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630701Z"
+        "fetchedAt": "2026-06-01T15:30:47.754562Z"
       },
       "extras": {}
     },
@@ -697,7 +689,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630706Z"
+        "fetchedAt": "2026-06-01T15:30:47.754567Z"
       },
       "extras": {}
     },
@@ -713,7 +705,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630710Z"
+        "fetchedAt": "2026-06-01T15:30:47.754571Z"
       },
       "extras": {}
     },
@@ -729,7 +721,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630718Z"
+        "fetchedAt": "2026-06-01T15:30:47.754577Z"
       },
       "extras": {}
     },
@@ -745,7 +737,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630725Z"
+        "fetchedAt": "2026-06-01T15:30:47.754581Z"
       },
       "extras": {}
     },
@@ -761,7 +753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630729Z"
+        "fetchedAt": "2026-06-01T15:30:47.754584Z"
       },
       "extras": {}
     },
@@ -777,7 +769,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630733Z"
+        "fetchedAt": "2026-06-01T15:30:47.754588Z"
       },
       "extras": {}
     },
@@ -793,7 +785,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630737Z"
+        "fetchedAt": "2026-06-01T15:30:47.754592Z"
       },
       "extras": {}
     },
@@ -809,7 +801,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630742Z"
+        "fetchedAt": "2026-06-01T15:30:47.754598Z"
       },
       "extras": {}
     },
@@ -825,7 +817,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630746Z"
+        "fetchedAt": "2026-06-01T15:30:47.754602Z"
       },
       "extras": {}
     },
@@ -841,7 +833,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630750Z"
+        "fetchedAt": "2026-06-01T15:30:47.754605Z"
       },
       "extras": {}
     },
@@ -857,7 +849,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630754Z"
+        "fetchedAt": "2026-06-01T15:30:47.754610Z"
       },
       "extras": {}
     },
@@ -873,7 +865,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630758Z"
+        "fetchedAt": "2026-06-01T15:30:47.754613Z"
       },
       "extras": {}
     },
@@ -889,7 +881,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630764Z"
+        "fetchedAt": "2026-06-01T15:30:47.754617Z"
       },
       "extras": {}
     },
@@ -905,7 +897,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630768Z"
+        "fetchedAt": "2026-06-01T15:30:47.754621Z"
       },
       "extras": {}
     },
@@ -921,7 +913,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630774Z"
+        "fetchedAt": "2026-06-01T15:30:47.754626Z"
       },
       "extras": {}
     },
@@ -937,7 +929,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630778Z"
+        "fetchedAt": "2026-06-01T15:30:47.754631Z"
       },
       "extras": {}
     },
@@ -953,7 +945,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630782Z"
+        "fetchedAt": "2026-06-01T15:30:47.754635Z"
       },
       "extras": {}
     },
@@ -969,7 +961,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630786Z"
+        "fetchedAt": "2026-06-01T15:30:47.754639Z"
       },
       "extras": {}
     },
@@ -985,7 +977,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630790Z"
+        "fetchedAt": "2026-06-01T15:30:47.754644Z"
       },
       "extras": {}
     },
@@ -1001,7 +993,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630794Z"
+        "fetchedAt": "2026-06-01T15:30:47.754648Z"
       },
       "extras": {}
     },
@@ -1017,7 +1009,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630798Z"
+        "fetchedAt": "2026-06-01T15:30:47.754652Z"
       },
       "extras": {}
     },
@@ -1033,7 +1025,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630802Z"
+        "fetchedAt": "2026-06-01T15:30:47.754656Z"
       },
       "extras": {}
     },
@@ -1049,7 +1041,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630809Z"
+        "fetchedAt": "2026-06-01T15:30:47.754660Z"
       },
       "extras": {}
     },
@@ -1065,7 +1057,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630817Z"
+        "fetchedAt": "2026-06-01T15:30:47.754664Z"
       },
       "extras": {}
     },
@@ -1081,7 +1073,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630822Z"
+        "fetchedAt": "2026-06-01T15:30:47.754668Z"
       },
       "extras": {}
     },
@@ -1097,7 +1089,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630826Z"
+        "fetchedAt": "2026-06-01T15:30:47.754672Z"
       },
       "extras": {}
     },
@@ -1113,7 +1105,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630830Z"
+        "fetchedAt": "2026-06-01T15:30:47.754676Z"
       },
       "extras": {}
     },
@@ -1129,7 +1121,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630835Z"
+        "fetchedAt": "2026-06-01T15:30:47.754680Z"
       },
       "extras": {}
     },
@@ -1145,7 +1137,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630840Z"
+        "fetchedAt": "2026-06-01T15:30:47.754687Z"
       },
       "extras": {}
     },
@@ -1161,7 +1153,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630844Z"
+        "fetchedAt": "2026-06-01T15:30:47.754691Z"
       },
       "extras": {}
     },
@@ -1177,7 +1169,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630848Z"
+        "fetchedAt": "2026-06-01T15:30:47.754695Z"
       },
       "extras": {}
     },
@@ -1193,7 +1185,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630852Z"
+        "fetchedAt": "2026-06-01T15:30:47.754699Z"
       },
       "extras": {}
     },
@@ -1209,7 +1201,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630859Z"
+        "fetchedAt": "2026-06-01T15:30:47.754703Z"
       },
       "extras": {}
     },
@@ -1225,7 +1217,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630863Z"
+        "fetchedAt": "2026-06-01T15:30:47.754707Z"
       },
       "extras": {}
     },
@@ -1241,7 +1233,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630869Z"
+        "fetchedAt": "2026-06-01T15:30:47.754713Z"
       },
       "extras": {}
     },
@@ -1257,7 +1249,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630874Z"
+        "fetchedAt": "2026-06-01T15:30:47.754730Z"
       },
       "extras": {}
     },
@@ -1273,7 +1265,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630878Z"
+        "fetchedAt": "2026-06-01T15:30:47.754734Z"
       },
       "extras": {}
     },
@@ -1289,7 +1281,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630883Z"
+        "fetchedAt": "2026-06-01T15:30:47.754742Z"
       },
       "extras": {}
     },
@@ -1305,7 +1297,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630887Z"
+        "fetchedAt": "2026-06-01T15:30:47.754746Z"
       },
       "extras": {}
     },
@@ -1321,7 +1313,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630894Z"
+        "fetchedAt": "2026-06-01T15:30:47.754750Z"
       },
       "extras": {}
     },
@@ -1337,7 +1329,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630916Z"
+        "fetchedAt": "2026-06-01T15:30:47.754754Z"
       },
       "extras": {}
     },
@@ -1353,7 +1345,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630922Z"
+        "fetchedAt": "2026-06-01T15:30:47.754758Z"
       },
       "extras": {}
     },
@@ -1369,7 +1361,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630930Z"
+        "fetchedAt": "2026-06-01T15:30:47.754762Z"
       },
       "extras": {}
     },
@@ -1385,7 +1377,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630935Z"
+        "fetchedAt": "2026-06-01T15:30:47.754766Z"
       },
       "extras": {}
     },
@@ -1401,7 +1393,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630939Z"
+        "fetchedAt": "2026-06-01T15:30:47.754769Z"
       },
       "extras": {}
     },
@@ -1417,7 +1409,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630943Z"
+        "fetchedAt": "2026-06-01T15:30:47.754773Z"
       },
       "extras": {}
     },
@@ -1433,7 +1425,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630947Z"
+        "fetchedAt": "2026-06-01T15:30:47.754777Z"
       },
       "extras": {}
     },
@@ -1449,7 +1441,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630951Z"
+        "fetchedAt": "2026-06-01T15:30:47.754783Z"
       },
       "extras": {}
     },
@@ -1465,7 +1457,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630956Z"
+        "fetchedAt": "2026-06-01T15:30:47.754787Z"
       },
       "extras": {}
     },
@@ -1481,7 +1473,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630960Z"
+        "fetchedAt": "2026-06-01T15:30:47.754790Z"
       },
       "extras": {}
     },
@@ -1497,7 +1489,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630964Z"
+        "fetchedAt": "2026-06-01T15:30:47.754794Z"
       },
       "extras": {}
     },
@@ -1513,7 +1505,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630970Z"
+        "fetchedAt": "2026-06-01T15:30:47.754798Z"
       },
       "extras": {}
     },
@@ -1529,7 +1521,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630976Z"
+        "fetchedAt": "2026-06-01T15:30:47.754803Z"
       },
       "extras": {}
     },
@@ -1545,7 +1537,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630980Z"
+        "fetchedAt": "2026-06-01T15:30:47.754807Z"
       },
       "extras": {}
     },
@@ -1561,7 +1553,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630984Z"
+        "fetchedAt": "2026-06-01T15:30:47.754812Z"
       },
       "extras": {}
     },
@@ -1577,7 +1569,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630988Z"
+        "fetchedAt": "2026-06-01T15:30:47.754816Z"
       },
       "extras": {}
     },
@@ -1593,7 +1585,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630992Z"
+        "fetchedAt": "2026-06-01T15:30:47.754820Z"
       },
       "extras": {}
     },
@@ -1609,7 +1601,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.630996Z"
+        "fetchedAt": "2026-06-01T15:30:47.754824Z"
       },
       "extras": {}
     },
@@ -1625,7 +1617,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631001Z"
+        "fetchedAt": "2026-06-01T15:30:47.754829Z"
       },
       "extras": {}
     },
@@ -1641,7 +1633,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631005Z"
+        "fetchedAt": "2026-06-01T15:30:47.754833Z"
       },
       "extras": {}
     },
@@ -1657,7 +1649,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631009Z"
+        "fetchedAt": "2026-06-01T15:30:47.754837Z"
       },
       "extras": {}
     },
@@ -1673,7 +1665,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631013Z"
+        "fetchedAt": "2026-06-01T15:30:47.754842Z"
       },
       "extras": {}
     },
@@ -1689,7 +1681,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631021Z"
+        "fetchedAt": "2026-06-01T15:30:47.754849Z"
       },
       "extras": {}
     },
@@ -1705,7 +1697,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631029Z"
+        "fetchedAt": "2026-06-01T15:30:47.754852Z"
       },
       "extras": {}
     },
@@ -1721,7 +1713,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631033Z"
+        "fetchedAt": "2026-06-01T15:30:47.754856Z"
       },
       "extras": {}
     },
@@ -1737,7 +1729,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631037Z"
+        "fetchedAt": "2026-06-01T15:30:47.754860Z"
       },
       "extras": {}
     },
@@ -1753,7 +1745,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631042Z"
+        "fetchedAt": "2026-06-01T15:30:47.754864Z"
       },
       "extras": {}
     },
@@ -1769,7 +1761,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631046Z"
+        "fetchedAt": "2026-06-01T15:30:47.754868Z"
       },
       "extras": {}
     },
@@ -1785,7 +1777,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631050Z"
+        "fetchedAt": "2026-06-01T15:30:47.754874Z"
       },
       "extras": {}
     },
@@ -1801,7 +1793,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631055Z"
+        "fetchedAt": "2026-06-01T15:30:47.754878Z"
       },
       "extras": {}
     },
@@ -1817,7 +1809,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631059Z"
+        "fetchedAt": "2026-06-01T15:30:47.754882Z"
       },
       "extras": {}
     },
@@ -1833,7 +1825,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631063Z"
+        "fetchedAt": "2026-06-01T15:30:47.754886Z"
       },
       "extras": {}
     },
@@ -1849,7 +1841,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631067Z"
+        "fetchedAt": "2026-06-01T15:30:47.754890Z"
       },
       "extras": {}
     },
@@ -1865,7 +1857,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631074Z"
+        "fetchedAt": "2026-06-01T15:30:47.754893Z"
       },
       "extras": {}
     },
@@ -1881,7 +1873,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631078Z"
+        "fetchedAt": "2026-06-01T15:30:47.754899Z"
       },
       "extras": {}
     },
@@ -1897,7 +1889,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631082Z"
+        "fetchedAt": "2026-06-01T15:30:47.754904Z"
       },
       "extras": {}
     },
@@ -1913,7 +1905,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631087Z"
+        "fetchedAt": "2026-06-01T15:30:47.754908Z"
       },
       "extras": {}
     },
@@ -1929,7 +1921,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631092Z"
+        "fetchedAt": "2026-06-01T15:30:47.754913Z"
       },
       "extras": {}
     },
@@ -1945,7 +1937,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631096Z"
+        "fetchedAt": "2026-06-01T15:30:47.754917Z"
       },
       "extras": {}
     },
@@ -1961,7 +1953,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631101Z"
+        "fetchedAt": "2026-06-01T15:30:47.754922Z"
       },
       "extras": {}
     },
@@ -1977,7 +1969,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631105Z"
+        "fetchedAt": "2026-06-01T15:30:47.754926Z"
       },
       "extras": {}
     },
@@ -1993,7 +1985,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631112Z"
+        "fetchedAt": "2026-06-01T15:30:47.754931Z"
       },
       "extras": {}
     },
@@ -2009,7 +2001,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631116Z"
+        "fetchedAt": "2026-06-01T15:30:47.754935Z"
       },
       "extras": {}
     },
@@ -2025,7 +2017,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631123Z"
+        "fetchedAt": "2026-06-01T15:30:47.754938Z"
       },
       "extras": {}
     },
@@ -2041,7 +2033,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631127Z"
+        "fetchedAt": "2026-06-01T15:30:47.754943Z"
       },
       "extras": {}
     },
@@ -2057,7 +2049,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631134Z"
+        "fetchedAt": "2026-06-01T15:30:47.754948Z"
       },
       "extras": {}
     },
@@ -2073,7 +2065,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631139Z"
+        "fetchedAt": "2026-06-01T15:30:47.754952Z"
       },
       "extras": {}
     },
@@ -2089,7 +2081,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631153Z"
+        "fetchedAt": "2026-06-01T15:30:47.754957Z"
       },
       "extras": {}
     },
@@ -2105,7 +2097,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631158Z"
+        "fetchedAt": "2026-06-01T15:30:47.754961Z"
       },
       "extras": {}
     },
@@ -2121,7 +2113,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631162Z"
+        "fetchedAt": "2026-06-01T15:30:47.754967Z"
       },
       "extras": {}
     },
@@ -2137,7 +2129,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631167Z"
+        "fetchedAt": "2026-06-01T15:30:47.754970Z"
       },
       "extras": {}
     },
@@ -2153,7 +2145,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631171Z"
+        "fetchedAt": "2026-06-01T15:30:47.754974Z"
       },
       "extras": {}
     },
@@ -2169,7 +2161,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631175Z"
+        "fetchedAt": "2026-06-01T15:30:47.754978Z"
       },
       "extras": {}
     },
@@ -2185,7 +2177,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631182Z"
+        "fetchedAt": "2026-06-01T15:30:47.754992Z"
       },
       "extras": {}
     },
@@ -2201,7 +2193,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631186Z"
+        "fetchedAt": "2026-06-01T15:30:47.754996Z"
       },
       "extras": {}
     },
@@ -2217,7 +2209,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631191Z"
+        "fetchedAt": "2026-06-01T15:30:47.755001Z"
       },
       "extras": {}
     },
@@ -2233,7 +2225,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631195Z"
+        "fetchedAt": "2026-06-01T15:30:47.755005Z"
       },
       "extras": {}
     },
@@ -2249,7 +2241,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631199Z"
+        "fetchedAt": "2026-06-01T15:30:47.755009Z"
       },
       "extras": {}
     },
@@ -2265,7 +2257,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631204Z"
+        "fetchedAt": "2026-06-01T15:30:47.755013Z"
       },
       "extras": {}
     },
@@ -2281,7 +2273,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631208Z"
+        "fetchedAt": "2026-06-01T15:30:47.755018Z"
       },
       "extras": {}
     },
@@ -2297,7 +2289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631212Z"
+        "fetchedAt": "2026-06-01T15:30:47.755022Z"
       },
       "extras": {}
     },
@@ -2313,7 +2305,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631219Z"
+        "fetchedAt": "2026-06-01T15:30:47.755026Z"
       },
       "extras": {}
     },
@@ -2329,7 +2321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631223Z"
+        "fetchedAt": "2026-06-01T15:30:47.755030Z"
       },
       "extras": {}
     },
@@ -2345,7 +2337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631230Z"
+        "fetchedAt": "2026-06-01T15:30:47.755034Z"
       },
       "extras": {}
     },
@@ -2361,7 +2353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631234Z"
+        "fetchedAt": "2026-06-01T15:30:47.755038Z"
       },
       "extras": {}
     },
@@ -2377,7 +2369,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631238Z"
+        "fetchedAt": "2026-06-01T15:30:47.755041Z"
       },
       "extras": {}
     },
@@ -2393,7 +2385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631244Z"
+        "fetchedAt": "2026-06-01T15:30:47.755045Z"
       },
       "extras": {}
     },
@@ -2409,7 +2401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631249Z"
+        "fetchedAt": "2026-06-01T15:30:47.755049Z"
       },
       "extras": {}
     },
@@ -2425,7 +2417,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631253Z"
+        "fetchedAt": "2026-06-01T15:30:47.755055Z"
       },
       "extras": {}
     },
@@ -2441,7 +2433,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631258Z"
+        "fetchedAt": "2026-06-01T15:30:47.755059Z"
       },
       "extras": {}
     },
@@ -2457,7 +2449,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631262Z"
+        "fetchedAt": "2026-06-01T15:30:47.755063Z"
       },
       "extras": {}
     },
@@ -2473,7 +2465,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631266Z"
+        "fetchedAt": "2026-06-01T15:30:47.755067Z"
       },
       "extras": {}
     },
@@ -2489,7 +2481,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631273Z"
+        "fetchedAt": "2026-06-01T15:30:47.755072Z"
       },
       "extras": {}
     },
@@ -2505,7 +2497,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631277Z"
+        "fetchedAt": "2026-06-01T15:30:47.755077Z"
       },
       "extras": {}
     },
@@ -2521,7 +2513,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631281Z"
+        "fetchedAt": "2026-06-01T15:30:47.755081Z"
       },
       "extras": {}
     },
@@ -2537,7 +2529,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631286Z"
+        "fetchedAt": "2026-06-01T15:30:47.755086Z"
       },
       "extras": {}
     },
@@ -2553,7 +2545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631293Z"
+        "fetchedAt": "2026-06-01T15:30:47.755092Z"
       },
       "extras": {}
     },
@@ -2569,7 +2561,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631297Z"
+        "fetchedAt": "2026-06-01T15:30:47.755096Z"
       },
       "extras": {}
     },
@@ -2585,7 +2577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631301Z"
+        "fetchedAt": "2026-06-01T15:30:47.755102Z"
       },
       "extras": {}
     },
@@ -2601,7 +2593,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631305Z"
+        "fetchedAt": "2026-06-01T15:30:47.755106Z"
       },
       "extras": {}
     },
@@ -2617,7 +2609,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631312Z"
+        "fetchedAt": "2026-06-01T15:30:47.755110Z"
       },
       "extras": {}
     },
@@ -2633,7 +2625,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631316Z"
+        "fetchedAt": "2026-06-01T15:30:47.755114Z"
       },
       "extras": {}
     },
@@ -2649,7 +2641,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631321Z"
+        "fetchedAt": "2026-06-01T15:30:47.755119Z"
       },
       "extras": {}
     },
@@ -2665,7 +2657,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631327Z"
+        "fetchedAt": "2026-06-01T15:30:47.755123Z"
       },
       "extras": {}
     },
@@ -2681,7 +2673,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631331Z"
+        "fetchedAt": "2026-06-01T15:30:47.755127Z"
       },
       "extras": {}
     },
@@ -2697,7 +2689,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631336Z"
+        "fetchedAt": "2026-06-01T15:30:47.755131Z"
       },
       "extras": {}
     },
@@ -2713,7 +2705,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631340Z"
+        "fetchedAt": "2026-06-01T15:30:47.755135Z"
       },
       "extras": {}
     },
@@ -2729,7 +2721,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631344Z"
+        "fetchedAt": "2026-06-01T15:30:47.755139Z"
       },
       "extras": {}
     },
@@ -2745,7 +2737,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631348Z"
+        "fetchedAt": "2026-06-01T15:30:47.755143Z"
       },
       "extras": {}
     },
@@ -2761,7 +2753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631352Z"
+        "fetchedAt": "2026-06-01T15:30:47.755149Z"
       },
       "extras": {}
     },
@@ -2777,7 +2769,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631357Z"
+        "fetchedAt": "2026-06-01T15:30:47.755153Z"
       },
       "extras": {}
     },
@@ -2793,7 +2785,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631362Z"
+        "fetchedAt": "2026-06-01T15:30:47.755158Z"
       },
       "extras": {}
     },
@@ -2809,7 +2801,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631367Z"
+        "fetchedAt": "2026-06-01T15:30:47.755164Z"
       },
       "extras": {}
     },
@@ -2825,7 +2817,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631374Z"
+        "fetchedAt": "2026-06-01T15:30:47.755168Z"
       },
       "extras": {}
     },
@@ -2841,7 +2833,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631382Z"
+        "fetchedAt": "2026-06-01T15:30:47.755173Z"
       },
       "extras": {}
     },
@@ -2857,7 +2849,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631387Z"
+        "fetchedAt": "2026-06-01T15:30:47.755177Z"
       },
       "extras": {}
     },
@@ -2873,7 +2865,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631392Z"
+        "fetchedAt": "2026-06-01T15:30:47.755182Z"
       },
       "extras": {}
     },
@@ -2889,7 +2881,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631397Z"
+        "fetchedAt": "2026-06-01T15:30:47.755187Z"
       },
       "extras": {}
     },
@@ -2905,7 +2897,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631405Z"
+        "fetchedAt": "2026-06-01T15:30:47.755193Z"
       },
       "extras": {}
     },
@@ -2921,7 +2913,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631410Z"
+        "fetchedAt": "2026-06-01T15:30:47.755197Z"
       },
       "extras": {}
     },
@@ -2937,7 +2929,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631416Z"
+        "fetchedAt": "2026-06-01T15:30:47.755202Z"
       },
       "extras": {}
     },
@@ -2953,7 +2945,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631421Z"
+        "fetchedAt": "2026-06-01T15:30:47.755207Z"
       },
       "extras": {}
     },
@@ -2969,7 +2961,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631427Z"
+        "fetchedAt": "2026-06-01T15:30:47.755212Z"
       },
       "extras": {}
     },
@@ -2985,7 +2977,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631433Z"
+        "fetchedAt": "2026-06-01T15:30:47.755216Z"
       },
       "extras": {}
     },
@@ -3001,7 +2993,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631437Z"
+        "fetchedAt": "2026-06-01T15:30:47.755220Z"
       },
       "extras": {}
     },
@@ -3017,7 +3009,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631441Z"
+        "fetchedAt": "2026-06-01T15:30:47.755225Z"
       },
       "extras": {}
     },
@@ -3033,7 +3025,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631446Z"
+        "fetchedAt": "2026-06-01T15:30:47.755229Z"
       },
       "extras": {}
     },
@@ -3049,7 +3041,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631450Z"
+        "fetchedAt": "2026-06-01T15:30:47.755233Z"
       },
       "extras": {}
     },
@@ -3065,7 +3057,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631456Z"
+        "fetchedAt": "2026-06-01T15:30:47.755238Z"
       },
       "extras": {}
     },
@@ -3081,7 +3073,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631463Z"
+        "fetchedAt": "2026-06-01T15:30:47.755243Z"
       },
       "extras": {}
     },
@@ -3097,7 +3089,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631467Z"
+        "fetchedAt": "2026-06-01T15:30:47.755247Z"
       },
       "extras": {}
     },
@@ -3113,7 +3105,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631471Z"
+        "fetchedAt": "2026-06-01T15:30:47.755251Z"
       },
       "extras": {}
     },
@@ -3129,7 +3121,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631477Z"
+        "fetchedAt": "2026-06-01T15:30:47.755256Z"
       },
       "extras": {}
     },
@@ -3145,7 +3137,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631483Z"
+        "fetchedAt": "2026-06-01T15:30:47.755260Z"
       },
       "extras": {}
     },
@@ -3161,7 +3153,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631488Z"
+        "fetchedAt": "2026-06-01T15:30:47.755263Z"
       },
       "extras": {}
     },
@@ -3177,7 +3169,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631494Z"
+        "fetchedAt": "2026-06-01T15:30:47.755267Z"
       },
       "extras": {}
     },
@@ -3193,7 +3185,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631498Z"
+        "fetchedAt": "2026-06-01T15:30:47.755271Z"
       },
       "extras": {}
     },
@@ -3209,7 +3201,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631502Z"
+        "fetchedAt": "2026-06-01T15:30:47.755275Z"
       },
       "extras": {}
     },
@@ -3225,7 +3217,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631508Z"
+        "fetchedAt": "2026-06-01T15:30:47.755279Z"
       },
       "extras": {}
     },
@@ -3241,7 +3233,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631530Z"
+        "fetchedAt": "2026-06-01T15:30:47.755284Z"
       },
       "extras": {}
     },
@@ -3257,7 +3249,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631534Z"
+        "fetchedAt": "2026-06-01T15:30:47.755287Z"
       },
       "extras": {}
     },
@@ -3273,7 +3265,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631539Z"
+        "fetchedAt": "2026-06-01T15:30:47.755291Z"
       },
       "extras": {}
     },
@@ -3289,7 +3281,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631543Z"
+        "fetchedAt": "2026-06-01T15:30:47.755295Z"
       },
       "extras": {}
     },
@@ -3305,7 +3297,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631549Z"
+        "fetchedAt": "2026-06-01T15:30:47.755299Z"
       },
       "extras": {}
     },
@@ -3321,7 +3313,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631555Z"
+        "fetchedAt": "2026-06-01T15:30:47.755305Z"
       },
       "extras": {}
     },
@@ -3337,7 +3329,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631559Z"
+        "fetchedAt": "2026-06-01T15:30:47.755309Z"
       },
       "extras": {}
     },
@@ -3353,7 +3345,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631563Z"
+        "fetchedAt": "2026-06-01T15:30:47.755313Z"
       },
       "extras": {}
     },
@@ -3369,7 +3361,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631567Z"
+        "fetchedAt": "2026-06-01T15:30:47.755318Z"
       },
       "extras": {}
     },
@@ -3385,7 +3377,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631572Z"
+        "fetchedAt": "2026-06-01T15:30:47.755322Z"
       },
       "extras": {}
     },
@@ -3401,7 +3393,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631576Z"
+        "fetchedAt": "2026-06-01T15:30:47.755330Z"
       },
       "extras": {}
     },
@@ -3417,7 +3409,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631580Z"
+        "fetchedAt": "2026-06-01T15:30:47.755334Z"
       },
       "extras": {}
     },
@@ -3433,7 +3425,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631584Z"
+        "fetchedAt": "2026-06-01T15:30:47.755338Z"
       },
       "extras": {}
     },
@@ -3449,7 +3441,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631588Z"
+        "fetchedAt": "2026-06-01T15:30:47.755342Z"
       },
       "extras": {}
     },
@@ -3465,7 +3457,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631595Z"
+        "fetchedAt": "2026-06-01T15:30:47.755347Z"
       },
       "extras": {}
     },
@@ -3481,7 +3473,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631602Z"
+        "fetchedAt": "2026-06-01T15:30:47.755351Z"
       },
       "extras": {}
     },
@@ -3497,7 +3489,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631610Z"
+        "fetchedAt": "2026-06-01T15:30:47.755355Z"
       },
       "extras": {}
     },
@@ -3513,7 +3505,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631615Z"
+        "fetchedAt": "2026-06-01T15:30:47.755359Z"
       },
       "extras": {}
     },
@@ -3529,7 +3521,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631623Z"
+        "fetchedAt": "2026-06-01T15:30:47.755363Z"
       },
       "extras": {}
     },
@@ -3545,7 +3537,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631627Z"
+        "fetchedAt": "2026-06-01T15:30:47.755367Z"
       },
       "extras": {}
     },
@@ -3561,7 +3553,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631632Z"
+        "fetchedAt": "2026-06-01T15:30:47.755372Z"
       },
       "extras": {}
     },
@@ -3577,7 +3569,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631636Z"
+        "fetchedAt": "2026-06-01T15:30:47.755376Z"
       },
       "extras": {}
     },
@@ -3593,7 +3585,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631640Z"
+        "fetchedAt": "2026-06-01T15:30:47.755380Z"
       },
       "extras": {}
     },
@@ -3609,7 +3601,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631644Z"
+        "fetchedAt": "2026-06-01T15:30:47.755384Z"
       },
       "extras": {}
     },
@@ -3625,7 +3617,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631651Z"
+        "fetchedAt": "2026-06-01T15:30:47.755388Z"
       },
       "extras": {}
     },
@@ -3641,7 +3633,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631655Z"
+        "fetchedAt": "2026-06-01T15:30:47.755392Z"
       },
       "extras": {}
     },
@@ -3657,7 +3649,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631659Z"
+        "fetchedAt": "2026-06-01T15:30:47.755396Z"
       },
       "extras": {}
     },
@@ -3673,7 +3665,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631663Z"
+        "fetchedAt": "2026-06-01T15:30:47.755399Z"
       },
       "extras": {}
     },
@@ -3689,7 +3681,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631667Z"
+        "fetchedAt": "2026-06-01T15:30:47.755405Z"
       },
       "extras": {}
     },
@@ -3705,7 +3697,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631671Z"
+        "fetchedAt": "2026-06-01T15:30:47.755408Z"
       },
       "extras": {}
     },
@@ -3721,7 +3713,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631676Z"
+        "fetchedAt": "2026-06-01T15:30:47.755414Z"
       },
       "extras": {}
     },
@@ -3737,7 +3729,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631680Z"
+        "fetchedAt": "2026-06-01T15:30:47.755418Z"
       },
       "extras": {}
     },
@@ -3753,7 +3745,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631684Z"
+        "fetchedAt": "2026-06-01T15:30:47.755422Z"
       },
       "extras": {}
     },
@@ -3769,7 +3761,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631688Z"
+        "fetchedAt": "2026-06-01T15:30:47.755426Z"
       },
       "extras": {}
     },
@@ -3785,7 +3777,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631692Z"
+        "fetchedAt": "2026-06-01T15:30:47.755429Z"
       },
       "extras": {}
     },
@@ -3801,7 +3793,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631700Z"
+        "fetchedAt": "2026-06-01T15:30:47.755433Z"
       },
       "extras": {}
     },
@@ -3817,7 +3809,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631707Z"
+        "fetchedAt": "2026-06-01T15:30:47.755438Z"
       },
       "extras": {}
     },
@@ -3833,7 +3825,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631711Z"
+        "fetchedAt": "2026-06-01T15:30:47.755442Z"
       },
       "extras": {}
     },
@@ -3849,7 +3841,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631716Z"
+        "fetchedAt": "2026-06-01T15:30:47.755446Z"
       },
       "extras": {}
     },
@@ -3865,7 +3857,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631720Z"
+        "fetchedAt": "2026-06-01T15:30:47.755450Z"
       },
       "extras": {}
     },
@@ -3881,7 +3873,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631724Z"
+        "fetchedAt": "2026-06-01T15:30:47.755455Z"
       },
       "extras": {}
     },
@@ -3897,7 +3889,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631731Z"
+        "fetchedAt": "2026-06-01T15:30:47.755460Z"
       },
       "extras": {}
     },
@@ -3913,7 +3905,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631735Z"
+        "fetchedAt": "2026-06-01T15:30:47.755465Z"
       },
       "extras": {}
     },
@@ -3929,7 +3921,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631739Z"
+        "fetchedAt": "2026-06-01T15:30:47.755469Z"
       },
       "extras": {}
     },
@@ -3945,7 +3937,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631743Z"
+        "fetchedAt": "2026-06-01T15:30:47.755472Z"
       },
       "extras": {}
     },
@@ -3961,7 +3953,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631750Z"
+        "fetchedAt": "2026-06-01T15:30:47.755476Z"
       },
       "extras": {}
     },
@@ -3977,7 +3969,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631754Z"
+        "fetchedAt": "2026-06-01T15:30:47.755480Z"
       },
       "extras": {}
     },
@@ -3993,7 +3985,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631758Z"
+        "fetchedAt": "2026-06-01T15:30:47.755485Z"
       },
       "extras": {}
     },
@@ -4009,7 +4001,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631762Z"
+        "fetchedAt": "2026-06-01T15:30:47.755489Z"
       },
       "extras": {}
     },
@@ -4025,7 +4017,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631766Z"
+        "fetchedAt": "2026-06-01T15:30:47.755493Z"
       },
       "extras": {}
     },
@@ -4041,7 +4033,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631772Z"
+        "fetchedAt": "2026-06-01T15:30:47.755498Z"
       },
       "extras": {}
     },
@@ -4057,7 +4049,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631776Z"
+        "fetchedAt": "2026-06-01T15:30:47.755503Z"
       },
       "extras": {}
     },
@@ -4073,7 +4065,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631781Z"
+        "fetchedAt": "2026-06-01T15:30:47.755508Z"
       },
       "extras": {}
     },
@@ -4089,7 +4081,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631785Z"
+        "fetchedAt": "2026-06-01T15:30:47.755511Z"
       },
       "extras": {}
     },
@@ -4105,7 +4097,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631789Z"
+        "fetchedAt": "2026-06-01T15:30:47.755515Z"
       },
       "extras": {}
     },
@@ -4121,7 +4113,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631797Z"
+        "fetchedAt": "2026-06-01T15:30:47.755521Z"
       },
       "extras": {}
     },
@@ -4137,7 +4129,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631802Z"
+        "fetchedAt": "2026-06-01T15:30:47.755525Z"
       },
       "extras": {}
     },
@@ -4153,7 +4145,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631806Z"
+        "fetchedAt": "2026-06-01T15:30:47.755529Z"
       },
       "extras": {}
     },
@@ -4169,7 +4161,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631811Z"
+        "fetchedAt": "2026-06-01T15:30:47.755533Z"
       },
       "extras": {}
     },
@@ -4185,7 +4177,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631815Z"
+        "fetchedAt": "2026-06-01T15:30:47.755537Z"
       },
       "extras": {}
     },
@@ -4201,7 +4193,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631819Z"
+        "fetchedAt": "2026-06-01T15:30:47.755541Z"
       },
       "extras": {}
     },
@@ -4217,7 +4209,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631823Z"
+        "fetchedAt": "2026-06-01T15:30:47.755548Z"
       },
       "extras": {}
     },
@@ -4233,7 +4225,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631829Z"
+        "fetchedAt": "2026-06-01T15:30:47.755552Z"
       },
       "extras": {}
     },
@@ -4249,7 +4241,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631834Z"
+        "fetchedAt": "2026-06-01T15:30:47.755557Z"
       },
       "extras": {}
     },
@@ -4265,7 +4257,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631838Z"
+        "fetchedAt": "2026-06-01T15:30:47.755561Z"
       },
       "extras": {}
     },
@@ -4281,7 +4273,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631850Z"
+        "fetchedAt": "2026-06-01T15:30:47.755565Z"
       },
       "extras": {}
     },
@@ -4297,7 +4289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631856Z"
+        "fetchedAt": "2026-06-01T15:30:47.755570Z"
       },
       "extras": {}
     },
@@ -4313,7 +4305,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631861Z"
+        "fetchedAt": "2026-06-01T15:30:47.755576Z"
       },
       "extras": {}
     },
@@ -4329,7 +4321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631865Z"
+        "fetchedAt": "2026-06-01T15:30:47.755580Z"
       },
       "extras": {}
     },
@@ -4345,7 +4337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631869Z"
+        "fetchedAt": "2026-06-01T15:30:47.755584Z"
       },
       "extras": {}
     },
@@ -4361,7 +4353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631873Z"
+        "fetchedAt": "2026-06-01T15:30:47.755588Z"
       },
       "extras": {}
     },
@@ -4377,7 +4369,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631877Z"
+        "fetchedAt": "2026-06-01T15:30:47.755593Z"
       },
       "extras": {}
     },
@@ -4393,7 +4385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631881Z"
+        "fetchedAt": "2026-06-01T15:30:47.755597Z"
       },
       "extras": {}
     },
@@ -4409,7 +4401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631885Z"
+        "fetchedAt": "2026-06-01T15:30:47.755601Z"
       },
       "extras": {}
     },
@@ -4425,7 +4417,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631892Z"
+        "fetchedAt": "2026-06-01T15:30:47.755605Z"
       },
       "extras": {}
     },
@@ -4441,7 +4433,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631896Z"
+        "fetchedAt": "2026-06-01T15:30:47.755609Z"
       },
       "extras": {}
     },
@@ -4457,7 +4449,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631902Z"
+        "fetchedAt": "2026-06-01T15:30:47.755612Z"
       },
       "extras": {}
     },
@@ -4473,7 +4465,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631906Z"
+        "fetchedAt": "2026-06-01T15:30:47.755616Z"
       },
       "extras": {}
     },
@@ -4489,7 +4481,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631911Z"
+        "fetchedAt": "2026-06-01T15:30:47.755620Z"
       },
       "extras": {}
     },
@@ -4505,7 +4497,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631915Z"
+        "fetchedAt": "2026-06-01T15:30:47.755624Z"
       },
       "extras": {}
     },
@@ -4521,7 +4513,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631919Z"
+        "fetchedAt": "2026-06-01T15:30:47.755628Z"
       },
       "extras": {}
     },
@@ -4537,7 +4529,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631925Z"
+        "fetchedAt": "2026-06-01T15:30:47.755634Z"
       },
       "extras": {}
     },
@@ -4553,7 +4545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631929Z"
+        "fetchedAt": "2026-06-01T15:30:47.755640Z"
       },
       "extras": {}
     },
@@ -4569,7 +4561,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631934Z"
+        "fetchedAt": "2026-06-01T15:30:47.755644Z"
       },
       "extras": {}
     },
@@ -4585,7 +4577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631938Z"
+        "fetchedAt": "2026-06-01T15:30:47.755649Z"
       },
       "extras": {}
     },
@@ -4601,7 +4593,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631942Z"
+        "fetchedAt": "2026-06-01T15:30:47.755652Z"
       },
       "extras": {}
     },
@@ -4617,7 +4609,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631950Z"
+        "fetchedAt": "2026-06-01T15:30:47.755658Z"
       },
       "extras": {}
     },
@@ -4633,7 +4625,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631955Z"
+        "fetchedAt": "2026-06-01T15:30:47.755663Z"
       },
       "extras": {}
     },
@@ -4649,7 +4641,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631959Z"
+        "fetchedAt": "2026-06-01T15:30:47.755667Z"
       },
       "extras": {}
     },
@@ -4665,7 +4657,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631963Z"
+        "fetchedAt": "2026-06-01T15:30:47.755671Z"
       },
       "extras": {}
     },
@@ -4681,7 +4673,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631968Z"
+        "fetchedAt": "2026-06-01T15:30:47.755675Z"
       },
       "extras": {}
     },
@@ -4697,7 +4689,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631972Z"
+        "fetchedAt": "2026-06-01T15:30:47.755681Z"
       },
       "extras": {}
     },
@@ -4713,7 +4705,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631976Z"
+        "fetchedAt": "2026-06-01T15:30:47.755685Z"
       },
       "extras": {}
     },
@@ -4729,7 +4721,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631982Z"
+        "fetchedAt": "2026-06-01T15:30:47.755689Z"
       },
       "extras": {}
     },
@@ -4745,7 +4737,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631988Z"
+        "fetchedAt": "2026-06-01T15:30:47.755693Z"
       },
       "extras": {}
     },
@@ -4761,7 +4753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.631996Z"
+        "fetchedAt": "2026-06-01T15:30:47.755699Z"
       },
       "extras": {}
     },
@@ -4777,7 +4769,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632002Z"
+        "fetchedAt": "2026-06-01T15:30:47.755703Z"
       },
       "extras": {}
     },
@@ -4793,7 +4785,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632006Z"
+        "fetchedAt": "2026-06-01T15:30:47.755707Z"
       },
       "extras": {}
     },
@@ -4809,7 +4801,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632010Z"
+        "fetchedAt": "2026-06-01T15:30:47.755711Z"
       },
       "extras": {}
     },
@@ -4825,7 +4817,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632015Z"
+        "fetchedAt": "2026-06-01T15:30:47.755714Z"
       },
       "extras": {}
     },
@@ -4841,7 +4833,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632019Z"
+        "fetchedAt": "2026-06-01T15:30:47.755720Z"
       },
       "extras": {}
     },
@@ -4857,7 +4849,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632023Z"
+        "fetchedAt": "2026-06-01T15:30:47.755723Z"
       },
       "extras": {}
     },
@@ -4873,7 +4865,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632028Z"
+        "fetchedAt": "2026-06-01T15:30:47.755729Z"
       },
       "extras": {}
     },
@@ -4889,7 +4881,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632033Z"
+        "fetchedAt": "2026-06-01T15:30:47.755733Z"
       },
       "extras": {}
     },
@@ -4905,7 +4897,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632037Z"
+        "fetchedAt": "2026-06-01T15:30:47.755737Z"
       },
       "extras": {}
     },
@@ -4921,7 +4913,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632041Z"
+        "fetchedAt": "2026-06-01T15:30:47.755741Z"
       },
       "extras": {}
     },
@@ -4937,7 +4929,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632048Z"
+        "fetchedAt": "2026-06-01T15:30:47.755747Z"
       },
       "extras": {}
     },
@@ -4953,7 +4945,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632052Z"
+        "fetchedAt": "2026-06-01T15:30:47.755750Z"
       },
       "extras": {}
     },
@@ -4969,7 +4961,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632056Z"
+        "fetchedAt": "2026-06-01T15:30:47.755754Z"
       },
       "extras": {}
     },
@@ -4985,7 +4977,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632060Z"
+        "fetchedAt": "2026-06-01T15:30:47.755770Z"
       },
       "extras": {}
     },
@@ -5001,113 +4993,113 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-01T08:41:44.632065Z"
+        "fetchedAt": "2026-06-01T15:30:47.755774Z"
       },
       "extras": {}
     }
   ],
   "fx": [
     {
-      "name": "USD/INR",
-      "pair": "USDINR",
-      "symbol": "USDINR=X",
-      "value": "₹94.8950",
-      "rate": 94.8949966430664,
-      "change": "-1.1532",
-      "changePercent": "-1.20",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-01T08:41:41.453112Z"
-    },
-    {
       "name": "GBP/INR",
       "pair": "GBPINR",
       "symbol": "GBPINR=X",
-      "value": "₹127.8225",
-      "rate": 127.82250213623047,
-      "change": "-1.2832",
-      "changePercent": "-0.99",
+      "value": "₹127.6448",
+      "rate": 127.6447982788086,
+      "change": "-1.4609",
+      "changePercent": "-1.13",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-01T08:41:41.501498Z"
+      "asOf": "2026-06-01T15:30:44.105369Z"
     },
     {
-      "name": "OMR/INR",
-      "pair": "OMRINR",
-      "symbol": "OMRINR=X",
-      "value": "₹246.2300",
-      "rate": 246.22999572753906,
-      "change": "0.0000",
-      "changePercent": "0.00",
-      "direction": "up",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-01T08:41:41.521987Z"
-    },
-    {
-      "name": "JPY/INR",
-      "pair": "JPYINR",
-      "symbol": "JPYINR=X",
-      "value": "₹0.5951",
-      "rate": 0.5950899720191956,
-      "change": "-0.0054",
-      "changePercent": "-0.89",
+      "name": "USD/INR",
+      "pair": "USDINR",
+      "symbol": "USDINR=X",
+      "value": "₹94.9800",
+      "rate": 94.9800033569336,
+      "change": "-1.0682",
+      "changePercent": "-1.11",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-01T08:41:41.543061Z"
+      "asOf": "2026-06-01T15:30:44.105569Z"
     },
     {
       "name": "EUR/INR",
       "pair": "EURINR",
       "symbol": "EURINR=X",
-      "value": "₹110.6237",
-      "rate": 110.62370300292969,
-      "change": "-0.8023",
-      "changePercent": "-0.72",
+      "value": "₹110.3741",
+      "rate": 110.37409973144531,
+      "change": "-1.0519",
+      "changePercent": "-0.94",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-01T08:41:41.558979Z"
+      "asOf": "2026-06-01T15:30:44.122208Z"
+    },
+    {
+      "name": "JPY/INR",
+      "pair": "JPYINR",
+      "symbol": "JPYINR=X",
+      "value": "₹0.5947",
+      "rate": 0.5947499871253967,
+      "change": "-0.0057",
+      "changePercent": "-0.95",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-01T15:30:44.127339Z"
+    },
+    {
+      "name": "OMR/INR",
+      "pair": "OMRINR",
+      "symbol": "OMRINR=X",
+      "value": "₹246.2000",
+      "rate": 246.1999969482422,
+      "change": "0.0000",
+      "changePercent": "0.00",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-01T15:30:44.137293Z"
     }
   ],
   "commodities": [
     {
-      "name": "Crude Oil",
-      "symbol": "CL=F",
-      "value": "$90.98",
-      "unit": "$/bbl",
-      "change": "3.62",
-      "changePercent": "4.14",
-      "direction": "up",
+      "name": "Gold",
+      "symbol": "GC=F",
+      "value": "$4494.10",
+      "unit": "$/oz",
+      "change": "-66.40",
+      "changePercent": "-1.46",
+      "direction": "down",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Silver",
       "symbol": "SI=F",
-      "value": "$75.67",
+      "value": "$74.83",
       "unit": "$/oz",
-      "change": "0.05",
-      "changePercent": "0.06",
-      "direction": "up",
+      "change": "-0.78",
+      "changePercent": "-1.03",
+      "direction": "down",
       "source": "yahoo-yfinance"
     },
     {
-      "name": "Gold",
-      "symbol": "GC=F",
-      "value": "$4522.80",
-      "unit": "$/oz",
-      "change": "-37.70",
-      "changePercent": "-0.83",
-      "direction": "down",
+      "name": "Crude Oil",
+      "symbol": "CL=F",
+      "value": "$93.97",
+      "unit": "$/bbl",
+      "change": "6.61",
+      "changePercent": "7.57",
+      "direction": "up",
       "source": "yahoo-yfinance"
     }
   ],
   "sourceHealth": {
     "schemaVersion": "1.0.0",
-    "generatedAt": "2026-06-01T08:43:23.239745Z",
+    "generatedAt": "2026-06-01T15:32:28.891809Z",
     "sections": {
       "indices": {
         "status": "ok",
