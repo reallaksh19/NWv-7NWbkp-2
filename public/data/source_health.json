@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-06-03T12:58:05.286867Z",
+  "generatedAt": "2026-06-04T07:59:10.425467Z",
   "sections": {
     "indices": {
       "status": "ok",
@@ -72,7 +72,7 @@
           "status": "failed",
           "latencyMs": null,
           "count": 0,
-          "message": "RBI reference scrape failed: unknown"
+          "message": "RBI reference scrape failed: 418 Client Error: Unknown Code for url: https://www.rbi.org.in/scripts/ReferenceRateArchive.aspx"
         },
         {
           "provider": "yahoo_yfinance",
@@ -93,8 +93,8 @@
           "provider": "amfi_navall",
           "status": "ok",
           "latencyMs": null,
-          "count": 14370,
-          "message": "14370 AMFI NAV rows parsed; 300 selected"
+          "count": 14211,
+          "message": "14211 AMFI NAV rows parsed; 300 selected"
         }
       ],
       "notes": []
