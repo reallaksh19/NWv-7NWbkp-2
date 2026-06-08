@@ -1,19 +1,19 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-06-05T11:00:51.602524Z",
+  "generatedAt": "2026-06-08T08:20:12.029043Z",
   "asOf": {
-    "equities": "2026-06-05T11:00:51.602530Z",
-    "mutualFunds": "04-Jun-2026",
-    "fx": "2026-06-05T11:00:51.602535Z"
+    "equities": "2026-06-08T08:20:12.029049Z",
+    "mutualFunds": "05-Jun-2026",
+    "fx": "2026-06-08T08:20:12.029053Z"
   },
   "equities": {
     "indices": [
       {
         "name": "NIFTY 50",
         "symbol": "^NSEI",
-        "value": "23,366.70",
-        "change": "-49.85",
-        "changePercent": "-0.21",
+        "value": "23,163.60",
+        "change": "-203.10",
+        "changePercent": "-0.87",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -21,9 +21,9 @@
       {
         "name": "SENSEX",
         "symbol": "^BSESN",
-        "value": "74,243.34",
-        "change": "-116.66",
-        "changePercent": "-0.16",
+        "value": "73,697.08",
+        "change": "-546.27",
+        "changePercent": "-0.74",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -31,19 +31,19 @@
       {
         "name": "NIFTY BANK",
         "symbol": "^NSEBANK",
-        "value": "54,496.25",
-        "change": "188.40",
-        "changePercent": "0.35",
-        "direction": "up",
+        "value": "54,118.25",
+        "change": "-378.00",
+        "changePercent": "-0.69",
+        "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "NIFTY IT",
         "symbol": "^CNXIT",
-        "value": "29,010.30",
-        "change": "-290.30",
-        "changePercent": "-0.99",
+        "value": "28,705.20",
+        "change": "-305.10",
+        "changePercent": "-1.05",
         "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -51,19 +51,19 @@
       {
         "name": "NIFTY AUTO",
         "symbol": "^CNXAUTO",
-        "value": "26,165.95",
-        "change": "73.15",
-        "changePercent": "0.28",
-        "direction": "up",
+        "value": "25,783.30",
+        "change": "-382.65",
+        "changePercent": "-1.46",
+        "direction": "down",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "NIFTY PHARMA",
         "symbol": "^CNXPHARMA",
-        "value": "24,248.05",
-        "change": "161.45",
-        "changePercent": "0.67",
+        "value": "24,281.80",
+        "change": "33.75",
+        "changePercent": "0.14",
         "direction": "up",
         "currency": "₹",
         "sourceMode": "yahoo-yfinance"
@@ -71,47 +71,47 @@
     ],
     "globalIndices": [
       {
-        "name": "S&P 500",
-        "symbol": "^GSPC",
-        "value": "7,584.31",
-        "change": "30.63",
-        "changePercent": "0.41",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
         "name": "DOW JONES",
         "symbol": "^DJI",
-        "value": "51,561.93",
-        "change": "874.86",
-        "changePercent": "1.73",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "name": "HANG SENG",
-        "symbol": "^HSI",
-        "value": "24,961.95",
-        "change": "-291.45",
-        "changePercent": "-1.15",
-        "direction": "down",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "name": "NIKKEI 225",
-        "symbol": "^N225",
-        "value": "66,588.12",
-        "change": "-882.57",
-        "changePercent": "-1.31",
+        "value": "50,866.78",
+        "change": "-695.15",
+        "changePercent": "-1.35",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "name": "NASDAQ",
         "symbol": "^IXIC",
-        "value": "26,830.96",
-        "change": "-23.02",
-        "changePercent": "-0.09",
+        "value": "25,709.43",
+        "change": "-1121.53",
+        "changePercent": "-4.18",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "NIKKEI 225",
+        "symbol": "^N225",
+        "value": "64,024.60",
+        "change": "-2563.52",
+        "changePercent": "-3.85",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "S&P 500",
+        "symbol": "^GSPC",
+        "value": "7,383.74",
+        "change": "-200.57",
+        "changePercent": "-2.64",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "name": "HANG SENG",
+        "symbol": "^HSI",
+        "value": "24,642.33",
+        "change": "-319.62",
+        "changePercent": "-1.28",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       }
@@ -119,42 +119,34 @@
     "movers": {
       "gainers": [
         {
-          "symbol": "HINDUNILVR",
-          "price": "2121.50",
-          "change": "42.10",
-          "changePercent": "2.02",
+          "symbol": "SUNPHARMA",
+          "price": "1793.90",
+          "change": "11.70",
+          "changePercent": "0.66",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "BAJFINANCE",
-          "price": "889.40",
-          "change": "15.00",
-          "changePercent": "1.72",
+          "symbol": "BHARTIARTL",
+          "price": "1809.60",
+          "change": "11.40",
+          "changePercent": "0.63",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "AXISBANK",
-          "price": "1272.30",
-          "change": "19.00",
-          "changePercent": "1.52",
+          "symbol": "ITC",
+          "price": "281.40",
+          "change": "0.70",
+          "changePercent": "0.25",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "ICICIBANK",
-          "price": "1262.10",
-          "change": "10.40",
-          "changePercent": "0.83",
-          "direction": "up",
-          "sourceMode": "yahoo-yfinance"
-        },
-        {
-          "symbol": "LT",
-          "price": "3953.20",
-          "change": "11.10",
-          "changePercent": "0.28",
+          "symbol": "SBIN",
+          "price": "979.80",
+          "change": "2.10",
+          "changePercent": "0.21",
           "direction": "up",
           "sourceMode": "yahoo-yfinance"
         }
@@ -162,41 +154,41 @@
       "losers": [
         {
           "symbol": "WIPRO",
-          "price": "198.37",
-          "change": "-5.95",
-          "changePercent": "-2.91",
+          "price": "183.92",
+          "change": "-14.45",
+          "changePercent": "-7.28",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "TCS",
-          "price": "2198.90",
-          "change": "-42.10",
-          "changePercent": "-1.88",
+          "price": "2149.00",
+          "change": "-49.90",
+          "changePercent": "-2.27",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "BHARTIARTL",
-          "price": "1798.20",
-          "change": "-20.70",
-          "changePercent": "-1.14",
+          "symbol": "BAJFINANCE",
+          "price": "870.90",
+          "change": "-18.50",
+          "changePercent": "-2.08",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
-          "symbol": "KOTAKBANK",
-          "price": "377.45",
-          "change": "-4.05",
-          "changePercent": "-1.06",
+          "symbol": "HDFCBANK",
+          "price": "735.80",
+          "change": "-11.25",
+          "changePercent": "-1.51",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         },
         {
           "symbol": "RELIANCE",
-          "price": "1291.00",
-          "change": "-12.70",
-          "changePercent": "-0.97",
+          "price": "1272.00",
+          "change": "-19.00",
+          "changePercent": "-1.47",
           "direction": "down",
           "sourceMode": "yahoo-yfinance"
         }
@@ -205,7 +197,7 @@
     },
     "eodBhavcopy": {
       "schemaVersion": "2.0.0",
-      "generatedAt": "2026-06-05T11:00:51.601898Z",
+      "generatedAt": "2026-06-08T08:20:12.028334Z",
       "nseRows": 0,
       "bseRows": 0,
       "sampleNse": [],
@@ -220,12 +212,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Banking & PSU Debt Fund- Direct Plan-Growth",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 395.8221,
-      "navDate": "04-Jun-2026",
+      "nav": 396.9456,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.847087Z"
+        "fetchedAt": "2026-06-08T08:18:33.559591Z"
       },
       "extras": {}
     },
@@ -236,12 +228,12 @@
       "isinDividendReinvestment": "-",
       "name": "LIC MF Banking & PSU Fund-Direct Plan-Growth",
       "category": "LIC Mutual Fund",
-      "nav": 39.151,
-      "navDate": "04-Jun-2026",
+      "nav": 39.2704,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.847652Z"
+        "fetchedAt": "2026-06-08T08:18:33.560162Z"
       },
       "extras": {}
     },
@@ -252,12 +244,12 @@
       "isinDividendReinvestment": "-",
       "name": "Nippon India Banking and PSU  Fund- Direct Plan-Growth Plan- Growth Option",
       "category": "Nippon India Mutual Fund",
-      "nav": 22.3872,
-      "navDate": "04-Jun-2026",
+      "nav": 22.4698,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.847718Z"
+        "fetchedAt": "2026-06-08T08:18:33.560229Z"
       },
       "extras": {}
     },
@@ -268,12 +260,12 @@
       "isinDividendReinvestment": "-",
       "name": "Nippon India Banking and PSU Fund- Direct Plan-Growth Plan- Bonus Option",
       "category": "Nippon India Mutual Fund",
-      "nav": 22.3866,
-      "navDate": "04-Jun-2026",
+      "nav": 22.4692,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.847753Z"
+        "fetchedAt": "2026-06-08T08:18:33.560264Z"
       },
       "extras": {}
     },
@@ -284,12 +276,12 @@
       "isinDividendReinvestment": "-",
       "name": "Tata Corporate Bond Fund-Direct Plan-Growth",
       "category": "Tata Mutual Fund",
-      "nav": 13.14,
-      "navDate": "04-Jun-2026",
+      "nav": 13.1866,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.852851Z"
+        "fetchedAt": "2026-06-08T08:18:33.561533Z"
       },
       "extras": {}
     },
@@ -300,12 +292,12 @@
       "isinDividendReinvestment": "-",
       "name": "TRUSTMF CORPORATE BOND FUND-DIRECT PLAN-GROWTH",
       "category": "Trust Mutual Fund",
-      "nav": 1250.5732,
-      "navDate": "04-Jun-2026",
+      "nav": 1255.0037,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.852913Z"
+        "fetchedAt": "2026-06-08T08:18:33.561594Z"
       },
       "extras": {}
     },
@@ -316,12 +308,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN Credit Risk Fund-Direct Plan-Growth",
       "category": "Bandhan Mutual Fund",
-      "nav": 18.6174,
-      "navDate": "04-Jun-2026",
+      "nav": 18.6649,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.853125Z"
+        "fetchedAt": "2026-06-08T08:18:33.561807Z"
       },
       "extras": {}
     },
@@ -332,12 +324,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN Dynamic Bond Fund-Direct Plan-Growth",
       "category": "Bandhan Mutual Fund",
-      "nav": 38.9703,
-      "navDate": "04-Jun-2026",
+      "nav": 39.1673,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.854174Z"
+        "fetchedAt": "2026-06-08T08:18:33.562841Z"
       },
       "extras": {}
     },
@@ -348,12 +340,12 @@
       "isinDividendReinvestment": "-",
       "name": "PGIM India Dynamic Bond Fund - Direct Plan-Growth Option",
       "category": "PGIM India Mutual Fund",
-      "nav": 3057.9781,
-      "navDate": "04-Jun-2026",
+      "nav": 3068.5208,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.854874Z"
+        "fetchedAt": "2026-06-08T08:18:33.563538Z"
       },
       "extras": {}
     },
@@ -369,7 +361,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.854957Z"
+        "fetchedAt": "2026-06-08T08:18:33.563610Z"
       },
       "extras": {}
     },
@@ -380,12 +372,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Floating Rate Fund-Direct Plan-Growth",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 377.031,
-      "navDate": "04-Jun-2026",
+      "nav": 377.7001,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.855098Z"
+        "fetchedAt": "2026-06-08T08:18:33.563758Z"
       },
       "extras": {}
     },
@@ -396,12 +388,12 @@
       "isinDividendReinvestment": "-",
       "name": "KOTAK FLOATING RATE FUND-DIRECT PLAN-GROWTH OPTION",
       "category": "Kotak Mahindra Mutual Fund",
-      "nav": 1629.1065,
-      "navDate": "04-Jun-2026",
+      "nav": 1634.0372,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.855462Z"
+        "fetchedAt": "2026-06-08T08:18:33.564112Z"
       },
       "extras": {}
     },
@@ -412,12 +404,12 @@
       "isinDividendReinvestment": "-",
       "name": "Tata Floating Rate Fund -Direct Plan-Growth",
       "category": "Tata Mutual Fund",
-      "nav": 13.6659,
-      "navDate": "04-Jun-2026",
+      "nav": 13.6948,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.855570Z"
+        "fetchedAt": "2026-06-08T08:18:33.564217Z"
       },
       "extras": {}
     },
@@ -428,12 +420,12 @@
       "isinDividendReinvestment": "-",
       "name": "LIC MF Gilt Fund-Direct Plan-Growth",
       "category": "LIC Mutual Fund",
-      "nav": 64.951,
-      "navDate": "04-Jun-2026",
+      "nav": 65.3253,
+      "navDate": "05-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856175Z"
+        "fetchedAt": "2026-06-08T08:18:33.564831Z"
       },
       "extras": {}
     },
@@ -444,12 +436,12 @@
       "isinDividendReinvestment": "INF579M01688",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  DAILY DIVIDEND REINVESTMENT",
       "category": "360 ONE Mutual Fund",
-      "nav": 1000.2467,
-      "navDate": "04-Jun-2026",
+      "nav": 1000.3794,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856670Z"
+        "fetchedAt": "2026-06-08T08:18:33.565328Z"
       },
       "extras": {}
     },
@@ -460,12 +452,12 @@
       "isinDividendReinvestment": "-",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  GROWTH",
       "category": "360 ONE Mutual Fund",
-      "nav": 2136.2145,
-      "navDate": "04-Jun-2026",
+      "nav": 2137.5742,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856674Z"
+        "fetchedAt": "2026-06-08T08:18:33.565332Z"
       },
       "extras": {}
     },
@@ -476,12 +468,12 @@
       "isinDividendReinvestment": "INF579M01696",
       "name": "360 ONE LIQUID FUND DIRECT PLAN  WEEKLY DIVIDEND",
       "category": "360 ONE Mutual Fund",
-      "nav": 1005.3964,
-      "navDate": "04-Jun-2026",
+      "nav": 1006.0366,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856681Z"
+        "fetchedAt": "2026-06-08T08:18:33.565338Z"
       },
       "extras": {}
     },
@@ -492,12 +484,12 @@
       "isinDividendReinvestment": "INF579M01563",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  DAILY DIVIDEND REINVESTMENT",
       "category": "360 ONE Mutual Fund",
-      "nav": 1000.2467,
-      "navDate": "04-Jun-2026",
+      "nav": 1000.3794,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856686Z"
+        "fetchedAt": "2026-06-08T08:18:33.565344Z"
       },
       "extras": {}
     },
@@ -508,12 +500,12 @@
       "isinDividendReinvestment": "-",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  GROWTH",
       "category": "360 ONE Mutual Fund",
-      "nav": 2120.9709,
-      "navDate": "04-Jun-2026",
+      "nav": 2122.2998,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856692Z"
+        "fetchedAt": "2026-06-08T08:18:33.565348Z"
       },
       "extras": {}
     },
@@ -524,12 +516,12 @@
       "isinDividendReinvestment": "INF579M01571",
       "name": "360 ONE LIQUID FUND REGULAR PLAN  WEEKLY DIVIDEND",
       "category": "360 ONE Mutual Fund",
-      "nav": 1005.3779,
-      "navDate": "04-Jun-2026",
+      "nav": 1006.0078,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856698Z"
+        "fetchedAt": "2026-06-08T08:18:33.565352Z"
       },
       "extras": {}
     },
@@ -541,11 +533,11 @@
       "name": "Abakkus Liquid Fund - Direct Plan - Daily IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
       "nav": 100.0527,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856703Z"
+        "fetchedAt": "2026-06-08T08:18:33.565357Z"
       },
       "extras": {}
     },
@@ -556,12 +548,12 @@
       "isinDividendReinvestment": "-",
       "name": "Abakkus Liquid Fund - Direct Plan - Growth",
       "category": "Abakkus Mutual Fund",
-      "nav": 102.6737,
-      "navDate": "04-Jun-2026",
+      "nav": 102.736,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856707Z"
+        "fetchedAt": "2026-06-08T08:18:33.565363Z"
       },
       "extras": {}
     },
@@ -572,12 +564,12 @@
       "isinDividendReinvestment": "INF2JJD01037",
       "name": "Abakkus Liquid Fund - Direct Plan - Monthly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.3683,
-      "navDate": "04-Jun-2026",
+      "nav": 100.4292,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856712Z"
+        "fetchedAt": "2026-06-08T08:18:33.565367Z"
       },
       "extras": {}
     },
@@ -588,12 +580,12 @@
       "isinDividendReinvestment": "INF2JJD01052",
       "name": "Abakkus Liquid Fund - Direct Plan - Quarterly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.9799,
-      "navDate": "04-Jun-2026",
+      "nav": 101.0411,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856716Z"
+        "fetchedAt": "2026-06-08T08:18:33.565373Z"
       },
       "extras": {}
     },
@@ -604,12 +596,12 @@
       "isinDividendReinvestment": "INF2JJD01045",
       "name": "Abakkus Liquid Fund - Direct Plan - Weekly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.1067,
-      "navDate": "04-Jun-2026",
+      "nav": 100.1674,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856720Z"
+        "fetchedAt": "2026-06-08T08:18:33.565377Z"
       },
       "extras": {}
     },
@@ -621,11 +613,11 @@
       "name": "Abakkus Liquid Fund - Regular Plan - Daily IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
       "nav": 100.0527,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856724Z"
+        "fetchedAt": "2026-06-08T08:18:33.565381Z"
       },
       "extras": {}
     },
@@ -636,12 +628,12 @@
       "isinDividendReinvestment": "-",
       "name": "Abakkus Liquid Fund - Regular Plan - Growth",
       "category": "Abakkus Mutual Fund",
-      "nav": 102.6339,
-      "navDate": "04-Jun-2026",
+      "nav": 102.6955,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856733Z"
+        "fetchedAt": "2026-06-08T08:18:33.565387Z"
       },
       "extras": {}
     },
@@ -652,12 +644,12 @@
       "isinDividendReinvestment": "INF2JJD01086",
       "name": "Abakkus Liquid Fund - Regular Plan - Monthly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.3642,
-      "navDate": "04-Jun-2026",
+      "nav": 100.4245,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856737Z"
+        "fetchedAt": "2026-06-08T08:18:33.565391Z"
       },
       "extras": {}
     },
@@ -668,12 +660,12 @@
       "isinDividendReinvestment": "INF2JJD01102",
       "name": "Abakkus Liquid Fund - Regular Plan - Quarterly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.9417,
-      "navDate": "04-Jun-2026",
+      "nav": 101.0023,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856741Z"
+        "fetchedAt": "2026-06-08T08:18:33.565395Z"
       },
       "extras": {}
     },
@@ -684,12 +676,12 @@
       "isinDividendReinvestment": "INF2JJD01094",
       "name": "Abakkus Liquid Fund - Regular Plan - Weekly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.1028,
-      "navDate": "04-Jun-2026",
+      "nav": 100.1632,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856746Z"
+        "fetchedAt": "2026-06-08T08:18:33.565399Z"
       },
       "extras": {}
     },
@@ -700,12 +692,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund - Growth",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 444.6967,
-      "navDate": "04-Jun-2026",
+      "nav": 444.9947,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856752Z"
+        "fetchedAt": "2026-06-08T08:18:33.565404Z"
       },
       "extras": {}
     },
@@ -716,12 +708,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund - Growth - Direct Plan",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 450.6205,
-      "navDate": "04-Jun-2026",
+      "nav": 450.9276,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856757Z"
+        "fetchedAt": "2026-06-08T08:18:33.565409Z"
       },
       "extras": {}
     },
@@ -733,11 +725,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Daily IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 100.195,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856763Z"
+        "fetchedAt": "2026-06-08T08:18:33.565413Z"
       },
       "extras": {}
     },
@@ -749,11 +741,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Direct - daily IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 100.195,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856767Z"
+        "fetchedAt": "2026-06-08T08:18:33.565417Z"
       },
       "extras": {}
     },
@@ -764,12 +756,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -DIRECT - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 144.1717,
-      "navDate": "04-Jun-2026",
+      "nav": 144.27,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856771Z"
+        "fetchedAt": "2026-06-08T08:18:33.565421Z"
       },
       "extras": {}
     },
@@ -780,12 +772,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -Direct - weekly IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 100.3385,
-      "navDate": "04-Jun-2026",
+      "nav": 100.2617,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856775Z"
+        "fetchedAt": "2026-06-08T08:18:33.565425Z"
       },
       "extras": {}
     },
@@ -797,11 +789,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Institutional - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 108.023,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856779Z"
+        "fetchedAt": "2026-06-08T08:18:33.565429Z"
       },
       "extras": {}
     },
@@ -812,12 +804,12 @@
       "isinDividendReinvestment": "INF209K01KY6",
       "name": "Aditya Birla Sun Life Liquid Fund -Institutional - weekly  IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 108.3113,
-      "navDate": "04-Jun-2026",
+      "nav": 108.2459,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856786Z"
+        "fetchedAt": "2026-06-08T08:18:33.565435Z"
       },
       "extras": {}
     },
@@ -828,12 +820,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund -Regular - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 109.6695,
-      "navDate": "04-Jun-2026",
+      "nav": 109.743,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856790Z"
+        "fetchedAt": "2026-06-08T08:18:33.565439Z"
       },
       "extras": {}
     },
@@ -845,11 +837,11 @@
       "name": "Aditya Birla Sun Life Liquid Fund -Retail - IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
       "nav": 163.694,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856794Z"
+        "fetchedAt": "2026-06-08T08:18:33.565443Z"
       },
       "extras": {}
     },
@@ -860,12 +852,12 @@
       "isinDividendReinvestment": "INF209KA1LJ9",
       "name": "Aditya Birla Sun Life Liquid Fund -weekly IDCW",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 100.3359,
-      "navDate": "04-Jun-2026",
+      "nav": 100.2607,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856798Z"
+        "fetchedAt": "2026-06-08T08:18:33.565447Z"
       },
       "extras": {}
     },
@@ -876,12 +868,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund- Discipline Advantage Plan",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 301.571,
-      "navDate": "04-Jun-2026",
+      "nav": 301.7714,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856802Z"
+        "fetchedAt": "2026-06-08T08:18:33.565453Z"
       },
       "extras": {}
     },
@@ -892,12 +884,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund-Institutional (Growth)",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 740.5628,
-      "navDate": "04-Jun-2026",
+      "nav": 741.059,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856806Z"
+        "fetchedAt": "2026-06-08T08:18:33.565459Z"
       },
       "extras": {}
     },
@@ -908,12 +900,12 @@
       "isinDividendReinvestment": "-",
       "name": "Aditya Birla Sun Life Liquid Fund-Retail (Growth)",
       "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 721.6506,
-      "navDate": "04-Jun-2026",
+      "nav": 722.1341,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856810Z"
+        "fetchedAt": "2026-06-08T08:18:33.565463Z"
       },
       "extras": {}
     },
@@ -929,7 +921,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856816Z"
+        "fetchedAt": "2026-06-08T08:18:33.565468Z"
       },
       "extras": {}
     },
@@ -941,11 +933,11 @@
       "name": "Axis Liquid Fund - Direct Plan - Daily IDCW",
       "category": "Axis Mutual Fund",
       "nav": 1000.956,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856820Z"
+        "fetchedAt": "2026-06-08T08:18:33.565472Z"
       },
       "extras": {}
     },
@@ -956,12 +948,12 @@
       "isinDividendReinvestment": "-",
       "name": "Axis Liquid Fund - Direct Plan - Growth Option",
       "category": "Axis Mutual Fund",
-      "nav": 3103.193,
-      "navDate": "04-Jun-2026",
+      "nav": 3105.2843,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856824Z"
+        "fetchedAt": "2026-06-08T08:18:33.565476Z"
       },
       "extras": {}
     },
@@ -972,12 +964,12 @@
       "isinDividendReinvestment": "INF846K01CZ9",
       "name": "Axis Liquid Fund - Direct Plan - Monthly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1002.5937,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.2694,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856830Z"
+        "fetchedAt": "2026-06-08T08:18:33.565482Z"
       },
       "extras": {}
     },
@@ -988,12 +980,12 @@
       "isinDividendReinvestment": "INF846K01DC6",
       "name": "Axis Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1002.6157,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.2914,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856834Z"
+        "fetchedAt": "2026-06-08T08:18:33.565486Z"
       },
       "extras": {}
     },
@@ -1005,11 +997,11 @@
       "name": "Axis Liquid Fund - Regular Plan - Daily IDCW",
       "category": "Axis Mutual Fund",
       "nav": 1001.3998,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856838Z"
+        "fetchedAt": "2026-06-08T08:18:33.565490Z"
       },
       "extras": {}
     },
@@ -1020,12 +1012,12 @@
       "isinDividendReinvestment": "-",
       "name": "Axis Liquid Fund - Regular Plan - Growth Option",
       "category": "Axis Mutual Fund",
-      "nav": 3074.112,
-      "navDate": "04-Jun-2026",
+      "nav": 3076.1598,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856844Z"
+        "fetchedAt": "2026-06-08T08:18:33.565494Z"
       },
       "extras": {}
     },
@@ -1036,12 +1028,12 @@
       "isinDividendReinvestment": "INF846K01461",
       "name": "Axis Liquid Fund - Regular Plan - Monthly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1003.1592,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.8275,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856848Z"
+        "fetchedAt": "2026-06-08T08:18:33.565498Z"
       },
       "extras": {}
     },
@@ -1052,12 +1044,12 @@
       "isinDividendReinvestment": "INF846K01446",
       "name": "Axis Liquid Fund - Regular Plan - Weekly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1002.6078,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.2757,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856852Z"
+        "fetchedAt": "2026-06-08T08:18:33.565503Z"
       },
       "extras": {}
     },
@@ -1069,11 +1061,11 @@
       "name": "Axis Liquid Fund - Retail Plan - Daily IDCW",
       "category": "Axis Mutual Fund",
       "nav": 1000.9559,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856856Z"
+        "fetchedAt": "2026-06-08T08:18:33.565507Z"
       },
       "extras": {}
     },
@@ -1084,12 +1076,12 @@
       "isinDividendReinvestment": "-",
       "name": "Axis Liquid Fund - Retail Plan - Growth Option",
       "category": "Axis Mutual Fund",
-      "nav": 2802.1305,
-      "navDate": "04-Jun-2026",
+      "nav": 2803.8833,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856860Z"
+        "fetchedAt": "2026-06-08T08:18:33.565511Z"
       },
       "extras": {}
     },
@@ -1100,12 +1092,12 @@
       "isinDividendReinvestment": "INF846K01404",
       "name": "Axis Liquid Fund - Retail Plan - Monthly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1002.451,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.0765,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856864Z"
+        "fetchedAt": "2026-06-08T08:18:33.565515Z"
       },
       "extras": {}
     },
@@ -1116,12 +1108,12 @@
       "isinDividendReinvestment": "INF846K01388",
       "name": "Axis Liquid Fund - Retail Plan - Weekly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1001.1765,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.9608,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856868Z"
+        "fetchedAt": "2026-06-08T08:18:33.565519Z"
       },
       "extras": {}
     },
@@ -1133,11 +1125,11 @@
       "name": "Bajaj Finserv Liquid Fund - Direct Plan - Daily - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
       "nav": 1034.6939,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856875Z"
+        "fetchedAt": "2026-06-08T08:18:33.565526Z"
       },
       "extras": {}
     },
@@ -1148,12 +1140,12 @@
       "isinDividendReinvestment": "INF0QA701045",
       "name": "Bajaj Finserv Liquid Fund - Direct Plan - Fortnightly - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1035.2011,
-      "navDate": "04-Jun-2026",
+      "nav": 1035.8747,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856880Z"
+        "fetchedAt": "2026-06-08T08:18:33.565530Z"
       },
       "extras": {}
     },
@@ -1164,12 +1156,12 @@
       "isinDividendReinvestment": "-",
       "name": "Bajaj Finserv Liquid Fund - Direct Plan - Growth",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1217.252,
-      "navDate": "04-Jun-2026",
+      "nav": 1218.0439,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856884Z"
+        "fetchedAt": "2026-06-08T08:18:33.565535Z"
       },
       "extras": {}
     },
@@ -1180,12 +1172,12 @@
       "isinDividendReinvestment": "INF0QA701052",
       "name": "Bajaj Finserv Liquid Fund - Direct Plan - Monthly - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1038.2734,
-      "navDate": "04-Jun-2026",
+      "nav": 1038.9489,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856888Z"
+        "fetchedAt": "2026-06-08T08:18:33.565539Z"
       },
       "extras": {}
     },
@@ -1196,12 +1188,12 @@
       "isinDividendReinvestment": "INF0QA701037",
       "name": "Bajaj Finserv Liquid Fund - Direct Plan - Weekly - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1035.1965,
-      "navDate": "04-Jun-2026",
+      "nav": 1035.8702,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856892Z"
+        "fetchedAt": "2026-06-08T08:18:33.565543Z"
       },
       "extras": {}
     },
@@ -1213,11 +1205,11 @@
       "name": "Bajaj Finserv Liquid Fund - Regular Plan - Daily - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
       "nav": 1033.8241,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856896Z"
+        "fetchedAt": "2026-06-08T08:18:33.565549Z"
       },
       "extras": {}
     },
@@ -1228,12 +1220,12 @@
       "isinDividendReinvestment": "INF0QA701110",
       "name": "Bajaj Finserv Liquid Fund - Regular Plan - Fortnightly - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1034.3126,
-      "navDate": "04-Jun-2026",
+      "nav": 1034.9684,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856901Z"
+        "fetchedAt": "2026-06-08T08:18:33.565553Z"
       },
       "extras": {}
     },
@@ -1244,12 +1236,12 @@
       "isinDividendReinvestment": "-",
       "name": "Bajaj Finserv Liquid Fund - Regular Plan - Growth",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1211.0488,
-      "navDate": "04-Jun-2026",
+      "nav": 1211.8167,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856907Z"
+        "fetchedAt": "2026-06-08T08:18:33.565557Z"
       },
       "extras": {}
     },
@@ -1260,12 +1252,12 @@
       "isinDividendReinvestment": "INF0QA701128",
       "name": "Bajaj Finserv Liquid Fund - Regular Plan - Monthly - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1037.282,
-      "navDate": "04-Jun-2026",
+      "nav": 1037.9396,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856912Z"
+        "fetchedAt": "2026-06-08T08:18:33.565576Z"
       },
       "extras": {}
     },
@@ -1276,12 +1268,12 @@
       "isinDividendReinvestment": "INF0QA701102",
       "name": "Bajaj Finserv Liquid Fund - Regular Plan - Weekly - IDCW",
       "category": "Bajaj Finserv Mutual Fund",
-      "nav": 1034.311,
-      "navDate": "04-Jun-2026",
+      "nav": 1034.9658,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856918Z"
+        "fetchedAt": "2026-06-08T08:18:33.565583Z"
       },
       "extras": {}
     },
@@ -1297,7 +1289,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856923Z"
+        "fetchedAt": "2026-06-08T08:18:33.565588Z"
       },
       "extras": {}
     },
@@ -1309,11 +1301,11 @@
       "name": "BANDHAN LIQUID Fund - Regular Plan - Daily IDCW",
       "category": "Bandhan Mutual Fund",
       "nav": 1001.4161,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856928Z"
+        "fetchedAt": "2026-06-08T08:18:33.565592Z"
       },
       "extras": {}
     },
@@ -1324,12 +1316,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Growth",
       "category": "Bandhan Mutual Fund",
-      "nav": 3331.3015,
-      "navDate": "04-Jun-2026",
+      "nav": 3333.4616,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856934Z"
+        "fetchedAt": "2026-06-08T08:18:33.565596Z"
       },
       "extras": {}
     },
@@ -1340,12 +1332,12 @@
       "isinDividendReinvestment": "INF194K01WE7",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Monthly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1002.3344,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.9843,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856955Z"
+        "fetchedAt": "2026-06-08T08:18:33.565600Z"
       },
       "extras": {}
     },
@@ -1356,12 +1348,12 @@
       "isinDividendReinvestment": "INF194K01WB3",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Periodic IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1438.2535,
-      "navDate": "04-Jun-2026",
+      "nav": 1439.1859,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856959Z"
+        "fetchedAt": "2026-06-08T08:18:33.565604Z"
       },
       "extras": {}
     },
@@ -1372,12 +1364,12 @@
       "isinDividendReinvestment": "INF194K01WH0",
       "name": "BANDHAN LIQUID Fund - Regular Plan - Weekly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1002.4067,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.7109,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856963Z"
+        "fetchedAt": "2026-06-08T08:18:33.565610Z"
       },
       "extras": {}
     },
@@ -1388,12 +1380,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund - Unclaimed IDCW Less than 3 years",
       "category": "Bandhan Mutual Fund",
-      "nav": 1.7939,
-      "navDate": "04-Jun-2026",
+      "nav": 1.7951,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856968Z"
+        "fetchedAt": "2026-06-08T08:18:33.565614Z"
       },
       "extras": {}
     },
@@ -1405,11 +1397,11 @@
       "name": "BANDHAN LIQUID Fund - Unclaimed IDCW More than 3 years",
       "category": "Bandhan Mutual Fund",
       "nav": 1.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856974Z"
+        "fetchedAt": "2026-06-08T08:18:33.565618Z"
       },
       "extras": {}
     },
@@ -1420,12 +1412,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund - Unclaimed Redemption Less than 3 years",
       "category": "Bandhan Mutual Fund",
-      "nav": 1.7939,
-      "navDate": "04-Jun-2026",
+      "nav": 1.7951,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856978Z"
+        "fetchedAt": "2026-06-08T08:18:33.565623Z"
       },
       "extras": {}
     },
@@ -1437,11 +1429,11 @@
       "name": "BANDHAN LIQUID Fund - Unclaimed Redemption More than 3 years",
       "category": "Bandhan Mutual Fund",
       "nav": 1.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856984Z"
+        "fetchedAt": "2026-06-08T08:18:33.565628Z"
       },
       "extras": {}
     },
@@ -1452,12 +1444,12 @@
       "isinDividendReinvestment": "INF194K01J28",
       "name": "BANDHAN LIQUID Fund -Direct Plan -Monthly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1008.6018,
-      "navDate": "04-Jun-2026",
+      "nav": 1009.2691,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856988Z"
+        "fetchedAt": "2026-06-08T08:18:33.565632Z"
       },
       "extras": {}
     },
@@ -1468,12 +1460,12 @@
       "isinDividendReinvestment": "INF194K01J51",
       "name": "BANDHAN LIQUID Fund -Direct Plan -Weekly IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1008.1764,
-      "navDate": "04-Jun-2026",
+      "nav": 1007.4582,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856992Z"
+        "fetchedAt": "2026-06-08T08:18:33.565636Z"
       },
       "extras": {}
     },
@@ -1485,11 +1477,11 @@
       "name": "BANDHAN LIQUID Fund -Direct Plan-Daily IDCW",
       "category": "Bandhan Mutual Fund",
       "nav": 1001.6663,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.856996Z"
+        "fetchedAt": "2026-06-08T08:18:33.565640Z"
       },
       "extras": {}
     },
@@ -1500,12 +1492,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANDHAN LIQUID Fund -Direct Plan-Growth",
       "category": "Bandhan Mutual Fund",
-      "nav": 3368.188,
-      "navDate": "04-Jun-2026",
+      "nav": 3370.4165,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857000Z"
+        "fetchedAt": "2026-06-08T08:18:33.565644Z"
       },
       "extras": {}
     },
@@ -1516,12 +1508,12 @@
       "isinDividendReinvestment": "INF194K01I94",
       "name": "BANDHAN LIQUID Fund -Direct Plan-Periodic IDCW",
       "category": "Bandhan Mutual Fund",
-      "nav": 1356.9246,
-      "navDate": "04-Jun-2026",
+      "nav": 1357.8223,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857004Z"
+        "fetchedAt": "2026-06-08T08:18:33.565653Z"
       },
       "extras": {}
     },
@@ -1537,7 +1529,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857010Z"
+        "fetchedAt": "2026-06-08T08:18:33.565660Z"
       },
       "extras": {}
     },
@@ -1553,7 +1545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857014Z"
+        "fetchedAt": "2026-06-08T08:18:33.565665Z"
       },
       "extras": {}
     },
@@ -1569,7 +1561,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857018Z"
+        "fetchedAt": "2026-06-08T08:18:33.565669Z"
       },
       "extras": {}
     },
@@ -1585,7 +1577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857022Z"
+        "fetchedAt": "2026-06-08T08:18:33.565673Z"
       },
       "extras": {}
     },
@@ -1597,11 +1589,11 @@
       "name": "BANK OF INDIA Liquid Fund- Direct Plan- Daily IDCW",
       "category": "Bank of India Mutual Fund",
       "nav": 1005.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857026Z"
+        "fetchedAt": "2026-06-08T08:18:33.565677Z"
       },
       "extras": {}
     },
@@ -1612,12 +1604,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANK OF INDIA Liquid Fund- Direct Plan- Growth",
       "category": "Bank of India Mutual Fund",
-      "nav": 3211.905,
-      "navDate": "04-Jun-2026",
+      "nav": 3214.0926,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857032Z"
+        "fetchedAt": "2026-06-08T08:18:33.565684Z"
       },
       "extras": {}
     },
@@ -1628,12 +1620,12 @@
       "isinDividendReinvestment": "INF761K01CM8",
       "name": "BANK OF INDIA Liquid Fund- Direct Plan- Weekly IDCW",
       "category": "Bank of India Mutual Fund",
-      "nav": 1005.4932,
-      "navDate": "04-Jun-2026",
+      "nav": 1006.1795,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857036Z"
+        "fetchedAt": "2026-06-08T08:18:33.565688Z"
       },
       "extras": {}
     },
@@ -1645,11 +1637,11 @@
       "name": "BANK OF INDIA Liquid Fund- Regular Plan- Daily IDCW",
       "category": "Bank of India Mutual Fund",
       "nav": 1005.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857044Z"
+        "fetchedAt": "2026-06-08T08:18:33.565692Z"
       },
       "extras": {}
     },
@@ -1660,12 +1652,12 @@
       "isinDividendReinvestment": "-",
       "name": "BANK OF INDIA Liquid Fund- Regular Plan- Growth",
       "category": "Bank of India Mutual Fund",
-      "nav": 3179.1099,
-      "navDate": "04-Jun-2026",
+      "nav": 3181.2596,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857048Z"
+        "fetchedAt": "2026-06-08T08:18:33.565696Z"
       },
       "extras": {}
     },
@@ -1676,12 +1668,12 @@
       "isinDividendReinvestment": "INF761K01CP1",
       "name": "BANK OF INDIA Liquid Fund- Regular Plan- Weekly IDCW",
       "category": "Bank of India Mutual Fund",
-      "nav": 1005.4883,
-      "navDate": "04-Jun-2026",
+      "nav": 1006.1697,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857052Z"
+        "fetchedAt": "2026-06-08T08:18:33.565702Z"
       },
       "extras": {}
     },
@@ -1693,11 +1685,11 @@
       "name": "Baroda BNP Paribas LIQUID FUND - DIRECT PLAN - DAILY IDCW OPTION",
       "category": "Baroda BNP Paribas Mutual Fund",
       "nav": 1002.0849,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857057Z"
+        "fetchedAt": "2026-06-08T08:18:33.565708Z"
       },
       "extras": {}
     },
@@ -1708,12 +1700,12 @@
       "isinDividendReinvestment": "-",
       "name": "Baroda BNP Paribas LIQUID FUND - DIRECT PLAN - GROWTH OPTION",
       "category": "Baroda BNP Paribas Mutual Fund",
-      "nav": 3214.6816,
-      "navDate": "04-Jun-2026",
+      "nav": 3216.7556,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857063Z"
+        "fetchedAt": "2026-06-08T08:18:33.565712Z"
       },
       "extras": {}
     },
@@ -1724,12 +1716,12 @@
       "isinDividendReinvestment": "-",
       "name": "Baroda BNP Paribas LIQUID FUND - DIRECT PLAN - WEEKLY IDCW OPTION",
       "category": "Baroda BNP Paribas Mutual Fund",
-      "nav": 1219.9105,
-      "navDate": "04-Jun-2026",
+      "nav": 1220.6975,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857067Z"
+        "fetchedAt": "2026-06-08T08:18:33.565716Z"
       },
       "extras": {}
     },
@@ -1745,7 +1737,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857071Z"
+        "fetchedAt": "2026-06-08T08:18:33.565720Z"
       },
       "extras": {}
     },
@@ -1761,7 +1753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857076Z"
+        "fetchedAt": "2026-06-08T08:18:33.565724Z"
       },
       "extras": {}
     },
@@ -1773,11 +1765,11 @@
       "name": "Baroda BNP Paribas LIQUID FUND - Regular Plan - DAILY IDCW OPTION",
       "category": "Baroda BNP Paribas Mutual Fund",
       "nav": 1001.1996,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857082Z"
+        "fetchedAt": "2026-06-08T08:18:33.565730Z"
       },
       "extras": {}
     },
@@ -1788,12 +1780,12 @@
       "isinDividendReinvestment": "-",
       "name": "Baroda BNP Paribas LIQUID FUND - Regular Plan - GROWTH OPTION",
       "category": "Baroda BNP Paribas Mutual Fund",
-      "nav": 3171.1924,
-      "navDate": "04-Jun-2026",
+      "nav": 3173.2187,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857086Z"
+        "fetchedAt": "2026-06-08T08:18:33.565734Z"
       },
       "extras": {}
     },
@@ -1804,12 +1796,12 @@
       "isinDividendReinvestment": "INF955L01500",
       "name": "Baroda BNP Paribas LIQUID FUND - Regular Plan - WEEKLY IDCW OPTION",
       "category": "Baroda BNP Paribas Mutual Fund",
-      "nav": 1000.4534,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.0926,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857090Z"
+        "fetchedAt": "2026-06-08T08:18:33.565739Z"
       },
       "extras": {}
     },
@@ -1825,7 +1817,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857094Z"
+        "fetchedAt": "2026-06-08T08:18:33.565743Z"
       },
       "extras": {}
     },
@@ -1841,7 +1833,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857098Z"
+        "fetchedAt": "2026-06-08T08:18:33.565749Z"
       },
       "extras": {}
     },
@@ -1857,7 +1849,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857102Z"
+        "fetchedAt": "2026-06-08T08:18:33.565753Z"
       },
       "extras": {}
     },
@@ -1873,7 +1865,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857106Z"
+        "fetchedAt": "2026-06-08T08:18:33.565757Z"
       },
       "extras": {}
     },
@@ -1884,12 +1876,12 @@
       "isinDividendReinvestment": "-",
       "name": "Baroda BNP Paribas LIQUID FUND- Defunct Plan -Growth Option",
       "category": "Baroda BNP Paribas Mutual Fund",
-      "nav": 4668.7343,
-      "navDate": "04-Jun-2026",
+      "nav": 4671.7176,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857110Z"
+        "fetchedAt": "2026-06-08T08:18:33.565761Z"
       },
       "extras": {}
     },
@@ -1900,12 +1892,12 @@
       "isinDividendReinvestment": "INF955L01567",
       "name": "Baroda BNP Paribas LIQUID FUND-Defunct Plan- IDCW Option",
       "category": "Baroda BNP Paribas Mutual Fund",
-      "nav": 3852.1205,
-      "navDate": "04-Jun-2026",
+      "nav": 3854.5821,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857115Z"
+        "fetchedAt": "2026-06-08T08:18:33.565765Z"
       },
       "extras": {}
     },
@@ -1921,7 +1913,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857119Z"
+        "fetchedAt": "2026-06-08T08:18:33.565769Z"
       },
       "extras": {}
     },
@@ -1933,11 +1925,11 @@
       "name": "CANARA ROBECO LIQUID FUND - DIRECT PLAN - DAILY IDCW (Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
       "nav": 1005.5,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857124Z"
+        "fetchedAt": "2026-06-08T08:18:33.565774Z"
       },
       "extras": {}
     },
@@ -1948,12 +1940,12 @@
       "isinDividendReinvestment": "-",
       "name": "CANARA ROBECO LIQUID FUND - DIRECT PLAN - GROWTH OPTION",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 3343.7087,
-      "navDate": "04-Jun-2026",
+      "nav": 3345.8025,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857132Z"
+        "fetchedAt": "2026-06-08T08:18:33.565782Z"
       },
       "extras": {}
     },
@@ -1964,12 +1956,12 @@
       "isinDividendReinvestment": "-",
       "name": "CANARA ROBECO LIQUID FUND - DIRECT PLAN - IDCW (Payout/Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 2392.8497,
-      "navDate": "04-Jun-2026",
+      "nav": 2394.3481,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857136Z"
+        "fetchedAt": "2026-06-08T08:18:33.565786Z"
       },
       "extras": {}
     },
@@ -1980,12 +1972,12 @@
       "isinDividendReinvestment": "INF760K01FW2",
       "name": "CANARA ROBECO LIQUID FUND - DIRECT PLAN - MONTHLY IDCW (Payout/Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 1001.8334,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.4607,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857140Z"
+        "fetchedAt": "2026-06-08T08:18:33.565791Z"
       },
       "extras": {}
     },
@@ -1996,12 +1988,12 @@
       "isinDividendReinvestment": "INF760K01FX0",
       "name": "CANARA ROBECO LIQUID FUND - DIRECT PLAN - WEEKLY IDCW (Payout/Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 1000.416,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.0424,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857145Z"
+        "fetchedAt": "2026-06-08T08:18:33.565795Z"
       },
       "extras": {}
     },
@@ -2013,11 +2005,11 @@
       "name": "CANARA ROBECO LIQUID FUND - REGULAR PLAN - DAILY IDCW (Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
       "nav": 1005.5,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857151Z"
+        "fetchedAt": "2026-06-08T08:18:33.565799Z"
       },
       "extras": {}
     },
@@ -2028,12 +2020,12 @@
       "isinDividendReinvestment": "-",
       "name": "CANARA ROBECO LIQUID FUND - REGULAR PLAN - GROWTH OPTION",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 3322.1445,
-      "navDate": "04-Jun-2026",
+      "nav": 3324.2088,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857155Z"
+        "fetchedAt": "2026-06-08T08:18:33.565803Z"
       },
       "extras": {}
     },
@@ -2044,12 +2036,12 @@
       "isinDividendReinvestment": "INF760K01CY5",
       "name": "CANARA ROBECO LIQUID FUND - REGULAR PLAN - MONTHLY IDCW (Payout/Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 1001.6392,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.2616,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857159Z"
+        "fetchedAt": "2026-06-08T08:18:33.565808Z"
       },
       "extras": {}
     },
@@ -2060,12 +2052,12 @@
       "isinDividendReinvestment": "INF760K01CZ2",
       "name": "CANARA ROBECO LIQUID FUND - REGULAR PLAN - WEEKLY IDCW (Payout/Reinvestment)",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 1000.4144,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.036,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857165Z"
+        "fetchedAt": "2026-06-08T08:18:33.565812Z"
       },
       "extras": {}
     },
@@ -2076,12 +2068,12 @@
       "isinDividendReinvestment": "-",
       "name": "Canara Robeco Liquid Fund -Unclaimed Redemption and Dividend Plan -Direct Growth Option",
       "category": "Canara Robeco Mutual Fund",
-      "nav": 1824.757,
-      "navDate": "04-Jun-2026",
+      "nav": 1825.9028,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857170Z"
+        "fetchedAt": "2026-06-08T08:18:33.565816Z"
       },
       "extras": {}
     },
@@ -2092,12 +2084,12 @@
       "isinDividendReinvestment": "-",
       "name": "Capitalmind Liquid Fund - Direct-Growth",
       "category": "Capitalmind Mutual Fund",
-      "nav": 1034.568,
-      "navDate": "04-Jun-2026",
+      "nav": 1035.1791,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857175Z"
+        "fetchedAt": "2026-06-08T08:18:33.565821Z"
       },
       "extras": {}
     },
@@ -2108,12 +2100,12 @@
       "isinDividendReinvestment": "-",
       "name": "Capitalmind Liquid Fund - Regular-Growth",
       "category": "Capitalmind Mutual Fund",
-      "nav": 1033.4954,
-      "navDate": "04-Jun-2026",
+      "nav": 1034.0892,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857180Z"
+        "fetchedAt": "2026-06-08T08:18:33.565827Z"
       },
       "extras": {}
     },
@@ -2124,12 +2116,12 @@
       "isinDividendReinvestment": "-",
       "name": "DSP Liquidity Fund - Direct Plan - Growth",
       "category": "DSP Mutual Fund",
-      "nav": 3989.2201,
-      "navDate": "04-Jun-2026",
+      "nav": 3991.9444,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857185Z"
+        "fetchedAt": "2026-06-08T08:18:33.565832Z"
       },
       "extras": {}
     },
@@ -2141,11 +2133,11 @@
       "name": "DSP Liquidity Fund - Direct Plan - IDCW - Daily",
       "category": "DSP Mutual Fund",
       "nav": 1001.4663,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857190Z"
+        "fetchedAt": "2026-06-08T08:18:33.565838Z"
       },
       "extras": {}
     },
@@ -2156,12 +2148,12 @@
       "isinDividendReinvestment": "INF740KA1OD2",
       "name": "DSP Liquidity Fund - Direct Plan - IDCW - Weekly",
       "category": "DSP Mutual Fund",
-      "nav": 1001.4509,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.1348,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857194Z"
+        "fetchedAt": "2026-06-08T08:18:33.565842Z"
       },
       "extras": {}
     },
@@ -2172,12 +2164,12 @@
       "isinDividendReinvestment": "-",
       "name": "DSP Liquidity Fund - Regular Plan - Growth",
       "category": "DSP Mutual Fund",
-      "nav": 3940.5986,
-      "navDate": "04-Jun-2026",
+      "nav": 3943.2606,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857198Z"
+        "fetchedAt": "2026-06-08T08:18:33.565846Z"
       },
       "extras": {}
     },
@@ -2188,12 +2180,12 @@
       "isinDividendReinvestment": "INF740K01FL7",
       "name": "DSP Liquidity Fund - Regular Plan - IDCW - Weekly",
       "category": "DSP Mutual Fund",
-      "nav": 1001.4509,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.1275,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857202Z"
+        "fetchedAt": "2026-06-08T08:18:33.565850Z"
       },
       "extras": {}
     },
@@ -2205,11 +2197,11 @@
       "name": "DSP Liquidity Fund- Regular Plan - IDCW - Daily",
       "category": "DSP Mutual Fund",
       "nav": 1001.4663,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857206Z"
+        "fetchedAt": "2026-06-08T08:18:33.565854Z"
       },
       "extras": {}
     },
@@ -2220,12 +2212,12 @@
       "isinDividendReinvestment": "-",
       "name": "Edelweiss Liquid Fund - Direct Plan - Bonus Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 2097.6619,
-      "navDate": "04-Jun-2026",
+      "nav": 2099.0978,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857211Z"
+        "fetchedAt": "2026-06-08T08:18:33.565859Z"
       },
       "extras": {}
     },
@@ -2236,12 +2228,12 @@
       "isinDividendReinvestment": "-",
       "name": "Edelweiss Liquid Fund - Direct Plan - Growth Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 3605.5864,
-      "navDate": "04-Jun-2026",
+      "nav": 3608.0547,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857215Z"
+        "fetchedAt": "2026-06-08T08:18:33.565863Z"
       },
       "extras": {}
     },
@@ -2252,12 +2244,12 @@
       "isinDividendReinvestment": "INF754K01GN2",
       "name": "Edelweiss Liquid Fund - Direct Plan - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 3605.5998,
-      "navDate": "04-Jun-2026",
+      "nav": 3608.068,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857239Z"
+        "fetchedAt": "2026-06-08T08:18:33.565867Z"
       },
       "extras": {}
     },
@@ -2268,12 +2260,12 @@
       "isinDividendReinvestment": "INF754K01GT9",
       "name": "Edelweiss Liquid Fund - Direct Plan Annual - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 3605.5608,
-      "navDate": "04-Jun-2026",
+      "nav": 3608.029,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857247Z"
+        "fetchedAt": "2026-06-08T08:18:33.565873Z"
       },
       "extras": {}
     },
@@ -2285,11 +2277,11 @@
       "name": "Edelweiss Liquid Fund - Direct Plan daily - IDCW Option",
       "category": "Edelweiss Mutual Fund",
       "nav": 1194.4512,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857251Z"
+        "fetchedAt": "2026-06-08T08:18:33.565877Z"
       },
       "extras": {}
     },
@@ -2300,12 +2292,12 @@
       "isinDividendReinvestment": "INF754K01GR3",
       "name": "Edelweiss Liquid Fund - Direct Plan Fortnightly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 2476.3243,
-      "navDate": "04-Jun-2026",
+      "nav": 2478.0195,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857255Z"
+        "fetchedAt": "2026-06-08T08:18:33.565881Z"
       },
       "extras": {}
     },
@@ -2316,12 +2308,12 @@
       "isinDividendReinvestment": "INF754K01GS1",
       "name": "Edelweiss Liquid Fund - Direct Plan Monthly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1006.1263,
-      "navDate": "04-Jun-2026",
+      "nav": 1006.8151,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857259Z"
+        "fetchedAt": "2026-06-08T08:18:33.565885Z"
       },
       "extras": {}
     },
@@ -2332,12 +2324,12 @@
       "isinDividendReinvestment": "INF754K01GQ5",
       "name": "Edelweiss Liquid Fund - Direct Plan weekly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 2173.8658,
-      "navDate": "04-Jun-2026",
+      "nav": 2175.3539,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857264Z"
+        "fetchedAt": "2026-06-08T08:18:33.565889Z"
       },
       "extras": {}
     },
@@ -2348,12 +2340,12 @@
       "isinDividendReinvestment": "-",
       "name": "Edelweiss Liquid Fund - Regular Plan - Bonus Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 2056.5427,
-      "navDate": "04-Jun-2026",
+      "nav": 2057.9388,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857268Z"
+        "fetchedAt": "2026-06-08T08:18:33.565893Z"
       },
       "extras": {}
     },
@@ -2364,12 +2356,12 @@
       "isinDividendReinvestment": "-",
       "name": "Edelweiss Liquid Fund - Regular Plan - Growth Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 3530.332,
-      "navDate": "04-Jun-2026",
+      "nav": 3532.7285,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857272Z"
+        "fetchedAt": "2026-06-08T08:18:33.565901Z"
       },
       "extras": {}
     },
@@ -2380,12 +2372,12 @@
       "isinDividendReinvestment": "INF754K01GL6",
       "name": "Edelweiss Liquid Fund - Regular Plan - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 3530.335,
-      "navDate": "04-Jun-2026",
+      "nav": 3532.7315,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857276Z"
+        "fetchedAt": "2026-06-08T08:18:33.565905Z"
       },
       "extras": {}
     },
@@ -2396,12 +2388,12 @@
       "isinDividendReinvestment": "INF754K01HP5",
       "name": "Edelweiss Liquid Fund - Regular Plan Annual - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 2442.6854,
-      "navDate": "04-Jun-2026",
+      "nav": 2444.3436,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857280Z"
+        "fetchedAt": "2026-06-08T08:18:33.565910Z"
       },
       "extras": {}
     },
@@ -2412,12 +2404,12 @@
       "isinDividendReinvestment": "INF754K01HA7",
       "name": "Edelweiss Liquid Fund - Regular Plan Daily - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1307.1803,
-      "navDate": "04-Jun-2026",
+      "nav": 1308.0677,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857286Z"
+        "fetchedAt": "2026-06-08T08:18:33.565916Z"
       },
       "extras": {}
     },
@@ -2428,12 +2420,12 @@
       "isinDividendReinvestment": "INF754K01HC3",
       "name": "Edelweiss Liquid Fund - Regular Plan Fortnightly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 2155.5615,
-      "navDate": "04-Jun-2026",
+      "nav": 2157.0247,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857292Z"
+        "fetchedAt": "2026-06-08T08:18:33.565921Z"
       },
       "extras": {}
     },
@@ -2444,12 +2436,12 @@
       "isinDividendReinvestment": "INF754K01HD1",
       "name": "Edelweiss Liquid Fund - Regular Plan Monthly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1084.4017,
-      "navDate": "04-Jun-2026",
+      "nav": 1085.1379,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857296Z"
+        "fetchedAt": "2026-06-08T08:18:33.565938Z"
       },
       "extras": {}
     },
@@ -2460,12 +2452,12 @@
       "isinDividendReinvestment": "INF754K01HB5",
       "name": "Edelweiss Liquid Fund - Regular Plan Weekly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1215.6532,
-      "navDate": "04-Jun-2026",
+      "nav": 1216.4784,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857300Z"
+        "fetchedAt": "2026-06-08T08:18:33.565945Z"
       },
       "extras": {}
     },
@@ -2476,12 +2468,12 @@
       "isinDividendReinvestment": "-",
       "name": "Edelweiss Liquid Fund - Retail Plan - Growth Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 3210.5488,
-      "navDate": "04-Jun-2026",
+      "nav": 3212.7285,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857305Z"
+        "fetchedAt": "2026-06-08T08:18:33.565949Z"
       },
       "extras": {}
     },
@@ -2492,12 +2484,12 @@
       "isinDividendReinvestment": "INF754K01HG4",
       "name": "Edelweiss Liquid Fund - Retail Plan - Weekly Dividend Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1231.4197,
-      "navDate": "04-Jun-2026",
+      "nav": 1232.2556,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857309Z"
+        "fetchedAt": "2026-06-08T08:18:33.565953Z"
       },
       "extras": {}
     },
@@ -2508,12 +2500,12 @@
       "isinDividendReinvestment": "INF754K01HF6",
       "name": "Edelweiss Liquid Fund - Retail Plan Daily - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1150.4976,
-      "navDate": "04-Jun-2026",
+      "nav": 1151.2807,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857313Z"
+        "fetchedAt": "2026-06-08T08:18:33.565959Z"
       },
       "extras": {}
     },
@@ -2524,12 +2516,12 @@
       "isinDividendReinvestment": "INF754K01HI0",
       "name": "Edelweiss Liquid Fund - Retail Plan Monthly - IDCW Option",
       "category": "Edelweiss Mutual Fund",
-      "nav": 1245.8531,
-      "navDate": "04-Jun-2026",
+      "nav": 1246.6992,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857317Z"
+        "fetchedAt": "2026-06-08T08:18:33.565963Z"
       },
       "extras": {}
     },
@@ -2541,11 +2533,11 @@
       "name": "Franklin India Liquid Fund - Regular Plan - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1509.0075,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857322Z"
+        "fetchedAt": "2026-06-08T08:18:33.565968Z"
       },
       "extras": {}
     },
@@ -2556,12 +2548,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Regular Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 6211.6965,
-      "navDate": "04-Jun-2026",
+      "nav": 6215.5423,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857328Z"
+        "fetchedAt": "2026-06-08T08:18:33.565972Z"
       },
       "extras": {}
     },
@@ -2572,12 +2564,12 @@
       "isinDividendReinvestment": "INF090I01BI6",
       "name": "Franklin India Liquid Fund - Regular Plan - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1245.1277,
-      "navDate": "04-Jun-2026",
+      "nav": 1244.2967,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857336Z"
+        "fetchedAt": "2026-06-08T08:18:33.565978Z"
       },
       "extras": {}
     },
@@ -2588,12 +2580,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Super Institutional - Direct - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 4192.2371,
-      "navDate": "04-Jun-2026",
+      "nav": 4195.0832,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857340Z"
+        "fetchedAt": "2026-06-08T08:18:33.565982Z"
       },
       "extras": {}
     },
@@ -2605,11 +2597,11 @@
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1000.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857344Z"
+        "fetchedAt": "2026-06-08T08:18:33.565986Z"
       },
       "extras": {}
     },
@@ -2621,11 +2613,11 @@
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Direct - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1002.8152,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857348Z"
+        "fetchedAt": "2026-06-08T08:18:33.565990Z"
       },
       "extras": {}
     },
@@ -2636,12 +2628,12 @@
       "isinDividendReinvestment": "INF090I01JY6",
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Direct - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1022.7339,
-      "navDate": "04-Jun-2026",
+      "nav": 1021.9698,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857353Z"
+        "fetchedAt": "2026-06-08T08:18:33.565995Z"
       },
       "extras": {}
     },
@@ -2652,12 +2644,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 4155.3846,
-      "navDate": "04-Jun-2026",
+      "nav": 4158.1854,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857357Z"
+        "fetchedAt": "2026-06-08T08:18:33.565999Z"
       },
       "extras": {}
     },
@@ -2668,12 +2660,12 @@
       "isinDividendReinvestment": "INF090I01BH8",
       "name": "Franklin India Liquid Fund - Super Institutional Plan - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1037.2116,
-      "navDate": "04-Jun-2026",
+      "nav": 1036.444,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857361Z"
+        "fetchedAt": "2026-06-08T08:18:33.566003Z"
       },
       "extras": {}
     },
@@ -2685,11 +2677,11 @@
       "name": "Franklin India Liquid Fund - Unclaimed IDCW Investor Education Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 10.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857365Z"
+        "fetchedAt": "2026-06-08T08:18:33.566007Z"
       },
       "extras": {}
     },
@@ -2700,12 +2692,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Unclaimed IDCW Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 17.6901,
-      "navDate": "04-Jun-2026",
+      "nav": 17.7021,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857369Z"
+        "fetchedAt": "2026-06-08T08:18:33.566011Z"
       },
       "extras": {}
     },
@@ -2717,11 +2709,11 @@
       "name": "Franklin India Liquid Fund - Unclaimed Redemption Investor Education Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 10.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857374Z"
+        "fetchedAt": "2026-06-08T08:18:33.566016Z"
       },
       "extras": {}
     },
@@ -2732,12 +2724,12 @@
       "isinDividendReinvestment": "-",
       "name": "Franklin India Liquid Fund - Unclaimed Redemption Plan - Growth",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 17.6901,
-      "navDate": "04-Jun-2026",
+      "nav": 17.7021,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857378Z"
+        "fetchedAt": "2026-06-08T08:18:33.566020Z"
       },
       "extras": {}
     },
@@ -2753,7 +2745,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857384Z"
+        "fetchedAt": "2026-06-08T08:18:33.566025Z"
       },
       "extras": {}
     },
@@ -2765,11 +2757,11 @@
       "name": "Franklin India Liquid Fund - Institutional Plan - Daily - IDCW",
       "category": "Franklin Templeton Mutual Fund",
       "nav": 1000.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857388Z"
+        "fetchedAt": "2026-06-08T08:18:33.566031Z"
       },
       "extras": {}
     },
@@ -2780,12 +2772,12 @@
       "isinDividendReinvestment": "INF090I01BE5",
       "name": "Franklin India Liquid Fund - Institutional Plan - Weekly - IDCW",
       "category": "Franklin Templeton Mutual Fund",
-      "nav": 1055.4529,
-      "navDate": "04-Jun-2026",
+      "nav": 1054.7184,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857397Z"
+        "fetchedAt": "2026-06-08T08:18:33.566037Z"
       },
       "extras": {}
     },
@@ -2796,12 +2788,12 @@
       "isinDividendReinvestment": "-",
       "name": "Groww Liquid Fund ( formerly known as Indiabulls Liquid )Fund - Direct Plan - Growth Option",
       "category": "Groww Mutual Fund",
-      "nav": 2704.0743,
-      "navDate": "04-Jun-2026",
+      "nav": 2705.733,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857403Z"
+        "fetchedAt": "2026-06-08T08:18:33.566043Z"
       },
       "extras": {}
     },
@@ -2813,11 +2805,11 @@
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund) - Direct Plan- - Income Distribution cum capital withdrawal Option ( Reinvestment)",
       "category": "Groww Mutual Fund",
       "nav": 1002.0907,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857408Z"
+        "fetchedAt": "2026-06-08T08:18:33.566048Z"
       },
       "extras": {}
     },
@@ -2828,12 +2820,12 @@
       "isinDividendReinvestment": "-",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund) - Regular Plan - Growth Option",
       "category": "Groww Mutual Fund",
-      "nav": 2668.9109,
-      "navDate": "04-Jun-2026",
+      "nav": 2670.5257,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857412Z"
+        "fetchedAt": "2026-06-08T08:18:33.566052Z"
       },
       "extras": {}
     },
@@ -2844,12 +2836,12 @@
       "isinDividendReinvestment": "INF666M01485",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund)- Direct Plan- Fortnightly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
       "category": "Groww Mutual Fund",
-      "nav": 1003.5937,
-      "navDate": "04-Jun-2026",
+      "nav": 1004.2093,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857418Z"
+        "fetchedAt": "2026-06-08T08:18:33.566057Z"
       },
       "extras": {}
     },
@@ -2860,12 +2852,12 @@
       "isinDividendReinvestment": "INF666M01493",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund)- Direct Plan- Monthly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
       "category": "Groww Mutual Fund",
-      "nav": 1029.8518,
-      "navDate": "04-Jun-2026",
+      "nav": 1030.4835,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857423Z"
+        "fetchedAt": "2026-06-08T08:18:33.566062Z"
       },
       "extras": {}
     },
@@ -2876,12 +2868,12 @@
       "isinDividendReinvestment": "INF666M01477",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund)- Direct Plan- Weekly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
       "category": "Groww Mutual Fund",
-      "nav": 1002.2624,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.8772,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857430Z"
+        "fetchedAt": "2026-06-08T08:18:33.566067Z"
       },
       "extras": {}
     },
@@ -2893,11 +2885,11 @@
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund)- Regular Plan- - Income Distribution cum capital withdrawal Option (Reinvestment)",
       "category": "Groww Mutual Fund",
       "nav": 1002.0894,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857434Z"
+        "fetchedAt": "2026-06-08T08:18:33.566072Z"
       },
       "extras": {}
     },
@@ -2908,12 +2900,12 @@
       "isinDividendReinvestment": "INF666M01055",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund)- Regular Plan- Monthly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
       "category": "Groww Mutual Fund",
-      "nav": 1002.1781,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.7845,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857441Z"
+        "fetchedAt": "2026-06-08T08:18:33.566079Z"
       },
       "extras": {}
     },
@@ -2924,12 +2916,12 @@
       "isinDividendReinvestment": "INF666M01030",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid Fund)- Regular Plan- Weekly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
       "category": "Groww Mutual Fund",
-      "nav": 1002.2523,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.8587,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857446Z"
+        "fetchedAt": "2026-06-08T08:18:33.566084Z"
       },
       "extras": {}
     },
@@ -2940,12 +2932,12 @@
       "isinDividendReinvestment": "INF666M01048",
       "name": "Groww Liquid Fund (formerly known as Indiabulls Liquid) Fund- Regular Plan- Fortnightly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
       "category": "Groww Mutual Fund",
-      "nav": 1003.5679,
-      "navDate": "04-Jun-2026",
+      "nav": 1004.1754,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857452Z"
+        "fetchedAt": "2026-06-08T08:18:33.566089Z"
       },
       "extras": {}
     },
@@ -2956,12 +2948,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - Growth Option - Direct Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 5476.9505,
-      "navDate": "04-Jun-2026",
+      "nav": 5480.5124,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857457Z"
+        "fetchedAt": "2026-06-08T08:18:33.566094Z"
       },
       "extras": {}
     },
@@ -2972,12 +2964,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - Growth Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 5413.8657,
-      "navDate": "04-Jun-2026",
+      "nav": 5417.3446,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857462Z"
+        "fetchedAt": "2026-06-08T08:18:33.566098Z"
       },
       "extras": {}
     },
@@ -2989,11 +2981,11 @@
       "name": "HDFC Liquid Fund - IDCW Daily",
       "category": "HDFC Mutual Fund",
       "nav": 1019.82,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857466Z"
+        "fetchedAt": "2026-06-08T08:18:33.566102Z"
       },
       "extras": {}
     },
@@ -3005,11 +2997,11 @@
       "name": "HDFC Liquid Fund - IDCW Daily - Direct Plan",
       "category": "HDFC Mutual Fund",
       "nav": 1019.82,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857470Z"
+        "fetchedAt": "2026-06-08T08:18:33.566106Z"
       },
       "extras": {}
     },
@@ -3020,12 +3012,12 @@
       "isinDividendReinvestment": "INF179KB1HL8",
       "name": "HDFC Liquid Fund - IDCW Monthly",
       "category": "HDFC Mutual Fund",
-      "nav": 1028.1485,
-      "navDate": "04-Jun-2026",
+      "nav": 1028.8092,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857474Z"
+        "fetchedAt": "2026-06-08T08:18:33.566111Z"
       },
       "extras": {}
     },
@@ -3036,12 +3028,12 @@
       "isinDividendReinvestment": "INF179KB1HQ7",
       "name": "HDFC Liquid Fund - IDCW Monthly - Direct Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 1028.1637,
-      "navDate": "04-Jun-2026",
+      "nav": 1028.8324,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857478Z"
+        "fetchedAt": "2026-06-08T08:18:33.566115Z"
       },
       "extras": {}
     },
@@ -3052,12 +3044,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - IDCW Plan Weekly",
       "category": "HDFC Mutual Fund",
-      "nav": 1031.5563,
-      "navDate": "04-Jun-2026",
+      "nav": 1032.2192,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857484Z"
+        "fetchedAt": "2026-06-08T08:18:33.566121Z"
       },
       "extras": {}
     },
@@ -3068,12 +3060,12 @@
       "isinDividendReinvestment": "-",
       "name": "HDFC Liquid Fund - IDCW Weekly - Direct Plan",
       "category": "HDFC Mutual Fund",
-      "nav": 1031.563,
-      "navDate": "04-Jun-2026",
+      "nav": 1032.2338,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857488Z"
+        "fetchedAt": "2026-06-08T08:18:33.566125Z"
       },
       "extras": {}
     },
@@ -3089,7 +3081,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857492Z"
+        "fetchedAt": "2026-06-08T08:18:33.566131Z"
       },
       "extras": {}
     },
@@ -3105,7 +3097,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857498Z"
+        "fetchedAt": "2026-06-08T08:18:33.566135Z"
       },
       "extras": {}
     },
@@ -3121,7 +3113,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857502Z"
+        "fetchedAt": "2026-06-08T08:18:33.566139Z"
       },
       "extras": {}
     },
@@ -3132,12 +3124,12 @@
       "isinDividendReinvestment": "-",
       "name": "HSBC Liquid Fund -  Growth Direct",
       "category": "HSBC Mutual Fund",
-      "nav": 2778.6825,
-      "navDate": "04-Jun-2026",
+      "nav": 2780.6152,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857509Z"
+        "fetchedAt": "2026-06-08T08:18:33.566144Z"
       },
       "extras": {}
     },
@@ -3149,11 +3141,11 @@
       "name": "HSBC Liquid Fund - Direct Daily IDCW",
       "category": "HSBC Mutual Fund",
       "nav": 1001.576,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857513Z"
+        "fetchedAt": "2026-06-08T08:18:33.566148Z"
       },
       "extras": {}
     },
@@ -3164,12 +3156,12 @@
       "isinDividendReinvestment": "INF336L01CA2",
       "name": "HSBC Liquid Fund - Direct Monthly IDCW",
       "category": "HSBC Mutual Fund",
-      "nav": 1039.7951,
-      "navDate": "04-Jun-2026",
+      "nav": 1040.5183,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857517Z"
+        "fetchedAt": "2026-06-08T08:18:33.566152Z"
       },
       "extras": {}
     },
@@ -3180,12 +3172,12 @@
       "isinDividendReinvestment": "INF336L01CD6",
       "name": "HSBC Liquid Fund - Direct Weekly IDCW",
       "category": "HSBC Mutual Fund",
-      "nav": 1195.5938,
-      "navDate": "04-Jun-2026",
+      "nav": 1196.4254,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857521Z"
+        "fetchedAt": "2026-06-08T08:18:33.566156Z"
       },
       "extras": {}
     },
@@ -3196,12 +3188,12 @@
       "isinDividendReinvestment": "-",
       "name": "HSBC Liquid Fund - Growth",
       "category": "HSBC Mutual Fund",
-      "nav": 3968.6872,
-      "navDate": "04-Jun-2026",
+      "nav": 3971.4169,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857525Z"
+        "fetchedAt": "2026-06-08T08:18:33.566159Z"
       },
       "extras": {}
     },
@@ -3213,11 +3205,11 @@
       "name": "HSBC Liquid Fund - IDCW",
       "category": "HSBC Mutual Fund",
       "nav": 1019.3,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857529Z"
+        "fetchedAt": "2026-06-08T08:18:33.566163Z"
       },
       "extras": {}
     },
@@ -3229,11 +3221,11 @@
       "name": "HSBC Liquid Fund - Institutional Daily IDCW",
       "category": "HSBC Mutual Fund",
       "nav": 1562.8262,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857535Z"
+        "fetchedAt": "2026-06-08T08:18:33.566169Z"
       },
       "extras": {}
     },
@@ -3245,11 +3237,11 @@
       "name": "HSBC Liquid Fund - Regular Daily IDCW",
       "category": "HSBC Mutual Fund",
       "nav": 1001.3789,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857539Z"
+        "fetchedAt": "2026-06-08T08:18:33.566173Z"
       },
       "extras": {}
     },
@@ -3260,12 +3252,12 @@
       "isinDividendReinvestment": "-",
       "name": "HSBC Liquid Fund - Regular Growth",
       "category": "HSBC Mutual Fund",
-      "nav": 2750.6762,
-      "navDate": "04-Jun-2026",
+      "nav": 2752.5681,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857543Z"
+        "fetchedAt": "2026-06-08T08:18:33.566179Z"
       },
       "extras": {}
     },
@@ -3276,12 +3268,12 @@
       "isinDividendReinvestment": "INF336L01BO5",
       "name": "HSBC Liquid Fund - Regular Monthly IDCW",
       "category": "HSBC Mutual Fund",
-      "nav": 1004.1192,
-      "navDate": "04-Jun-2026",
+      "nav": 1004.8098,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857547Z"
+        "fetchedAt": "2026-06-08T08:18:33.566183Z"
       },
       "extras": {}
     },
@@ -3292,12 +3284,12 @@
       "isinDividendReinvestment": "INF336L01BQ0",
       "name": "HSBC Liquid Fund - Regular Weekly IDCW",
       "category": "HSBC Mutual Fund",
-      "nav": 1107.8671,
-      "navDate": "04-Jun-2026",
+      "nav": 1108.6291,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857551Z"
+        "fetchedAt": "2026-06-08T08:18:33.566187Z"
       },
       "extras": {}
     },
@@ -3308,12 +3300,12 @@
       "isinDividendReinvestment": "INF336L01BR8",
       "name": "HSBC Liquid Fund - Weekly IDCW",
       "category": "HSBC Mutual Fund",
-      "nav": 1001.6672,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.3561,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857555Z"
+        "fetchedAt": "2026-06-08T08:18:33.566191Z"
       },
       "extras": {}
     },
@@ -3329,7 +3321,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857560Z"
+        "fetchedAt": "2026-06-08T08:18:33.566198Z"
       },
       "extras": {}
     },
@@ -3345,7 +3337,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857564Z"
+        "fetchedAt": "2026-06-08T08:18:33.566202Z"
       },
       "extras": {}
     },
@@ -3361,7 +3353,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857568Z"
+        "fetchedAt": "2026-06-08T08:18:33.566206Z"
       },
       "extras": {}
     },
@@ -3373,11 +3365,11 @@
       "name": "ICICI Prudential Liquid Fund - Daily IDCW",
       "category": "ICICI Prudential Mutual Fund",
       "nav": 100.1482,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857572Z"
+        "fetchedAt": "2026-06-08T08:18:33.566210Z"
       },
       "extras": {}
     },
@@ -3393,7 +3385,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857578Z"
+        "fetchedAt": "2026-06-08T08:18:33.566216Z"
       },
       "extras": {}
     },
@@ -3409,7 +3401,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857582Z"
+        "fetchedAt": "2026-06-08T08:18:33.566220Z"
       },
       "extras": {}
     },
@@ -3420,12 +3412,12 @@
       "isinDividendReinvestment": "INF109K01Q23",
       "name": "ICICI Prudential Liquid Fund - Direct Plan -  IDCW Others",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 191.4079,
-      "navDate": "04-Jun-2026",
+      "nav": 191.5368,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857587Z"
+        "fetchedAt": "2026-06-08T08:18:33.566224Z"
       },
       "extras": {}
     },
@@ -3437,11 +3429,11 @@
       "name": "ICICI Prudential Liquid Fund - Direct Plan - Daily IDCW",
       "category": "ICICI Prudential Mutual Fund",
       "nav": 100.1082,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857591Z"
+        "fetchedAt": "2026-06-08T08:18:33.566228Z"
       },
       "extras": {}
     },
@@ -3452,12 +3444,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Direct Plan - Growth",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 412.6966,
-      "navDate": "04-Jun-2026",
+      "nav": 412.9743,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857599Z"
+        "fetchedAt": "2026-06-08T08:18:33.566232Z"
       },
       "extras": {}
     },
@@ -3473,7 +3465,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857603Z"
+        "fetchedAt": "2026-06-08T08:18:33.566236Z"
       },
       "extras": {}
     },
@@ -3489,7 +3481,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857609Z"
+        "fetchedAt": "2026-06-08T08:18:33.566240Z"
       },
       "extras": {}
     },
@@ -3500,12 +3492,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 100.2342,
-      "navDate": "04-Jun-2026",
+      "nav": 100.3016,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857613Z"
+        "fetchedAt": "2026-06-08T08:18:33.566244Z"
       },
       "extras": {}
     },
@@ -3521,7 +3513,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857617Z"
+        "fetchedAt": "2026-06-08T08:18:33.566248Z"
       },
       "extras": {}
     },
@@ -3532,12 +3524,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Growth",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 408.3391,
-      "navDate": "04-Jun-2026",
+      "nav": 408.6103,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857621Z"
+        "fetchedAt": "2026-06-08T08:18:33.566252Z"
       },
       "extras": {}
     },
@@ -3553,7 +3545,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857627Z"
+        "fetchedAt": "2026-06-08T08:18:33.566258Z"
       },
       "extras": {}
     },
@@ -3564,12 +3556,12 @@
       "isinDividendReinvestment": "INF109K01VT5",
       "name": "ICICI Prudential Liquid Fund - IDCW Others",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 189.7747,
-      "navDate": "04-Jun-2026",
+      "nav": 189.9007,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857631Z"
+        "fetchedAt": "2026-06-08T08:18:33.566262Z"
       },
       "extras": {}
     },
@@ -3585,7 +3577,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857636Z"
+        "fetchedAt": "2026-06-08T08:18:33.566266Z"
       },
       "extras": {}
     },
@@ -3601,7 +3593,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857639Z"
+        "fetchedAt": "2026-06-08T08:18:33.566270Z"
       },
       "extras": {}
     },
@@ -3617,7 +3609,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857644Z"
+        "fetchedAt": "2026-06-08T08:18:33.566274Z"
       },
       "extras": {}
     },
@@ -3633,7 +3625,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857648Z"
+        "fetchedAt": "2026-06-08T08:18:33.566278Z"
       },
       "extras": {}
     },
@@ -3649,7 +3641,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857652Z"
+        "fetchedAt": "2026-06-08T08:18:33.566287Z"
       },
       "extras": {}
     },
@@ -3660,12 +3652,12 @@
       "isinDividendReinvestment": "-",
       "name": "ICICI Prudential Liquid Fund - Weekly IDCW",
       "category": "ICICI Prudential Mutual Fund",
-      "nav": 100.2081,
-      "navDate": "04-Jun-2026",
+      "nav": 100.2747,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857657Z"
+        "fetchedAt": "2026-06-08T08:18:33.566291Z"
       },
       "extras": {}
     },
@@ -3681,7 +3673,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857662Z"
+        "fetchedAt": "2026-06-08T08:18:33.566295Z"
       },
       "extras": {}
     },
@@ -3697,7 +3689,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857666Z"
+        "fetchedAt": "2026-06-08T08:18:33.566299Z"
       },
       "extras": {}
     },
@@ -3713,7 +3705,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857671Z"
+        "fetchedAt": "2026-06-08T08:18:33.566305Z"
       },
       "extras": {}
     },
@@ -3729,7 +3721,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857676Z"
+        "fetchedAt": "2026-06-08T08:18:33.566309Z"
       },
       "extras": {}
     },
@@ -3745,7 +3737,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857680Z"
+        "fetchedAt": "2026-06-08T08:18:33.566313Z"
       },
       "extras": {}
     },
@@ -3761,7 +3753,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857685Z"
+        "fetchedAt": "2026-06-08T08:18:33.566319Z"
       },
       "extras": {}
     },
@@ -3777,7 +3769,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857689Z"
+        "fetchedAt": "2026-06-08T08:18:33.566323Z"
       },
       "extras": {}
     },
@@ -3793,7 +3785,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857694Z"
+        "fetchedAt": "2026-06-08T08:18:33.566326Z"
       },
       "extras": {}
     },
@@ -3809,7 +3801,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857698Z"
+        "fetchedAt": "2026-06-08T08:18:33.566330Z"
       },
       "extras": {}
     },
@@ -3821,11 +3813,11 @@
       "name": "Invesco India Liquid Fund - Daily IDCW (Reinvestment)",
       "category": "Invesco Mutual Fund",
       "nav": 1002.7594,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857703Z"
+        "fetchedAt": "2026-06-08T08:18:33.566338Z"
       },
       "extras": {}
     },
@@ -3836,12 +3828,12 @@
       "isinDividendReinvestment": "-",
       "name": "Invesco India Liquid Fund - Direct Plan - Growth",
       "category": "Invesco Mutual Fund",
-      "nav": 3827.6526,
-      "navDate": "04-Jun-2026",
+      "nav": 3830.1034,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857707Z"
+        "fetchedAt": "2026-06-08T08:18:33.566343Z"
       },
       "extras": {}
     },
@@ -3852,12 +3844,12 @@
       "isinDividendReinvestment": "INF205K01MH5",
       "name": "Invesco India Liquid Fund - Direct Plan - Monthly IDCW (Payout / Reinvestment)",
       "category": "Invesco Mutual Fund",
-      "nav": 1083.7726,
-      "navDate": "04-Jun-2026",
+      "nav": 1084.4666,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857711Z"
+        "fetchedAt": "2026-06-08T08:18:33.566348Z"
       },
       "extras": {}
     },
@@ -3868,12 +3860,12 @@
       "isinDividendReinvestment": "INF205K01MI3",
       "name": "Invesco India Liquid Fund - Direct Plan - Weekly IDCW (Reinvestment)",
       "category": "Invesco Mutual Fund",
-      "nav": 1072.934,
-      "navDate": "04-Jun-2026",
+      "nav": 1073.6262,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857717Z"
+        "fetchedAt": "2026-06-08T08:18:33.566354Z"
       },
       "extras": {}
     },
@@ -3885,11 +3877,11 @@
       "name": "Invesco India Liquid Fund - Direct Plan- Daily IDCW (Reinvestment)",
       "category": "Invesco Mutual Fund",
       "nav": 1005.8604,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857721Z"
+        "fetchedAt": "2026-06-08T08:18:33.566358Z"
       },
       "extras": {}
     },
@@ -3900,12 +3892,12 @@
       "isinDividendReinvestment": "-",
       "name": "Invesco India Liquid Fund - Growth",
       "category": "Invesco Mutual Fund",
-      "nav": 3793.0646,
-      "navDate": "04-Jun-2026",
+      "nav": 3795.4713,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857727Z"
+        "fetchedAt": "2026-06-08T08:18:33.566362Z"
       },
       "extras": {}
     },
@@ -3916,12 +3908,12 @@
       "isinDividendReinvestment": "INF205K01HP8",
       "name": "Invesco India Liquid Fund - Monthly IDCW (Payout / Reinvestment)",
       "category": "Invesco Mutual Fund",
-      "nav": 1004.4802,
-      "navDate": "04-Jun-2026",
+      "nav": 1005.1176,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857731Z"
+        "fetchedAt": "2026-06-08T08:18:33.566366Z"
       },
       "extras": {}
     },
@@ -3932,12 +3924,12 @@
       "isinDividendReinvestment": "-",
       "name": "Invesco India Liquid Fund - Regular - Growth",
       "category": "Invesco Mutual Fund",
-      "nav": 3342.8474,
-      "navDate": "04-Jun-2026",
+      "nav": 3344.8447,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857735Z"
+        "fetchedAt": "2026-06-08T08:18:33.566370Z"
       },
       "extras": {}
     },
@@ -3948,12 +3940,12 @@
       "isinDividendReinvestment": "INF205K01HH5",
       "name": "Invesco India Liquid Fund - Regular - Weekly IDCW (Reinvestment)",
       "category": "Invesco Mutual Fund",
-      "nav": 1004.5692,
-      "navDate": "04-Jun-2026",
+      "nav": 1005.1694,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857739Z"
+        "fetchedAt": "2026-06-08T08:18:33.566376Z"
       },
       "extras": {}
     },
@@ -3965,11 +3957,11 @@
       "name": "Invesco India Liquid Fund - Unclaimed Dividend Plan - Above 3 Years",
       "category": "Invesco Mutual Fund",
       "nav": 1000.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857744Z"
+        "fetchedAt": "2026-06-08T08:18:33.566380Z"
       },
       "extras": {}
     },
@@ -3980,12 +3972,12 @@
       "isinDividendReinvestment": "-",
       "name": "Invesco India Liquid Fund - Unclaimed Dividend Plan - Below 3 Years",
       "category": "Invesco Mutual Fund",
-      "nav": 1814.2316,
-      "navDate": "04-Jun-2026",
+      "nav": 1815.3932,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857748Z"
+        "fetchedAt": "2026-06-08T08:18:33.566384Z"
       },
       "extras": {}
     },
@@ -3997,11 +3989,11 @@
       "name": "Invesco India Liquid Fund - Unclaimed Redemption Plan - Above 3 Years",
       "category": "Invesco Mutual Fund",
       "nav": 1000.0,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857755Z"
+        "fetchedAt": "2026-06-08T08:18:33.566388Z"
       },
       "extras": {}
     },
@@ -4012,12 +4004,12 @@
       "isinDividendReinvestment": "-",
       "name": "Invesco India Liquid Fund - Unclaimed Redemption Plan - Below 3 years",
       "category": "Invesco Mutual Fund",
-      "nav": 1813.8273,
-      "navDate": "04-Jun-2026",
+      "nav": 1814.9887,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857759Z"
+        "fetchedAt": "2026-06-08T08:18:33.566392Z"
       },
       "extras": {}
     },
@@ -4028,12 +4020,12 @@
       "isinDividendReinvestment": "INF205K01HO1",
       "name": "Invesco India Liquid Fund - Weekly IDCW (Reinvestment)",
       "category": "Invesco Mutual Fund",
-      "nav": 1019.1039,
-      "navDate": "04-Jun-2026",
+      "nav": 1019.7506,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857765Z"
+        "fetchedAt": "2026-06-08T08:18:33.566396Z"
       },
       "extras": {}
     },
@@ -4044,12 +4036,12 @@
       "isinDividendReinvestment": "INF00XX01333",
       "name": "ITI Liquid Fund - Direct Plan - Annually IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1451.1381,
-      "navDate": "04-Jun-2026",
+      "nav": 1451.9318,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857772Z"
+        "fetchedAt": "2026-06-08T08:18:33.566403Z"
       },
       "extras": {}
     },
@@ -4060,12 +4052,12 @@
       "isinDividendReinvestment": "INF00XX01291",
       "name": "ITI Liquid Fund - Direct Plan - Daily IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1000.2083,
-      "navDate": "04-Jun-2026",
+      "nav": 1000.7386,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857776Z"
+        "fetchedAt": "2026-06-08T08:18:33.566407Z"
       },
       "extras": {}
     },
@@ -4076,12 +4068,12 @@
       "isinDividendReinvestment": "INF00XX01317",
       "name": "ITI Liquid Fund - Direct Plan - Fortnightly IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1002.3502,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.9005,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857782Z"
+        "fetchedAt": "2026-06-08T08:18:33.566411Z"
       },
       "extras": {}
     },
@@ -4092,12 +4084,12 @@
       "isinDividendReinvestment": "-",
       "name": "ITI Liquid Fund - Direct Plan - Growth Option",
       "category": "ITI Mutual Fund",
-      "nav": 1449.2149,
-      "navDate": "04-Jun-2026",
+      "nav": 1450.0075,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857786Z"
+        "fetchedAt": "2026-06-08T08:18:33.566415Z"
       },
       "extras": {}
     },
@@ -4108,12 +4100,12 @@
       "isinDividendReinvestment": "INF00XX01325",
       "name": "ITI Liquid Fund - Direct Plan - Monthly IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1002.3534,
-      "navDate": "04-Jun-2026",
+      "nav": 1002.9016,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857790Z"
+        "fetchedAt": "2026-06-08T08:18:33.566419Z"
       },
       "extras": {}
     },
@@ -4124,12 +4116,12 @@
       "isinDividendReinvestment": "INF00XX01309",
       "name": "ITI Liquid Fund - Direct Plan - Weekly IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1001.3048,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.8512,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857794Z"
+        "fetchedAt": "2026-06-08T08:18:33.566425Z"
       },
       "extras": {}
     },
@@ -4140,12 +4132,12 @@
       "isinDividendReinvestment": "INF00XX01242",
       "name": "ITI Liquid Fund - Regular Plan - Annually IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1444.0476,
-      "navDate": "04-Jun-2026",
+      "nav": 1444.8052,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857799Z"
+        "fetchedAt": "2026-06-08T08:18:33.566429Z"
       },
       "extras": {}
     },
@@ -4156,12 +4148,12 @@
       "isinDividendReinvestment": "INF00XX01200",
       "name": "ITI Liquid Fund - Regular Plan - Daily IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1001.0001,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.0,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857802Z"
+        "fetchedAt": "2026-06-08T08:18:33.566433Z"
       },
       "extras": {}
     },
@@ -4177,7 +4169,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857807Z"
+        "fetchedAt": "2026-06-08T08:18:33.566438Z"
       },
       "extras": {}
     },
@@ -4188,12 +4180,12 @@
       "isinDividendReinvestment": "-",
       "name": "ITI Liquid Fund - Regular Plan - Growth Option",
       "category": "ITI Mutual Fund",
-      "nav": 1435.0476,
-      "navDate": "04-Jun-2026",
+      "nav": 1435.8232,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857811Z"
+        "fetchedAt": "2026-06-08T08:18:33.566442Z"
       },
       "extras": {}
     },
@@ -4205,11 +4197,11 @@
       "name": "ITI Liquid Fund - Regular Plan - Monthly IDCW Option",
       "category": "ITI Mutual Fund",
       "nav": 1001.1538,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857817Z"
+        "fetchedAt": "2026-06-08T08:18:33.566448Z"
       },
       "extras": {}
     },
@@ -4220,12 +4212,12 @@
       "isinDividendReinvestment": "INF00XX01218",
       "name": "ITI Liquid Fund - Regular Plan - Weekly IDCW Option",
       "category": "ITI Mutual Fund",
-      "nav": 1001.2997,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.8407,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857821Z"
+        "fetchedAt": "2026-06-08T08:18:33.566452Z"
       },
       "extras": {}
     },
@@ -4236,12 +4228,12 @@
       "isinDividendReinvestment": "-",
       "name": "JioBlackRock Liquid Fund - Direct Plan - Growth Option",
       "category": "Jio BlackRock Mutual Fund",
-      "nav": 1057.5704,
-      "navDate": "04-Jun-2026",
+      "nav": 1058.2791,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857828Z"
+        "fetchedAt": "2026-06-08T08:18:33.566457Z"
       },
       "extras": {}
     },
@@ -4257,7 +4249,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857833Z"
+        "fetchedAt": "2026-06-08T08:18:33.566462Z"
       },
       "extras": {}
     },
@@ -4269,11 +4261,11 @@
       "name": "JM Liquid Fund (Direct) - Daily IDCW",
       "category": "JM Financial Mutual Fund",
       "nav": 10.4302,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857837Z"
+        "fetchedAt": "2026-06-08T08:18:33.566468Z"
       },
       "extras": {}
     },
@@ -4284,12 +4276,12 @@
       "isinDividendReinvestment": "-",
       "name": "JM Liquid Fund (Direct) - Growth Option",
       "category": "JM Financial Mutual Fund",
-      "nav": 76.092,
-      "navDate": "04-Jun-2026",
+      "nav": 76.1397,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857841Z"
+        "fetchedAt": "2026-06-08T08:18:33.566472Z"
       },
       "extras": {}
     },
@@ -4300,12 +4292,12 @@
       "isinDividendReinvestment": "INF192K01CL8",
       "name": "JM Liquid Fund (Direct) - Quarterly IDCW",
       "category": "JM Financial Mutual Fund",
-      "nav": 43.2006,
-      "navDate": "04-Jun-2026",
+      "nav": 43.2276,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857847Z"
+        "fetchedAt": "2026-06-08T08:18:33.566476Z"
       },
       "extras": {}
     },
@@ -4316,12 +4308,12 @@
       "isinDividendReinvestment": "INF192K01CJ2",
       "name": "JM Liquid Fund (Direct) - Weekly IDCW",
       "category": "JM Financial Mutual Fund",
-      "nav": 11.0102,
-      "navDate": "04-Jun-2026",
+      "nav": 11.0171,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857851Z"
+        "fetchedAt": "2026-06-08T08:18:33.566485Z"
       },
       "extras": {}
     },
@@ -4332,12 +4324,12 @@
       "isinDividendReinvestment": "INF192K01874",
       "name": "JM Liquid Fund (Regular) - Quarterly IDCW",
       "category": "JM Financial Mutual Fund",
-      "nav": 42.5734,
-      "navDate": "04-Jun-2026",
+      "nav": 42.5997,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857855Z"
+        "fetchedAt": "2026-06-08T08:18:33.566489Z"
       },
       "extras": {}
     },
@@ -4348,12 +4340,12 @@
       "isinDividendReinvestment": "-",
       "name": "JM Liquid Fund (Regular) - Super Institutional Plan - Growth Option",
       "category": "JM Financial Mutual Fund",
-      "nav": 43.2466,
-      "navDate": "04-Jun-2026",
+      "nav": 43.2734,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857860Z"
+        "fetchedAt": "2026-06-08T08:18:33.566493Z"
       },
       "extras": {}
     },
@@ -4364,12 +4356,12 @@
       "isinDividendReinvestment": "INF192K01858",
       "name": "JM Liquid Fund (Regular) - Weekly IDCW",
       "category": "JM Financial Mutual Fund",
-      "nav": 11.0076,
-      "navDate": "04-Jun-2026",
+      "nav": 11.0144,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857865Z"
+        "fetchedAt": "2026-06-08T08:18:33.566499Z"
       },
       "extras": {}
     },
@@ -4380,12 +4372,12 @@
       "isinDividendReinvestment": "-",
       "name": "JM Liquid Fund - Growth Option",
       "category": "JM Financial Mutual Fund",
-      "nav": 75.2166,
-      "navDate": "04-Jun-2026",
+      "nav": 75.2631,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857871Z"
+        "fetchedAt": "2026-06-08T08:18:33.566502Z"
       },
       "extras": {}
     },
@@ -4397,11 +4389,11 @@
       "name": "JM Liquid Fund - Unclaimed Application Refund Amount I.E.F. (Direct) - Growth Plan",
       "category": "JM Financial Mutual Fund",
       "nav": 41.4437,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857875Z"
+        "fetchedAt": "2026-06-08T08:18:33.566507Z"
       },
       "extras": {}
     },
@@ -4413,11 +4405,11 @@
       "name": "JM Liquid Fund - Unclaimed Brokerage I.E.F. (Direct) - Growth Plan",
       "category": "JM Financial Mutual Fund",
       "nav": 41.4437,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857879Z"
+        "fetchedAt": "2026-06-08T08:18:33.566511Z"
       },
       "extras": {}
     },
@@ -4433,7 +4425,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857883Z"
+        "fetchedAt": "2026-06-08T08:18:33.566514Z"
       },
       "extras": {}
     },
@@ -4449,7 +4441,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857887Z"
+        "fetchedAt": "2026-06-08T08:18:33.566518Z"
       },
       "extras": {}
     },
@@ -4465,7 +4457,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857891Z"
+        "fetchedAt": "2026-06-08T08:18:33.566523Z"
       },
       "extras": {}
     },
@@ -4481,7 +4473,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857896Z"
+        "fetchedAt": "2026-06-08T08:18:33.566527Z"
       },
       "extras": {}
     },
@@ -4497,7 +4489,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857900Z"
+        "fetchedAt": "2026-06-08T08:18:33.566531Z"
       },
       "extras": {}
     },
@@ -4508,12 +4500,12 @@
       "isinDividendReinvestment": "-",
       "name": "JM Liquid Fund (Regular) - Bonus Option - Principal Units",
       "category": "JM Financial Mutual Fund",
-      "nav": 24.0846,
-      "navDate": "04-Jun-2026",
+      "nav": 24.0995,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857904Z"
+        "fetchedAt": "2026-06-08T08:18:33.566535Z"
       },
       "extras": {}
     },
@@ -4525,11 +4517,11 @@
       "name": "JM Liquid Fund (Regular) - Daily IDCW",
       "category": "JM Financial Mutual Fund",
       "nav": 10.4302,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857908Z"
+        "fetchedAt": "2026-06-08T08:18:33.566539Z"
       },
       "extras": {}
     },
@@ -4541,11 +4533,11 @@
       "name": "Kotak Liquid Fund - Direct Plan - Daily Reinvestment of Income Distribution cum capital withdrawal option",
       "category": "Kotak Mahindra Mutual Fund",
       "nav": 1222.81,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857915Z"
+        "fetchedAt": "2026-06-08T08:18:33.566548Z"
       },
       "extras": {}
     },
@@ -4556,12 +4548,12 @@
       "isinDividendReinvestment": "-",
       "name": "Kotak Liquid Fund - Direct Plan - Growth",
       "category": "Kotak Mahindra Mutual Fund",
-      "nav": 5634.6365,
-      "navDate": "04-Jun-2026",
+      "nav": 5638.3151,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857919Z"
+        "fetchedAt": "2026-06-08T08:18:33.566554Z"
       },
       "extras": {}
     },
@@ -4572,12 +4564,12 @@
       "isinDividendReinvestment": "INF174KA1WJ7",
       "name": "Kotak Liquid Fund - Direct Plan - Weekly - Reinvestment & Payout of Income Distribution cum capital withdrawal option",
       "category": "Kotak Mahindra Mutual Fund",
-      "nav": 1000.7366,
-      "navDate": "04-Jun-2026",
+      "nav": 1001.39,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857924Z"
+        "fetchedAt": "2026-06-08T08:18:33.566562Z"
       },
       "extras": {}
     },
@@ -4588,12 +4580,12 @@
       "isinDividendReinvestment": "INF174K01NL3",
       "name": "Kotak Liquid Fund - Regular  - Daily Reinvestment of Income Distribution cum capital withdrawal option",
       "category": "Kotak Mahindra Mutual Fund",
-      "nav": 1262.3935,
-      "navDate": "04-Jun-2026",
+      "nav": 1263.2031,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857929Z"
+        "fetchedAt": "2026-06-08T08:18:33.566567Z"
       },
       "extras": {}
     },
@@ -4604,12 +4596,12 @@
       "isinDividendReinvestment": "-",
       "name": "Kotak Liquid Fund - Regular Plan - Growth",
       "category": "Kotak Mahindra Mutual Fund",
-      "nav": 5575.7204,
-      "navDate": "04-Jun-2026",
+      "nav": 5579.2962,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857933Z"
+        "fetchedAt": "2026-06-08T08:18:33.566571Z"
       },
       "extras": {}
     },
@@ -4620,12 +4612,12 @@
       "isinDividendReinvestment": "INF174KA1WM1",
       "name": "Kotak Liquid Fund - Regular Plan - Weekly - Reinvestment & Payout of Income Distribution cum capital withdrawal option",
       "category": "Kotak Mahindra Mutual Fund",
-      "nav": 1035.8277,
-      "navDate": "04-Jun-2026",
+      "nav": 1036.492,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857937Z"
+        "fetchedAt": "2026-06-08T08:18:33.566575Z"
       },
       "extras": {}
     },
@@ -4637,11 +4629,11 @@
       "name": "LIC MF Liquid Fund-Direct Plan-Daily IDCW",
       "category": "LIC Mutual Fund",
       "nav": 1035.2975,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857943Z"
+        "fetchedAt": "2026-06-08T08:18:33.566580Z"
       },
       "extras": {}
     },
@@ -4652,12 +4644,12 @@
       "isinDividendReinvestment": "-",
       "name": "LIC MF Liquid Fund-Direct Plan-Growth",
       "category": "LIC Mutual Fund",
-      "nav": 5063.5163,
-      "navDate": "04-Jun-2026",
+      "nav": 5066.863,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857947Z"
+        "fetchedAt": "2026-06-08T08:18:33.566584Z"
       },
       "extras": {}
     },
@@ -4668,12 +4660,12 @@
       "isinDividendReinvestment": "INF397L01AJ9",
       "name": "LIC MF Liquid Fund-Direct Plan-Monthly IDCW",
       "category": "LIC Mutual Fund",
-      "nav": 1229.146,
-      "navDate": "04-Jun-2026",
+      "nav": 1229.9581,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857951Z"
+        "fetchedAt": "2026-06-08T08:18:33.566588Z"
       },
       "extras": {}
     },
@@ -4684,12 +4676,12 @@
       "isinDividendReinvestment": "INF397L01AL5",
       "name": "LIC MF Liquid Fund-Direct Plan-Weekly IDCW",
       "category": "LIC Mutual Fund",
-      "nav": 1097.8855,
-      "navDate": "04-Jun-2026",
+      "nav": 1098.6111,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857955Z"
+        "fetchedAt": "2026-06-08T08:18:33.566594Z"
       },
       "extras": {}
     },
@@ -4701,11 +4693,11 @@
       "name": "LIC MF Liquid Fund-Regular Plan-Daily IDCW",
       "category": "LIC Mutual Fund",
       "nav": 1000.1751,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857962Z"
+        "fetchedAt": "2026-06-08T08:18:33.566598Z"
       },
       "extras": {}
     },
@@ -4716,12 +4708,12 @@
       "isinDividendReinvestment": "-",
       "name": "LIC MF Liquid Fund-Regular Plan-Growth",
       "category": "LIC Mutual Fund",
-      "nav": 4987.5896,
-      "navDate": "04-Jun-2026",
+      "nav": 4990.8571,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857966Z"
+        "fetchedAt": "2026-06-08T08:18:33.566602Z"
       },
       "extras": {}
     },
@@ -4732,12 +4724,12 @@
       "isinDividendReinvestment": "INF397L01968",
       "name": "LIC MF Liquid Fund-Regular Plan-Monthly IDCW",
       "category": "LIC Mutual Fund",
-      "nav": 1208.3041,
-      "navDate": "04-Jun-2026",
+      "nav": 1209.0955,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857970Z"
+        "fetchedAt": "2026-06-08T08:18:33.566606Z"
       },
       "extras": {}
     },
@@ -4748,12 +4740,12 @@
       "isinDividendReinvestment": "INF397L01943",
       "name": "LIC MF Liquid Fund-Regular Plan-Weekly IDCW",
       "category": "LIC Mutual Fund",
-      "nav": 1002.5583,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.2151,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857974Z"
+        "fetchedAt": "2026-06-08T08:18:33.566610Z"
       },
       "extras": {}
     },
@@ -4764,12 +4756,12 @@
       "isinDividendReinvestment": "INF174V01051",
       "name": "Mahindra Manulife Liquid Fund - Direct Plan - Daily IDCW",
       "category": "Mahindra Manulife Mutual Fund",
-      "nav": 1275.5533,
-      "navDate": "04-Jun-2026",
+      "nav": 1276.4149,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857983Z"
+        "fetchedAt": "2026-06-08T08:18:33.566615Z"
       },
       "extras": {}
     },
@@ -4780,12 +4772,12 @@
       "isinDividendReinvestment": "INF174V01069",
       "name": "Mahindra Manulife Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "Mahindra Manulife Mutual Fund",
-      "nav": 1004.2995,
-      "navDate": "04-Jun-2026",
+      "nav": 1003.5159,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857987Z"
+        "fetchedAt": "2026-06-08T08:18:33.566619Z"
       },
       "extras": {}
     },
@@ -4796,12 +4788,12 @@
       "isinDividendReinvestment": "-",
       "name": "Mahindra Manulife Liquid Fund - Direct Plan -Growth",
       "category": "Mahindra Manulife Mutual Fund",
-      "nav": 1816.7312,
-      "navDate": "04-Jun-2026",
+      "nav": 1817.9566,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857991Z"
+        "fetchedAt": "2026-06-08T08:18:33.566623Z"
       },
       "extras": {}
     },
@@ -4813,11 +4805,11 @@
       "name": "Mahindra Manulife Liquid Fund - Regular Plan - Daily IDCW",
       "category": "Mahindra Manulife Mutual Fund",
       "nav": 1001.7781,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.857996Z"
+        "fetchedAt": "2026-06-08T08:18:33.566627Z"
       },
       "extras": {}
     },
@@ -4828,12 +4820,12 @@
       "isinDividendReinvestment": "-",
       "name": "Mahindra Manulife Liquid Fund - Regular Plan - Growth",
       "category": "Mahindra Manulife Mutual Fund",
-      "nav": 1795.6138,
-      "navDate": "04-Jun-2026",
+      "nav": 1796.8094,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858000Z"
+        "fetchedAt": "2026-06-08T08:18:33.566631Z"
       },
       "extras": {}
     },
@@ -4844,12 +4836,12 @@
       "isinDividendReinvestment": "INF174V01036",
       "name": "Mahindra Manulife Liquid Fund - Regular Plan - Weekly IDCW",
       "category": "Mahindra Manulife Mutual Fund",
-      "nav": 1010.7053,
-      "navDate": "04-Jun-2026",
+      "nav": 1009.927,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858004Z"
+        "fetchedAt": "2026-06-08T08:18:33.566635Z"
       },
       "extras": {}
     },
@@ -4865,7 +4857,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858013Z"
+        "fetchedAt": "2026-06-08T08:18:33.566641Z"
       },
       "extras": {}
     },
@@ -4881,7 +4873,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858018Z"
+        "fetchedAt": "2026-06-08T08:18:33.566646Z"
       },
       "extras": {}
     },
@@ -4892,12 +4884,12 @@
       "isinDividendReinvestment": "-",
       "name": "Mirae Asset Liquid Fund - Direct Plan - Growth",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 2944.9972,
-      "navDate": "04-Jun-2026",
+      "nav": 2946.8766,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858023Z"
+        "fetchedAt": "2026-06-08T08:18:33.566652Z"
       },
       "extras": {}
     },
@@ -4908,12 +4900,12 @@
       "isinDividendReinvestment": "INF769K01CP4",
       "name": "Mirae Asset Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1216.4975,
-      "navDate": "04-Jun-2026",
+      "nav": 1217.2738,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858027Z"
+        "fetchedAt": "2026-06-08T08:18:33.566656Z"
       },
       "extras": {}
     },
@@ -4925,11 +4917,11 @@
       "name": "Mirae Asset Liquid Fund - Direct Plan -Daily IDCW",
       "category": "Mirae Asset Mutual Fund",
       "nav": 1075.8332,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858031Z"
+        "fetchedAt": "2026-06-08T08:18:33.566660Z"
       },
       "extras": {}
     },
@@ -4940,12 +4932,12 @@
       "isinDividendReinvestment": "INF769K01CQ2",
       "name": "Mirae Asset Liquid Fund - Direct Plan -Monthly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1136.797,
-      "navDate": "04-Jun-2026",
+      "nav": 1137.5224,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858035Z"
+        "fetchedAt": "2026-06-08T08:18:33.566664Z"
       },
       "extras": {}
     },
@@ -4957,11 +4949,11 @@
       "name": "Mirae Asset Liquid Fund - Regular - Daily IDCW",
       "category": "Mirae Asset Mutual Fund",
       "nav": 1066.4347,
-      "navDate": "04-Jun-2026",
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858041Z"
+        "fetchedAt": "2026-06-08T08:18:33.566668Z"
       },
       "extras": {}
     },
@@ -4972,12 +4964,12 @@
       "isinDividendReinvestment": "-",
       "name": "Mirae Asset Liquid Fund - Regular Plan - Growth",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 2892.1593,
-      "navDate": "04-Jun-2026",
+      "nav": 2893.9806,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858045Z"
+        "fetchedAt": "2026-06-08T08:18:33.566673Z"
       },
       "extras": {}
     },
@@ -4988,12 +4980,12 @@
       "isinDividendReinvestment": "INF769K01820",
       "name": "Mirae Asset Liquid Fund - Regular Plan - Monthly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1154.4515,
-      "navDate": "04-Jun-2026",
+      "nav": 1155.1785,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858049Z"
+        "fetchedAt": "2026-06-08T08:18:33.567806Z"
       },
       "extras": {}
     },
@@ -5004,118 +4996,118 @@
       "isinDividendReinvestment": "INF769K01812",
       "name": "Mirae Asset Liquid Fund - Regular Plan - Weekly IDCW",
       "category": "Mirae Asset Mutual Fund",
-      "nav": 1152.8206,
-      "navDate": "04-Jun-2026",
+      "nav": 1153.5466,
+      "navDate": "07-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-05T10:59:10.858055Z"
+        "fetchedAt": "2026-06-08T08:18:33.567812Z"
       },
       "extras": {}
     }
   ],
   "fx": [
     {
-      "name": "USD/INR",
-      "pair": "USDINR",
-      "symbol": "USDINR=X",
-      "value": "₹94.9350",
-      "rate": 94.93499755859375,
-      "change": "-1.2295",
-      "changePercent": "-1.28",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-05T10:59:07.740440Z"
-    },
-    {
-      "name": "OMR/INR",
-      "pair": "OMRINR",
-      "symbol": "OMRINR=X",
-      "value": "₹248.2700",
-      "rate": 248.27000427246094,
-      "change": "0.0000",
-      "changePercent": "0.00",
-      "direction": "up",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-05T10:59:07.751779Z"
-    },
-    {
       "name": "GBP/INR",
       "pair": "GBPINR",
       "symbol": "GBPINR=X",
-      "value": "₹127.9765",
-      "rate": 127.97650146484375,
-      "change": "-1.0253",
-      "changePercent": "-0.79",
+      "value": "₹127.5004",
+      "rate": 127.50039672851562,
+      "change": "-1.2492",
+      "changePercent": "-0.97",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-05T10:59:07.761832Z"
+      "asOf": "2026-06-08T08:18:30.096472Z"
     },
     {
       "name": "EUR/INR",
       "pair": "EURINR",
       "symbol": "EURINR=X",
-      "value": "₹110.5697",
-      "rate": 110.5697021484375,
-      "change": "-0.4573",
-      "changePercent": "-0.41",
+      "value": "₹110.1697",
+      "rate": 110.1697006225586,
+      "change": "-0.9903",
+      "changePercent": "-0.89",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-05T10:59:07.780433Z"
+      "asOf": "2026-06-08T08:18:30.103157Z"
+    },
+    {
+      "name": "USD/INR",
+      "pair": "USDINR",
+      "symbol": "USDINR=X",
+      "value": "₹95.6600",
+      "rate": 95.66000366210938,
+      "change": "-0.1303",
+      "changePercent": "-0.14",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-08T08:18:30.116472Z"
+    },
+    {
+      "name": "OMR/INR",
+      "pair": "OMRINR",
+      "symbol": "OMRINR=X",
+      "value": "₹246.0900",
+      "rate": 246.08999633789062,
+      "change": "0.0000",
+      "changePercent": "0.00",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-08T08:18:30.180085Z"
     },
     {
       "name": "JPY/INR",
       "pair": "JPYINR",
       "symbol": "JPYINR=X",
-      "value": "₹0.5936",
-      "rate": 0.5935699939727783,
-      "change": "-0.0044",
-      "changePercent": "-0.73",
+      "value": "₹0.5970",
+      "rate": 0.5969600081443787,
+      "change": "-0.0014",
+      "changePercent": "-0.23",
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-05T10:59:07.785857Z"
+      "asOf": "2026-06-08T08:18:30.185405Z"
     }
   ],
   "commodities": [
     {
-      "name": "Crude Oil",
-      "symbol": "CL=F",
-      "value": "$93.08",
-      "unit": "$/bbl",
-      "change": "0.04",
-      "changePercent": "0.04",
-      "direction": "up",
+      "name": "Silver",
+      "symbol": "SI=F",
+      "value": "$67.12",
+      "unit": "$/oz",
+      "change": "-1.82",
+      "changePercent": "-2.64",
+      "direction": "down",
       "source": "yahoo-yfinance"
     },
     {
-      "name": "Silver",
-      "symbol": "SI=F",
-      "value": "$73.00",
-      "unit": "$/oz",
-      "change": "-0.77",
-      "changePercent": "-1.05",
-      "direction": "down",
+      "name": "Crude Oil",
+      "symbol": "CL=F",
+      "value": "$94.91",
+      "unit": "$/bbl",
+      "change": "4.37",
+      "changePercent": "4.83",
+      "direction": "up",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Gold",
       "symbol": "GC=F",
-      "value": "$4492.50",
+      "value": "$4315.90",
       "unit": "$/oz",
-      "change": "16.70",
-      "changePercent": "0.37",
-      "direction": "up",
+      "change": "-21.20",
+      "changePercent": "-0.49",
+      "direction": "down",
       "source": "yahoo-yfinance"
     }
   ],
   "sourceHealth": {
     "schemaVersion": "1.0.0",
-    "generatedAt": "2026-06-05T11:00:51.602442Z",
+    "generatedAt": "2026-06-08T08:20:12.028940Z",
     "sections": {
       "indices": {
         "status": "ok",
