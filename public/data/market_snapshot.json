@@ -1,8 +1,8 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-06-26T10:28:48.824631Z",
-  "generated_at": "2026-06-26T10:28:48.824635Z",
-  "fetchedAt": 1782469728824,
+  "generatedAt": "2026-06-26T12:33:47.722385Z",
+  "generated_at": "2026-06-26T12:33:47.722389Z",
+  "fetchedAt": 1782477227722,
   "sourceMode": "snapshot-worker-v2",
   "indices": [
     {
@@ -68,6 +68,33 @@
   ],
   "globalIndices": [
     {
+      "name": "NIKKEI 225",
+      "symbol": "^N225",
+      "value": "69,360.88",
+      "change": "-3005.46",
+      "changePercent": "-4.15",
+      "direction": "down",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
+      "name": "S&P 500",
+      "symbol": "^GSPC",
+      "value": "7,357.49",
+      "change": "-0.73",
+      "changePercent": "-0.01",
+      "direction": "down",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
+      "name": "HANG SENG",
+      "symbol": "^HSI",
+      "value": "22,671.86",
+      "change": "-405.05",
+      "changePercent": "-1.76",
+      "direction": "down",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
       "name": "DOW JONES",
       "symbol": "^DJI",
       "value": "51,920.62",
@@ -82,33 +109,6 @@
       "value": "25,358.60",
       "change": "-118.04",
       "changePercent": "-0.46",
-      "direction": "down",
-      "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "S&P 500",
-      "symbol": "^GSPC",
-      "value": "7,357.49",
-      "change": "-0.73",
-      "changePercent": "-0.01",
-      "direction": "down",
-      "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "NIKKEI 225",
-      "symbol": "^N225",
-      "value": "69,360.88",
-      "change": "-3005.46",
-      "changePercent": "-4.15",
-      "direction": "down",
-      "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "HANG SENG",
-      "symbol": "^HSI",
-      "value": "22,671.86",
-      "change": "-405.05",
-      "changePercent": "-1.76",
       "direction": "down",
       "sourceMode": "yahoo-yfinance"
     }
@@ -244,50 +244,37 @@
   ],
   "commodities": [
     {
-      "name": "Silver",
-      "symbol": "SI=F",
-      "value": "$58.76",
-      "unit": "$/oz",
-      "change": "0.42",
-      "changePercent": "0.71",
-      "direction": "up",
-      "source": "yahoo-yfinance"
-    },
-    {
       "name": "Gold",
       "symbol": "GC=F",
-      "value": "$4065.60",
+      "value": "$4058.30",
       "unit": "$/oz",
-      "change": "35.10",
-      "changePercent": "0.87",
+      "change": "27.80",
+      "changePercent": "0.69",
       "direction": "up",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Crude Oil",
       "symbol": "CL=F",
-      "value": "$69.25",
+      "value": "$69.89",
       "unit": "$/bbl",
-      "change": "-2.67",
-      "changePercent": "-3.71",
+      "change": "-2.03",
+      "changePercent": "-2.82",
       "direction": "down",
+      "source": "yahoo-yfinance"
+    },
+    {
+      "name": "Silver",
+      "symbol": "SI=F",
+      "value": "$58.52",
+      "unit": "$/oz",
+      "change": "0.17",
+      "changePercent": "0.29",
+      "direction": "up",
       "source": "yahoo-yfinance"
     }
   ],
   "currencies": [
-    {
-      "name": "JPY/INR",
-      "pair": "JPYINR",
-      "symbol": "JPYINR=X",
-      "value": "₹0.5833",
-      "rate": 0.5832599997520447,
-      "change": "-0.0015",
-      "changePercent": "-0.25",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-26T10:27:07.339470Z"
-    },
     {
       "name": "EUR/INR",
       "pair": "EURINR",
@@ -299,33 +286,7 @@
       "direction": "down",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-26T10:27:07.341299Z"
-    },
-    {
-      "name": "USD/INR",
-      "pair": "USDINR",
-      "symbol": "USDINR=X",
-      "value": "₹94.3850",
-      "rate": 94.38500213623047,
-      "change": "-0.0557",
-      "changePercent": "-0.06",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-26T10:27:07.356151Z"
-    },
-    {
-      "name": "GBP/INR",
-      "pair": "GBPINR",
-      "symbol": "GBPINR=X",
-      "value": "₹124.4150",
-      "rate": 124.41500091552734,
-      "change": "0.0840",
-      "changePercent": "0.07",
-      "direction": "up",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-06-26T10:27:07.393603Z"
+      "asOf": "2026-06-26T12:32:06.036285Z"
     },
     {
       "name": "OMR/INR",
@@ -338,7 +299,46 @@
       "direction": "up",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-06-26T10:27:07.399171Z"
+      "asOf": "2026-06-26T12:32:06.053674Z"
+    },
+    {
+      "name": "USD/INR",
+      "pair": "USDINR",
+      "symbol": "USDINR=X",
+      "value": "₹94.3850",
+      "rate": 94.38500213623047,
+      "change": "-0.0557",
+      "changePercent": "-0.06",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-26T12:32:06.077118Z"
+    },
+    {
+      "name": "JPY/INR",
+      "pair": "JPYINR",
+      "symbol": "JPYINR=X",
+      "value": "₹0.5833",
+      "rate": 0.5832599997520447,
+      "change": "-0.0015",
+      "changePercent": "-0.25",
+      "direction": "down",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-26T12:32:06.083458Z"
+    },
+    {
+      "name": "GBP/INR",
+      "pair": "GBPINR",
+      "symbol": "GBPINR=X",
+      "value": "₹124.4150",
+      "rate": 124.41500091552734,
+      "change": "0.0840",
+      "changePercent": "0.07",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-06-26T12:32:06.103618Z"
     }
   ],
   "mutualFunds": [
@@ -354,7 +354,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.285358Z"
+        "fetchedAt": "2026-06-26T12:32:08.795140Z"
       },
       "extras": {}
     },
@@ -370,7 +370,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.285921Z"
+        "fetchedAt": "2026-06-26T12:32:08.795691Z"
       },
       "extras": {}
     },
@@ -386,7 +386,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.285985Z"
+        "fetchedAt": "2026-06-26T12:32:08.795756Z"
       },
       "extras": {}
     },
@@ -402,7 +402,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.286018Z"
+        "fetchedAt": "2026-06-26T12:32:08.795790Z"
       },
       "extras": {}
     },
@@ -418,7 +418,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.287273Z"
+        "fetchedAt": "2026-06-26T12:32:08.797073Z"
       },
       "extras": {}
     },
@@ -434,7 +434,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.287335Z"
+        "fetchedAt": "2026-06-26T12:32:08.797138Z"
       },
       "extras": {}
     },
@@ -450,7 +450,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.287560Z"
+        "fetchedAt": "2026-06-26T12:32:08.797366Z"
       },
       "extras": {}
     },
@@ -466,7 +466,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.288642Z"
+        "fetchedAt": "2026-06-26T12:32:08.798421Z"
       },
       "extras": {}
     },
@@ -482,7 +482,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.291362Z"
+        "fetchedAt": "2026-06-26T12:32:08.799114Z"
       },
       "extras": {}
     },
@@ -498,7 +498,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.291435Z"
+        "fetchedAt": "2026-06-26T12:32:08.799185Z"
       },
       "extras": {}
     },
@@ -514,7 +514,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.291601Z"
+        "fetchedAt": "2026-06-26T12:32:08.799327Z"
       },
       "extras": {}
     },
@@ -530,7 +530,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.291928Z"
+        "fetchedAt": "2026-06-26T12:32:08.799662Z"
       },
       "extras": {}
     },
@@ -546,7 +546,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.292039Z"
+        "fetchedAt": "2026-06-26T12:32:08.799775Z"
       },
       "extras": {}
     },
@@ -562,7 +562,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.292662Z"
+        "fetchedAt": "2026-06-26T12:32:08.800384Z"
       },
       "extras": {}
     },
@@ -578,7 +578,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293139Z"
+        "fetchedAt": "2026-06-26T12:32:08.800863Z"
       },
       "extras": {}
     },
@@ -594,7 +594,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293143Z"
+        "fetchedAt": "2026-06-26T12:32:08.800867Z"
       },
       "extras": {}
     },
@@ -610,7 +610,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293147Z"
+        "fetchedAt": "2026-06-26T12:32:08.800873Z"
       },
       "extras": {}
     },
@@ -626,7 +626,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293152Z"
+        "fetchedAt": "2026-06-26T12:32:08.800879Z"
       },
       "extras": {}
     },
@@ -642,7 +642,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293155Z"
+        "fetchedAt": "2026-06-26T12:32:08.800883Z"
       },
       "extras": {}
     },
@@ -658,7 +658,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293159Z"
+        "fetchedAt": "2026-06-26T12:32:08.800887Z"
       },
       "extras": {}
     },
@@ -669,12 +669,12 @@
       "isinDividendReinvestment": "INF2JJD01011",
       "name": "Abakkus Liquid Fund - Direct Plan - Daily IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.0929,
-      "navDate": "27-Jun-2026",
+      "nav": 100.06,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293164Z"
+        "fetchedAt": "2026-06-26T12:32:08.800892Z"
       },
       "extras": {}
     },
@@ -685,12 +685,12 @@
       "isinDividendReinvestment": "-",
       "name": "Abakkus Liquid Fund - Direct Plan - Growth",
       "category": "Abakkus Mutual Fund",
-      "nav": 103.1477,
-      "navDate": "27-Jun-2026",
+      "nav": 103.1647,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293168Z"
+        "fetchedAt": "2026-06-26T12:32:08.800896Z"
       },
       "extras": {}
     },
@@ -701,12 +701,12 @@
       "isinDividendReinvestment": "INF2JJD01037",
       "name": "Abakkus Liquid Fund - Direct Plan - Monthly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.2707,
-      "navDate": "27-Jun-2026",
+      "nav": 100.2872,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293172Z"
+        "fetchedAt": "2026-06-26T12:32:08.800900Z"
       },
       "extras": {}
     },
@@ -717,12 +717,12 @@
       "isinDividendReinvestment": "INF2JJD01052",
       "name": "Abakkus Liquid Fund - Direct Plan - Quarterly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 101.4461,
-      "navDate": "27-Jun-2026",
+      "nav": 101.4628,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293177Z"
+        "fetchedAt": "2026-06-26T12:32:08.800906Z"
       },
       "extras": {}
     },
@@ -733,12 +733,12 @@
       "isinDividendReinvestment": "INF2JJD01045",
       "name": "Abakkus Liquid Fund - Direct Plan - Weekly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.1458,
-      "navDate": "27-Jun-2026",
+      "nav": 100.1622,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293182Z"
+        "fetchedAt": "2026-06-26T12:32:08.800910Z"
       },
       "extras": {}
     },
@@ -749,12 +749,12 @@
       "isinDividendReinvestment": "INF2JJD01060",
       "name": "Abakkus Liquid Fund - Regular Plan - Daily IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.0925,
-      "navDate": "27-Jun-2026",
+      "nav": 100.06,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293188Z"
+        "fetchedAt": "2026-06-26T12:32:08.800914Z"
       },
       "extras": {}
     },
@@ -765,12 +765,12 @@
       "isinDividendReinvestment": "-",
       "name": "Abakkus Liquid Fund - Regular Plan - Growth",
       "category": "Abakkus Mutual Fund",
-      "nav": 103.1025,
-      "navDate": "27-Jun-2026",
+      "nav": 103.1192,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293192Z"
+        "fetchedAt": "2026-06-26T12:32:08.800918Z"
       },
       "extras": {}
     },
@@ -781,12 +781,12 @@
       "isinDividendReinvestment": "INF2JJD01086",
       "name": "Abakkus Liquid Fund - Regular Plan - Monthly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.2684,
-      "navDate": "27-Jun-2026",
+      "nav": 100.2847,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293196Z"
+        "fetchedAt": "2026-06-26T12:32:08.800924Z"
       },
       "extras": {}
     },
@@ -797,12 +797,12 @@
       "isinDividendReinvestment": "INF2JJD01102",
       "name": "Abakkus Liquid Fund - Regular Plan - Quarterly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 101.4028,
-      "navDate": "27-Jun-2026",
+      "nav": 101.4192,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293200Z"
+        "fetchedAt": "2026-06-26T12:32:08.800928Z"
       },
       "extras": {}
     },
@@ -813,12 +813,12 @@
       "isinDividendReinvestment": "INF2JJD01094",
       "name": "Abakkus Liquid Fund - Regular Plan - Weekly IDCW Reinvestment",
       "category": "Abakkus Mutual Fund",
-      "nav": 100.141,
-      "navDate": "27-Jun-2026",
+      "nav": 100.1573,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293204Z"
+        "fetchedAt": "2026-06-26T12:32:08.800932Z"
       },
       "extras": {}
     },
@@ -834,7 +834,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293209Z"
+        "fetchedAt": "2026-06-26T12:32:08.800938Z"
       },
       "extras": {}
     },
@@ -850,7 +850,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293213Z"
+        "fetchedAt": "2026-06-26T12:32:08.800954Z"
       },
       "extras": {}
     },
@@ -866,7 +866,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293217Z"
+        "fetchedAt": "2026-06-26T12:32:08.800961Z"
       },
       "extras": {}
     },
@@ -882,7 +882,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293221Z"
+        "fetchedAt": "2026-06-26T12:32:08.800965Z"
       },
       "extras": {}
     },
@@ -898,7 +898,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293225Z"
+        "fetchedAt": "2026-06-26T12:32:08.800969Z"
       },
       "extras": {}
     },
@@ -914,7 +914,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293230Z"
+        "fetchedAt": "2026-06-26T12:32:08.800973Z"
       },
       "extras": {}
     },
@@ -930,7 +930,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293235Z"
+        "fetchedAt": "2026-06-26T12:32:08.800977Z"
       },
       "extras": {}
     },
@@ -946,7 +946,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293239Z"
+        "fetchedAt": "2026-06-26T12:32:08.800987Z"
       },
       "extras": {}
     },
@@ -962,7 +962,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293243Z"
+        "fetchedAt": "2026-06-26T12:32:08.800991Z"
       },
       "extras": {}
     },
@@ -978,7 +978,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293247Z"
+        "fetchedAt": "2026-06-26T12:32:08.800995Z"
       },
       "extras": {}
     },
@@ -994,55 +994,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293251Z"
-      },
-      "extras": {}
-    },
-    {
-      "instrumentType": "mutualFund",
-      "schemeCode": "112014",
-      "isinGrowth": "INF209K01KZ3",
-      "isinDividendReinvestment": "-",
-      "name": "Aditya Birla Sun Life Liquid Fund- Discipline Advantage Plan",
-      "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 302.6457,
-      "navDate": "19-Jun-2026",
-      "source": {
-        "provider": "amfi_navall",
-        "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293255Z"
-      },
-      "extras": {}
-    },
-    {
-      "instrumentType": "mutualFund",
-      "schemeCode": "100043",
-      "isinGrowth": "INF209K01RT1",
-      "isinDividendReinvestment": "-",
-      "name": "Aditya Birla Sun Life Liquid Fund-Institutional (Growth)",
-      "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 743.1443,
-      "navDate": "19-Jun-2026",
-      "source": {
-        "provider": "amfi_navall",
-        "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293259Z"
-      },
-      "extras": {}
-    },
-    {
-      "instrumentType": "mutualFund",
-      "schemeCode": "100042",
-      "isinGrowth": "INF209K01ME4",
-      "isinDividendReinvestment": "-",
-      "name": "Aditya Birla Sun Life Liquid Fund-Retail (Growth)",
-      "category": "Aditya Birla Sun Life Mutual Fund",
-      "nav": 724.1661,
-      "navDate": "19-Jun-2026",
-      "source": {
-        "provider": "amfi_navall",
-        "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293264Z"
+        "fetchedAt": "2026-06-26T12:32:08.800999Z"
       },
       "extras": {}
     },
@@ -1058,7 +1010,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293273Z"
+        "fetchedAt": "2026-06-26T12:32:08.801004Z"
       },
       "extras": {}
     },
@@ -1070,11 +1022,11 @@
       "name": "Axis Liquid Fund - Direct Plan - Daily IDCW",
       "category": "Axis Mutual Fund",
       "nav": 1000.956,
-      "navDate": "25-Jun-2026",
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293279Z"
+        "fetchedAt": "2026-06-26T12:32:08.801008Z"
       },
       "extras": {}
     },
@@ -1085,12 +1037,12 @@
       "isinDividendReinvestment": "-",
       "name": "Axis Liquid Fund - Direct Plan - Growth Option",
       "category": "Axis Mutual Fund",
-      "nav": 3117.4965,
-      "navDate": "25-Jun-2026",
+      "nav": 3119.0989,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293283Z"
+        "fetchedAt": "2026-06-26T12:32:08.801014Z"
       },
       "extras": {}
     },
@@ -1101,12 +1053,12 @@
       "isinDividendReinvestment": "INF846K01CZ9",
       "name": "Axis Liquid Fund - Direct Plan - Monthly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1000.8675,
-      "navDate": "25-Jun-2026",
+      "nav": 1001.382,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293287Z"
+        "fetchedAt": "2026-06-26T12:32:08.801018Z"
       },
       "extras": {}
     },
@@ -1117,12 +1069,12 @@
       "isinDividendReinvestment": "INF846K01DC6",
       "name": "Axis Liquid Fund - Direct Plan - Weekly IDCW",
       "category": "Axis Mutual Fund",
-      "nav": 1002.6645,
-      "navDate": "25-Jun-2026",
+      "nav": 1003.1799,
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293292Z"
+        "fetchedAt": "2026-06-26T12:32:08.801022Z"
       },
       "extras": {}
     },
@@ -1134,11 +1086,59 @@
       "name": "Axis Liquid Fund - Regular Plan - Daily IDCW",
       "category": "Axis Mutual Fund",
       "nav": 1001.3998,
-      "navDate": "25-Jun-2026",
+      "navDate": "28-Jun-2026",
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-06-26T10:27:10.293296Z"
+        "fetchedAt": "2026-06-26T12:32:08.801026Z"
+      },
+      "extras": {}
+    },
+    {
+      "instrumentType": "mutualFund",
+      "schemeCode": "112210",
+      "isinGrowth": "INF846K01412",
+      "isinDividendReinvestment": "-",
+      "name": "Axis Liquid Fund - Regular Plan - Growth Option",
+      "category": "Axis Mutual Fund",
+      "nav": 3089.6767,
+      "navDate": "28-Jun-2026",
+      "source": {
+        "provider": "amfi_navall",
+        "mode": "official-daily",
+        "fetchedAt": "2026-06-26T12:32:08.801032Z"
+      },
+      "extras": {}
+    },
+    {
+      "instrumentType": "mutualFund",
+      "schemeCode": "112213",
+      "isinGrowth": "INF846K01453",
+      "isinDividendReinvestment": "INF846K01461",
+      "name": "Axis Liquid Fund - Regular Plan - Monthly IDCW",
+      "category": "Axis Mutual Fund",
+      "nav": 1001.7847,
+      "navDate": "28-Jun-2026",
+      "source": {
+        "provider": "amfi_navall",
+        "mode": "official-daily",
+        "fetchedAt": "2026-06-26T12:32:08.801036Z"
+      },
+      "extras": {}
+    },
+    {
+      "instrumentType": "mutualFund",
+      "schemeCode": "112212",
+      "isinGrowth": "INF846K01438",
+      "isinDividendReinvestment": "INF846K01446",
+      "name": "Axis Liquid Fund - Regular Plan - Weekly IDCW",
+      "category": "Axis Mutual Fund",
+      "nav": 1003.1643,
+      "navDate": "28-Jun-2026",
+      "source": {
+        "provider": "amfi_navall",
+        "mode": "official-daily",
+        "fetchedAt": "2026-06-26T12:32:08.801042Z"
       },
       "extras": {}
     }
@@ -1194,7 +1194,7 @@
       "status": "ok",
       "provider": "amfi_navall",
       "mode": "ok",
-      "message": "14224 AMFI NAV rows parsed; 300 selected"
+      "message": "14208 AMFI NAV rows parsed; 300 selected"
     },
     "eodBhavcopy": {
       "status": "failed",
