@@ -1,16 +1,16 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-07-01T07:19:06.175063Z",
-  "generated_at": "2026-07-01T07:19:06.175068Z",
-  "fetchedAt": 1782890346175,
+  "generatedAt": "2026-07-01T10:56:34.497703Z",
+  "generated_at": "2026-07-01T10:56:34.497709Z",
+  "fetchedAt": 1782903394497,
   "sourceMode": "snapshot-worker-v2",
   "indices": [
     {
       "name": "NIFTY 50",
       "symbol": "^NSEI",
-      "value": "24,026.55",
-      "change": "160.80",
-      "changePercent": "0.67",
+      "value": "24,005.85",
+      "change": "140.10",
+      "changePercent": "0.59",
       "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -18,9 +18,9 @@
     {
       "name": "SENSEX",
       "symbol": "^BSESN",
-      "value": "77,042.87",
-      "change": "564.20",
-      "changePercent": "0.74",
+      "value": "76,922.64",
+      "change": "443.97",
+      "changePercent": "0.58",
       "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -28,9 +28,9 @@
     {
       "name": "NIFTY BANK",
       "symbol": "^NSEBANK",
-      "value": "57,973.65",
-      "change": "430.75",
-      "changePercent": "0.75",
+      "value": "58,033.05",
+      "change": "490.15",
+      "changePercent": "0.85",
       "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -38,9 +38,9 @@
     {
       "name": "NIFTY IT",
       "symbol": "^CNXIT",
-      "value": "26,060.45",
-      "change": "-238.60",
-      "changePercent": "-0.91",
+      "value": "25,769.80",
+      "change": "-529.25",
+      "changePercent": "-2.01",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -48,9 +48,9 @@
     {
       "name": "NIFTY AUTO",
       "symbol": "^CNXAUTO",
-      "value": "26,719.45",
-      "change": "-258.30",
-      "changePercent": "-0.96",
+      "value": "26,783.20",
+      "change": "-194.55",
+      "changePercent": "-0.72",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -58,9 +58,9 @@
     {
       "name": "NIFTY PHARMA",
       "symbol": "^CNXPHARMA",
-      "value": "25,202.75",
-      "change": "-123.65",
-      "changePercent": "-0.49",
+      "value": "25,182.70",
+      "change": "-143.70",
+      "changePercent": "-0.57",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -73,6 +73,24 @@
       "value": "70,474.96",
       "change": "412.64",
       "changePercent": "0.59",
+      "direction": "up",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
+      "name": "DOW JONES",
+      "symbol": "^DJI",
+      "value": "52,319.20",
+      "change": "136.46",
+      "changePercent": "0.26",
+      "direction": "up",
+      "sourceMode": "yahoo-yfinance"
+    },
+    {
+      "name": "NASDAQ",
+      "symbol": "^IXIC",
+      "value": "26,213.72",
+      "change": "393.58",
+      "changePercent": "1.52",
       "direction": "up",
       "sourceMode": "yahoo-yfinance"
     },
@@ -93,99 +111,89 @@
       "changePercent": "-0.63",
       "direction": "down",
       "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "DOW JONES",
-      "symbol": "^DJI",
-      "value": "52,319.20",
-      "change": "136.46",
-      "changePercent": "0.26",
-      "direction": "up",
-      "sourceMode": "yahoo-yfinance"
-    },
-    {
-      "name": "NASDAQ",
-      "symbol": "^IXIC",
-      "value": "26,213.72",
-      "change": "393.58",
-      "changePercent": "1.52",
-      "direction": "up",
-      "sourceMode": "yahoo-yfinance"
     }
   ],
   "movers": {
     "gainers": [
       {
         "symbol": "HINDUNILVR",
-        "price": "2176.40",
-        "change": "58.20",
-        "changePercent": "2.75",
+        "price": "2182.00",
+        "change": "63.80",
+        "changePercent": "3.01",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
       {
-        "symbol": "AXISBANK",
-        "price": "1375.10",
-        "change": "29.40",
-        "changePercent": "2.18",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "symbol": "BHARTIARTL",
-        "price": "1878.80",
-        "change": "26.80",
-        "changePercent": "1.45",
-        "direction": "up",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
-        "symbol": "BAJFINANCE",
-        "price": "1019.20",
-        "change": "14.45",
-        "changePercent": "1.44",
+        "symbol": "KOTAKBANK",
+        "price": "400.45",
+        "change": "8.20",
+        "changePercent": "2.09",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "symbol": "SBIN",
-        "price": "1040.30",
-        "change": "13.40",
-        "changePercent": "1.30",
+        "price": "1047.40",
+        "change": "20.50",
+        "changePercent": "2.00",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "MARUTI",
+        "price": "14395.00",
+        "change": "280.00",
+        "changePercent": "1.98",
+        "direction": "up",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "AXISBANK",
+        "price": "1368.70",
+        "change": "23.00",
+        "changePercent": "1.71",
         "direction": "up",
         "sourceMode": "yahoo-yfinance"
       }
     ],
     "losers": [
       {
-        "symbol": "LT",
-        "price": "4093.70",
-        "change": "-49.70",
-        "changePercent": "-1.20",
-        "direction": "down",
-        "sourceMode": "yahoo-yfinance"
-      },
-      {
         "symbol": "TCS",
-        "price": "2019.00",
-        "change": "-12.50",
-        "changePercent": "-0.62",
+        "price": "1982.60",
+        "change": "-48.90",
+        "changePercent": "-2.41",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "symbol": "INFY",
-        "price": "994.40",
-        "change": "-6.00",
-        "changePercent": "-0.60",
+        "price": "985.30",
+        "change": "-15.10",
+        "changePercent": "-1.51",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "LT",
+        "price": "4092.60",
+        "change": "-50.80",
+        "changePercent": "-1.23",
+        "direction": "down",
+        "sourceMode": "yahoo-yfinance"
+      },
+      {
+        "symbol": "HDFCBANK",
+        "price": "796.15",
+        "change": "-1.80",
+        "changePercent": "-0.23",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       },
       {
         "symbol": "WIPRO",
-        "price": "169.53",
-        "change": "-0.86",
-        "changePercent": "-0.50",
+        "price": "170.13",
+        "change": "-0.26",
+        "changePercent": "-0.15",
         "direction": "down",
         "sourceMode": "yahoo-yfinance"
       }
@@ -196,9 +204,9 @@
     {
       "name": "NIFTY BANK",
       "symbol": "^NSEBANK",
-      "value": "57,973.65",
-      "change": "430.75",
-      "changePercent": "0.75",
+      "value": "58,033.05",
+      "change": "490.15",
+      "changePercent": "0.85",
       "direction": "up",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -206,9 +214,9 @@
     {
       "name": "NIFTY IT",
       "symbol": "^CNXIT",
-      "value": "26,060.45",
-      "change": "-238.60",
-      "changePercent": "-0.91",
+      "value": "25,769.80",
+      "change": "-529.25",
+      "changePercent": "-2.01",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -216,9 +224,9 @@
     {
       "name": "NIFTY AUTO",
       "symbol": "^CNXAUTO",
-      "value": "26,719.45",
-      "change": "-258.30",
-      "changePercent": "-0.96",
+      "value": "26,783.20",
+      "change": "-194.55",
+      "changePercent": "-0.72",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -226,9 +234,9 @@
     {
       "name": "NIFTY PHARMA",
       "symbol": "^CNXPHARMA",
-      "value": "25,202.75",
-      "change": "-123.65",
-      "changePercent": "-0.49",
+      "value": "25,182.70",
+      "change": "-143.70",
+      "changePercent": "-0.57",
       "direction": "down",
       "currency": "₹",
       "sourceMode": "yahoo-yfinance"
@@ -238,60 +246,47 @@
     {
       "name": "Silver",
       "symbol": "SI=F",
-      "value": "$57.76",
+      "value": "$58.44",
       "unit": "$/oz",
-      "change": "-1.72",
-      "changePercent": "-2.90",
+      "change": "-1.04",
+      "changePercent": "-1.74",
       "direction": "down",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Crude Oil",
       "symbol": "CL=F",
-      "value": "$69.47",
+      "value": "$68.87",
       "unit": "$/bbl",
-      "change": "-0.03",
-      "changePercent": "-0.04",
+      "change": "-0.63",
+      "changePercent": "-0.91",
       "direction": "down",
       "source": "yahoo-yfinance"
     },
     {
       "name": "Gold",
       "symbol": "GC=F",
-      "value": "$3977.60",
+      "value": "$4000.40",
       "unit": "$/oz",
-      "change": "-45.30",
-      "changePercent": "-1.13",
+      "change": "-22.50",
+      "changePercent": "-0.56",
       "direction": "down",
       "source": "yahoo-yfinance"
     }
   ],
   "currencies": [
     {
-      "name": "EUR/INR",
-      "pair": "EURINR",
-      "symbol": "EURINR=X",
-      "value": "₹108.0939",
-      "rate": 108.09390258789062,
-      "change": "0.1969",
-      "changePercent": "0.18",
-      "direction": "up",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-07-01T07:17:21.038822Z"
-    },
-    {
       "name": "USD/INR",
       "pair": "USDINR",
       "symbol": "USDINR=X",
-      "value": "₹94.8525",
-      "rate": 94.85250091552734,
-      "change": "0.0620",
-      "changePercent": "0.07",
+      "value": "₹95.2475",
+      "rate": 95.24749755859375,
+      "change": "0.4570",
+      "changePercent": "0.48",
       "direction": "up",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-07-01T07:17:21.057908Z"
+      "asOf": "2026-07-01T10:54:52.245674Z"
     },
     {
       "name": "OMR/INR",
@@ -304,33 +299,46 @@
       "direction": "up",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-07-01T07:17:21.093896Z"
-    },
-    {
-      "name": "GBP/INR",
-      "pair": "GBPINR",
-      "symbol": "GBPINR=X",
-      "value": "₹125.5240",
-      "rate": 125.52400207519531,
-      "change": "-0.1714",
-      "changePercent": "-0.14",
-      "direction": "down",
-      "source": "yahoo-yfinance",
-      "mode": "fallback-intraday",
-      "asOf": "2026-07-01T07:17:21.113549Z"
+      "asOf": "2026-07-01T10:54:52.251214Z"
     },
     {
       "name": "JPY/INR",
       "pair": "JPYINR",
       "symbol": "JPYINR=X",
-      "value": "₹0.5829",
-      "rate": 0.5829399824142456,
-      "change": "-0.0005",
-      "changePercent": "-0.08",
-      "direction": "down",
+      "value": "₹0.5852",
+      "rate": 0.5852400064468384,
+      "change": "0.0018",
+      "changePercent": "0.31",
+      "direction": "up",
       "source": "yahoo-yfinance",
       "mode": "fallback-intraday",
-      "asOf": "2026-07-01T07:17:21.203235Z"
+      "asOf": "2026-07-01T10:54:52.265008Z"
+    },
+    {
+      "name": "EUR/INR",
+      "pair": "EURINR",
+      "symbol": "EURINR=X",
+      "value": "₹108.5622",
+      "rate": 108.56220245361328,
+      "change": "0.6652",
+      "changePercent": "0.62",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-07-01T10:54:52.286711Z"
+    },
+    {
+      "name": "GBP/INR",
+      "pair": "GBPINR",
+      "symbol": "GBPINR=X",
+      "value": "₹126.2359",
+      "rate": 126.23590087890625,
+      "change": "0.5405",
+      "changePercent": "0.43",
+      "direction": "up",
+      "source": "yahoo-yfinance",
+      "mode": "fallback-intraday",
+      "asOf": "2026-07-01T10:54:52.287013Z"
     }
   ],
   "mutualFunds": [
@@ -346,7 +354,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.751499Z"
+        "fetchedAt": "2026-07-01T10:54:55.100293Z"
       },
       "extras": {}
     },
@@ -362,7 +370,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.752052Z"
+        "fetchedAt": "2026-07-01T10:54:55.100892Z"
       },
       "extras": {}
     },
@@ -378,7 +386,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.752117Z"
+        "fetchedAt": "2026-07-01T10:54:55.100959Z"
       },
       "extras": {}
     },
@@ -394,7 +402,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.752151Z"
+        "fetchedAt": "2026-07-01T10:54:55.100996Z"
       },
       "extras": {}
     },
@@ -410,7 +418,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.753532Z"
+        "fetchedAt": "2026-07-01T10:54:55.102380Z"
       },
       "extras": {}
     },
@@ -426,7 +434,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.753657Z"
+        "fetchedAt": "2026-07-01T10:54:55.102450Z"
       },
       "extras": {}
     },
@@ -442,7 +450,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.753889Z"
+        "fetchedAt": "2026-07-01T10:54:55.102701Z"
       },
       "extras": {}
     },
@@ -458,7 +466,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.754947Z"
+        "fetchedAt": "2026-07-01T10:54:55.103804Z"
       },
       "extras": {}
     },
@@ -474,7 +482,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.755640Z"
+        "fetchedAt": "2026-07-01T10:54:55.104532Z"
       },
       "extras": {}
     },
@@ -490,7 +498,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.755712Z"
+        "fetchedAt": "2026-07-01T10:54:55.104607Z"
       },
       "extras": {}
     },
@@ -506,7 +514,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.755851Z"
+        "fetchedAt": "2026-07-01T10:54:55.104763Z"
       },
       "extras": {}
     },
@@ -522,7 +530,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.756181Z"
+        "fetchedAt": "2026-07-01T10:54:55.105109Z"
       },
       "extras": {}
     },
@@ -538,7 +546,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.756285Z"
+        "fetchedAt": "2026-07-01T10:54:55.105221Z"
       },
       "extras": {}
     },
@@ -554,7 +562,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.756886Z"
+        "fetchedAt": "2026-07-01T10:54:55.105854Z"
       },
       "extras": {}
     },
@@ -570,7 +578,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757362Z"
+        "fetchedAt": "2026-07-01T10:54:55.106361Z"
       },
       "extras": {}
     },
@@ -586,7 +594,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757366Z"
+        "fetchedAt": "2026-07-01T10:54:55.106367Z"
       },
       "extras": {}
     },
@@ -602,7 +610,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757370Z"
+        "fetchedAt": "2026-07-01T10:54:55.106372Z"
       },
       "extras": {}
     },
@@ -618,7 +626,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757376Z"
+        "fetchedAt": "2026-07-01T10:54:55.106376Z"
       },
       "extras": {}
     },
@@ -634,7 +642,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757380Z"
+        "fetchedAt": "2026-07-01T10:54:55.106380Z"
       },
       "extras": {}
     },
@@ -650,7 +658,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757384Z"
+        "fetchedAt": "2026-07-01T10:54:55.106385Z"
       },
       "extras": {}
     },
@@ -666,7 +674,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757391Z"
+        "fetchedAt": "2026-07-01T10:54:55.106393Z"
       },
       "extras": {}
     },
@@ -682,7 +690,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757395Z"
+        "fetchedAt": "2026-07-01T10:54:55.106397Z"
       },
       "extras": {}
     },
@@ -698,7 +706,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757399Z"
+        "fetchedAt": "2026-07-01T10:54:55.106401Z"
       },
       "extras": {}
     },
@@ -714,7 +722,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757403Z"
+        "fetchedAt": "2026-07-01T10:54:55.106406Z"
       },
       "extras": {}
     },
@@ -730,7 +738,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757407Z"
+        "fetchedAt": "2026-07-01T10:54:55.106410Z"
       },
       "extras": {}
     },
@@ -746,7 +754,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757411Z"
+        "fetchedAt": "2026-07-01T10:54:55.106416Z"
       },
       "extras": {}
     },
@@ -762,7 +770,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757415Z"
+        "fetchedAt": "2026-07-01T10:54:55.106420Z"
       },
       "extras": {}
     },
@@ -778,7 +786,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757419Z"
+        "fetchedAt": "2026-07-01T10:54:55.106425Z"
       },
       "extras": {}
     },
@@ -794,7 +802,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757425Z"
+        "fetchedAt": "2026-07-01T10:54:55.106429Z"
       },
       "extras": {}
     },
@@ -810,7 +818,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757429Z"
+        "fetchedAt": "2026-07-01T10:54:55.106435Z"
       },
       "extras": {}
     },
@@ -826,7 +834,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757434Z"
+        "fetchedAt": "2026-07-01T10:54:55.106441Z"
       },
       "extras": {}
     },
@@ -842,7 +850,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757438Z"
+        "fetchedAt": "2026-07-01T10:54:55.106445Z"
       },
       "extras": {}
     },
@@ -858,7 +866,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757442Z"
+        "fetchedAt": "2026-07-01T10:54:55.106450Z"
       },
       "extras": {}
     },
@@ -874,7 +882,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757448Z"
+        "fetchedAt": "2026-07-01T10:54:55.106454Z"
       },
       "extras": {}
     },
@@ -890,7 +898,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757452Z"
+        "fetchedAt": "2026-07-01T10:54:55.106458Z"
       },
       "extras": {}
     },
@@ -906,7 +914,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757456Z"
+        "fetchedAt": "2026-07-01T10:54:55.106462Z"
       },
       "extras": {}
     },
@@ -922,7 +930,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757460Z"
+        "fetchedAt": "2026-07-01T10:54:55.106468Z"
       },
       "extras": {}
     },
@@ -938,7 +946,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757464Z"
+        "fetchedAt": "2026-07-01T10:54:55.106473Z"
       },
       "extras": {}
     },
@@ -954,7 +962,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757470Z"
+        "fetchedAt": "2026-07-01T10:54:55.106486Z"
       },
       "extras": {}
     },
@@ -970,7 +978,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757476Z"
+        "fetchedAt": "2026-07-01T10:54:55.106490Z"
       },
       "extras": {}
     },
@@ -986,7 +994,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757482Z"
+        "fetchedAt": "2026-07-01T10:54:55.106497Z"
       },
       "extras": {}
     },
@@ -1002,7 +1010,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757487Z"
+        "fetchedAt": "2026-07-01T10:54:55.106503Z"
       },
       "extras": {}
     },
@@ -1018,7 +1026,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757491Z"
+        "fetchedAt": "2026-07-01T10:54:55.106507Z"
       },
       "extras": {}
     },
@@ -1034,7 +1042,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757494Z"
+        "fetchedAt": "2026-07-01T10:54:55.106511Z"
       },
       "extras": {}
     },
@@ -1050,7 +1058,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757498Z"
+        "fetchedAt": "2026-07-01T10:54:55.106516Z"
       },
       "extras": {}
     },
@@ -1066,7 +1074,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757502Z"
+        "fetchedAt": "2026-07-01T10:54:55.106520Z"
       },
       "extras": {}
     },
@@ -1082,7 +1090,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757506Z"
+        "fetchedAt": "2026-07-01T10:54:55.106527Z"
       },
       "extras": {}
     },
@@ -1098,7 +1106,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757510Z"
+        "fetchedAt": "2026-07-01T10:54:55.106531Z"
       },
       "extras": {}
     },
@@ -1114,7 +1122,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757516Z"
+        "fetchedAt": "2026-07-01T10:54:55.106535Z"
       },
       "extras": {}
     },
@@ -1130,7 +1138,7 @@
       "source": {
         "provider": "amfi_navall",
         "mode": "official-daily",
-        "fetchedAt": "2026-07-01T07:17:23.757520Z"
+        "fetchedAt": "2026-07-01T10:54:55.106539Z"
       },
       "extras": {}
     }
